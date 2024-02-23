@@ -1,0 +1,11 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: mysecretpassword
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/immowealth
+  hibernate-orm:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    database:
+      generation: update
