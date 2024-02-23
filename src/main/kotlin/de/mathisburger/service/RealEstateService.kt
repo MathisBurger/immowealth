@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
+import java.util.Date
 
 @ApplicationScoped
 class RealEstateService {
@@ -33,6 +34,7 @@ class RealEstateService {
         obj.streetAndHouseNr = input.streetAndHouseNr;
         obj.initialValue = input.initialValue;
         obj.credit = credit;
+        obj.dateBought = input.dateBought;
         this.entityManager.persist(obj);
         this.entityManager.flush();
         return obj;

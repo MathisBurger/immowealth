@@ -4,6 +4,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.OneToOne
+import java.util.Date
 
 @Entity
 class RealEstateObject {
@@ -19,6 +20,8 @@ class RealEstateObject {
     var streetAndHouseNr: String? = null
 
     var initialValue: Long? = null
+
+    var dateBought: Date? = null
 
     @OneToOne
     var credit: Credit? = null
