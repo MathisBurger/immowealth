@@ -19,6 +19,11 @@ class RealEstateResource {
         return this.realEstateService.getAllObjects();
     }
 
+    @Query
+    fun getObject(id: Long): RealEstateObject {
+        return this.realEstateService.getObject(id);
+    }
+
     @Mutation
     fun createRealEstate(input: RealEstateInput): RealEstateObject {
         return this.realEstateService.createObject(input);

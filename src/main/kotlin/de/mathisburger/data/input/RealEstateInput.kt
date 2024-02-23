@@ -6,5 +6,6 @@ data class RealEstateInput @JsonbCreator constructor(
     val city: String,
     val zip: String,
     val streetAndHouseNr: String,
-    val initialValue: Long
+    val initialValue: Long,
+    val credit: CreditInput
 )

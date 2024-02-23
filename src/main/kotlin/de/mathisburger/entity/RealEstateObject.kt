@@ -3,6 +3,7 @@ package de.mathisburger.entity
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import jakarta.persistence.OneToOne
 
 @Entity
 class RealEstateObject {
@@ -19,4 +20,6 @@ class RealEstateObject {
 
     var initialValue: Long? = null
 
+    @OneToOne
+    var credit: Credit? = null
 }
