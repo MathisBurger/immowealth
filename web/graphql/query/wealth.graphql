@@ -1,22 +1,38 @@
 query GetWealth {
-    grossWealthWithoutInflation
-    grossWealthWithInflation
-    netWealthWithoutInflation
-    netWealthWithInflation
+    grossWealthWithoutInflation {
+        ...WealthData
+    }
+    grossWealthWithInflation {
+        ...WealthData
+    }
+    netWealthWithoutInflation {
+        ...WealthData
+    }
+    netWealthWithInflation {
+        ...WealthData
+    }
 }
 
 query GetGrossWealthWithoutInflation {
-    grossWealthWithoutInflation
+    grossWealthWithoutInflation {
+        ...WealthData
+    }
 }
 
 query GetGrossWealthWithInflation {
-    grossWealthWithInflation
+    grossWealthWithInflation {
+        ...WealthData
+    }
 }
 
 query GetNetWealthWithoutInflation {
-    netWealthWithoutInflation
+    netWealthWithoutInflation {
+        ...WealthData
+    }
 }
 
 query GetNetWealthWithInflation {
-    netWealthWithInflation
+    netWealthWithInflation {
+        ...WealthData
+    }
 }

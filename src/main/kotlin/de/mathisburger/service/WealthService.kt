@@ -1,5 +1,7 @@
 package de.mathisburger.service
 
+import de.mathisburger.data.response.WealthResponse
+import de.mathisburger.data.type.WealthSpreadType
 import de.mathisburger.repository.HousePriceChangeRepository
 import de.mathisburger.repository.RealEstateRepository
 import jakarta.enterprise.context.ApplicationScoped
@@ -16,9 +18,10 @@ class WealthService {
     @Inject
     lateinit var housePriceChangeRepository: HousePriceChangeRepository;
 
-    fun getGrossWealthWithInflation(): Long {
+    fun getGrossWealthWithInflation(): WealthResponse {
         val objects = this.realEstateRepository.listAll();
         var wealth = 0L;
+        val detailed: MutableList<WealthSpreadType> = mutableListOf();
         for (obj in objects) {
             val priceChanges = this.housePriceChangeRepository.findByZip(obj.zip!!);
             var value = obj.initialValue!!;
@@ -32,22 +35,26 @@ class WealthService {
                 }
             }
             wealth += value;
+            detailed.add(WealthSpreadType(obj.id!!, value, obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city))
         }
-        return wealth;
+        return WealthResponse(wealth, detailed);
     }
 
-    fun getGrossWealthWithoutInflation(): Long {
+    fun getGrossWealthWithoutInflation(): WealthResponse {
         val objects = this.realEstateRepository.listAll();
         var wealth = 0L;
+        val detailed: MutableList<WealthSpreadType> = mutableListOf();
         for (obj in objects) {
             wealth += obj.initialValue!!;
+            detailed.add(WealthSpreadType(obj.id!!, obj.initialValue!!, obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city))
         }
-        return wealth;
+        return WealthResponse(wealth, detailed);
     }
 
-    fun getNetWealthWithInflation(): Long {
+    fun getNetWealthWithInflation(): WealthResponse {
         val objects = this.realEstateRepository.listAll();
         var netWealth = 0L;
+        val detailed: MutableList<WealthSpreadType> = mutableListOf()
         for (obj in objects) {
             var cumulatedRate = 0.0;
             for (rate in obj.credit!!.rates) {
@@ -69,13 +76,15 @@ class WealthService {
                 }
             }
             netWealth += value;
+            detailed.add(WealthSpreadType(obj.id!!, value, obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city));
         }
-        return netWealth;
+        return WealthResponse(netWealth, detailed);
     }
 
-    fun getNetWealthWithoutInflation(): Long {
+    fun getNetWealthWithoutInflation(): WealthResponse {
         val objects = this.realEstateRepository.listAll();
         var netWealth = 0L;
+        val detailed: MutableList<WealthSpreadType> = mutableListOf()
         for (obj in objects) {
             var cumulatedRate = 0.0;
             for (rate in obj.credit!!.rates) {
@@ -86,7 +95,8 @@ class WealthService {
                 continue;
             }
             netWealth += obj.initialValue!!;
+            detailed.add(WealthSpreadType(obj.id!!, obj.initialValue!!, obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city));
         }
-        return netWealth;
+        return WealthResponse(netWealth, detailed);
     }
 }

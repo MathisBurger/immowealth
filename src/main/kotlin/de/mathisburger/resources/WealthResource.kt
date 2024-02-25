@@ -1,5 +1,6 @@
 package de.mathisburger.resources
 
+import de.mathisburger.data.response.WealthResponse
 import de.mathisburger.service.WealthService
 import jakarta.inject.Inject
 import org.eclipse.microprofile.graphql.GraphQLApi
@@ -12,22 +13,22 @@ class WealthResource {
     lateinit var wealthService: WealthService;
 
     @Query
-    fun getGrossWealthWithInflation(): Long {
+    fun getGrossWealthWithInflation(): WealthResponse {
         return this.wealthService.getGrossWealthWithInflation();
     }
 
     @Query
-    fun getGrossWealthWithoutInflation(): Long {
+    fun getGrossWealthWithoutInflation(): WealthResponse {
         return this.wealthService.getGrossWealthWithoutInflation();
     }
 
     @Query
-    fun getNetWealthWithInflation(): Long {
+    fun getNetWealthWithInflation(): WealthResponse {
         return this.wealthService.getNetWealthWithInflation();
     }
 
     @Query
-    fun getNetWealthWithoutInflation(): Long {
+    fun getNetWealthWithoutInflation(): WealthResponse {
         return this.wealthService.getNetWealthWithoutInflation();
     }
 }
