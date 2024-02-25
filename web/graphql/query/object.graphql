@@ -1,0 +1,9 @@
+query GetAllObjects {
+    allObjects {
+        id
+        initialValue
+        streetAndHouseNr
+        city
+        zip
+    }
+}
