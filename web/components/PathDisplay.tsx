@@ -2,14 +2,14 @@
 import {Box, Breadcrumbs, Link, Typography} from "@mui/joy";
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import {useRouter} from "next/navigation";
-import {useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
 import routes from "@/routeConfig";
 import {RouteConfigType} from "@/typings/routeConfig";
+import {usePathname} from "next/navigation";
 
 const PathDisplay = () => {
 
-    const router = useRouter();
+    const pathname = usePathname();
 
     const findRoute = (path: string, pos: RouteConfigType[]): RouteConfigType|null => {
         for (let p of pos) {
@@ -28,7 +28,7 @@ const PathDisplay = () => {
 
     const selectedRoute = useMemo<RouteConfigType[]>(() => {
         let results = [];
-        let spl = document.location.pathname.split('/');
+        let spl = pathname.split('/');
         for (let i=1; i<=spl.length; i++) {
             let res = findRoute(spl.slice(0, i).join('/'), routes);
             if (res !== null) {
@@ -37,17 +37,17 @@ const PathDisplay = () => {
         }
         return results;
     },
-    [routes]);
+    [routes, pathname]);
 
     const route = useMemo<RouteConfigType|null>(
-        () => findRoute(document.location.pathname, routes),
-        [document.location.pathname]
+        () => findRoute(pathname, routes),
+        [pathname]
     );
 
     const lastId = useMemo<string>(() => {
-        let spl = document.location.pathname.split('/');
+        let spl = pathname.split('/');
         return spl[spl.length-1];
-    }, [document.location.pathname]);
+    }, [pathname]);
 
 
     return (
