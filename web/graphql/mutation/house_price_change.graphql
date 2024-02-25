@@ -1,0 +1,5 @@
+mutation AddHousePriceChange($zip: String! $change: Float! $year: Int!) {
+    addHousePriceChange(zip: $zip, change: $change, year: $year) {
+        ...HousePriceChangeData
+    }
+}

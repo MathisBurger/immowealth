@@ -1,0 +1,5 @@
+mutation CreateRealEstate($input: RealEstateInputInput!) {
+    createRealEstate(input: $input) {
+        ...ObjectData
+    }
+}

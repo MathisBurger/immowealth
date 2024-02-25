@@ -1,0 +1,3 @@
+mutation AddCreditRate($input: CreditRateInputInput!) {
+    addCreditRate(input: $input)
+}
