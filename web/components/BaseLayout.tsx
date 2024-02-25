@@ -11,8 +11,6 @@ interface BaseLayoutProps {
 
 const BaseLayout = ({children}: BaseLayoutProps) => (
     <NoSSR>
-        <CssVarsProvider disableTransitionOnChange>
-            <CssBaseline />
             <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
                 <Sidebar />
                 <Box
@@ -38,7 +36,6 @@ const BaseLayout = ({children}: BaseLayoutProps) => (
                     {children}
                 </Box>
             </Box>
-        </CssVarsProvider>
     </NoSSR>
 );
 

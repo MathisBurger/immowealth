@@ -1,4 +1,8 @@
 quarkus:
+  http:
+    cors:
+      ~: true
+      origins: /.*/
   datasource:
     db-kind: postgresql
     username: postgres
