@@ -1,0 +1,23 @@
+fragment SimpleObjectData on RealEstateObject {
+    id
+    initialValue
+    streetAndHouseNr
+    city
+    zip
+    dateBought
+    credit {
+        ...SimpleCredit
+    }
+}
+
+fragment ObjectData on RealEstateObject {
+    id
+    initialValue
+    streetAndHouseNr
+    city
+    zip
+    dateBought
+    credit {
+        ...CreditData
+    }
+}

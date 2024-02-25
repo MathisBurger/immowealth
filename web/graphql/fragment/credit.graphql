@@ -1,0 +1,18 @@
+fragment SimpleCredit on Credit {
+    id
+    interestRate
+    redemptionRate
+    amount
+    bank
+}
+
+fragment CreditData on Credit {
+    id
+    interestRate
+    redemptionRate
+    amount
+    bank
+    rates {
+        ...CreditRateData
+    }
+}

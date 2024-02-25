@@ -1,0 +1,15 @@
+query GetGrossWealthWithoutInflation {
+    grossWealthWithoutInflation
+}
+
+query GetGrossWealthWithInflation {
+    grossWealthWithInflation
+}
+
+query GetNetWealthWithoutInflation {
+    netWealthWithoutInflation
+}
+
+query GetNetWealthWithInflation {
+    netWealthWithInflation
+}

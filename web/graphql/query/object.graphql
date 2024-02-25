@@ -1,9 +1,11 @@
 query GetAllObjects {
     allObjects {
-        id
-        initialValue
-        streetAndHouseNr
-        city
-        zip
+        ...SimpleObjectData
+    }
+}
+
+query GetObject($id: BigInteger!) {
+    object(id: $id) {
+        ...ObjectData
     }
 }

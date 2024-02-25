@@ -1,0 +1,6 @@
+fragment HousePriceChangeData on HousePriceChange {
+    id
+    change
+    year
+    zip
+}

@@ -1,0 +1,11 @@
+query AllHousePriceChanges {
+    allHousePricesChange {
+        ...HousePriceChangeData
+    }
+}
+
+query AllHousePriceChangesByZip($zip: String!) {
+    allHousePricesChangeByZip(zip: $zip) {
+        ...HousePriceChangeData
+    }
+}
