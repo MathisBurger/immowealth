@@ -1,6 +1,7 @@
 package de.mathisburger.service
 
 import de.mathisburger.entity.CreditRate
+import de.mathisburger.exception.DateNotAllowedException
 import de.mathisburger.repository.CreditRepository
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -19,6 +20,9 @@ class CreditService {
 
     @Transactional
     fun addCreditRate(id: Long, rate: Double, date: Date) {
+        if (date.after(Date())) {
+            throw DateNotAllowedException("Date in future is not allowed");
+        }
         val credit = this.creditRepository.findById(id);
         val creditRate = CreditRate()
         creditRate.date = date;
