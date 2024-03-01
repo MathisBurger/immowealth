@@ -1,6 +1,7 @@
 package de.mathisburger.resources
 
 import de.mathisburger.data.input.RealEstateInput
+import de.mathisburger.data.response.ObjectResponse
 import de.mathisburger.entity.RealEstateObject
 import de.mathisburger.service.RealEstateService
 import jakarta.inject.Inject
@@ -20,7 +21,7 @@ class RealEstateResource {
     }
 
     @Query
-    fun getObject(id: Long): RealEstateObject {
+    fun getObject(id: Long): ObjectResponse {
         return this.realEstateService.getObject(id);
     }
 

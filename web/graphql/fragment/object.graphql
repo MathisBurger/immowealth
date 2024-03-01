@@ -10,7 +10,7 @@ fragment SimpleObjectData on RealEstateObject {
     }
 }
 
-fragment ObjectData on RealEstateObject {
+fragment FullRealEstateData on RealEstateObject {
     id
     initialValue
     streetAndHouseNr
@@ -20,4 +20,11 @@ fragment ObjectData on RealEstateObject {
     credit {
         ...CreditData
     }
+}
+
+fragment ObjectData on ObjectResponse {
+    realEstate {
+        ...FullRealEstateData
+    }
+    creditRateSum
 }

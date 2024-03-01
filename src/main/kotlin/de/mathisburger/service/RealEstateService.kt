@@ -1,6 +1,7 @@
 package de.mathisburger.service
 
 import de.mathisburger.data.input.RealEstateInput
+import de.mathisburger.data.response.ObjectResponse
 import de.mathisburger.entity.Credit
 import de.mathisburger.entity.RealEstateObject
 import de.mathisburger.repository.RealEstateRepository
@@ -8,7 +9,6 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
-import java.util.Date
 
 @ApplicationScoped
 class RealEstateService {
@@ -44,7 +44,12 @@ class RealEstateService {
         return this.realEstateRepository.listAll()
     }
 
-    fun getObject(id: Long): RealEstateObject {
-        return this.realEstateRepository.findById(id);
+    fun getObject(id: Long): ObjectResponse {
+        val obj =  this.realEstateRepository.findById(id);
+        var creditRateSum = 0.0;
+        for (rate in obj.credit!!.rates) {
+            creditRateSum += rate.amount!!;
+        }
+        return ObjectResponse(obj, creditRateSum);
     }
 }
