@@ -3,6 +3,7 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {RouteConfigType} from "@/typings/routeConfig";
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 
 const routes: RouteConfigType[] = [
     {
@@ -19,6 +20,11 @@ const routes: RouteConfigType[] = [
         name: 'Kredite',
         path: '/credits',
         icon: <AttachMoneyIcon />
+    },
+    {
+        name: 'Preisänderungen',
+        path: '/housingPrices',
+        icon: <ShowChartIcon />
     },
     {
         name: 'Einstellungen',

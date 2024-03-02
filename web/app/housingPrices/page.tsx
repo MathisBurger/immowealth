@@ -1,11 +1,14 @@
+'use client';
 import {HousePriceChangeDataFragment, useAllHousePriceChangesQuery} from "@/generated/graphql";
 import {useMemo, useState} from "react";
-import {Divider, Select, Typography, Option, Table} from "@mui/joy";
+import {Divider, Select, Typography, Option, Table, Button} from "@mui/joy";
+import {useRouter} from "next/navigation";
 
 
 const HousingPrices = () => {
 
     const {data} = useAllHousePriceChangesQuery();
+    const router = useRouter();
 
     const [filter, setFilter] = useState<string>('');
 
@@ -27,13 +30,23 @@ const HousingPrices = () => {
     return (
         <>
             <Typography level="h1">Preisänderungen</Typography>
+            <Button
+                variant="solid"
+                color="primary"
+                sx={{width: '200px'}}
+                onClick={() => router.push("/housingPrices/new")}
+            >
+                Neue Preisänderung
+            </Button>
             <Divider />
             <Select
                 placeholder="Choose"
                 variant="soft"
+                sx={{width: '200px'}}
                 value={filter}
                 onChange={(_, f) => setFilter(f ?? '')}
             >
+                <Option value={''}>Kein Filter</Option>
                 {zips.map((op) => (
                     <Option value={op}>{op}</Option>
                 ))}
@@ -65,5 +78,7 @@ const HousingPrices = () => {
                 </tbody>
             </Table>
         </>
-    )
+    );
 }
+
+export default HousingPrices;
