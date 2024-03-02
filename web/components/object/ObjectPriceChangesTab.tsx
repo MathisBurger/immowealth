@@ -7,9 +7,10 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 interface ObjectPriceChangesTabProps {
     loading: boolean;
     data: GetObjectQuery|undefined;
+    fieldToAccess: string;
 }
 
-const ObjectPriceChangesTab = ({loading, data}: ObjectPriceChangesTabProps) => {
+const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChangesTabProps) => {
 
     return (
         <LoadingSpinner loading={loading}>
@@ -31,7 +32,8 @@ const ObjectPriceChangesTab = ({loading, data}: ObjectPriceChangesTabProps) => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {data?.object.priceChanges.map((object) => (
+                                {/* @ts-ignore */}
+                                {data?.object[fieldToAccess].map((object) => (
                                     <tr>
                                         <td>{object?.value}€</td>
                                         <td>{object?.year}</td>
@@ -46,8 +48,14 @@ const ObjectPriceChangesTab = ({loading, data}: ObjectPriceChangesTabProps) => {
                     <Card>
                         <CardContent>
                             <LineChart
-                                series={[{data: data?.object.priceChanges.map((c) => c?.value ?? 0)}]}
-                                xAxis={[{data: data?.object.priceChanges.map((c) => c?.year ?? 0)}]}
+                                series={[{
+                                    // @ts-ignore
+                                    data: data?.object[fieldToAccess].map((c) => c?.value ?? 0)
+                                }]}
+                                xAxis={[{
+                                    // @ts-ignore
+                                    data: data?.object[fieldToAccess].map((c) => c?.year ?? 0)
+                                }]}
                                 height={500}
                             />
                         </CardContent>

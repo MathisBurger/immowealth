@@ -2,8 +2,8 @@ MVP
 - [x] Add object frontend implementation
 - [x] Credit rates overview in object tab and sidebar tab
 - [x] Housing price changes
-- [ ] Display price increase in object view
-- [ ] Simple Price forecast
+- [x] Display price increase in object view
+- [x] Simple Price forecast
 - [ ] Automated credit rate insertion
 - [ ] Automated housing price insertions
 - [ ] Add extra information to objects
@@ -32,3 +32,6 @@ Future updates
 - [ ] Migrate all tables to MUI datagrid
 - [ ] Add AFA calculations
 - [ ] Add support for measured object prices
+- [ ] Add activity logging
+- [ ] Save settings like filter selections
+- [ ] Split large numbers with dots

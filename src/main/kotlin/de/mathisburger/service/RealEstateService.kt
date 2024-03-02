@@ -92,7 +92,10 @@ class RealEstateService {
             averageGrowth = 2.0;
         } else {
             val diffMoney = priceChanges.last().value - obj.initialValue!!;
-            val diffYears = priceChanges.last().year - DateUtils.getYearFromDate(obj.dateBought!!);
+            var diffYears = priceChanges.last().year - DateUtils.getYearFromDate(obj.dateBought!!);
+            if (diffYears == 0) {
+                diffYears = 1;
+            }
             val averageMoneyPerYear = diffMoney / diffYears;
             averageGrowth = (averageMoneyPerYear / obj.initialValue!!).toDouble();
         }

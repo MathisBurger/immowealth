@@ -1,8 +1,8 @@
 'use client';
 import {useParams} from "next/navigation";
-import {Button, Divider, Grid, Typography} from "@mui/joy";
+import {Button, Divider, Option, Select, Stack, Typography} from "@mui/joy";
 import {CreditRateDataFragment, useGetObjectQuery} from "@/generated/graphql";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
 import TabLayout, {TabLayoutElement} from "@/components/TabLayout";
 import ObjectDashboardTab from "@/components/object/ObjectDashboardTab";
@@ -13,11 +13,17 @@ import ObjectPriceChangesTab from "@/components/object/ObjectPriceChangesTab";
 const ObjectDetailsPage = () => {
 
     const {id} = useParams<{id: string}>();
-    const {data, loading} = useGetObjectQuery({
+    const {data, loading, refetch} = useGetObjectQuery({
         variables: {id: parseInt(id, 10)}
     });
 
     const [creditRateModalOpen, setCreditRateModalOpen] = useState<boolean>(false);
+    const [forecastYears, setForecastYears] = useState<number>(10);
+
+    useEffect(() => {
+        console.log("is this the dream");
+        refetch({id: parseInt(id, 10), yearsInFuture: forecastYears});
+    }, [forecastYears])
 
     const tabs = useMemo<TabLayoutElement[]>(() => [
         {
@@ -33,9 +39,28 @@ const ObjectDetailsPage = () => {
         {
             id: 'priceChanges',
             label: 'Marktwert (aktuell)',
-            content: <ObjectPriceChangesTab loading={loading} data={data} />
+            content: <ObjectPriceChangesTab loading={loading} data={data} fieldToAccess="priceChanges" />
+        },
+        {
+            id: 'priceForecast',
+            label: 'Marktwert (Prognose)',
+            content: (
+                <Stack spacing={2}>
+                    <Select
+                        variant="soft"
+                        value={forecastYears}
+                        onChange={(_, v ) => setForecastYears(v ?? 0)}
+                        sx={{width: '200px'}}
+                    >
+                        {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((n) => (
+                            <Option value={n}>{n} Jahre</Option>
+                        ))}
+                    </Select>
+                    <ObjectPriceChangesTab loading={loading} data={data} fieldToAccess="priceForecast" />
+                </Stack>
+            )
         }
-    ], [data, loading]);
+    ], [data, loading, forecastYears]);
 
     return (
         <>
