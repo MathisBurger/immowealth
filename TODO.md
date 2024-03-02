@@ -1,5 +1,5 @@
 MVP
-- [ ] Add object frontend implementation
+- [x] Add object frontend implementation
 - [ ] Credit rates overview in object tab and sidebar tab
 - [ ] Housing price changes
 - [ ] Simple Price forecast
@@ -8,6 +8,7 @@ MVP
 - [ ] Add extra information to objects
 - [ ] Editable display for object base data
 - [ ] Add object map with Leaflet
+- [ ] Navigate back on every page
 - [ ] Installation guide and README.md
 - [ ] Move future updates to README.md
 - [ ] Make repository public 

@@ -13,6 +13,14 @@ const ObjectsPage = () => {
     return (
         <>
             <Typography level="h1">Objekte</Typography>
+            <Button
+                variant="solid"
+                color="primary"
+                sx={{width: '200px'}}
+                onClick={() => router.push("/objects/new")}
+            >
+                Neues Objekt
+            </Button>
             <Divider />
             <Table
                 borderAxis="x"
