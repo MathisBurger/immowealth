@@ -62,6 +62,7 @@ class WealthService {
             }
             if (cumulatedRate.toLong() < obj.credit!!.amount!!) {
                 netWealth += cumulatedRate.toLong();
+                detailed.add(WealthSpreadType(obj.id!!, cumulatedRate.toLong(), obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city));
                 continue;
             }
             val priceChanges = this.housePriceChangeRepository.findByZip(obj.zip!!);
@@ -92,6 +93,7 @@ class WealthService {
             }
             if (cumulatedRate.toLong() < obj.credit!!.amount!!) {
                 netWealth += cumulatedRate.toLong();
+                detailed.add(WealthSpreadType(obj.id!!, cumulatedRate.toLong(), obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city));
                 continue;
             }
             netWealth += obj.initialValue!!;
