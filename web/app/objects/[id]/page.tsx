@@ -6,6 +6,7 @@ import ObjectBaseDataCard from "@/components/object/ObjectBaseDataCard";
 import ObjectCreditChartCard from "@/components/object/ObjectCreditChartCard";
 import {useState} from "react";
 import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
+import ObjectCreditDataCard from "@/components/object/ObjectCreditDataCard";
 
 
 const ObjectDetailsPage = () => {
@@ -32,8 +33,13 @@ const ObjectDetailsPage = () => {
             </Button>
             <Divider />
             <Grid container direction="row" spacing={2}>
-                <Grid xs={4}>
-                    <ObjectBaseDataCard loading={loading} data={data} />
+                <Grid xs={4} container direction="column">
+                    <Grid xs={12}>
+                        <ObjectBaseDataCard loading={loading} data={data} />
+                    </Grid>
+                    <Grid xs={12}>
+                        <ObjectCreditDataCard loading={loading} data={data} />
+                    </Grid>
                 </Grid>
                 <Grid xs={8}>
                     <ObjectCreditChartCard loading={loading} data={data} />
