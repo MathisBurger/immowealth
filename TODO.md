@@ -8,6 +8,9 @@ MVP
 - [ ] Add extra information to objects
 - [ ] Editable display for object base data
 - [ ] Add object map with Leaflet
+- [ ] Installation guide and README.md
+- [ ] Move future updates to README.md
+- [ ] Make repository public 
 
 Future updates
 - [ ] Performance calculations
@@ -20,3 +23,5 @@ Future updates
 - [ ] Most / recently used document recommendations
 - [ ] Object location watchlist
 - [ ] Immo portal search
+- [ ] Support Chat for renter
+- [ ] Rental status / statistics about the renter
