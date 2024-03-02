@@ -4,6 +4,7 @@ import de.mathisburger.data.response.WealthResponse
 import de.mathisburger.service.WealthService
 import jakarta.inject.Inject
 import org.eclipse.microprofile.graphql.GraphQLApi
+import org.eclipse.microprofile.graphql.GraphQLException
 import org.eclipse.microprofile.graphql.Query
 
 @GraphQLApi
