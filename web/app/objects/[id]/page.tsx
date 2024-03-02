@@ -1,12 +1,12 @@
 'use client';
 import {useParams} from "next/navigation";
 import {Button, Divider, Grid, Typography} from "@mui/joy";
-import {useGetObjectQuery} from "@/generated/graphql";
-import ObjectBaseDataCard from "@/components/object/ObjectBaseDataCard";
-import ObjectCreditChartCard from "@/components/object/ObjectCreditChartCard";
-import {useState} from "react";
+import {CreditRateDataFragment, useGetObjectQuery} from "@/generated/graphql";
+import {useMemo, useState} from "react";
 import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
-import ObjectCreditDataCard from "@/components/object/ObjectCreditDataCard";
+import TabLayout, {TabLayoutElement} from "@/components/TabLayout";
+import ObjectDashboardTab from "@/components/object/ObjectDashboardTab";
+import CreditRateList from "@/components/credit/CreditRateList";
 
 
 const ObjectDetailsPage = () => {
@@ -17,6 +17,19 @@ const ObjectDetailsPage = () => {
     });
 
     const [creditRateModalOpen, setCreditRateModalOpen] = useState<boolean>(false);
+
+    const tabs = useMemo<TabLayoutElement[]>(() => [
+        {
+            id: 'general',
+            label: 'Allgemein',
+            content: <ObjectDashboardTab loading={loading} data={data} />
+        },
+        {
+            id: 'creditRates',
+            label: 'Kreditraten',
+            content: <CreditRateList elements={(data?.object.realEstate.credit?.rates as CreditRateDataFragment[]) ?? []} />
+        }
+    ], [data, loading]);
 
     return (
         <>
@@ -32,19 +45,7 @@ const ObjectDetailsPage = () => {
                 Kreditrate hinzufügen
             </Button>
             <Divider />
-            <Grid container direction="row" spacing={2}>
-                <Grid xs={4} container direction="column">
-                    <Grid xs={12}>
-                        <ObjectBaseDataCard loading={loading} data={data} />
-                    </Grid>
-                    <Grid xs={12}>
-                        <ObjectCreditDataCard loading={loading} data={data} />
-                    </Grid>
-                </Grid>
-                <Grid xs={8}>
-                    <ObjectCreditChartCard loading={loading} data={data} />
-                </Grid>
-            </Grid>
+            <TabLayout elements={tabs} />
             {creditRateModalOpen && (
                 <AddCreditRateModal
                     onClose={() => setCreditRateModalOpen(false)}

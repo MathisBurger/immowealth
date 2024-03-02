@@ -1,6 +1,7 @@
 import {GetObjectQuery} from "@/generated/graphql";
 import {Card, CardContent, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import dayjs from "dayjs";
 
 
 interface ObjectBaseDataCard {
@@ -15,7 +16,7 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
             <CardContent>
                 <LoadingSpinner loading={loading}>
                     <Typography level="h3">Grunddaten</Typography>
-                    <Typography>Kaufdatum: {data?.object?.realEstate.dateBought}</Typography>
+                    <Typography>Kaufdatum: {dayjs(data?.object?.realEstate.dateBought).format("DD.MM.YYYY")}</Typography>
                     <Typography>{data?.object?.realEstate.streetAndHouseNr}</Typography>
                     <Typography>{data?.object?.realEstate.zip} {data?.object?.realEstate.city}</Typography>
                 </LoadingSpinner>
