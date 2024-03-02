@@ -16,3 +16,10 @@ fragment CreditData on Credit {
         ...CreditRateData
     }
 }
+
+fragment CreditObject on CreditResponse {
+    credit {
+        ...CreditData
+    }
+    creditRateSum
+}

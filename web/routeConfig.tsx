@@ -1,9 +1,8 @@
-import {OverridableComponent} from "@mui/material/OverridableComponent";
-import {SvgIconTypeMap} from "@mui/material/SvgIcon/SvgIcon";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {RouteConfigType} from "@/typings/routeConfig";
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 const routes: RouteConfigType[] = [
     {
@@ -12,15 +11,20 @@ const routes: RouteConfigType[] = [
         icon: <DashboardIcon />
     },
     {
+        name: 'Objekte',
+        path: '/objects',
+        icon: <ApartmentIcon />
+    },
+    {
+        name: 'Kredite',
+        path: '/credits',
+        icon: <AttachMoneyIcon />
+    },
+    {
         name: 'Einstellungen',
         path: '/settings',
         icon: <SettingsRoundedIcon />
     },
-    {
-        name: 'Objekte',
-        path: '/objects',
-        icon: <ApartmentIcon />
-    }
 ];
 
 export default routes;
