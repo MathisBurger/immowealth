@@ -17,6 +17,8 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
                 <LoadingSpinner loading={loading}>
                     <Typography level="h3">Grunddaten</Typography>
                     <Typography>Kaufdatum: {dayjs(data?.object?.realEstate.dateBought).format("DD.MM.YYYY")}</Typography>
+                    <Typography>Kaufpreis: {data?.object?.realEstate.initialValue}€</Typography>
+                    <Typography>Geschätzter Marktpreis (aktuell): {data?.object.estimatedMarketValue}€</Typography>
                     <Typography>{data?.object?.realEstate.streetAndHouseNr}</Typography>
                     <Typography>{data?.object?.realEstate.zip} {data?.object?.realEstate.city}</Typography>
                 </LoadingSpinner>

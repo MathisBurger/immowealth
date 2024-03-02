@@ -21,8 +21,9 @@ class RealEstateResource {
     }
 
     @Query
-    fun getObject(id: Long): ObjectResponse {
-        return this.realEstateService.getObject(id);
+    fun getObject(id: Long, yearsInFuture: Int?): ObjectResponse {
+        val yif = yearsInFuture ?: 10;
+        return this.realEstateService.getObject(id, yif);
     }
 
     @Mutation

@@ -4,8 +4,8 @@ query GetAllObjects {
     }
 }
 
-query GetObject($id: BigInteger!) {
-    object(id: $id) {
+query GetObject($id: BigInteger!, $yearsInFuture: Int) {
+    object(id: $id, yearsInFuture: $yearsInFuture) {
         ...ObjectData
     }
 }

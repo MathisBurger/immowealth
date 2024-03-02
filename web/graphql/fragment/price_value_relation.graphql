@@ -1,0 +1,4 @@
+fragment PriceValueRelation on PriceValueRelation {
+    year
+    value
+}

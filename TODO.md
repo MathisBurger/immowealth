@@ -2,6 +2,7 @@ MVP
 - [x] Add object frontend implementation
 - [x] Credit rates overview in object tab and sidebar tab
 - [x] Housing price changes
+- [ ] Display price increase in object view
 - [ ] Simple Price forecast
 - [ ] Automated credit rate insertion
 - [ ] Automated housing price insertions
@@ -10,6 +11,7 @@ MVP
 - [ ] Add object map with Leaflet
 - [x] Navigate back on every page
 - [ ] Deletion feature
+- [ ] Add code documentation
 - [ ] Installation guide and README.md
 - [ ] Move future updates to README.md
 - [ ] Make repository public 
@@ -28,3 +30,5 @@ Future updates
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
 - [ ] Migrate all tables to MUI datagrid
+- [ ] Add AFA calculations
+- [ ] Add support for measured object prices

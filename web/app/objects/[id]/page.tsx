@@ -7,6 +7,7 @@ import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
 import TabLayout, {TabLayoutElement} from "@/components/TabLayout";
 import ObjectDashboardTab from "@/components/object/ObjectDashboardTab";
 import CreditRateList from "@/components/credit/CreditRateList";
+import ObjectPriceChangesTab from "@/components/object/ObjectPriceChangesTab";
 
 
 const ObjectDetailsPage = () => {
@@ -28,6 +29,11 @@ const ObjectDetailsPage = () => {
             id: 'creditRates',
             label: 'Kreditraten',
             content: <CreditRateList elements={(data?.object.realEstate.credit?.rates as CreditRateDataFragment[]) ?? []} />
+        },
+        {
+            id: 'priceChanges',
+            label: 'Marktwert (aktuell)',
+            content: <ObjectPriceChangesTab loading={loading} data={data} />
         }
     ], [data, loading]);
 

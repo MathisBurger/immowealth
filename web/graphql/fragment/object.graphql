@@ -28,4 +28,11 @@ fragment ObjectData on ObjectResponse {
     }
     creditRateSum
     creditRateCummulationSteps
+    estimatedMarketValue
+    priceChanges {
+        ...PriceValueRelation
+    }
+    priceForecast {
+        ...PriceValueRelation
+    }
 }
