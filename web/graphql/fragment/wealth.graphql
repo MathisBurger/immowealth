@@ -1,7 +1,6 @@
 fragment WealthData on WealthResponse {
     total
     detailed {
-        id
         value
         label
     }
