@@ -26,3 +26,4 @@ Future updates
 - [ ] Immo portal search
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
+- [ ] Migrate all tables to MUI datagrid
