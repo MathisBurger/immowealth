@@ -47,9 +47,11 @@ class RealEstateService {
     fun getObject(id: Long): ObjectResponse {
         val obj =  this.realEstateRepository.findById(id);
         var creditRateSum = 0.0;
+        var cum: MutableList<Double> = mutableListOf();
         for (rate in obj.credit!!.rates) {
             creditRateSum += rate.amount!!;
+            cum.add(creditRateSum);
         }
-        return ObjectResponse(obj, creditRateSum);
+        return ObjectResponse(obj, creditRateSum, cum);
     }
 }

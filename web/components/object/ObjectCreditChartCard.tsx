@@ -1,8 +1,9 @@
 import {Card, CardContent, Grid, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import {BarChart, BarSeriesType} from "@mui/x-charts";
+import {BarChart, BarSeriesType, LineChart} from "@mui/x-charts";
 import {GetObjectQuery} from "@/generated/graphql";
 import {useMemo} from "react";
+import dayjs from "dayjs";
 
 interface ObjectCreditChartCardProps {
     loading: boolean;
@@ -22,7 +23,7 @@ const ObjectCreditChartCard = ({loading, data}: ObjectCreditChartCardProps) => {
         <Card variant="outlined">
             <CardContent>
                 <LoadingSpinner loading={loading}>
-                    <Typography level="h3">Finanzierung</Typography>
+                    <Typography level="h3">Finanzierungsverlauf</Typography>
                     <Grid container direction="row">
                         <Grid xs={4}>
                             <BarChart series={series} height={400} dataset={[
@@ -33,7 +34,9 @@ const ObjectCreditChartCard = ({loading, data}: ObjectCreditChartCardProps) => {
                             ]} />
                         </Grid>
                         <Grid xs={8}>
-                            {/* Add credit rate chart here */}
+                           <LineChart
+                               series={[{data: data?.object.creditRateCummulationSteps.filter(e => e !== null)}]}
+                           />
                         </Grid>
                     </Grid>
                 </LoadingSpinner>

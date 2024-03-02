@@ -27,4 +27,5 @@ fragment ObjectData on ObjectResponse {
         ...FullRealEstateData
     }
     creditRateSum
+    creditRateCummulationSteps
 }
