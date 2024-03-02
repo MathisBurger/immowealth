@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 interface AddCreditRateModalProps {
     onClose: () => void;
     creditId: number;
-    objectId: number;
+    objectId: number|undefined;
 }
 
 const AddCreditRateModal = ({onClose, creditId, objectId}: AddCreditRateModalProps) => {
@@ -17,12 +17,12 @@ const AddCreditRateModal = ({onClose, creditId, objectId}: AddCreditRateModalPro
     const [rate, setRate] = useState<number>(0);
     const [date, setDate] = useState<Date>(new Date());
     const [mutation, {loading}] = useAddCreditRateMutation({
-        refetchQueries: [
+        refetchQueries: objectId ? [
             {
                 query: GetObjectDocument,
                 variables: {id: objectId}
             }
-        ]
+        ] : []
     });
 
     const submit = async () => {

@@ -5,5 +5,6 @@ import jakarta.json.bind.annotation.JsonbCreator
 
 data class CreditResponse @JsonbCreator constructor(
     val credit: Credit,
-    val creditRateSum: Double
+    val creditRateSum: Double,
+    val creditRateCummulationSteps: List<Double>
 );

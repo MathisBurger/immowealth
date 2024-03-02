@@ -1,17 +1,18 @@
+import {useMemo} from "react";
 import {Card, CardContent, Grid, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import {BarChart, BarSeriesType, LineChart} from "@mui/x-charts";
-import {GetObjectQuery} from "@/generated/graphql";
-import {useMemo} from "react";
+import {GetCreditQuery} from "@/generated/graphql";
 
-interface ObjectCreditChartCardProps {
+interface CreditChartCardProps {
     loading: boolean;
-    data: GetObjectQuery|undefined;
+    data: GetCreditQuery|undefined;
 }
 
 type BarChartData = Omit<BarSeriesType, 'type'>;
 
-const ObjectCreditChartCard = ({loading, data}: ObjectCreditChartCardProps) => {
+
+const CreditChartCard = ({loading, data}: CreditChartCardProps) => {
 
     const series = useMemo<BarChartData[]>(() => [
         {dataKey: 'paid', label: 'Getilgt'},
@@ -27,15 +28,15 @@ const ObjectCreditChartCard = ({loading, data}: ObjectCreditChartCardProps) => {
                         <Grid xs={4}>
                             <BarChart series={series} height={400} dataset={[
                                 {
-                                    paid: data?.object.creditRateSum ?? 0,
-                                    total: data?.object.realEstate.credit?.amount ?? 0
+                                    paid: data?.credit.creditRateSum ?? 0,
+                                    total: data?.credit.credit.amount ?? 0
                                 }
                             ]} />
                         </Grid>
                         <Grid xs={8}>
-                           <LineChart
-                               series={[{data: data?.object.creditRateCummulationSteps.filter(e => e !== null)}]}
-                           />
+                            <LineChart
+                                series={[{data: data?.credit.creditRateCummulationSteps.filter(e => e !== null)}]}
+                            />
                         </Grid>
                     </Grid>
                 </LoadingSpinner>
@@ -44,4 +45,4 @@ const ObjectCreditChartCard = ({loading, data}: ObjectCreditChartCardProps) => {
     );
 }
 
-export default ObjectCreditChartCard;
+export default CreditChartCard;

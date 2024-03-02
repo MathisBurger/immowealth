@@ -35,10 +35,10 @@ const CreditsPage = () => {
                 {data?.allCredits.map((credit: any) => (
                     <tr>
                         <td>{credit?.credit.id}</td>
-                        <td>{credit?.credit.amount}</td>
-                        <td>{credit?.creditRateSum}</td>
-                        <td>{credit?.credit.interestRate}</td>
-                        <td>{credit?.credit.redemptionRate}</td>
+                        <td>{credit?.credit.amount}€</td>
+                        <td>{credit?.creditRateSum}€</td>
+                        <td>{credit?.credit.interestRate}%</td>
+                        <td>{credit?.credit.redemptionRate}%</td>
                         <td>{credit?.credit.bank}</td>
                         <td>
                             <Grid container direction="row">

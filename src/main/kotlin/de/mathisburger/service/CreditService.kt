@@ -41,11 +41,18 @@ class CreditService {
         return credits.map(transform);
     }
 
+    fun getCredit(id: Long): CreditResponse {
+        val credit = this.creditRepository.findById(id);
+        return this.getResponseObject(credit);
+    }
+
     private fun getResponseObject(credit: Credit): CreditResponse {
         var sum = 0.0;
+        var list: MutableList<Double> = mutableListOf();
         for (rate in credit.rates) {
             sum += rate.amount!!;
+            list.add(sum);
         }
-        return CreditResponse(credit, sum);
+        return CreditResponse(credit, sum, list);
     }
 }

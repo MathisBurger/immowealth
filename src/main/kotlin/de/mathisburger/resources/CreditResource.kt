@@ -24,4 +24,9 @@ class CreditResource {
     fun getAllCredits(): List<CreditResponse> {
         return this.creditService.getAllCredits();
     }
+
+    @Query
+    fun getCredit(id: Long): CreditResponse {
+        return this.creditService.getCredit(id);
+    }
 }

@@ -3,3 +3,9 @@ query GetCredits {
         ...CreditObject
     }
 }
+
+query GetCredit($id: BigInteger!) {
+    credit(id: $id) {
+        ...CreditObject
+    }
+}

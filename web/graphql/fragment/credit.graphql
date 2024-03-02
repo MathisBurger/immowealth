@@ -22,4 +22,5 @@ fragment CreditObject on CreditResponse {
         ...CreditData
     }
     creditRateSum
+    creditRateCummulationSteps
 }
