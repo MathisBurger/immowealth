@@ -8,7 +8,7 @@ MVP
 - [ ] Add extra information to objects
 - [ ] Editable display for object base data
 - [ ] Add object map with Leaflet
-- [ ] Navigate back on every page
+- [x] Navigate back on every page
 - [ ] Installation guide and README.md
 - [ ] Move future updates to README.md
 - [ ] Make repository public 
