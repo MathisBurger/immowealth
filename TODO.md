@@ -1,6 +1,6 @@
 MVP
 - [x] Add object frontend implementation
-- [ ] Credit rates overview in object tab and sidebar tab
+- [x] Credit rates overview in object tab and sidebar tab
 - [ ] Housing price changes
 - [ ] Simple Price forecast
 - [ ] Automated credit rate insertion
