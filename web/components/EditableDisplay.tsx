@@ -100,7 +100,7 @@ const EditableDisplay = ({inputType, value, onChange, loading, options, customDi
             <div
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                style={hovered ? {border: '1px solid #a9ada6', width: 'fit-content'} : {width: 'fit-content'}}
+                style={{width: 'fit-content'}}
             >
                 <Typography
                     endDecorator={hovered ? (
