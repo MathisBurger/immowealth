@@ -36,3 +36,4 @@ Future updates
 - [ ] Save settings like filter selections
 - [ ] Split large numbers with dots
 - [ ] AutoPayInterval (configure start date)
+- [ ] Add mail notifications
