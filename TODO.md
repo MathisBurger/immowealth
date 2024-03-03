@@ -4,13 +4,13 @@ MVP
 - [x] Housing price changes
 - [x] Display price increase in object view
 - [x] Simple Price forecast
-- [ ] Automated credit rate insertion
-- [ ] Automated housing price insertions
-- [ ] Add extra information to objects
+- [x] Automated credit rate insertion
+- [x] Navigate back on every page
 - [ ] Editable display for object base data
 - [ ] Add object map with Leaflet
-- [x] Navigate back on every page
 - [ ] Deletion feature
+- [ ] Add extra information to objects
+- [ ] Docker image with web assets included
 - [ ] Add code documentation
 - [ ] Installation guide and README.md
 - [ ] Move future updates to README.md
@@ -37,3 +37,4 @@ Future updates
 - [ ] Split large numbers with dots
 - [ ] AutoPayInterval (configure start date)
 - [ ] Add mail notifications
+- [ ] Archiving feature
