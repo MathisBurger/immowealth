@@ -1,5 +1,5 @@
-mutation ConfigureCreditAutoPay($id: BigInteger!, $enabled: Boolean!, $interval: AutoPayInterval) {
-    configureCreditAutoPay(id: $id, enabled: $enabled, interval: $interval) {
+mutation ConfigureCreditAutoPay($id: BigInteger!, $enabled: Boolean!, $interval: AutoPayInterval, $amount: Float) {
+    configureCreditAutoPay(id: $id, enabled: $enabled, interval: $interval, amount: $amount) {
         ...CreditObject
     }
 }

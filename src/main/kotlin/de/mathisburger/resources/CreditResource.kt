@@ -23,8 +23,8 @@ class CreditResource {
     }
 
     @Mutation
-    fun configureCreditAutoPay(id: Long, enabled: Boolean, interval: AutoPayInterval?): CreditResponse {
-        return this.creditService.configureAutoBooking(id, enabled, interval);
+    fun configureCreditAutoPay(id: Long, enabled: Boolean, interval: AutoPayInterval?, amount: Double?): CreditResponse {
+        return this.creditService.configureAutoBooking(id, enabled, interval, amount);
     }
 
     @Query

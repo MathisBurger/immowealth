@@ -50,11 +50,12 @@ class CreditService {
     }
 
     @Transactional
-    fun configureAutoBooking(id: Long, enabled: Boolean, interval: AutoPayInterval?): CreditResponse {
+    fun configureAutoBooking(id: Long, enabled: Boolean, interval: AutoPayInterval?, amount: Double?): CreditResponse {
         var credit = this.creditRepository.findById(id);
         if (!enabled) {
             credit.autoPayInterval = null;
             credit.nextCreditRate = null;
+            credit.autoPayAmount = null;
             this.entityManager.persist(credit);
             this.entityManager.flush();
             return this.getResponseObject(credit);
@@ -62,8 +63,12 @@ class CreditService {
         if (interval == null) {
             throw GraphQLException("Interval must be configured if auto booking is enabled")
         }
+        if (amount == null) {
+            throw GraphQLException("Amount must be configured if auto booking is enabled")
+        }
         credit.autoPayInterval = interval;
         credit.nextCreditRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval);
+        credit.autoPayAmount = amount;
         this.entityManager.persist(credit);
         this.entityManager.flush();
         return this.getResponseObject(credit);

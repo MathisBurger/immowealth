@@ -26,6 +26,8 @@ class Credit {
 
     var autoPayInterval: AutoPayInterval? = null
 
+    var autoPayAmount: Double? = null
+
     @OneToMany
     var rates: MutableList<CreditRate> = mutableListOf();
 }

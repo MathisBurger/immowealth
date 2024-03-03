@@ -21,6 +21,7 @@ import {
 } from "@mui/joy";
 import LoadingButton from "@/components/LoadingButton";
 import {FormEvent, useState} from "react";
+import dayjs from "dayjs";
 
 interface ConfigureCreditAutoPayModalProps {
     credit: CreditDataFragment|undefined;
@@ -45,7 +46,12 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
         e.preventDefault();
         let formData = new FormData(e.currentTarget);
         const result = await mutation({
-            variables: {id: credit?.id ?? -1, enabled: checked, interval: formData.get("intervalType") as AutoPayInterval}
+            variables: {
+                id: credit?.id ?? -1,
+                enabled: checked,
+                interval: formData.get("intervalType") as AutoPayInterval,
+                amount: parseFloat(`${formData.get("amount")}`)
+            }
         });
         if (result.errors === undefined) {
             onClose();
@@ -62,6 +68,11 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                     <Grid container direction="row" spacing={2} justifyContent="flex-end">
                         <Grid xs={12}>
                             <Stack spacing={2}>
+                                {credit?.nextCreditRate && checked && (
+                                    <Typography level="h4">
+                                        Nächste Buchung: {dayjs(`${credit.nextCreditRate}`).format("DD.MM.YYYY")}
+                                    </Typography>
+                                )}
                                 <Typography component="label" endDecorator={
                                     <Switch
                                         variant="solid"
@@ -73,11 +84,22 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                                 </Typography>
                                 <FormControl>
                                     <FormLabel>Interval</FormLabel>
-                                    <Select name="intervalType" defaultValue={credit?.autoPayInterval}>
+                                    <Select name="intervalType" defaultValue={credit?.autoPayInterval} disabled={!checked}>
                                         {Object.entries(AutoPayInterval).map((el) => (
                                             <Option value={el[1]}>{el[1]}</Option>
                                         ))}
                                     </Select>
+                                </FormControl>
+                                <FormControl>
+                                    <FormLabel>Buchungssumme</FormLabel>
+                                    <Input
+                                        type="number"
+                                        variant="outlined"
+                                        endDecorator="€"
+                                        name="amount"
+                                        disabled={!checked}
+                                        defaultValue={credit?.autoPayAmount ?? 0}
+                                    />
                                 </FormControl>
                             </Stack>
                         </Grid>
