@@ -12,6 +12,8 @@ fragment CreditData on Credit {
     redemptionRate
     amount
     bank
+    nextCreditRate
+    autoPayInterval
     rates {
         ...CreditRateData
     }

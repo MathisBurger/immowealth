@@ -1,0 +1,5 @@
+mutation ConfigureCreditAutoPay($id: BigInteger!, $enabled: Boolean!, $interval: AutoPayInterval) {
+    configureCreditAutoPay(id: $id, enabled: $enabled, interval: $interval) {
+        ...CreditObject
+    }
+}

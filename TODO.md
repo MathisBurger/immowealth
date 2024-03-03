@@ -35,3 +35,4 @@ Future updates
 - [ ] Add activity logging
 - [ ] Save settings like filter selections
 - [ ] Split large numbers with dots
+- [ ] AutoPayInterval (configure start date)

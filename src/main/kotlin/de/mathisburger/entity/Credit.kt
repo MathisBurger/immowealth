@@ -1,9 +1,11 @@
 package de.mathisburger.entity
 
+import de.mathisburger.entity.enum.AutoPayInterval
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
+import java.util.Date
 
 @Entity
 class Credit {
@@ -19,6 +21,10 @@ class Credit {
     var bank: String? = null;
 
     var amount: Long? = null;
+
+    var nextCreditRate: Date? = null
+
+    var autoPayInterval: AutoPayInterval? = null
 
     @OneToMany
     var rates: MutableList<CreditRate> = mutableListOf();
