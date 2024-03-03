@@ -23,7 +23,6 @@ const ObjectDetailsPage = () => {
     const [forecastYears, setForecastYears] = useState<number>(10);
 
     useEffect(() => {
-        console.log("is this the dream");
         refetch({id: parseInt(id, 10), yearsInFuture: forecastYears});
     }, [forecastYears])
 

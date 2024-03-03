@@ -1,12 +1,13 @@
 'use client';
 import {useParams} from "next/navigation";
-import {CreditRateDataFragment, useGetCreditQuery} from "@/generated/graphql";
+import {CreditDataFragment, CreditRateDataFragment, useGetCreditQuery} from "@/generated/graphql";
 import {useMemo, useState} from "react";
-import {Button, Divider, Typography} from "@mui/joy";
+import {Button, Divider, Grid, Typography} from "@mui/joy";
 import TabLayout, {TabLayoutElement} from "@/components/TabLayout";
 import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
 import CreditRateList from "@/components/credit/CreditRateList";
 import CreditDataTab from "@/components/credit/CreditDataTab";
+import ConfigureCreditAutoPayModal from "@/components/credit/ConfigureCreditAutoPayModal";
 
 
 const CreditDetailsPage = () => {
@@ -17,6 +18,7 @@ const CreditDetailsPage = () => {
     });
 
     const [creditRateModalOpen, setCreditRateModalOpen] = useState<boolean>(false);
+    const [configureAutoBookingModal, setConfigureAutoBookingModal] = useState<boolean>(false);
 
     const tabs = useMemo<TabLayoutElement[]>(() => [
         {
@@ -36,14 +38,28 @@ const CreditDetailsPage = () => {
             <Typography level="h1">
                 Kredit {id}
             </Typography>
-            <Button
-                variant="solid"
-                color="primary"
-                sx={{width: '200px'}}
-                onClick={() => setCreditRateModalOpen(true)}
-            >
-                Kreditrate hinzufügen
-            </Button>
+            <Grid container direction="row" spacing={2}>
+                <Grid>
+                    <Button
+                        variant="solid"
+                        color="primary"
+                        sx={{width: '200px'}}
+                        onClick={() => setCreditRateModalOpen(true)}
+                    >
+                        Kreditrate hinzufügen
+                    </Button>
+                </Grid>
+                <Grid>
+                    <Button
+                        variant="solid"
+                        color="primary"
+                        sx={{width: '250px'}}
+                        onClick={() => setConfigureAutoBookingModal(true)}
+                    >
+                        Automatische Kreditbuchung
+                    </Button>
+                </Grid>
+            </Grid>
             <Divider />
             <TabLayout elements={tabs} />
             {creditRateModalOpen && (
@@ -51,6 +67,13 @@ const CreditDetailsPage = () => {
                     onClose={() => setCreditRateModalOpen(false)}
                     creditId={data?.credit.credit.id}
                     objectId={undefined}
+                />
+            )}
+            {configureAutoBookingModal && (
+                <ConfigureCreditAutoPayModal
+                    credit={data?.credit.credit as CreditDataFragment}
+                    onClose={() => setConfigureAutoBookingModal(false)}
+                    refetchId={data?.credit.credit.id ?? -1}
                 />
             )}
         </>
