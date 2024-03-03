@@ -1,7 +1,7 @@
 'use client';
 import {HousePriceChangeDataFragment, useAllHousePriceChangesQuery} from "@/generated/graphql";
 import {useMemo, useState} from "react";
-import {Divider, Select, Typography, Option, Table, Button} from "@mui/joy";
+import {Divider, Select, Typography, Option, Table, Button, Autocomplete} from "@mui/joy";
 import {useRouter} from "next/navigation";
 
 
@@ -24,7 +24,7 @@ const HousingPrices = () => {
 
     const filtered = useMemo<HousePriceChangeDataFragment[]>(
         () => (data?.allHousePricesChange ?? [])
-            .filter((el) => filter === '' || el?.zip === filter) as HousePriceChangeDataFragment[],
+            .filter((el) => filter === '' || (el?.zip ?? '').startsWith(filter)) as HousePriceChangeDataFragment[],
     [filter, data]);
 
     return (
@@ -39,18 +39,14 @@ const HousingPrices = () => {
                 Neue Preisänderung
             </Button>
             <Divider />
-            <Select
+            <Autocomplete
                 placeholder="Choose"
                 variant="soft"
                 sx={{width: '200px'}}
-                value={filter}
-                onChange={(_, f) => setFilter(f ?? '')}
-            >
-                <Option value={''}>Kein Filter</Option>
-                {zips.map((op) => (
-                    <Option value={op}>{op}</Option>
-                ))}
-            </Select>
+                options={zips.map((o) => ({label: o, id: o}))}
+                inputValue={filter}
+                onInputChange={(_, f) => setFilter(f ?? '')}
+            />
             <Table
                 borderAxis="x"
                 size="lg"
