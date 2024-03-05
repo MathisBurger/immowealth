@@ -20,6 +20,10 @@ class RealEstateObject {
 
     var dateBought: Date? = null
 
+    var positionLat: Double? = null
+
+    var positionLon: Double? = null
+
     @OneToOne
     var credit: Credit? = null
 }

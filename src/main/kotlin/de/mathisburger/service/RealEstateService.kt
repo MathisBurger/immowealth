@@ -1,5 +1,6 @@
 package de.mathisburger.service
 
+import de.mathisburger.api.NominatimApi
 import de.mathisburger.data.input.RealEstateInput
 import de.mathisburger.data.input.UpdateRealEstateInput
 import de.mathisburger.data.response.ObjectResponse
@@ -13,6 +14,7 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
+import org.eclipse.microprofile.rest.client.inject.RestClient
 import java.util.Calendar
 
 @ApplicationScoped
@@ -26,6 +28,10 @@ class RealEstateService {
 
     @Inject
     lateinit var priceChangeRepository: HousePriceChangeRepository;
+
+    @Inject
+    @RestClient
+    lateinit var geocodingApi: NominatimApi;
 
     @Transactional
     fun createObject(input: RealEstateInput): RealEstateObject {
@@ -43,6 +49,13 @@ class RealEstateService {
         obj.initialValue = input.initialValue;
         obj.credit = credit;
         obj.dateBought = input.dateBought;
+
+        val results = this.geocodingApi.getLocations(input.streetAndHouseNr + " " + input.zip + " " + input.city);
+        if (results.isNotEmpty()) {
+            obj.positionLat = results.first().lat.toDouble();
+            obj.positionLon = results.first().lon.toDouble();
+        }
+
         this.entityManager.persist(obj);
         this.entityManager.flush();
         return obj;

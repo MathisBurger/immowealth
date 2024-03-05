@@ -9,6 +9,10 @@ quarkus:
     password: mysecretpassword
     jdbc:
       url: jdbc:postgresql://localhost:5432/immowealth
+  rest-client:
+    geocoding:
+      url: https://nominatim.openstreetmap.org/
+      scope: jakarta.inject.Singleton
   hibernate-orm:
     dialect: org.hibernate.dialect.PostgreSQLDialect
     database:

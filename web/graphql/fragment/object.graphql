@@ -10,6 +10,15 @@ fragment SimpleObjectData on RealEstateObject {
     }
 }
 
+fragment MapObject on RealEstateObject {
+    id
+    streetAndHouseNr
+    city
+    zip
+    positionLat
+    positionLon
+}
+
 fragment FullRealEstateData on RealEstateObject {
     id
     initialValue

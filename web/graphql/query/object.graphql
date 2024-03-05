@@ -4,6 +4,12 @@ query GetAllObjects {
     }
 }
 
+query GetMapObjects {
+    allObjects {
+        ...MapObject
+    }
+}
+
 query GetObject($id: BigInteger!, $yearsInFuture: Int) {
     object(id: $id, yearsInFuture: $yearsInFuture) {
         ...ObjectData
