@@ -6,7 +6,7 @@ MVP
 - [x] Simple Price forecast
 - [x] Automated credit rate insertion
 - [x] Navigate back on every page
-- [ ] Editable display for object base data
+- [x] Editable display for object base data
 - [ ] Add object map with Leaflet
 - [ ] Deletion feature
 - [ ] Add extra information to objects
@@ -18,6 +18,7 @@ MVP
 
 Future updates
 - [ ] Performance calculations
+- [ ] More entities should be editable
 - [ ] Split rent into credit rate and other expenses
 - [ ] User account system
 - [ ] Add credit rate note
