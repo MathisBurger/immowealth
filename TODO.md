@@ -39,3 +39,4 @@ Future updates
 - [ ] AutoPayInterval (configure start date)
 - [ ] Add mail notifications
 - [ ] Archiving feature
+- [ ] Update geo location by hand
