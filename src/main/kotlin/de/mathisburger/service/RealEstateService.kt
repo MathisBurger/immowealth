@@ -114,7 +114,7 @@ class RealEstateService {
 
     private fun getPriceForecast(obj: RealEstateObject, yearsInFuture: Int): List<PriceValueRelation> {
         val priceChanges = this.getPriceChanges(obj);
-        var averageGrowth = 0.0;
+        var averageGrowth = 2.0;
         if (priceChanges.isEmpty()) {
             averageGrowth = 2.0;
         } else {
@@ -124,7 +124,7 @@ class RealEstateService {
                 diffYears = 1;
             }
             val averageMoneyPerYear = diffMoney / diffYears;
-            averageGrowth = (averageMoneyPerYear / obj.initialValue!!).toDouble();
+            averageGrowth = averageMoneyPerYear.toDouble() / obj.initialValue!!
         }
         var value = (if(priceChanges.isEmpty()) obj.initialValue!! else priceChanges.last().value).toDouble();
         val currentYear = if(priceChanges.isEmpty()) DateUtils.getYearFromDate(obj.dateBought!!) else priceChanges.last().year;
