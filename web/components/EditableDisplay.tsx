@@ -28,7 +28,7 @@ export interface DisplayOption {
     id: string|number;
 }
 
-type DisplayValue = string|number|boolean|null|undefined;
+export type DisplayValue = string|number|boolean|null|undefined;
 
 interface EditableDisplayProps {
     inputType: InputType;
@@ -93,7 +93,7 @@ const EditableDisplay = ({inputType, value, onChange, loading, options, customDi
                   </FormControl>
                 );
         }
-    }, [inputType, value, options])
+    }, [inputType, internalValue, options])
 
     if (!editing) {
         return (

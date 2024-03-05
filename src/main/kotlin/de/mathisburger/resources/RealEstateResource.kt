@@ -1,6 +1,7 @@
 package de.mathisburger.resources
 
 import de.mathisburger.data.input.RealEstateInput
+import de.mathisburger.data.input.UpdateRealEstateInput
 import de.mathisburger.data.response.ObjectResponse
 import de.mathisburger.entity.RealEstateObject
 import de.mathisburger.service.RealEstateService
@@ -29,5 +30,10 @@ class RealEstateResource {
     @Mutation
     fun createRealEstate(input: RealEstateInput): RealEstateObject {
         return this.realEstateService.createObject(input);
+    }
+
+    @Mutation
+    fun updateRealEstate(input: UpdateRealEstateInput): ObjectResponse {
+        return this.realEstateService.updateObject(input);
     }
 }

@@ -3,3 +3,9 @@ mutation CreateRealEstate($input: RealEstateInputInput!) {
         ...FullRealEstateData
     }
 }
+
+mutation UpdateRealEstate($input: UpdateRealEstateInputInput!) {
+    updateRealEstate(input: $input) {
+        ...ObjectData
+    }
+}

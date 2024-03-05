@@ -1,6 +1,7 @@
 package de.mathisburger.service
 
 import de.mathisburger.data.input.RealEstateInput
+import de.mathisburger.data.input.UpdateRealEstateInput
 import de.mathisburger.data.response.ObjectResponse
 import de.mathisburger.data.response.PriceValueRelation
 import de.mathisburger.entity.Credit
@@ -69,6 +70,19 @@ class RealEstateService {
             this.getPriceForecast(obj, yearsInFuture),
             marketValue
         );
+    }
+
+    @Transactional
+    fun updateObject(input: UpdateRealEstateInput): ObjectResponse {
+        val obj = this.realEstateRepository.findById(input.id);
+        obj.zip = input.zip ?: obj.zip;
+        obj.dateBought = input.dateBought ?: obj.dateBought;
+        obj.initialValue = input.initialValue ?: obj.initialValue;
+        obj.city = input.city ?: obj.city;
+        obj.streetAndHouseNr = input.streetAndHouseNr ?: obj.streetAndHouseNr;
+        this.entityManager.persist(obj);
+        this.entityManager.flush();
+        return this.getObject(obj.id!!, 10);
     }
 
     private fun getPriceChanges(obj: RealEstateObject): List<PriceValueRelation> {
