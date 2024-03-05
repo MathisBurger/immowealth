@@ -28,6 +28,13 @@ class HousePriceChangeService {
         return change;
     }
 
+    @Transactional
+    fun delete(id: Long) {
+        val obj = this.housePriceChangeRepository.findById(id);
+        this.entityManager.remove(obj);
+        this.entityManager.flush();
+    }
+
     fun getAllChanges(): List<HousePriceChange> {
         return this.housePriceChangeRepository.listAll();
     }

@@ -2,7 +2,6 @@ package de.mathisburger.resources
 
 import de.mathisburger.data.input.CreditRateInput
 import de.mathisburger.data.response.CreditResponse
-import de.mathisburger.entity.Credit
 import de.mathisburger.entity.enum.AutoPayInterval
 import de.mathisburger.service.CreditService
 import jakarta.inject.Inject
@@ -25,6 +24,12 @@ class CreditResource {
     @Mutation
     fun configureCreditAutoPay(id: Long, enabled: Boolean, interval: AutoPayInterval?, amount: Double?): CreditResponse {
         return this.creditService.configureAutoBooking(id, enabled, interval, amount);
+    }
+
+    @Mutation
+    fun deleteCreditRate(id: Long): Boolean {
+        this.creditService.deleteCreditRate(id);
+        return true;
     }
 
     @Query

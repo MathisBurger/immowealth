@@ -9,3 +9,7 @@ mutation UpdateRealEstate($input: UpdateRealEstateInputInput!) {
         ...ObjectData
     }
 }
+
+mutation DeleteRealEstate($id: BigInteger!) {
+    deleteRealEstate(id: $id)
+}

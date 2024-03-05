@@ -1,14 +1,38 @@
 'use client';
-import {HousePriceChangeDataFragment, useAllHousePriceChangesQuery} from "@/generated/graphql";
+import {
+    AllHousePriceChangesDocument,
+    GetAllObjectsDocument,
+    HousePriceChangeDataFragment,
+    useAllHousePriceChangesQuery, useDeleteHousePriceChangeMutation,
+    useDeleteRealEstateMutation
+} from "@/generated/graphql";
 import {useMemo, useState} from "react";
 import {Divider, Select, Typography, Option, Table, Button, Autocomplete} from "@mui/joy";
 import {useRouter} from "next/navigation";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 
 const HousingPrices = () => {
 
     const {data} = useAllHousePriceChangesQuery();
     const router = useRouter();
+
+    const [deleteMutation, {loading: deleteLoading}] = useDeleteHousePriceChangeMutation({
+        refetchQueries: [
+            {
+                query: AllHousePriceChangesDocument
+            }
+        ]
+    });
+
+    const deleteObject = async (id: string) => {
+        const result = await deleteMutation({
+            variables: {id: parseInt(`${id}`)}
+        });
+        if (result.errors === undefined) {
+            router.push('/objects');
+        }
+    }
 
     const [filter, setFilter] = useState<string>('');
 
@@ -60,6 +84,7 @@ const HousingPrices = () => {
                     <th>Änderung</th>
                     <th>Zip</th>
                     <th>Year</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -69,6 +94,11 @@ const HousingPrices = () => {
                         <td>{change.change}%</td>
                         <td>{change.zip}</td>
                         <td>{change.year}</td>
+                        <td>
+                            <Button color="danger" onClick={() => deleteObject(`${change.id}`)} loading={deleteLoading}>
+                                <DeleteIcon />
+                            </Button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>

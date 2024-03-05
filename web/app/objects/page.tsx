@@ -1,14 +1,29 @@
 'use client';
 import {Button, Divider, Grid, IconButton, Table, Typography} from "@mui/joy";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import {useGetAllObjectsQuery} from "@/generated/graphql";
+import {GetAllObjectsDocument, useDeleteRealEstateMutation, useGetAllObjectsQuery} from "@/generated/graphql";
 import {useRouter} from "next/navigation";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const ObjectsPage = () => {
 
     const {data} = useGetAllObjectsQuery();
     const router = useRouter();
+
+    const [deleteMutation, {loading: deleteLoading}] = useDeleteRealEstateMutation({
+        refetchQueries: [
+            {
+                query: GetAllObjectsDocument
+            }
+        ]
+    });
+
+    const deleteObject = async (id: string) => {
+        await deleteMutation({
+            variables: {id: parseInt(`${id}`)}
+        });
+    }
 
     return (
         <>
@@ -50,10 +65,15 @@ const ObjectsPage = () => {
                         <td>{object?.city}</td>
                         <td>{(new Date(object?.dateBought)).getUTCDay()}.{(new Date(object?.dateBought)).getUTCMonth()+1}.{(new Date(object?.dateBought)).getFullYear()}</td>
                         <td>
-                            <Grid container direction="row">
-                                <Grid xs={4}>
+                            <Grid container direction="row" spacing={2}>
+                                <Grid xs={5}>
                                     <Button onClick={() => router.push('/objects/' + object?.id)}>
                                         <OpenInNewIcon />
+                                    </Button>
+                                </Grid>
+                                <Grid xs={5}>
+                                    <Button onClick={() => deleteObject(`${object?.id}`)} color="danger" loading={deleteLoading}>
+                                        <DeleteIcon />
                                     </Button>
                                 </Grid>
                             </Grid>

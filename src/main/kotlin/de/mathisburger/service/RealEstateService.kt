@@ -98,6 +98,13 @@ class RealEstateService {
         return this.getObject(obj.id!!, 10);
     }
 
+    @Transactional
+    fun deleteObject(id: Long) {
+        val obj = this.realEstateRepository.findById(id);
+        this.entityManager.remove(obj);
+        this.entityManager.flush();
+    }
+
     private fun getPriceChanges(obj: RealEstateObject): List<PriceValueRelation> {
         val changes = this.priceChangeRepository.findByZip(obj.zip!!)
             .filter { it.year!! >= DateUtils.getYearFromDate(obj.dateBought!!) }

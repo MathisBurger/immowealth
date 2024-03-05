@@ -18,6 +18,12 @@ class HousePriceChangeResource {
         return this.housePriceChangeService.addHousePriceChange(zip, change, year);
     }
 
+    @Mutation
+    fun deleteHousePriceChange(id: Long): Boolean {
+        this.housePriceChangeService.delete(id);
+        return true;
+    }
+
     @Query
     fun getAllHousePricesChange(): List<HousePriceChange> {
         return this.housePriceChangeService.getAllChanges();

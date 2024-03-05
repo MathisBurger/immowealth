@@ -5,6 +5,7 @@ import de.mathisburger.entity.Credit
 import de.mathisburger.entity.CreditRate
 import de.mathisburger.entity.enum.AutoPayInterval
 import de.mathisburger.exception.DateNotAllowedException
+import de.mathisburger.repository.CreditRateRepository
 import de.mathisburger.repository.CreditRepository
 import de.mathisburger.util.AutoBookingUtils
 import jakarta.enterprise.context.ApplicationScoped
@@ -21,7 +22,10 @@ class CreditService {
     lateinit var creditRepository: CreditRepository;
 
     @Inject
-    lateinit var entityManager: EntityManager
+    lateinit var entityManager: EntityManager;
+
+    @Inject
+    lateinit var creditRateRepository: CreditRateRepository;
 
     @Transactional
     fun addCreditRate(id: Long, rate: Double, date: Date) {
@@ -72,6 +76,13 @@ class CreditService {
         this.entityManager.persist(credit);
         this.entityManager.flush();
         return this.getResponseObject(credit);
+    }
+
+    @Transactional
+    fun deleteCreditRate(id: Long) {
+        val obj = this.creditRateRepository.findById(id);
+        this.entityManager.remove(obj);
+        this.entityManager.flush();
     }
 
     private fun getResponseObject(credit: Credit): CreditResponse {

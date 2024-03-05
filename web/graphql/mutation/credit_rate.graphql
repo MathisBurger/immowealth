@@ -1,3 +1,7 @@
 mutation AddCreditRate($input: CreditRateInputInput!) {
     addCreditRate(input: $input)
 }
+
+mutation DeleteCreditRate($id: BigInteger!) {
+    deleteCreditRate(id: $id)
+}

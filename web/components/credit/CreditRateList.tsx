@@ -1,12 +1,26 @@
-import {Table} from "@mui/joy";
-import {CreditRateDataFragment} from "@/generated/graphql";
+import {Button, Table} from "@mui/joy";
+import {
+    CreditRateDataFragment,
+    GetAllObjectsDocument,
+    useDeleteCreditRateMutation,
+    useDeleteRealEstateMutation
+} from "@/generated/graphql";
 import dayjs from "dayjs";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface CreditRateListProps {
     elements: CreditRateDataFragment[];
 }
 
 const CreditRateList = ({elements}: CreditRateListProps) => {
+
+    const [deleteMutation, {loading: deleteLoading}] = useDeleteCreditRateMutation();
+
+    const deleteObject = async (id: string) => {
+        await deleteMutation({
+            variables: {id: parseInt(`${id}`)}
+        });
+    }
 
     return (
         <Table
@@ -21,6 +35,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
                 <th>ID</th>
                 <th>Rate</th>
                 <th>Buchungsdatum</th>
+                <th>Aktionen</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +44,11 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
                     <td>{object.id}</td>
                     <td>{object.amount}€</td>
                     <td>{dayjs(object.date).format("DD.MM.YYYY")}</td>
+                    <td>
+                        <Button color="danger" onClick={() => deleteObject(`${object.id}`)}>
+                            <DeleteIcon />
+                        </Button>
+                    </td>
                 </tr>
             ))}
             </tbody>

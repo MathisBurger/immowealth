@@ -36,4 +36,10 @@ class RealEstateResource {
     fun updateRealEstate(input: UpdateRealEstateInput): ObjectResponse {
         return this.realEstateService.updateObject(input);
     }
+
+    @Mutation
+    fun deleteRealEstate(id: Long): Boolean {
+        this.realEstateService.deleteObject(id);
+        return true;
+    }
 }

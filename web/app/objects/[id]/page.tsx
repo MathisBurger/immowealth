@@ -1,7 +1,12 @@
 'use client';
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import {Button, Divider, Grid, Option, Select, Stack, Typography} from "@mui/joy";
-import {CreditDataFragment, CreditRateDataFragment, useGetObjectQuery} from "@/generated/graphql";
+import {
+    CreditDataFragment,
+    CreditRateDataFragment, GetAllObjectsDocument,
+    useDeleteRealEstateMutation,
+    useGetObjectQuery
+} from "@/generated/graphql";
 import {useEffect, useMemo, useState} from "react";
 import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
 import TabLayout, {TabLayoutElement} from "@/components/TabLayout";
@@ -9,14 +14,33 @@ import ObjectDashboardTab from "@/components/object/ObjectDashboardTab";
 import CreditRateList from "@/components/credit/CreditRateList";
 import ObjectPriceChangesTab from "@/components/object/ObjectPriceChangesTab";
 import ConfigureCreditAutoPayModal from "@/components/credit/ConfigureCreditAutoPayModal";
+import {router} from "next/client";
 
 
 const ObjectDetailsPage = () => {
 
     const {id} = useParams<{id: string}>();
+    const router = useRouter();
     const {data, loading, refetch} = useGetObjectQuery({
         variables: {id: parseInt(id, 10)}
     });
+
+    const [deleteMutation, {loading: deleteLoading}] = useDeleteRealEstateMutation({
+        refetchQueries: [
+            {
+                query: GetAllObjectsDocument
+            }
+        ]
+    });
+
+    const deleteObject = async () => {
+        const result = await deleteMutation({
+            variables: {id: parseInt(`${id}`)}
+        });
+        if (result.errors === undefined) {
+            router.push('/objects');
+        }
+    }
 
     const [creditRateModalOpen, setCreditRateModalOpen] = useState<boolean>(false);
     const [configureAutoBookingModal, setConfigureAutoBookingModal] = useState<boolean>(false);
@@ -87,6 +111,17 @@ const ObjectDetailsPage = () => {
                         onClick={() => setConfigureAutoBookingModal(true)}
                     >
                         Automatische Kreditbuchung
+                    </Button>
+                </Grid>
+                <Grid>
+                    <Button
+                        variant="solid"
+                        color="danger"
+                        sx={{width: '250px'}}
+                        loading={deleteLoading}
+                        onClick={deleteObject}
+                    >
+                        Löschen
                     </Button>
                 </Grid>
             </Grid>

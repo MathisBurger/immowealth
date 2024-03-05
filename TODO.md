@@ -7,8 +7,8 @@ MVP
 - [x] Automated credit rate insertion
 - [x] Navigate back on every page
 - [x] Editable display for object base data
-- [ ] Add object map with Leaflet
-- [ ] Deletion feature
+- [x] Add object map with Leaflet
+- [x] Deletion feature
 - [ ] Add extra information to objects
 - [ ] Docker image with web assets included
 - [ ] Add code documentation
