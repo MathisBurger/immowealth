@@ -40,6 +40,11 @@ jobs:
           for attempt in {1..20}; do sleep 1; if curl http://localhost:8080/; then echo ready; break; fi; echo waiting...; done
       - name: Generate schema
         run: curl http://localhost:8080/graphql/schema.graphql >> web/schema.graphql
+      - name: Update schema
+        run: |
+          echo "scalar Date\n" >> web/schema.graphql 
+          echo "scalar BigInteger\n" >> web/schema.graphql 
+          echo "scalar DateTime\n" >> web/schema.graphql
       - name: set up buildx
         uses: docker/setup-buildx-action@v1
       - name: log in to ghcr
