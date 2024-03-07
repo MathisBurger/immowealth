@@ -9,7 +9,6 @@ MVP
 - [x] Editable display for object base data
 - [x] Add object map with Leaflet
 - [x] Deletion feature
-- [ ] Add extra information to objects
 - [ ] Docker image with web assets included
 - [ ] Add code documentation
 - [ ] Installation guide and README.md
@@ -17,6 +16,7 @@ MVP
 - [ ] Make repository public 
 
 Future updates
+- [ ] Add extra information to objects
 - [ ] Performance calculations
 - [ ] More entities should be editable
 - [ ] Split rent into credit rate and other expenses
