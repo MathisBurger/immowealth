@@ -7,6 +7,11 @@ interface ApolloBuilderProps {
     children: ReactNode;
 }
 
+/**
+ * Apollo provider
+ *
+ * @constructor
+ */
 const ApolloBuilder = ({children}: ApolloBuilderProps) => {
 
     const {error} = useSnackbar();

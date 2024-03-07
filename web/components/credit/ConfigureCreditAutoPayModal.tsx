@@ -24,12 +24,29 @@ import {FormEvent, useState} from "react";
 import dayjs from "dayjs";
 
 interface ConfigureCreditAutoPayModalProps {
+    /**
+     * Credit element
+     */
     credit: CreditDataFragment|undefined;
+    /**
+     * Executed on modal close
+     */
     onClose: () => void;
+    /**
+     * ID of element that should be refetched
+     */
     refetchId: number;
+    /**
+     * Indicates a real estate refetch
+     */
     isObjectRefetch?: boolean;
 }
 
+/**
+ * Modal for auto pay configuration
+ *
+ * @constructor
+ */
 const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetch}: ConfigureCreditAutoPayModalProps) => {
 
     const [mutation, {loading}] = useConfigureCreditAutoPayMutation({

@@ -5,12 +5,26 @@ import {GetObjectQuery} from "@/generated/graphql";
 import {useMemo} from "react";
 
 interface ObjectCreditChartCardProps {
+    /**
+     * Loading prop
+     */
     loading: boolean;
+    /**
+     * The data
+     */
     data: GetObjectQuery|undefined;
 }
 
+/**
+ * Type of bar chart
+ */
 type BarChartData = Omit<BarSeriesType, 'type'>;
 
+/**
+ * Credit chart card of objects
+ *
+ * @constructor
+ */
 const ObjectCreditChartCard = ({loading, data}: ObjectCreditChartCardProps) => {
 
     const series = useMemo<BarChartData[]>(() => [

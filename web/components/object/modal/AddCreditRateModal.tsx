@@ -6,11 +6,25 @@ import {DatePicker} from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 
 interface AddCreditRateModalProps {
+    /**
+     * Executed to close modal
+     */
     onClose: () => void;
+    /**
+     * ID of credit
+     */
     creditId: number;
+    /**
+     * ID of real estate
+     */
     objectId: number|undefined;
 }
 
+/**
+ * Modal to add a credit rate
+ *
+ * @constructor
+ */
 const AddCreditRateModal = ({onClose, creditId, objectId}: AddCreditRateModalProps) => {
 
     const [errorMessage, setErrorMessage] = useState<string|null>(null);

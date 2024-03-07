@@ -3,14 +3,29 @@ import {Dispatch, ReactNode, SetStateAction, useState} from "react";
 import {Box} from "@mui/joy";
 
 interface SidebarTogglerProps {
+    /**
+     * if expanded by default
+     */
     defaultExpanded?: boolean;
+    /**
+     * Children
+     */
     children: ReactNode;
+    /**
+     * Renders the toggle
+     * @param params
+     */
     renderToggle: (params: {
         open: boolean;
         setOpen: Dispatch<SetStateAction<boolean>>;
     }) => ReactNode;
 }
 
+/**
+ * The sidebar toggler
+ *
+ * @constructor
+ */
 const SidebarToggler = ({
  defaultExpanded = false,
  renderToggle,

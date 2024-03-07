@@ -9,6 +9,11 @@ interface BaseLayoutProps {
     children: ReactNode;
 }
 
+/**
+ * Base layout
+ *
+ * @constructor
+ */
 const BaseLayout = ({children}: BaseLayoutProps) => (
     <NoSSR>
             <Box sx={{ display: 'flex', minHeight: '100dvh' }}>

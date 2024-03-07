@@ -3,10 +3,21 @@ import {Card, CardContent, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface ObjectCreditDataCardProps {
+    /**
+     * Loading prop
+     */
     loading: boolean;
+    /**
+     * The data
+     */
     data: GetObjectQuery|undefined;
 }
 
+/**
+ * Displays object credit status
+ *
+ * @constructor
+ */
 const ObjectCreditDataCard = ({loading, data}: ObjectCreditDataCardProps) => {
 
     return (

@@ -9,9 +9,17 @@ import dayjs from "dayjs";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 interface CreditRateListProps {
+    /**
+     * All credit rate elements
+     */
     elements: CreditRateDataFragment[];
 }
 
+/**
+ * List of all credit elements
+ *
+ * @constructor
+ */
 const CreditRateList = ({elements}: CreditRateListProps) => {
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteCreditRateMutation();

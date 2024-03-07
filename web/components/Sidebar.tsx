@@ -16,7 +16,11 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import routes from "@/routeConfig";
 import {useRouter} from "next/navigation";
 
-
+/**
+ * The sidebar
+ *
+ * @constructor
+ */
 const Sidebar = () => {
 
     const router = useRouter();

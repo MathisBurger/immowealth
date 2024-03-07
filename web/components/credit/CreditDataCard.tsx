@@ -1,12 +1,23 @@
 import {Card, CardContent, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import {GetCreditQuery, GetObjectQuery} from "@/generated/graphql";
+import {GetCreditQuery} from "@/generated/graphql";
 
 interface CreditDataCardProps {
+    /**
+     * Loading prop
+     */
     loading: boolean;
+    /**
+     * The data
+     */
     data: GetCreditQuery|undefined;
 }
 
+/**
+ * Displays the credit data
+ *
+ * @constructor
+ */
 const CreditDataCard = ({loading, data}: CreditDataCardProps) => {
 
     return (

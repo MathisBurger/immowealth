@@ -11,10 +11,21 @@ import EditableDisplay, {DisplayValue, InputType} from "@/components/EditableDis
 
 
 interface ObjectBaseDataCard {
+    /**
+     * Loading prop
+     */
     loading: boolean;
+    /**
+     * The data
+     */
     data: GetObjectQuery|undefined;
 }
 
+/**
+ * Real estate base data
+ *
+ * @constructor
+ */
 const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
 
     const [mutation, {loading: mutationLoading}] = useUpdateRealEstateMutation({

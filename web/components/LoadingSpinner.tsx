@@ -2,10 +2,21 @@ import {ReactNode} from "react";
 import {CircularProgress} from "@mui/joy";
 
 interface LoadingSpinnerProps {
+    /**
+     * Loading prop
+     */
     loading: boolean;
+    /**
+     * children
+     */
     children: ReactNode;
 }
 
+/**
+ * Loading spinner wrapper
+ *
+ * @constructor
+ */
 const LoadingSpinner = ({loading, children}: LoadingSpinnerProps) => {
 
     if (loading) {

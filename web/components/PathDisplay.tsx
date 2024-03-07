@@ -7,6 +7,10 @@ import routes from "@/routeConfig";
 import {RouteConfigType} from "@/typings/routeConfig";
 import {usePathname} from "next/navigation";
 
+/**
+ * Displays the path of the current location
+ * @constructor
+ */
 const PathDisplay = () => {
 
     const pathname = usePathname();

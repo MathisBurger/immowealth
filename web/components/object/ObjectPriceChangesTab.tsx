@@ -5,11 +5,25 @@ import {LineChart} from "@mui/x-charts";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface ObjectPriceChangesTabProps {
+    /**
+     * Data loading
+     */
     loading: boolean;
+    /**
+     * The data
+     */
     data: GetObjectQuery|undefined;
+    /**
+     * Field of the data that should be accessed
+     */
     fieldToAccess: string;
 }
 
+/**
+ * Displays a price change
+ *
+ * @constructor
+ */
 const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChangesTabProps) => {
 
     return (

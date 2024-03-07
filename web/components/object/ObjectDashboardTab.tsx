@@ -5,10 +5,21 @@ import ObjectCreditChartCard from "@/components/object/ObjectCreditChartCard";
 import {GetObjectQuery} from "@/generated/graphql";
 
 interface ObjectDashboardTab {
+    /**
+     * Loading prop
+     */
     loading: boolean;
+    /**
+     * The data
+     */
     data: GetObjectQuery|undefined;
 }
 
+/**
+ * Default object tab
+ *
+ * @constructor
+ */
 const ObjectDashboardTab = ({loading, data}: ObjectDashboardTab) => {
 
     return (

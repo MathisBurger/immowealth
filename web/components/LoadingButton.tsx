@@ -1,8 +1,16 @@
 import {Button, ButtonProps, CircularProgress} from "@mui/joy";
 
 
+/**
+ * Loading button props
+ */
 type LoadingButtonProps = Omit<ButtonProps, 'disabled'> & {loading: boolean};
 
+/**
+ * Loading button.
+ *
+ * @constructor
+ */
 const LoadingButton = (props: LoadingButtonProps) => {
 
     return (

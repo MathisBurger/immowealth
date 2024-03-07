@@ -16,6 +16,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
 
+/**
+ * Type of supported input
+ */
 export enum InputType {
     TEXT,
     NUMBER,
@@ -23,23 +26,65 @@ export enum InputType {
     SELECT
 }
 
+/**
+ * Option of select input
+ */
 export interface DisplayOption {
+    /**
+     * The label
+     */
     label: string;
+    /**
+     * The ID
+     */
     id: string|number;
 }
 
+/**
+ * Generic displayable value
+ */
 export type DisplayValue = string|number|boolean|null|undefined;
 
 interface EditableDisplayProps {
+    /**
+     * The type of the input
+     */
     inputType: InputType;
+    /**
+     * The value
+     */
     value: DisplayValue;
+    /**
+     * On Change executed
+     *
+     * @param val new value
+     */
     onChange: (val: DisplayValue) => Promise<boolean>;
+    /**
+     * If data or mutation is loading
+     */
     loading: boolean;
+    /**
+     * All options for select
+     */
     options?: DisplayOption[];
+    /**
+     * Custom function to display the data
+     *
+     * @param val value
+     */
     customDisplay?: (val: DisplayValue) => DisplayValue;
+    /**
+     * The name of the input field
+     */
     fieldName? : string;
 }
 
+/**
+ * Input to edit and display data
+ *
+ * @constructor
+ */
 const EditableDisplay = ({inputType, value, onChange, loading, options, customDisplay, fieldName}: EditableDisplayProps) => {
 
     const [editing, setEditing] = useState<boolean>(false);

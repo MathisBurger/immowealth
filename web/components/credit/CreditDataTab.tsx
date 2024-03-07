@@ -1,14 +1,24 @@
 import {Grid} from "@mui/joy";
-import ObjectCreditChartCard from "@/components/object/ObjectCreditChartCard";
 import {GetCreditQuery} from "@/generated/graphql";
 import CreditDataCard from "@/components/credit/CreditDataCard";
 import CreditChartCard from "@/components/credit/CreditChartCard";
 
 interface CreditDataTabProps {
+    /**
+     * Loading prop
+     */
     loading: boolean;
+    /**
+     * The data
+     */
     data: GetCreditQuery|undefined;
 }
 
+/**
+ * Tab containing all credit data
+ *
+ * @constructor
+ */
 const CreditDataTab = ({loading, data}: CreditDataTabProps) => {
 
     return (

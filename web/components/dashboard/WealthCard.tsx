@@ -4,10 +4,21 @@ import React from "react";
 import {WealthResponse} from "@/generated/graphql";
 
 interface WealthCardProps {
+    /**
+     * The wealth data
+     */
     data?: WealthResponse;
+    /**
+     * The label of the card
+     */
     label: string;
 }
 
+/**
+ * Displays wealth situation in a card
+ *
+ * @constructor
+ */
 const WealthCard = ({data, label}: WealthCardProps) => {
 
     //console.log(data);
