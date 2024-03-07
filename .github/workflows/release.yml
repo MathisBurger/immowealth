@@ -39,7 +39,7 @@ jobs:
           nohup ./gradlew --console=plain quarkusDev &
           for attempt in {1..20}; do sleep 1; if curl http://localhost:8080/; then echo ready; break; fi; echo waiting...; done
       - name: Generate schema
-        run: curl http://localhost:8080/graphql/schema.graphql >> web/schema.graphql
+        run: curl http://localhost:8080/graphql/schema.graphql
       - name: set up buildx
         uses: docker/setup-buildx-action@v1
       - name: log in to ghcr
