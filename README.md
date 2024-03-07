@@ -1,98 +1,75 @@
-# immowealth
+# Immowealth
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Immowealth is a project build to monitor your real estate investments
+with a simple easy to use UI. The application provides forecasts, simple analysis 
+and a central data storage for all your real estate projects.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+There are some more advanced features planned in the future, so this application will
+grow very fast and continously and will always have its users in focus. 
 
-## Running the application in dev mode
+# Features
 
-You can run your application in dev mode that enables live coding using:
+- Real estate overview
+- Credit rate auto booking
+- value forecast
+- Inflation based value calculations
+- Real estate map
 
-```shell script
-./gradlew quarkusDev
+
+# Installation
+
+This application itself is written in Kotlin (Quarkus) and Typescript (Next.js) but uses Docker for its hosting.
+Therefore the process of installation is quite easy. 
+
+Clone the repository:
+```shell
+git clone https://github.com/MathisBurger/immowealth.git
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
-
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./gradlew build
+Execute the docker compose:
+```shell
+docker-compose up -d
 ```
 
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
 
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
+# Roadmap
 
-If you want to build an _über-jar_, execute the following command:
+There are many new features planned. You can find a little roadmap of planned future releases here:
 
-```shell script
-./gradlew build -Dquarkus.package.type=uber-jar
-```
+### v1.1.0
+- [ ] Add extra information to objects
+- [ ] More entities should be editable
+- [ ] Update geo location by hand
+- [ ] Split large numbers with dots
+- [ ] Add credit rate note
+- [ ] Migrate all tables to MUI datagrid
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
+### v1.2.0
+- [ ] Add translations
+- [ ] Add different currencies
+- [ ] Add activity logging
+- [ ] Save settings like filter selections
+- [ ] Split rent into credit rate and other expenses
 
-## Creating a native executable
+### v1.3.0
+- [ ] AutoPayInterval (configure start date)
+- [ ] Add mail notifications
+- [ ] Archiving feature
+- [ ] Add document upload for important documents
+- [ ] Most / recently used document recommendations
 
-You can create a native executable using:
+### v1.4.0
+- [ ] User account system
+- [ ] Support Chat for renter
+- [ ] Rental status / statistics about the renter
+- [ ] Performance calculations
 
-```shell script
-./gradlew build -Dquarkus.package.type=native
-```
+### v1.5.0
+- [ ] Immo portal search
+- [ ] Object location watchlist
+- [ ] Add AFA calculations
+- [ ] Add support for measured object prices
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+### Planned but not fixed
+- [ ] Auto collect market value change data
 
-```shell script
-./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/immowealth-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
-
-## Related Guides
-
-- Hibernate ORM ([guide](https://quarkus.io/guides/hibernate-orm)): Define your persistent model with Hibernate ORM and
-  Jakarta Persistence
-- YAML Configuration ([guide](https://quarkus.io/guides/config-yaml)): Use YAML to configure your Quarkus application
-- Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code
-  for Hibernate ORM via the active record or the repository pattern
-- RESTEasy Classic ([guide](https://quarkus.io/guides/resteasy)): REST endpoint framework implementing Jakarta REST and
-  more
-- SmallRye GraphQL ([guide](https://quarkus.io/guides/smallrye-graphql)): Create GraphQL Endpoints using the code-first
-  approach from MicroProfile GraphQL
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
-
-## Provided Code
-
-### YAML Config
-
-Configure your application with YAML
-
-[Related guide section...](https://quarkus.io/guides/config-reference#configuration-examples)
-
-The Quarkus application configuration is located in `src/main/resources/application.yml`.
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-### RESTEasy JAX-RS
-
-Easily start your RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
-
-### SmallRye GraphQL
-
-Start coding with this Hello GraphQL Query
-
-[Related guide section...](https://quarkus.io/guides/smallrye-graphql)
