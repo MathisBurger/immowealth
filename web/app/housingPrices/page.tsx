@@ -89,7 +89,7 @@ const HousingPrices = () => {
                 </thead>
                 <tbody>
                 {filtered.map((change) => (
-                    <tr>
+                    <tr key={change.id}>
                         <td>{change.id}</td>
                         <td>{change.change}%</td>
                         <td>{change.zip}</td>
@@ -106,5 +106,8 @@ const HousingPrices = () => {
         </>
     );
 }
+
+export const dynamic = 'force-static';
+export const dynamicParams = true;
 
 export default HousingPrices;

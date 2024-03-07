@@ -86,7 +86,7 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                                     <FormLabel>Interval</FormLabel>
                                     <Select name="intervalType" defaultValue={credit?.autoPayInterval} disabled={!checked}>
                                         {Object.entries(AutoPayInterval).map((el) => (
-                                            <Option value={el[1]}>{el[1]}</Option>
+                                            <Option value={el[1]} key={el[1]}>{el[1]}</Option>
                                         ))}
                                     </Select>
                                 </FormControl>

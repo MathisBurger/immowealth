@@ -87,13 +87,13 @@ const EditableDisplay = ({inputType, value, onChange, loading, options, customDi
                       <FormLabel>{fieldName}</FormLabel>
                       <Select value={internalValue} onChange={(_, v) => setInternalValue(v)}>
                           {(options ?? []).map((el) => (
-                              <Option value={el.id}>{el.label}</Option>
+                              <Option value={el.id} key={el.id}>{el.label}</Option>
                           ))}
                       </Select>
                   </FormControl>
                 );
         }
-    }, [inputType, internalValue, options])
+    }, [inputType, internalValue, options, fieldName])
 
     if (!editing) {
         return (

@@ -85,4 +85,7 @@ const NewHousingPriceChange = () => {
     );
 }
 
+export const dynamic = 'force-static';
+export const dynamicParams = true;
+
 export default NewHousingPriceChange;

@@ -8,11 +8,10 @@ const LoadingButton = (props: LoadingButtonProps) => {
     return (
         <Button
             disabled={props.loading}
-            children={
-                props.loading ? <CircularProgress variant="plain" /> : props.children
-            }
             {...props}
-        />
+        >
+            {props.loading ? <CircularProgress variant="plain"/> : props.children}
+        </Button>
     );
 }
 

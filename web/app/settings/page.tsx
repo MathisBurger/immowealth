@@ -10,4 +10,7 @@ const Page = () => {
     )
 }
 
+export const dynamic = 'force-static';
+export const dynamicParams = true;
+
 export default Page;

@@ -33,7 +33,7 @@ const CreditsPage = () => {
                 </thead>
                 <tbody>
                 {data?.allCredits.map((credit: any) => (
-                    <tr>
+                    <tr key={credit?.credit.id}>
                         <td>{credit?.credit.id}</td>
                         <td>{credit?.credit.amount}€</td>
                         <td>{credit?.creditRateSum}€</td>
@@ -43,7 +43,7 @@ const CreditsPage = () => {
                         <td>
                             <Grid container direction="row">
                                 <Grid xs={4}>
-                                    <Button onClick={() => router.push('/credits/' + credit?.credit.id)}>
+                                    <Button onClick={() => router.push('/credits/details?id=' + credit?.credit.id)}>
                                         <OpenInNewIcon />
                                     </Button>
                                 </Grid>
@@ -56,5 +56,8 @@ const CreditsPage = () => {
         </>
     );
 }
+
+export const dynamic = 'force-static';
+export const dynamicParams = true;
 
 export default CreditsPage;

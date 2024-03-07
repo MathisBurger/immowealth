@@ -1,5 +1,4 @@
 'use client';
-import {useParams} from "next/navigation";
 import {CreditDataFragment, CreditRateDataFragment, useGetCreditQuery} from "@/generated/graphql";
 import {useMemo, useState} from "react";
 import {Button, Divider, Grid, Typography} from "@mui/joy";
@@ -8,10 +7,11 @@ import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
 import CreditRateList from "@/components/credit/CreditRateList";
 import CreditDataTab from "@/components/credit/CreditDataTab";
 import ConfigureCreditAutoPayModal from "@/components/credit/ConfigureCreditAutoPayModal";
+import {useParams, useSearchParams} from "next/navigation";
 
 
 const CreditDetailsPage = () => {
-    const {id} = useParams<{id: string}>();
+    const id = useSearchParams().get('id') ?? '';
 
     const {data, loading} = useGetCreditQuery({
         variables: {id: parseInt(id, 10)}
@@ -31,7 +31,7 @@ const CreditDetailsPage = () => {
             label: 'Kreditraten',
             content: <CreditRateList elements={(data?.credit.credit.rates as CreditRateDataFragment[]) ?? []} />
         }
-    ], [data]);
+    ], [data, loading]);
 
     return (
         <>
@@ -79,5 +79,8 @@ const CreditDetailsPage = () => {
         </>
     );
 }
+
+export const dynamic = 'force-static';
+export const dynamicParams = true;
 
 export default CreditDetailsPage;

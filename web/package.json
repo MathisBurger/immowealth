@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "compile": "graphql-codegen-esm --config codegen.yml"
+    "compile": "graphql-codegen-esm --config codegen.yml",
+    "compile-pipeline": "graphql-codegen-esm --config pipeline.codegen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",
@@ -22,7 +23,7 @@
     "dayjs": "^1.11.10",
     "graphql": "^16.8.1",
     "leaflet": "^1.9.4",
-    "next": "14.1.0",
+    "next": "13.5.1",
     "notistack": "^3.0.1",
     "react": "^18",
     "react-dom": "^18",

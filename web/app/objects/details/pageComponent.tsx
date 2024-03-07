@@ -1,5 +1,5 @@
-'use client';
-import {useParams, useRouter} from "next/navigation";
+"use client"
+import {useRouter, useSearchParams} from "next/navigation";
 import {Button, Divider, Grid, Option, Select, Stack, Typography} from "@mui/joy";
 import {
     CreditDataFragment,
@@ -14,12 +14,11 @@ import ObjectDashboardTab from "@/components/object/ObjectDashboardTab";
 import CreditRateList from "@/components/credit/CreditRateList";
 import ObjectPriceChangesTab from "@/components/object/ObjectPriceChangesTab";
 import ConfigureCreditAutoPayModal from "@/components/credit/ConfigureCreditAutoPayModal";
-import {router} from "next/client";
 
 
 const ObjectDetailsPage = () => {
 
-    const {id} = useParams<{id: string}>();
+    const id = useSearchParams().get('id') ?? '';
     const router = useRouter();
     const {data, loading, refetch} = useGetObjectQuery({
         variables: {id: parseInt(id, 10)}
@@ -48,7 +47,7 @@ const ObjectDetailsPage = () => {
 
     useEffect(() => {
         refetch({id: parseInt(id, 10), yearsInFuture: forecastYears});
-    }, [forecastYears])
+    }, [forecastYears, id, refetch])
 
     const tabs = useMemo<TabLayoutElement[]>(() => [
         {
@@ -78,7 +77,7 @@ const ObjectDetailsPage = () => {
                         sx={{width: '200px'}}
                     >
                         {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((n) => (
-                            <Option value={n}>{n} Jahre</Option>
+                            <Option value={n} key={n}>{n} Jahre</Option>
                         ))}
                     </Select>
                     <ObjectPriceChangesTab loading={loading} data={data} fieldToAccess="priceForecast" />
@@ -145,5 +144,8 @@ const ObjectDetailsPage = () => {
         </>
     );
 }
+
+export const dynamic = 'force-static';
+export const dynamicParams = true;
 
 export default ObjectDetailsPage;

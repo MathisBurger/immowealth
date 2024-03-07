@@ -34,7 +34,7 @@ const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChange
                                 <tbody>
                                 {/* @ts-ignore */}
                                 {data?.object[fieldToAccess].map((object) => (
-                                    <tr>
+                                    <tr key={'jey_' + object?.year + object?.value}>
                                         <td>{object?.value}€</td>
                                         <td>{object?.year}</td>
                                     </tr>

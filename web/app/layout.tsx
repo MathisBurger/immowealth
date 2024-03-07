@@ -22,7 +22,9 @@ export default function RootLayout({
         <SnackbarProvider maxSnack={5} anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
             <ApolloBuilder>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <BaseLayout children={children} />
+                    <BaseLayout>
+                        {children}
+                    </BaseLayout>
                 </LocalizationProvider>
             </ApolloBuilder>
         </SnackbarProvider>
@@ -30,3 +32,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+export const dynamic = 'force-static';
+export const dynamicParams = true;

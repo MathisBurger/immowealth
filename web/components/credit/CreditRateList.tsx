@@ -40,7 +40,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
             </thead>
             <tbody>
             {elements.map((object) => (
-                <tr>
+                <tr key={object.id}>
                     <td>{object.id}</td>
                     <td>{object.amount}€</td>
                     <td>{dayjs(object.date).format("DD.MM.YYYY")}</td>

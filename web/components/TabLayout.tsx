@@ -19,11 +19,11 @@ const TabLayout = ({elements}: TabLayoutProps) => {
         <Tabs value={value} defaultValue={elements[0].id} onChange={(e, value) => setValue(value as string)}>
             <TabList>
                 {elements.map((tab) => (
-                    <Tab value={tab.id}>{tab.label}</Tab>
+                    <Tab value={tab.id} key={tab.id}>{tab.label}</Tab>
                 ))}
             </TabList>
             {elements.map((tab) => (
-                <TabPanel value={tab.id}>
+                <TabPanel value={tab.id} key={tab.id}>
                     {tab.content}
                 </TabPanel>
             ))}

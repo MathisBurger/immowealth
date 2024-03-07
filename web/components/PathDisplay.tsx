@@ -2,7 +2,7 @@
 import {Box, Breadcrumbs, Link, Typography} from "@mui/joy";
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import {useEffect, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import routes from "@/routeConfig";
 import {RouteConfigType} from "@/typings/routeConfig";
 import {usePathname} from "next/navigation";
@@ -11,7 +11,7 @@ const PathDisplay = () => {
 
     const pathname = usePathname();
 
-    const findRoute = (path: string, pos: RouteConfigType[]): RouteConfigType|null => {
+    const findRoute = useCallback((path: string, pos: RouteConfigType[]): RouteConfigType|null => {
         for (let p of pos) {
             if (p.path === path) {
                 return p;
@@ -24,7 +24,7 @@ const PathDisplay = () => {
             }
         }
         return null;
-    }
+    }, []);
 
     const selectedRoute = useMemo<RouteConfigType[]>(() => {
         let results = [];
@@ -37,11 +37,11 @@ const PathDisplay = () => {
         }
         return results;
     },
-    [routes, pathname]);
+    [routes, pathname, findRoute]);
 
     const route = useMemo<RouteConfigType|null>(
         () => findRoute(pathname, routes),
-        [pathname]
+        [pathname, findRoute]
     );
 
     const lastId = useMemo<string>(() => {

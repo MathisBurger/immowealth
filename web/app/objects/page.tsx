@@ -57,7 +57,7 @@ const ObjectsPage = () => {
                </thead>
                 <tbody>
                 {data?.allObjects.map((object) => (
-                    <tr>
+                    <tr key={object?.id}>
                         <td>{object?.id}</td>
                         <td>{object?.initialValue}</td>
                         <td>{object?.streetAndHouseNr}</td>
@@ -67,7 +67,7 @@ const ObjectsPage = () => {
                         <td>
                             <Grid container direction="row" spacing={2}>
                                 <Grid xs={5}>
-                                    <Button onClick={() => router.push('/objects/' + object?.id)}>
+                                    <Button onClick={() => router.push('/objects/details?id=' + object?.id)}>
                                         <OpenInNewIcon />
                                     </Button>
                                 </Grid>
@@ -85,5 +85,8 @@ const ObjectsPage = () => {
         </>
     )
 }
+
+export const dynamic = 'force-static';
+export const dynamicParams = true;
 
 export default ObjectsPage;
