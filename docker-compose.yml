@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: immowealth
+  server:
+    depends_on:
+      - postgres
+    image: ghcr.io/mathisburger/immowealth:latest

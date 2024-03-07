@@ -13,7 +13,7 @@ WORKDIR /app
 COPY . .
 RUN mkdir ./src/main/resources/META-INF.resources
 COPY --from=webBuild ./web/out ./src/main/resources/META-INF.resources
-RUN ./gradlew build -Dquarkus.package.type=uber-jar
+RUN ./gradlew build -Dquarkus.package.type=uber-jar -Dquarkus.profile=docker
 
 FROM openjdk:21
 WORKDIR /app

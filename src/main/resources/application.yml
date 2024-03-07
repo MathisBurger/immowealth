@@ -17,3 +17,9 @@ quarkus:
     dialect: org.hibernate.dialect.PostgreSQLDialect
     database:
       generation: update
+
+"%docker":
+  quarkus:
+    datasource:
+      jdbc:
+        url: jdbc:postgresql://postgres:5432/immowealth
