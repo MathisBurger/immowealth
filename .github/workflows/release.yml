@@ -1,6 +1,8 @@
 on:
-  release:
-    types: [published, created]
+  push:
+    branches: [main]
+#  release:
+#    types: [published, created]
 
 jobs:
   build:
