@@ -1,5 +1,4 @@
 build/
-web/
 .gradle
 .github
 .gitignore
