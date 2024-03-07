@@ -10,6 +10,9 @@ import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import java.util.Calendar
 
+/**
+ * Credit rate auto booking scheduler handler class
+ */
 @ApplicationScoped
 class CreditAutoBookingScheduler {
 
@@ -19,6 +22,9 @@ class CreditAutoBookingScheduler {
     @Inject
     lateinit var entityManager: EntityManager;
 
+    /**
+     * Executes all bookings every day at 1am.
+     */
     @Scheduled(cron = "0 0 1 * * ? *")
     @Transactional
     fun executeBookings() {

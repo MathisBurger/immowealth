@@ -9,6 +9,9 @@ import jakarta.inject.Inject
 import java.util.Calendar
 import java.util.GregorianCalendar
 
+/**
+ * The wealth service
+ */
 @ApplicationScoped
 class WealthService {
 
@@ -18,6 +21,9 @@ class WealthService {
     @Inject
     lateinit var housePriceChangeRepository: HousePriceChangeRepository;
 
+    /**
+     * Gets gross wealth with inflation
+     */
     fun getGrossWealthWithInflation(): WealthResponse {
         val objects = this.realEstateRepository.listAll();
         var wealth = 0L;
@@ -40,6 +46,9 @@ class WealthService {
         return WealthResponse(wealth, detailed);
     }
 
+    /**
+     * Gets gross wealth without inflation
+     */
     fun getGrossWealthWithoutInflation(): WealthResponse {
         val objects = this.realEstateRepository.listAll();
         var wealth = 0L;
@@ -51,6 +60,9 @@ class WealthService {
         return WealthResponse(wealth, detailed);
     }
 
+    /**
+     * Gets net wealth with inflation
+     */
     fun getNetWealthWithInflation(): WealthResponse {
         val objects = this.realEstateRepository.listAll();
         var netWealth = 0L;
@@ -82,6 +94,9 @@ class WealthService {
         return WealthResponse(netWealth, detailed);
     }
 
+    /**
+     * Gets net wealth without inflation
+     */
     fun getNetWealthWithoutInflation(): WealthResponse {
         val objects = this.realEstateRepository.listAll();
         var netWealth = 0L;

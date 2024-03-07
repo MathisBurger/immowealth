@@ -9,7 +9,7 @@ MVP
 - [x] Editable display for object base data
 - [x] Add object map with Leaflet
 - [x] Deletion feature
-- [ ] Docker image with web assets included
+- [x] Docker image with web assets included
 - [ ] Add code documentation
 - [ ] Installation guide and README.md
 - [ ] Move future updates to README.md
@@ -40,3 +40,4 @@ Future updates
 - [ ] Add mail notifications
 - [ ] Archiving feature
 - [ ] Update geo location by hand
+- [ ] Auto collect market value change data

@@ -4,9 +4,17 @@ import de.mathisburger.entity.enum.AutoPayInterval
 import java.util.Calendar
 import java.util.Date
 
+/**
+ * All utils for static auto booking methods
+ */
 class AutoBookingUtils {
 
     companion object {
+        /**
+         * Gets the next date from interval
+         *
+         * @param interval The auto booking interval
+         */
         fun getNextAutoPayIntervalDate(interval: AutoPayInterval): Date {
             val today = Calendar.getInstance();
             val next =  when (interval) {
@@ -23,11 +31,21 @@ class AutoBookingUtils {
             return next.time;
         }
 
+        /**
+         * Gets the next day from calendar
+         *
+         * @param cal The calendar
+         */
         private fun getNextDay(cal: Calendar): Calendar {
             cal.add(Calendar.DATE, 1);
             return cal;
         }
 
+        /**
+         * Gets the next weekly from calendar
+         *
+         * @param cal The calendar
+         */
         private fun getNextWeeklyDay(cal: Calendar): Calendar {
             if (cal.get(Calendar.DAY_OF_WEEK) == 1) {
                 cal.add(Calendar.DATE, 7);
@@ -37,12 +55,22 @@ class AutoBookingUtils {
             return cal;
         }
 
+        /**
+         * Gets the next monthly from calendar
+         *
+         * @param cal The calendar
+         */
         private fun getNextMonthDay(cal: Calendar): Calendar {
             cal.set(Calendar.DAY_OF_MONTH, 1);
             cal.add(Calendar.MONTH, 1);
             return cal;
         }
 
+        /**
+         * Gets the next quarterly from calendar
+         *
+         * @param cal The calendar
+         */
         private fun getNextQuarterlyDay(cal: Calendar): Calendar {
             cal.set(Calendar.DAY_OF_MONTH, 1);
             val month = cal.get(Calendar.MONTH);
@@ -57,6 +85,12 @@ class AutoBookingUtils {
             }
             return cal;
         }
+
+        /**
+         * Gets the next half yearly from calendar
+         *
+         * @param cal The calendar
+         */
         private fun getNextHalfYearlyDay(cal: Calendar): Calendar {
             cal.set(Calendar.DAY_OF_MONTH, 1);
             val month = cal.get(Calendar.MONTH);
@@ -68,6 +102,11 @@ class AutoBookingUtils {
             return cal;
         }
 
+        /**
+         * Gets the next yearly from calendar
+         *
+         * @param cal The calendar
+         */
         private fun getNextYearlyDay(cal: Calendar): Calendar {
             cal.set(Calendar.DAY_OF_YEAR, 1);
             cal.add(Calendar.YEAR, 1);

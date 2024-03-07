@@ -17,6 +17,9 @@ import jakarta.transaction.Transactional
 import org.eclipse.microprofile.rest.client.inject.RestClient
 import java.util.Calendar
 
+/**
+ * The real estate service
+ */
 @ApplicationScoped
 class RealEstateService {
 
@@ -33,6 +36,11 @@ class RealEstateService {
     @RestClient
     lateinit var geocodingApi: NominatimApi;
 
+    /**
+     * Creates a new real estate object
+     *
+     * @param input The data input
+     */
     @Transactional
     fun createObject(input: RealEstateInput): RealEstateObject {
         val credit = Credit();
@@ -61,10 +69,19 @@ class RealEstateService {
         return obj;
     }
 
+    /**
+     * Gets all objects
+     */
     fun getAllObjects(): List<RealEstateObject> {
         return this.realEstateRepository.listAll()
     }
 
+    /**
+     * Gets a specific object
+     *
+     * @param id The ID of the object
+     * @param yearsInFuture The forecast years in future
+     */
     fun getObject(id: Long, yearsInFuture: Int = 10): ObjectResponse {
         val obj =  this.realEstateRepository.findById(id);
         var creditRateSum = 0.0;
@@ -85,6 +102,11 @@ class RealEstateService {
         );
     }
 
+    /**
+     * Updates an object
+     *
+     * @param input The input for updating
+     */
     @Transactional
     fun updateObject(input: UpdateRealEstateInput): ObjectResponse {
         val obj = this.realEstateRepository.findById(input.id);
@@ -98,6 +120,11 @@ class RealEstateService {
         return this.getObject(obj.id!!, 10);
     }
 
+    /**
+     * Deletes an object
+     *
+     * @param The ID that should be deleted
+     */
     @Transactional
     fun deleteObject(id: Long) {
         val obj = this.realEstateRepository.findById(id);
@@ -105,6 +132,11 @@ class RealEstateService {
         this.entityManager.flush();
     }
 
+    /**
+     * Gets all price changes of an object
+     *
+     * @param obj The object
+     */
     private fun getPriceChanges(obj: RealEstateObject): List<PriceValueRelation> {
         val changes = this.priceChangeRepository.findByZip(obj.zip!!)
             .filter { it.year!! >= DateUtils.getYearFromDate(obj.dateBought!!) }
@@ -119,6 +151,12 @@ class RealEstateService {
         return data;
     }
 
+    /**
+     * Gets the price forecast of an object
+     *
+     * @param obj The object
+     * @param yearsInFuture The years in future
+     */
     private fun getPriceForecast(obj: RealEstateObject, yearsInFuture: Int): List<PriceValueRelation> {
         val priceChanges = this.getPriceChanges(obj);
         var averageGrowth = 2.0;

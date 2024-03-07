@@ -15,6 +15,9 @@ import jakarta.transaction.Transactional
 import org.eclipse.microprofile.graphql.GraphQLException
 import java.util.Date
 
+/**
+ * The credit service
+ */
 @ApplicationScoped
 class CreditService {
 
@@ -27,6 +30,13 @@ class CreditService {
     @Inject
     lateinit var creditRateRepository: CreditRateRepository;
 
+    /**
+     * Adds a new credit rate
+     *
+     * @param id The ID of the credit
+     * @param rate The credit rate amount
+     * @param date The date of booking
+     */
     @Transactional
     fun addCreditRate(id: Long, rate: Double, date: Date) {
         if (date.after(Date())) {
@@ -42,17 +52,33 @@ class CreditService {
         this.entityManager.flush();
     }
 
+    /**
+     * Gets all credits
+     */
     fun getAllCredits(): List<CreditResponse> {
         val credits = this.creditRepository.listAll();
         val transform: (Credit) -> CreditResponse = {this.getResponseObject(it)};
         return credits.map(transform);
     }
 
+    /**
+     * Gets a specific credit
+     *
+     * @param id The ID of the credit
+     */
     fun getCredit(id: Long): CreditResponse {
         val credit = this.creditRepository.findById(id);
         return this.getResponseObject(credit);
     }
 
+    /**
+     * Configures auto booking
+     *
+     * @param id The credit ID
+     * @param enabled Enabled status of auto booking
+     * @param interval The booking interval
+     * @param amount The booking amount of money per interval
+     */
     @Transactional
     fun configureAutoBooking(id: Long, enabled: Boolean, interval: AutoPayInterval?, amount: Double?): CreditResponse {
         var credit = this.creditRepository.findById(id);
@@ -78,6 +104,11 @@ class CreditService {
         return this.getResponseObject(credit);
     }
 
+    /**
+     * Deletes a credit rate
+     *
+     * @param id The id of the credit rate
+     */
     @Transactional
     fun deleteCreditRate(id: Long) {
         val obj = this.creditRateRepository.findById(id);
@@ -85,6 +116,11 @@ class CreditService {
         this.entityManager.flush();
     }
 
+    /**
+     * Gets the credit response of a credit
+     *
+     * @param credit The credit entity
+     */
     private fun getResponseObject(credit: Credit): CreditResponse {
         var sum = 0.0;
         var list: MutableList<Double> = mutableListOf();
