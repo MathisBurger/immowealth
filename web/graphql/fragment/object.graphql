@@ -29,6 +29,17 @@ fragment FullRealEstateData on RealEstateObject {
     credit {
         ...CreditData
     }
+    rooms
+    space
+    objectType
+    constructionYear
+    renovationYear
+    energyEfficiency
+    grossReturn
+    garden
+    kitchen
+    heatingType
+    notes
 }
 
 fragment ObjectData on ObjectResponse {

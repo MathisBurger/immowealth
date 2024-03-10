@@ -57,6 +57,17 @@ class RealEstateService {
         obj.initialValue = input.initialValue;
         obj.credit = credit;
         obj.dateBought = input.dateBought;
+        obj.rooms = input.rooms;
+        obj.space = input.space;
+        obj.objectType = input.objectType;
+        obj.constructionYear = input.constructionYear;
+        obj.renovationYear = input.renovationYear;
+        obj.energyEfficiency = input.energyEfficiency;
+        obj.grossReturn = input.grossReturn;
+        obj.garden = input.garden;
+        obj.kitchen = input.kitchen;
+        obj.heatingType = input.heatingType;
+        obj.notes = input.notes;
 
         val results = this.geocodingApi.getLocations(input.streetAndHouseNr + " " + input.zip + " " + input.city);
         if (results.isNotEmpty()) {
@@ -115,6 +126,20 @@ class RealEstateService {
         obj.initialValue = input.initialValue ?: obj.initialValue;
         obj.city = input.city ?: obj.city;
         obj.streetAndHouseNr = input.streetAndHouseNr ?: obj.streetAndHouseNr;
+        obj.positionLat = input.positionLat ?: obj.positionLat;
+        obj.positionLon = input.positionLon ?: obj.positionLon;
+        obj.rooms = input.rooms ?: obj.rooms;
+        obj.space = input.space ?: obj.space;
+        obj.objectType = input.objectType ?: obj.objectType;
+        obj.constructionYear = input.constructionYear ?: obj.constructionYear;
+        obj.renovationYear = input.renovationYear ?: obj.renovationYear;
+        obj.energyEfficiency = input.energyEfficiency ?: obj.energyEfficiency;
+        obj.grossReturn = input.grossReturn ?: obj.grossReturn;
+        obj.garden = input.garden ?: obj.garden;
+        obj.kitchen = input.kitchen ?: obj.kitchen;
+        obj.heatingType = input.heatingType ?: obj.heatingType;
+        obj.notes = input.notes ?: obj.notes;
+
         this.entityManager.persist(obj);
         this.entityManager.flush();
         return this.getObject(obj.id!!, 10);

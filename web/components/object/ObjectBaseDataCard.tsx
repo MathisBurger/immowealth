@@ -85,6 +85,83 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
                             />
                         </Grid>
                     </Grid>
+                    <EditableDisplay
+                        inputType={InputType.NUMBER}
+                        customDisplay={(v) => `Räume: ${v}`}
+                        value={data?.object?.realEstate.rooms}
+                        onChange={updateContent('rooms')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.NUMBER}
+                        customDisplay={(v) => `Wohnfläche: ${v}m²`}
+                        value={data?.object?.realEstate.space}
+                        onChange={updateContent('space')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.TEXT}
+                        customDisplay={(v) => `Objekt-typ: ${v}`}
+                        value={data?.object?.realEstate.objectType}
+                        onChange={updateContent('objectType')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.NUMBER}
+                        customDisplay={(v) => `Baujahr: ${v}`}
+                        value={data?.object?.realEstate.constructionYear}
+                        onChange={updateContent('constructionYear')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.NUMBER}
+                        customDisplay={(v) => `Renoviert: ${v}`}
+                        value={data?.object?.realEstate.renovationYear}
+                        onChange={updateContent('renovationYear')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.TEXT}
+                        customDisplay={(v) => `Energie-effizienz: ${v}`}
+                        value={data?.object?.realEstate.energyEfficiency}
+                        onChange={updateContent('energyEfficiency')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.NUMBER}
+                        customDisplay={(v) => `Rendite: ${v}%`}
+                        value={data?.object?.realEstate.grossReturn}
+                        onChange={updateContent('grossReturn')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.BOOLEAN}
+                        customDisplay={(v) => `Garten: ${v ? 'Ja' : 'Nein'}`}
+                        value={data?.object?.realEstate.garden}
+                        onChange={updateContent('garden')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.BOOLEAN}
+                        customDisplay={(v) => `Küche: ${v ? 'Ja' : 'Nein'}`}
+                        value={data?.object?.realEstate.kitchen}
+                        onChange={updateContent('kitchen')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.TEXT}
+                        customDisplay={(v) => `Heizart: ${v}`}
+                        value={data?.object?.realEstate.heatingType}
+                        onChange={updateContent('heatingType')}
+                        loading={mutationLoading}
+                    />
+                    <EditableDisplay
+                        inputType={InputType.TEXT}
+                        customDisplay={(v) => `Notizen: ${v ? v : 'Keine'}`}
+                        value={data?.object?.realEstate.notes}
+                        onChange={updateContent('notes')}
+                        loading={mutationLoading}
+                    />
                 </LoadingSpinner>
             </CardContent>
         </Card>

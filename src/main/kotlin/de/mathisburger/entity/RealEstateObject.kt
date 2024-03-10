@@ -52,6 +52,62 @@ class RealEstateObject {
     var positionLon: Double? = null
 
     /**
+     * Amount of rooms
+     */
+    var rooms: Double? = null
+
+    /**
+     * Space for living
+     */
+    var space: Double? = null
+
+    /**
+     * Type of the object
+     * e.g. house or flat (1. OG, EG)
+     */
+    var objectType: String? = null
+
+    /**
+     * Construction year
+     */
+    var constructionYear: Int? = null
+
+    /**
+     * Renovation year
+     */
+    var renovationYear: Int? = null
+
+    /**
+     * Energy efficiency class
+     */
+    var energyEfficiency: String? = null
+
+    /**
+     * Gross return of the object investment
+     */
+    var grossReturn: Double? = null
+
+    /**
+     * Garden exists
+     */
+    var garden: Boolean? = null
+
+    /**
+     * Kitchen exists
+     */
+    var kitchen: Boolean? = null
+
+    /**
+     * Heating type (wood, oil, gas)
+     */
+    var heatingType: String? = null
+
+    /**
+     * All multiline notes of the
+     */
+    var notes: String? = null;
+
+    /**
      * The linked credit
      */
     @OneToOne

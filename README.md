@@ -37,7 +37,7 @@ docker-compose up -d
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.1.0
-- [ ] Add extra information to objects
+- [x] Add extra information to objects
 - [ ] More entities should be editable
 - [ ] Update geo location by hand
 - [ ] Split large numbers with dots
