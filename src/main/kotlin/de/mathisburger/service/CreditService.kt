@@ -1,5 +1,6 @@
 package de.mathisburger.service
 
+import de.mathisburger.data.input.UpdateCreditInput
 import de.mathisburger.data.response.CreditResponse
 import de.mathisburger.entity.Credit
 import de.mathisburger.entity.CreditRate
@@ -74,6 +75,25 @@ class CreditService {
     fun getCredit(id: Long): CreditResponse {
         val credit = this.creditRepository.findById(id);
         return this.getResponseObject(credit);
+    }
+
+    /**
+     * Updates a credit.
+     *
+     * @param input The update input
+     * @return The updated credit
+     */
+    @Transactional
+    fun updateCredit(input: UpdateCreditInput): CreditResponse {
+        val credit = this.creditRepository.findById(input.id);
+        credit.amount = input.amount ?: credit.amount;
+        credit.interestRate = input.interestRate ?: credit.interestRate;
+        credit.redemptionRate = input.redemptionRate ?: credit.redemptionRate;
+        credit.bank = input.bank ?: credit.bank;
+        this.entityManager.persist(credit);
+        this.entityManager.flush();
+        return this.getCredit(credit.id!!);
+
     }
 
     /**

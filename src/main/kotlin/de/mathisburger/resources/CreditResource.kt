@@ -1,6 +1,7 @@
 package de.mathisburger.resources
 
 import de.mathisburger.data.input.CreditRateInput
+import de.mathisburger.data.input.UpdateCreditInput
 import de.mathisburger.data.response.CreditResponse
 import de.mathisburger.entity.enum.AutoPayInterval
 import de.mathisburger.service.CreditService
@@ -69,5 +70,13 @@ class CreditResource {
     @Query
     fun getCredit(id: Long): CreditResponse {
         return this.creditService.getCredit(id);
+    }
+
+    /**
+     * Updates a credit
+     */
+    @Mutation
+    fun updateCredit(input: UpdateCreditInput): CreditResponse {
+        return this.creditService.updateCredit(input);
     }
 }

@@ -3,3 +3,9 @@ mutation ConfigureCreditAutoPay($id: BigInteger!, $enabled: Boolean!, $interval:
         ...CreditObject
     }
 }
+
+mutation UpdateCredit($input: UpdateCreditInputInput!) {
+    updateCredit(input: $input) {
+        ...CreditObject
+    }
+}
