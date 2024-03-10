@@ -110,6 +110,6 @@ class RealEstateObject {
     /**
      * The linked credit
      */
-    @OneToOne
+    @OneToOne(cascade = [CascadeType.ALL])
     var credit: Credit? = null
 }

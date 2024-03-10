@@ -26,4 +26,5 @@ fragment CreditObject on CreditResponse {
     }
     creditRateSum
     creditRateCummulationSteps
+    realEstateObjectId
 }

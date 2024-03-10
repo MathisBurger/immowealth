@@ -3,10 +3,12 @@ package de.mathisburger.service
 import de.mathisburger.data.response.CreditResponse
 import de.mathisburger.entity.Credit
 import de.mathisburger.entity.CreditRate
+import de.mathisburger.entity.RealEstateObject
 import de.mathisburger.entity.enum.AutoPayInterval
 import de.mathisburger.exception.DateNotAllowedException
 import de.mathisburger.repository.CreditRateRepository
 import de.mathisburger.repository.CreditRepository
+import de.mathisburger.repository.RealEstateRepository
 import de.mathisburger.util.AutoBookingUtils
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -29,6 +31,9 @@ class CreditService {
 
     @Inject
     lateinit var creditRateRepository: CreditRateRepository;
+
+    @Inject
+    lateinit var realEstateRepository: RealEstateRepository;
 
     /**
      * Adds a new credit rate
@@ -128,6 +133,7 @@ class CreditService {
             sum += rate.amount!!;
             list.add(sum);
         }
-        return CreditResponse(credit, sum, list);
+       val res =
+        return CreditResponse(credit, sum, list, this.realEstateRepository.getByCredit(credit).id!!);
     }
 }

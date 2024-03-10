@@ -3,6 +3,7 @@ import {useGetCreditsQuery} from "@/generated/graphql";
 import {Button, Divider, Grid, Table, Typography} from "@mui/joy";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {useRouter} from "next/navigation";
+import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 
 const CreditsPage = () => {
 
@@ -42,9 +43,14 @@ const CreditsPage = () => {
                         <td>{credit?.credit.bank}</td>
                         <td>
                             <Grid container direction="row">
-                                <Grid xs={4}>
+                                <Grid xs={6}>
                                     <Button onClick={() => router.push('/credits/details?id=' + credit?.credit.id)}>
                                         <OpenInNewIcon />
+                                    </Button>
+                                </Grid>
+                                <Grid xs={6}>
+                                    <Button onClick={() => router.push('/objects/details?id=' + credit?.realEstateObjectId)}>
+                                        <MapsHomeWorkIcon />
                                     </Button>
                                 </Grid>
                             </Grid>
