@@ -21,12 +21,12 @@ const MapPage = () => {
 
     if (loaded) {
         return (
-            <MapContainer center={[latitude, longitude]} zoom={13} ref={mapRef} style={{height: "100%", width: "100%"}}>
+            <MapContainer center={[data?.mapObjects.lat ?? latitude, data?.mapObjects.lon ?? longitude]} zoom={13} ref={mapRef} style={{height: "100%", width: "100%"}}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {data?.allObjects.map((obj) => (
+                {data?.mapObjects.objects.map((obj) => (
                     <Marker position={[obj?.positionLat ?? 0, obj?.positionLon ?? 0]} key={obj?.id}>
                         <Popup>
                             <Typography level="h3">

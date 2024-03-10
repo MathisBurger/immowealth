@@ -5,8 +5,12 @@ query GetAllObjects {
 }
 
 query GetMapObjects {
-    allObjects {
-        ...MapObject
+    mapObjects {
+        objects {
+            ...MapObject
+        }
+        lat
+        lon
     }
 }
 
