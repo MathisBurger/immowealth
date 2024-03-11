@@ -3,6 +3,7 @@ import {GetObjectQuery} from "@/generated/graphql";
 import {Card, CardContent, Grid, Table} from "@mui/joy";
 import {LineChart} from "@mui/x-charts";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import {formatNumber} from "@/utilts/formatter";
 
 interface ObjectPriceChangesTabProps {
     /**
@@ -49,7 +50,7 @@ const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChange
                                 {/* @ts-ignore */}
                                 {data?.object[fieldToAccess].map((object) => (
                                     <tr key={'jey_' + object?.year + object?.value}>
-                                        <td>{object?.value}€</td>
+                                        <td>{formatNumber(object?.value)}€</td>
                                         <td>{object?.year}</td>
                                     </tr>
                                 ))}

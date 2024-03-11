@@ -1,6 +1,5 @@
 'use client';
 import { Inter } from "next/font/google";
-import {ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache} from "@apollo/client";
 import BaseLayout from "@/components/BaseLayout";
 import {ReactNode} from "react";
 import { LocalizationProvider } from '@mui/x-date-pickers';

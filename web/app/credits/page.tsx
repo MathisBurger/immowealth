@@ -4,6 +4,7 @@ import {Button, Divider, Grid, Table, Typography} from "@mui/joy";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {useRouter} from "next/navigation";
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
+import {formatNumber} from "@/utilts/formatter";
 
 const CreditsPage = () => {
 
@@ -36,10 +37,10 @@ const CreditsPage = () => {
                 {data?.allCredits.map((credit: any) => (
                     <tr key={credit?.credit.id}>
                         <td>{credit?.credit.id}</td>
-                        <td>{credit?.credit.amount}€</td>
-                        <td>{credit?.creditRateSum}€</td>
-                        <td>{credit?.credit.interestRate}%</td>
-                        <td>{credit?.credit.redemptionRate}%</td>
+                        <td>{formatNumber(credit?.credit.amount)}€</td>
+                        <td>{formatNumber(credit?.creditRateSum)}€</td>
+                        <td>{formatNumber(credit?.credit.interestRate)}%</td>
+                        <td>{formatNumber(credit?.credit.redemptionRate)}%</td>
                         <td>{credit?.credit.bank}</td>
                         <td>
                             <Grid container direction="row">

@@ -7,6 +7,7 @@ import {
     useUpdateCreditMutation
 } from "@/generated/graphql";
 import EditableDisplay, {DisplayValue, InputType} from "@/components/EditableDisplay";
+import {formatNumber} from "@/utilts/formatter";
 
 interface CreditDataCardProps {
     /**
@@ -53,7 +54,7 @@ const CreditDataCard = ({loading, data}: CreditDataCardProps) => {
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.credit.credit.amount}
-                        customDisplay={(v) => `Kredithöhe: ${v}€`}
+                        customDisplay={(v) => `Kredithöhe: ${formatNumber(v as number)}€`}
                         onChange={updateContent('amount')}
                         loading={mutationLoading}
                     />
@@ -68,14 +69,14 @@ const CreditDataCard = ({loading, data}: CreditDataCardProps) => {
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.credit.credit.interestRate}
-                        customDisplay={(v) => `Zins: ${v}%`}
+                        customDisplay={(v) => `Zins: ${formatNumber(v as number)}%`}
                         onChange={updateContent('interestRate')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.credit.credit.redemptionRate}
-                        customDisplay={(v) => `Tilgung: ${v}%`}
+                        customDisplay={(v) => `Tilgung: ${formatNumber(v as number)}%`}
                         onChange={updateContent('redemptionRate')}
                         loading={mutationLoading}
                     />

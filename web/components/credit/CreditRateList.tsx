@@ -7,6 +7,7 @@ import {
 } from "@/generated/graphql";
 import dayjs from "dayjs";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {formatNumber} from "@/utilts/formatter";
 
 interface CreditRateListProps {
     /**
@@ -50,7 +51,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
             {elements.map((object) => (
                 <tr key={object.id}>
                     <td>{object.id}</td>
-                    <td>{object.amount}€</td>
+                    <td>{formatNumber(object.amount ?? 0)}€</td>
                     <td>{dayjs(object.date).format("DD.MM.YYYY")}</td>
                     <td>
                         <Button color="danger" onClick={() => deleteObject(`${object.id}`)}>

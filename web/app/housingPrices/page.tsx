@@ -12,6 +12,7 @@ import {useRouter} from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateHousePriceModal from "@/components/housePriceChanges/UpdateHousePriceModal";
 import EditIcon from "@mui/icons-material/Edit";
+import {formatNumber} from "@/utilts/formatter";
 
 
 const HousingPrices = () => {
@@ -94,7 +95,7 @@ const HousingPrices = () => {
                 {filtered.map((change) => (
                     <tr key={change.id}>
                         <td>{change.id}</td>
-                        <td>{change.change}%</td>
+                        <td>{formatNumber(change.change ?? 0)}%</td>
                         <td>{change.zip}</td>
                         <td>{change.year}</td>
                         <td>

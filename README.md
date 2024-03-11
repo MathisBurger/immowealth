@@ -40,7 +40,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] Add extra information to objects
 - [x] More entities should be editable
 - [x] Update geo location by hand
-- [ ] Split large numbers with dots
+- [x] Split large numbers with dots
 - [ ] Add credit rate note
 - [ ] Migrate all tables to MUI datagrid
 

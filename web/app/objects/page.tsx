@@ -4,6 +4,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {GetAllObjectsDocument, useDeleteRealEstateMutation, useGetAllObjectsQuery} from "@/generated/graphql";
 import {useRouter} from "next/navigation";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {formatNumber} from "@/utilts/formatter";
 
 
 const ObjectsPage = () => {
@@ -59,7 +60,7 @@ const ObjectsPage = () => {
                 {data?.allObjects.map((object) => (
                     <tr key={object?.id}>
                         <td>{object?.id}</td>
-                        <td>{object?.initialValue}</td>
+                        <td>{formatNumber(object?.initialValue)}</td>
                         <td>{object?.streetAndHouseNr}</td>
                         <td>{object?.zip}</td>
                         <td>{object?.city}</td>

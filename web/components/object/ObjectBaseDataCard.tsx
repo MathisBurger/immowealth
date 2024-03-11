@@ -8,6 +8,7 @@ import {Card, CardContent, Grid, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import dayjs from "dayjs";
 import EditableDisplay, {DisplayValue, InputType} from "@/components/EditableDisplay";
+import {formatNumber} from "@/utilts/formatter";
 
 
 interface ObjectBaseDataCard {
@@ -56,7 +57,7 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.object?.realEstate.initialValue}
-                        customDisplay={(v) => `Kaufpreis: ${v}€`}
+                        customDisplay={(v) => `Kaufpreis: ${formatNumber(v as number)}€`}
                         onChange={updateContent('initialValue')}
                         loading={mutationLoading}
                     />
@@ -129,7 +130,7 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
                     />
                     <EditableDisplay
                         inputType={InputType.NUMBER}
-                        customDisplay={(v) => `Rendite: ${v}%`}
+                        customDisplay={(v) => `Rendite: ${formatNumber(v as number)}%`}
                         value={data?.object?.realEstate.grossReturn}
                         onChange={updateContent('grossReturn')}
                         loading={mutationLoading}
