@@ -7,15 +7,18 @@ import {
     useDeleteRealEstateMutation
 } from "@/generated/graphql";
 import {useMemo, useState} from "react";
-import {Divider, Select, Typography, Option, Table, Button, Autocomplete} from "@mui/joy";
+import {Divider, Select, Typography, Option, Table, Button, Autocomplete, Grid} from "@mui/joy";
 import {useRouter} from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
+import UpdateHousePriceModal from "@/components/housePriceChanges/UpdateHousePriceModal";
+import EditIcon from "@mui/icons-material/Edit";
 
 
 const HousingPrices = () => {
 
     const {data} = useAllHousePriceChangesQuery();
     const router = useRouter();
+    const [updateObject, setUpdateObject] = useState<HousePriceChangeDataFragment|null>(null);
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteHousePriceChangeMutation({
         refetchQueries: [
@@ -95,14 +98,29 @@ const HousingPrices = () => {
                         <td>{change.zip}</td>
                         <td>{change.year}</td>
                         <td>
-                            <Button color="danger" onClick={() => deleteObject(`${change.id}`)} loading={deleteLoading}>
-                                <DeleteIcon />
-                            </Button>
+                            <Grid container direction="row">
+                                <Grid xs={6}>
+                                    <Button color="primary" onClick={() => setUpdateObject(change)}>
+                                        <EditIcon />
+                                    </Button>
+                                </Grid>
+                                <Grid xs={6}>
+                                    <Button color="danger" onClick={() => deleteObject(`${change.id}`)} loading={deleteLoading}>
+                                        <DeleteIcon />
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </Table>
+            {updateObject && (
+                <UpdateHousePriceModal
+                    onClose={() => setUpdateObject(null)}
+                    housePrice={updateObject}
+                />
+            )}
         </>
     );
 }
