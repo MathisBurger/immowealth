@@ -21,5 +21,9 @@ data class CreditRateInput @JsonbCreator constructor(
     /**
      * The date of the booking
      */
-    val date: Date
+    val date: Date,
+    /**
+     * The note of the booking
+     */
+    val note: String?
 )

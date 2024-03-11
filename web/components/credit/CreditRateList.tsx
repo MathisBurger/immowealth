@@ -44,6 +44,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
                 <th>ID</th>
                 <th>Rate</th>
                 <th>Buchungsdatum</th>
+                <th>Notiz</th>
                 <th>Aktionen</th>
             </tr>
             </thead>
@@ -53,6 +54,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
                     <td>{object.id}</td>
                     <td>{formatNumber(object.amount ?? 0)}€</td>
                     <td>{dayjs(object.date).format("DD.MM.YYYY")}</td>
+                    <td>{object.note}</td>
                     <td>
                         <Button color="danger" onClick={() => deleteObject(`${object.id}`)}>
                             <DeleteIcon />

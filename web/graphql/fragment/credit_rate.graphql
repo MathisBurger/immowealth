@@ -2,4 +2,5 @@ fragment CreditRateData on CreditRate {
     id
     amount
     date
+    note
 }

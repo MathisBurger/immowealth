@@ -41,7 +41,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] More entities should be editable
 - [x] Update geo location by hand
 - [x] Split large numbers with dots
-- [ ] Add credit rate note
+- [x] Add credit rate note
 - [ ] Migrate all tables to MUI datagrid
 
 ### v1.2.0

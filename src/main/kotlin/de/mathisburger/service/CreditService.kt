@@ -42,9 +42,10 @@ class CreditService {
      * @param id The ID of the credit
      * @param rate The credit rate amount
      * @param date The date of booking
+     * @param note The note of the booking
      */
     @Transactional
-    fun addCreditRate(id: Long, rate: Double, date: Date) {
+    fun addCreditRate(id: Long, rate: Double, date: Date, note: String?) {
         if (date.after(Date())) {
             throw DateNotAllowedException("Date in future is not allowed");
         }
@@ -52,6 +53,7 @@ class CreditService {
         val creditRate = CreditRate()
         creditRate.date = date;
         creditRate.amount = rate;
+        creditRate.note = note;
         this.entityManager.persist(creditRate);
         credit.rates.add(creditRate);
         this.entityManager.persist(credit);

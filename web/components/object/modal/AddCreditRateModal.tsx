@@ -1,4 +1,4 @@
-import {Alert, Button, Grid, Input, Modal, ModalDialog, Typography} from "@mui/joy";
+import {Alert, Button, FormControl, FormLabel, Grid, Input, Modal, ModalDialog, Typography} from "@mui/joy";
 import {useState} from "react";
 import {GetObjectDocument, useAddCreditRateMutation} from "@/generated/graphql";
 import LoadingButton from "@/components/LoadingButton";
@@ -30,6 +30,7 @@ const AddCreditRateModal = ({onClose, creditId, objectId}: AddCreditRateModalPro
     const [errorMessage, setErrorMessage] = useState<string|null>(null);
     const [rate, setRate] = useState<number>(0);
     const [date, setDate] = useState<Date>(new Date());
+    const [note, setNote] = useState<string>('');
     const [mutation, {loading}] = useAddCreditRateMutation({
         refetchQueries: objectId ? [
             {
@@ -49,7 +50,7 @@ const AddCreditRateModal = ({onClose, creditId, objectId}: AddCreditRateModalPro
             return;
         }
         const result = await mutation({
-            variables: {input: {id: creditId, date: new Date(), rate}}
+            variables: {input: {id: creditId, date: new Date(), rate, note}}
         });
         if ((result.errors?.length ?? 0) > 0) {
             setErrorMessage((result?.errors ?? [])[0]?.message);
@@ -75,7 +76,14 @@ const AddCreditRateModal = ({onClose, creditId, objectId}: AddCreditRateModalPro
                     disableFuture
                     onChange={(newDate) => setDate(newDate !== null ? newDate.toDate() : new Date())}
                 />
-                <Input type="number" value={rate} onChange={(e) => setRate(parseFloat(e.target.value))} />
+                <FormControl>
+                    <FormLabel>Rate</FormLabel>
+                    <Input type="number" value={rate} onChange={(e) => setRate(parseFloat(e.target.value))} />
+                </FormControl>
+                <FormControl>
+                    <FormLabel>Notiz</FormLabel>
+                    <Input type="type" value={note} onChange={(e) => setNote(e.target.value)} />
+                </FormControl>
                 <Grid container direction="row" spacing={2} justifyContent="flex-end">
                     <Grid>
                         <Button

@@ -26,7 +26,7 @@ class CreditResource {
      */
     @Mutation
     fun addCreditRate(input: CreditRateInput): Boolean {
-        this.creditService.addCreditRate(input.id, input.rate, input.date);
+        this.creditService.addCreditRate(input.id, input.rate, input.date, input.note);
         return true;
     }
 

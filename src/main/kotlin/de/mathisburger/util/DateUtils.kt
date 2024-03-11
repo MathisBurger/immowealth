@@ -20,5 +20,15 @@ class DateUtils {
             cal.time = date;
             return cal.get(Calendar.YEAR);
         }
+
+        /**
+         * Gets today formatted as date string
+         *
+         * @return Formatted date string
+         */
+        fun getTodayFormat(): String {
+            var cal = Calendar.getInstance();
+            return "" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
+        }
     }
 }
