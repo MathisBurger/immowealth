@@ -6,7 +6,7 @@ import {
     useAllHousePriceChangesQuery, useDeleteHousePriceChangeMutation,
     useDeleteRealEstateMutation
 } from "@/generated/graphql";
-import {useMemo, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {Divider, Select, Typography, Option, Table, Button, Autocomplete, Grid} from "@mui/joy";
 import {useRouter} from "next/navigation";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -31,14 +31,14 @@ const HousingPrices = () => {
         ]
     });
 
-    const deleteObject = async (id: string) => {
+    const deleteObject = useCallback(async (id: string) => {
         const result = await deleteMutation({
             variables: {id: parseInt(`${id}`)}
         });
         if (result.errors === undefined) {
             router.push('/objects');
         }
-    }
+    }, [router, deleteMutation]);
 
     const cols = useMemo<GridColDef[]>(() => [
         {
@@ -78,7 +78,7 @@ const HousingPrices = () => {
                 </Grid>
             )
         }
-    ], []);
+    ], [deleteLoading, deleteObject]);
 
     const [filter, setFilter] = useState<string>('');
 

@@ -8,7 +8,7 @@ import {
 import dayjs from "dayjs";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {formatNumber} from "@/utilts/formatter";
-import {useMemo} from "react";
+import {useCallback, useMemo} from "react";
 import {GridColDef, GridRenderCellParams, GridValueFormatterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
 
@@ -28,11 +28,11 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteCreditRateMutation();
 
-    const deleteObject = async (id: string) => {
+    const deleteObject = useCallback(async (id: string) => {
         await deleteMutation({
             variables: {id: parseInt(`${id}`)}
         });
-    }
+    }, [deleteMutation]);
 
     const cols = useMemo<GridColDef[]>(() => [
         {
@@ -63,7 +63,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
                 </Button>
             )
         }
-    ], []);
+    ], [deleteObject]);
 
     return (
         <EntityList columns={cols} rows={elements} />

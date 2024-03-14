@@ -6,7 +6,7 @@ import {useRouter} from "next/navigation";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {formatNumber} from "@/utilts/formatter";
 import EntityList from "@/components/EntityList";
-import {useMemo} from "react";
+import {useCallback, useMemo} from "react";
 import {GridColDef, GridRenderCellParams, GridValueFormatterParams} from "@mui/x-data-grid";
 
 
@@ -23,11 +23,11 @@ const ObjectsPage = () => {
         ]
     });
 
-    const deleteObject = async (id: string) => {
+    const deleteObject = useCallback(async (id: string) => {
         await deleteMutation({
             variables: {id: parseInt(`${id}`)}
         });
-    }
+    }, [deleteMutation]);
 
     const cols = useMemo<GridColDef[]>(() => [
         {
@@ -77,7 +77,7 @@ const ObjectsPage = () => {
                 </Grid>
             )
         }
-    ], [deleteLoading, router]);
+    ], [deleteLoading, router, deleteObject]);
 
     return (
         <>
