@@ -36,14 +36,6 @@ docker-compose up -d
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
-### v1.1.0
-- [x] Add extra information to objects
-- [x] More entities should be editable
-- [x] Update geo location by hand
-- [x] Split large numbers with dots
-- [x] Add credit rate note
-- [ ] Migrate all tables to MUI datagrid
-
 ### v1.2.0
 - [ ] Add translations
 - [ ] Add different currencies
