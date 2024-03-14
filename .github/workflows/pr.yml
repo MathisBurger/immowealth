@@ -19,7 +19,9 @@ jobs:
           cd web
           npm ci
       - name: Lint
-        run: npm run lint
+        run: |
+          cd web
+          npm run lint
   build:
     runs-on: ubuntu-latest
     services:
