@@ -4,6 +4,9 @@ import {Card, CardContent, Grid, Table} from "@mui/joy";
 import {LineChart} from "@mui/x-charts";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import {formatNumber} from "@/utilts/formatter";
+import {useMemo} from "react";
+import {GridColDef, GridValueFormatterParams} from "@mui/x-data-grid";
+import EntityList from "@/components/EntityList";
 
 interface ObjectPriceChangesTabProps {
     /**
@@ -27,35 +30,27 @@ interface ObjectPriceChangesTabProps {
  */
 const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChangesTabProps) => {
 
+    const cols = useMemo<GridColDef[]>(() => [
+        {
+            field: 'value',
+            headerName: 'Preis',
+            width: 200,
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+        },
+        {
+            field: 'year',
+            headerName: 'Jahr',
+        }
+    ], []);
+
     return (
         <LoadingSpinner loading={loading}>
             <Grid container direction="row" spacing={2}>
                 <Grid xs={6}>
                     <Card>
                         <CardContent>
-                            <Table
-                                borderAxis="x"
-                                size="lg"
-                                stickyHeader
-                                stripe="even"
-                                variant="soft"
-                            >
-                                <thead>
-                                <tr>
-                                    <th>Preis</th>
-                                    <th>Jahr</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {/* @ts-ignore */}
-                                {data?.object[fieldToAccess].map((object) => (
-                                    <tr key={'jey_' + object?.year + object?.value}>
-                                        <td>{formatNumber(object?.value)}€</td>
-                                        <td>{object?.year}</td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </Table>
+                            {/* @ts-ignore */}
+                            <EntityList columns={cols} rows={data?.object[fieldToAccess]} />
                         </CardContent>
                     </Card>
                 </Grid>

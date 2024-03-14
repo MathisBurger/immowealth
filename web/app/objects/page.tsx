@@ -5,6 +5,9 @@ import {GetAllObjectsDocument, useDeleteRealEstateMutation, useGetAllObjectsQuer
 import {useRouter} from "next/navigation";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {formatNumber} from "@/utilts/formatter";
+import EntityList from "@/components/EntityList";
+import {useMemo} from "react";
+import {GridColDef, GridRenderCellParams, GridValueFormatterParams} from "@mui/x-data-grid";
 
 
 const ObjectsPage = () => {
@@ -26,6 +29,56 @@ const ObjectsPage = () => {
         });
     }
 
+    const cols = useMemo<GridColDef[]>(() => [
+        {
+            field: 'id',
+            headerName: 'ID'
+        },
+        {
+            field: 'initialValue',
+            headerName: 'Kaufpreis',
+            width: 200,
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+        },
+        {
+            field: 'streetAndHouseNr',
+            headerName: 'Straße und Hausnummer',
+            width: 300
+        },
+        {
+            field: 'zip',
+            headerName: 'Postleitzahl',
+        },
+        {
+            field: 'city',
+            headerName: 'Stadt',
+            width: 150
+        },
+        {
+            field: 'dateBought',
+            headerName: 'Kaufdatum',
+        },
+        {
+            field: 'actions',
+            headerName: 'Aktionen',
+            width: 400,
+            renderCell: ({row}: GridRenderCellParams) => (
+                <Grid container direction="row" spacing={2}>
+                    <Grid>
+                        <Button onClick={() => router.push('/objects/details?id=' + row.id)}>
+                            <OpenInNewIcon />
+                        </Button>
+                    </Grid>
+                    <Grid>
+                        <Button onClick={() => deleteObject(`${row.id}`)} color="danger" loading={deleteLoading}>
+                            <DeleteIcon />
+                        </Button>
+                    </Grid>
+                </Grid>
+            )
+        }
+    ], [deleteLoading, router]);
+
     return (
         <>
             <Typography level="h1">Objekte</Typography>
@@ -38,51 +91,10 @@ const ObjectsPage = () => {
                 Neues Objekt
             </Button>
             <Divider />
-            <Table
-                borderAxis="x"
-                size="lg"
-                stickyHeader
-                stripe="even"
-                variant="soft"
-            >
-               <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Kaufpreis</th>
-                    <th>Straße und Hausnummer</th>
-                    <th>Postleitzahl</th>
-                    <th>Ort</th>
-                    <th>Kaufdatum</th>
-                    <th>Aktionen</th>
-                </tr>
-               </thead>
-                <tbody>
-                {data?.allObjects.map((object) => (
-                    <tr key={object?.id}>
-                        <td>{object?.id}</td>
-                        <td>{formatNumber(object?.initialValue)}</td>
-                        <td>{object?.streetAndHouseNr}</td>
-                        <td>{object?.zip}</td>
-                        <td>{object?.city}</td>
-                        <td>{(new Date(object?.dateBought)).getUTCDay()}.{(new Date(object?.dateBought)).getUTCMonth()+1}.{(new Date(object?.dateBought)).getFullYear()}</td>
-                        <td>
-                            <Grid container direction="row" spacing={2}>
-                                <Grid xs={5}>
-                                    <Button onClick={() => router.push('/objects/details?id=' + object?.id)}>
-                                        <OpenInNewIcon />
-                                    </Button>
-                                </Grid>
-                                <Grid xs={5}>
-                                    <Button onClick={() => deleteObject(`${object?.id}`)} color="danger" loading={deleteLoading}>
-                                        <DeleteIcon />
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
+            <EntityList
+                rows={data?.allObjects ?? []}
+                columns={cols}
+            />
         </>
     )
 }

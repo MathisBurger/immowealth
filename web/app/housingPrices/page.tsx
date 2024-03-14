@@ -13,6 +13,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import UpdateHousePriceModal from "@/components/housePriceChanges/UpdateHousePriceModal";
 import EditIcon from "@mui/icons-material/Edit";
 import {formatNumber} from "@/utilts/formatter";
+import {GridColDef, GridValueFormatterParams} from "@mui/x-data-grid";
+import EntityList from "@/components/EntityList";
 
 
 const HousingPrices = () => {
@@ -37,6 +39,46 @@ const HousingPrices = () => {
             router.push('/objects');
         }
     }
+
+    const cols = useMemo<GridColDef[]>(() => [
+        {
+            field: 'id',
+            headerName: 'ID'
+        },
+        {
+            field: 'change',
+            headerName: 'Änderung',
+            width: 200,
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+        },
+        {
+            field: 'zip',
+            headerName: 'Postleitzahl'
+        },
+        {
+            field: 'year',
+            headerName: 'Jahr'
+        },
+        {
+            field: 'actions',
+            width: 400,
+            headerName: 'Aktionen',
+            renderCell: ({row}) => (
+                <Grid container direction="row" spacing={2}>
+                    <Grid xs={6}>
+                        <Button color="primary" onClick={() => setUpdateObject(row)}>
+                            <EditIcon />
+                        </Button>
+                    </Grid>
+                    <Grid xs={6}>
+                        <Button color="danger" onClick={() => deleteObject(`${row.id}`)} loading={deleteLoading}>
+                            <DeleteIcon />
+                        </Button>
+                    </Grid>
+                </Grid>
+            )
+        }
+    ], []);
 
     const [filter, setFilter] = useState<string>('');
 
@@ -75,47 +117,7 @@ const HousingPrices = () => {
                 inputValue={filter}
                 onInputChange={(_, f) => setFilter(f ?? '')}
             />
-            <Table
-                borderAxis="x"
-                size="lg"
-                stickyHeader
-                stripe="even"
-                variant="soft"
-            >
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Änderung</th>
-                    <th>Zip</th>
-                    <th>Year</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {filtered.map((change) => (
-                    <tr key={change.id}>
-                        <td>{change.id}</td>
-                        <td>{formatNumber(change.change ?? 0)}%</td>
-                        <td>{change.zip}</td>
-                        <td>{change.year}</td>
-                        <td>
-                            <Grid container direction="row">
-                                <Grid xs={6}>
-                                    <Button color="primary" onClick={() => setUpdateObject(change)}>
-                                        <EditIcon />
-                                    </Button>
-                                </Grid>
-                                <Grid xs={6}>
-                                    <Button color="danger" onClick={() => deleteObject(`${change.id}`)} loading={deleteLoading}>
-                                        <DeleteIcon />
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
+            <EntityList columns={cols} rows={filtered} />
             {updateObject && (
                 <UpdateHousePriceModal
                     onClose={() => setUpdateObject(null)}
