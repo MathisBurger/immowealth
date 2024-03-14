@@ -1,5 +1,6 @@
 package de.mathisburger.service
 
+import de.mathisburger.data.input.UpdateHousePriceChangeInput
 import de.mathisburger.entity.HousePriceChange
 import de.mathisburger.repository.HousePriceChangeRepository
 import jakarta.enterprise.context.ApplicationScoped
@@ -64,5 +65,21 @@ class HousePriceChangeService {
      */
     fun getAllChangesWithZip(zip: String): List<HousePriceChange> {
         return this.housePriceChangeRepository.findByZip(zip);
+    }
+
+    /**
+     * Updates a house price
+     *
+     * @param input The update input
+     */
+    @Transactional
+    fun updateHousePrices(input: UpdateHousePriceChangeInput): HousePriceChange {
+        val obj = this.housePriceChangeRepository.findById(input.id);
+        obj.change = input.change ?: obj.change;
+        obj.zip = input.zip ?: obj.zip;
+        obj.year = input.year ?: obj.year;
+        this.entityManager.persist(obj);
+        this.entityManager.flush();
+        return obj;
     }
 }

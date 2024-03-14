@@ -3,56 +3,85 @@ import {useGetCreditsQuery} from "@/generated/graphql";
 import {Button, Divider, Grid, Table, Typography} from "@mui/joy";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {useRouter} from "next/navigation";
+import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
+import {formatNumber} from "@/utilts/formatter";
+import {useMemo} from "react";
+import {GridColDef, GridRenderCellParams, GridValueFormatterParams, GridValueGetterParams} from "@mui/x-data-grid";
+import EntityList from "@/components/EntityList";
 
 const CreditsPage = () => {
 
     const {data} = useGetCreditsQuery();
     const router = useRouter();
 
+    const cols = useMemo<GridColDef[]>(() => [
+        {
+            field: 'id',
+            headerName: 'ID',
+            valueGetter: ({row}: GridValueGetterParams) => row.credit.id,
+        },
+        {
+            field: 'amount',
+            headerName: 'Summe',
+            width: 200,
+            valueGetter: ({row}: GridValueGetterParams) => row.credit.amount,
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+        },
+        {
+            field: 'creditRateSum',
+            headerName: 'Getilgt',
+            width: 200,
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+        },
+        {
+            field: 'interestRate',
+            headerName: 'Zins',
+            width: 100,
+            valueGetter: ({row}: GridValueGetterParams) => row.credit.interestRate,
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}%`
+        },
+        {
+            field: 'redemptionRate',
+            headerName: 'Tilgung',
+            width: 100,
+            valueGetter: ({row}: GridValueGetterParams) => row.credit.redemptionRate,
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}%`
+        },
+        {
+            field: 'bank',
+            headerName: 'Bank',
+            width: 200,
+            valueGetter: ({row}: GridValueGetterParams) => row.credit.bank,
+        },
+        {
+            field: 'actions',
+            headerName: 'Aktionen',
+            width: 400,
+            renderCell: ({row}: GridRenderCellParams) => (
+                <Grid container direction="row" spacing={2}>
+                    <Grid xs={6}>
+                        <Button onClick={() => router.push('/credits/details?id=' + row.credit.id)}>
+                            <OpenInNewIcon />
+                        </Button>
+                    </Grid>
+                    <Grid xs={6}>
+                        <Button onClick={() => router.push('/objects/details?id=' + row.realEstateObjectId)}>
+                            <MapsHomeWorkIcon />
+                        </Button>
+                    </Grid>
+                </Grid>
+            )
+        }
+    ], [router]);
+
     return (
         <>
             <Typography level="h1">Kredite</Typography>
             <Divider />
-            <Table
-                borderAxis="x"
-                size="lg"
-                stickyHeader
-                stripe="even"
-                variant="soft"
-            >
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Summe</th>
-                    <th>Getilgt</th>
-                    <th>Zins</th>
-                    <th>Tilgung</th>
-                    <th>Bank</th>
-                    <th>Aktionen</th>
-                </tr>
-                </thead>
-                <tbody>
-                {data?.allCredits.map((credit: any) => (
-                    <tr key={credit?.credit.id}>
-                        <td>{credit?.credit.id}</td>
-                        <td>{credit?.credit.amount}€</td>
-                        <td>{credit?.creditRateSum}€</td>
-                        <td>{credit?.credit.interestRate}%</td>
-                        <td>{credit?.credit.redemptionRate}%</td>
-                        <td>{credit?.credit.bank}</td>
-                        <td>
-                            <Grid container direction="row">
-                                <Grid xs={4}>
-                                    <Button onClick={() => router.push('/credits/details?id=' + credit?.credit.id)}>
-                                        <OpenInNewIcon />
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
+            <EntityList
+                rows={data?.allCredits ?? []}
+                columns={cols}
+            />
         </>
     );
 }

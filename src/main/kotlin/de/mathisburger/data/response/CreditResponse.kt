@@ -18,5 +18,9 @@ data class CreditResponse @JsonbCreator constructor(
     /**
      * The credit rate accumulation steps
      */
-    val creditRateCummulationSteps: List<Double>
+    val creditRateCummulationSteps: List<Double>,
+    /**
+     * Linked real estate object id
+     */
+    val realEstateObjectId: Long
 );

@@ -1,12 +1,15 @@
 package de.mathisburger.service
 
+import de.mathisburger.data.input.UpdateCreditInput
 import de.mathisburger.data.response.CreditResponse
 import de.mathisburger.entity.Credit
 import de.mathisburger.entity.CreditRate
+import de.mathisburger.entity.RealEstateObject
 import de.mathisburger.entity.enum.AutoPayInterval
 import de.mathisburger.exception.DateNotAllowedException
 import de.mathisburger.repository.CreditRateRepository
 import de.mathisburger.repository.CreditRepository
+import de.mathisburger.repository.RealEstateRepository
 import de.mathisburger.util.AutoBookingUtils
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -30,15 +33,19 @@ class CreditService {
     @Inject
     lateinit var creditRateRepository: CreditRateRepository;
 
+    @Inject
+    lateinit var realEstateRepository: RealEstateRepository;
+
     /**
      * Adds a new credit rate
      *
      * @param id The ID of the credit
      * @param rate The credit rate amount
      * @param date The date of booking
+     * @param note The note of the booking
      */
     @Transactional
-    fun addCreditRate(id: Long, rate: Double, date: Date) {
+    fun addCreditRate(id: Long, rate: Double, date: Date, note: String?) {
         if (date.after(Date())) {
             throw DateNotAllowedException("Date in future is not allowed");
         }
@@ -46,6 +53,7 @@ class CreditService {
         val creditRate = CreditRate()
         creditRate.date = date;
         creditRate.amount = rate;
+        creditRate.note = note;
         this.entityManager.persist(creditRate);
         credit.rates.add(creditRate);
         this.entityManager.persist(credit);
@@ -69,6 +77,25 @@ class CreditService {
     fun getCredit(id: Long): CreditResponse {
         val credit = this.creditRepository.findById(id);
         return this.getResponseObject(credit);
+    }
+
+    /**
+     * Updates a credit.
+     *
+     * @param input The update input
+     * @return The updated credit
+     */
+    @Transactional
+    fun updateCredit(input: UpdateCreditInput): CreditResponse {
+        val credit = this.creditRepository.findById(input.id);
+        credit.amount = input.amount ?: credit.amount;
+        credit.interestRate = input.interestRate ?: credit.interestRate;
+        credit.redemptionRate = input.redemptionRate ?: credit.redemptionRate;
+        credit.bank = input.bank ?: credit.bank;
+        this.entityManager.persist(credit);
+        this.entityManager.flush();
+        return this.getCredit(credit.id!!);
+
     }
 
     /**
@@ -128,6 +155,7 @@ class CreditService {
             sum += rate.amount!!;
             list.add(sum);
         }
-        return CreditResponse(credit, sum, list);
+       val res =
+        return CreditResponse(credit, sum, list, this.realEstateRepository.getByCredit(credit).id!!);
     }
 }

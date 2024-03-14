@@ -7,6 +7,10 @@ import {
 } from "@/generated/graphql";
 import dayjs from "dayjs";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {formatNumber} from "@/utilts/formatter";
+import {useCallback, useMemo} from "react";
+import {GridColDef, GridRenderCellParams, GridValueFormatterParams} from "@mui/x-data-grid";
+import EntityList from "@/components/EntityList";
 
 interface CreditRateListProps {
     /**
@@ -24,43 +28,45 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteCreditRateMutation();
 
-    const deleteObject = async (id: string) => {
+    const deleteObject = useCallback(async (id: string) => {
         await deleteMutation({
             variables: {id: parseInt(`${id}`)}
         });
-    }
+    }, [deleteMutation]);
+
+    const cols = useMemo<GridColDef[]>(() => [
+        {
+            field: 'id',
+            headerName: 'ID'
+        },
+        {
+            field: 'amount',
+            headerName: 'Rate',
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value ?? 0)}€`
+        },
+        {
+            field: 'date',
+            headerName: 'Buchungsdatum',
+            valueFormatter: ({value}: GridValueFormatterParams) => `${dayjs(value).format("DD.MM.YYYY")}`
+        },
+        {
+            field: 'note',
+            headerName: 'Notiz',
+            width: 400
+        },
+        {
+            field: 'actions',
+            headerName: 'Aktionen',
+            renderCell: ({row}: GridRenderCellParams) => (
+                <Button color="danger" onClick={() => deleteObject(`${row.id}`)}>
+                    <DeleteIcon />
+                </Button>
+            )
+        }
+    ], [deleteObject]);
 
     return (
-        <Table
-            borderAxis="x"
-            size="lg"
-            stickyHeader
-            stripe="even"
-            variant="soft"
-        >
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Rate</th>
-                <th>Buchungsdatum</th>
-                <th>Aktionen</th>
-            </tr>
-            </thead>
-            <tbody>
-            {elements.map((object) => (
-                <tr key={object.id}>
-                    <td>{object.id}</td>
-                    <td>{object.amount}€</td>
-                    <td>{dayjs(object.date).format("DD.MM.YYYY")}</td>
-                    <td>
-                        <Button color="danger" onClick={() => deleteObject(`${object.id}`)}>
-                            <DeleteIcon />
-                        </Button>
-                    </td>
-                </tr>
-            ))}
-            </tbody>
-        </Table>
+        <EntityList columns={cols} rows={elements} />
     );
 }
 

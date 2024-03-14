@@ -1,5 +1,17 @@
 'use client';
-import {Button, Card, CardContent, Divider, FormControl, FormLabel, Grid, Input, Stack, Typography} from "@mui/joy";
+import {
+    Button,
+    Card,
+    CardContent, Checkbox,
+    Divider,
+    FormControl,
+    FormLabel,
+    Grid,
+    Input,
+    Stack,
+    Textarea,
+    Typography
+} from "@mui/joy";
 import {DatePicker} from "@mui/x-date-pickers";
 import {useRouter} from "next/navigation";
 import {FormEvent} from "react";
@@ -28,13 +40,22 @@ const NewObject = () => {
                     dateBought: new Date(formData.get("dateBought") as string),
                     initialValue: parseInt(`${formData.get("initialPrice")}`, 10),
                     streetAndHouseNr: formData.get("streetAndHouseNr") as string,
-                    zip: formData.get("zip") as string
+                    zip: formData.get("zip") as string,
+                    rooms: parseFloat(`${formData.get('rooms')}`),
+                    space: parseFloat(`${formData.get('space')}`),
+                    objectType: `${formData.get('objectType')}`,
+                    constructionYear: parseInt(`${formData.get('space')}`, 10),
+                    renovationYear: formData.get('renovationYear') ? parseInt(`${formData.get('space')}`, 10) : null,
+                    energyEfficiency: formData.get('energyEfficiency') ? `${formData.get('energyEfficiency')}` : null,
+                    grossReturn: parseFloat(`${formData.get('grossReturn')}`),
+                    garden: formData.get('garden') === 'true',
+                    kitchen: formData.get('kitchen') === 'true',
+                    heatingType: `${formData.get('heatingType')}`,
+                    notes: formData.get('notes') ? `${formData.get('objectType')}` : null,
                 }}
         });
         if (result.errors === undefined) {
-            router.push(`/objects/${result.data?.createRealEstate.id}`);
-        } else {
-            alert(result.errors[0].message);
+            router.push(`/objects/details?id=${result.data?.createRealEstate.id}`);
         }
     }
 
@@ -50,7 +71,7 @@ const NewObject = () => {
                                 <Stack spacing={2}>
                                     <Typography level="h3">Grunddaten</Typography>
                                     <FormControl>
-                                        <FormLabel>Straße und Hausnummer</FormLabel>
+                                        <FormLabel>Straße und Hausnummer *</FormLabel>
                                         <Input
                                             required
                                             name="streetAndHouseNr"
@@ -62,7 +83,7 @@ const NewObject = () => {
                                     <Grid container direction="row" spacing={2}>
                                         <Grid xs={6}>
                                             <FormControl>
-                                                <FormLabel>Postleitzahl</FormLabel>
+                                                <FormLabel>Postleitzahl *</FormLabel>
                                                 <Input
                                                     required
                                                     name="zip"
@@ -74,7 +95,7 @@ const NewObject = () => {
                                         </Grid>
                                         <Grid xs={6}>
                                             <FormControl>
-                                                <FormLabel>Ort</FormLabel>
+                                                <FormLabel>Ort *</FormLabel>
                                                 <Input
                                                     required
                                                     name="city"
@@ -86,7 +107,7 @@ const NewObject = () => {
                                         </Grid>
                                     </Grid>
                                     <FormControl>
-                                        <FormLabel>Kaufpreis</FormLabel>
+                                        <FormLabel>Kaufpreis *</FormLabel>
                                         <Input
                                             required
                                             name="initialPrice"
@@ -98,8 +119,101 @@ const NewObject = () => {
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Kaufdatum</FormLabel>
+                                        <FormLabel>Kaufdatum *</FormLabel>
                                         <DatePicker disableFuture name="dateBought" />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Räume *</FormLabel>
+                                        <Input
+                                            required
+                                            name="rooms"
+                                            type="number"
+                                            placeholder="Räume"
+                                            variant="soft"
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Nutzfläche *</FormLabel>
+                                        <Input
+                                            required
+                                            name="space"
+                                            placeholder="Nutzfläche"
+                                            variant="soft"
+                                            type="number"
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Wohnungstyp *</FormLabel>
+                                        <Input
+                                            required
+                                            name="objectType"
+                                            placeholder="Wohnungstyp"
+                                            variant="soft"
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Baujahr *</FormLabel>
+                                        <Input
+                                            required
+                                            name="constructionYear"
+                                            placeholder="Baujahr"
+                                            variant="soft"
+                                            type="number"
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Renoviert (Jahr)</FormLabel>
+                                        <Input
+                                            name="renovationYear"
+                                            type="number"
+                                            placeholder="Renoviert (Jahr)"
+                                            variant="soft"
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Energie Effizienz</FormLabel>
+                                        <Input
+                                            name="energyEfficiency"
+                                            placeholder="Energie Effizienz"
+                                            variant="soft"
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Rendite *</FormLabel>
+                                        <Input
+                                            required
+                                            type="number"
+                                            name="grossReturn"
+                                            placeholder="Rendite"
+                                            variant="soft"
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Heiztyp *</FormLabel>
+                                        <Input
+                                            required
+                                            name="heatingType"
+                                            placeholder="Heiztyp"
+                                            variant="soft"
+                                            fullWidth
+                                        />
+                                    </FormControl>
+                                    <Checkbox name="garden" label="Garten" />
+                                    <Checkbox name="kitchen" label="Küche" />
+                                    <FormControl>
+                                        <FormLabel>Notizen</FormLabel>
+                                        <Textarea
+                                            name="notes"
+                                            placeholder="Notizen"
+                                            variant="soft"
+                                        />
                                     </FormControl>
                                 </Stack>
                             </CardContent>
@@ -111,7 +225,7 @@ const NewObject = () => {
                                 <Stack spacing={2}>
                                     <Typography level="h3">Kreditdaten</Typography>
                                     <FormControl>
-                                        <FormLabel>Bank</FormLabel>
+                                        <FormLabel>Bank *</FormLabel>
                                         <Input
                                             required
                                             name="bank"
@@ -121,7 +235,7 @@ const NewObject = () => {
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Kreditsumme</FormLabel>
+                                        <FormLabel>Kreditsumme *</FormLabel>
                                         <Input
                                             required
                                             name="creditAmount"
@@ -135,7 +249,7 @@ const NewObject = () => {
                                     <Grid container direction="row" spacing={2}>
                                         <Grid xs={6}>
                                             <FormControl>
-                                                <FormLabel>Zins</FormLabel>
+                                                <FormLabel>Zins *</FormLabel>
                                                 <Input
                                                     required
                                                     name="interestRate"
@@ -149,7 +263,7 @@ const NewObject = () => {
                                         </Grid>
                                         <Grid xs={6}>
                                             <FormControl>
-                                                <FormLabel>Tilgung</FormLabel>
+                                                <FormLabel>Tilgung *</FormLabel>
                                                 <Input
                                                     required
                                                     name="redemptionRate"

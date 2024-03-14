@@ -1,0 +1,74 @@
+name: Pull Request
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20
+      - name: Install web dependencies
+        run: |
+          cd web
+          npm ci
+      - name: Lint
+        run: |
+          cd web
+          npm run lint
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: mysecretpassword
+          POSTGRES_DB: immowealth
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+      - name: Build with Gradle
+        run: ./gradlew build -Dquarkus.package.type=uber-jar
+      - name: Start application
+        run: |
+          nohup ./gradlew --console=plain quarkusDev &
+          for attempt in {1..20}; do sleep 1; if curl http://localhost:8080/; then echo ready; break; fi; echo waiting...; done
+      - name: Generate schema
+        run: curl http://localhost:8080/graphql/schema.graphql >> web/schema.graphql
+      - name: Update schema
+        run: |
+          echo "scalar Date" >> web/schema.graphql 
+          echo "scalar BigInteger" >> web/schema.graphql 
+          echo "scalar DateTime" >> web/schema.graphql
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 20
+      - name: Build web
+        run: |
+          cd web
+          npm ci
+          npm run compile
+          npm run build

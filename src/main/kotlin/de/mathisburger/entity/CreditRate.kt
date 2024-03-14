@@ -27,4 +27,9 @@ class CreditRate {
      * The amount of money
      */
     var amount: Double? = null;
+
+    /**
+     * The note of the credit rate
+     */
+    var note: String? = null;
 }

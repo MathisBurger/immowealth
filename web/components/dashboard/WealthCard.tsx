@@ -2,6 +2,7 @@ import {Card, Grid, Typography} from "@mui/joy";
 import {PieChart} from "@mui/x-charts";
 import React from "react";
 import {WealthResponse} from "@/generated/graphql";
+import {formatNumber} from "@/utilts/formatter";
 
 interface WealthCardProps {
     /**
@@ -32,7 +33,7 @@ const WealthCard = ({data, label}: WealthCardProps) => {
                 <Grid container direction="row" spacing={2}>
                     <Grid xs={6} alignItems="center">
                         <Typography level="h2">
-                            {data?.total}€
+                            {formatNumber(data?.total)}€
                         </Typography>
                     </Grid>
                     <Grid xs={6}>

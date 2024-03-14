@@ -41,7 +41,7 @@ const PathDisplay = () => {
         }
         return results;
     },
-    [routes, pathname, findRoute]);
+    [pathname, findRoute]);
 
     const route = useMemo<RouteConfigType|null>(
         () => findRoute(pathname, routes),

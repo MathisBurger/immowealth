@@ -7,7 +7,8 @@ import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
 import CreditRateList from "@/components/credit/CreditRateList";
 import CreditDataTab from "@/components/credit/CreditDataTab";
 import ConfigureCreditAutoPayModal from "@/components/credit/ConfigureCreditAutoPayModal";
-import {useParams, useSearchParams} from "next/navigation";
+import {useParams, useRouter, useSearchParams} from "next/navigation";
+import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 
 
 const CreditDetailsPage = () => {
@@ -16,6 +17,7 @@ const CreditDetailsPage = () => {
     const {data, loading} = useGetCreditQuery({
         variables: {id: parseInt(id, 10)}
     });
+    const router = useRouter();
 
     const [creditRateModalOpen, setCreditRateModalOpen] = useState<boolean>(false);
     const [configureAutoBookingModal, setConfigureAutoBookingModal] = useState<boolean>(false);
@@ -57,6 +59,11 @@ const CreditDetailsPage = () => {
                         onClick={() => setConfigureAutoBookingModal(true)}
                     >
                         Automatische Kreditbuchung
+                    </Button>
+                </Grid>
+                <Grid>
+                    <Button onClick={() => router.push('/objects/details?id=' + data?.credit.realEstateObjectId)}>
+                        <MapsHomeWorkIcon />
                     </Button>
                 </Grid>
             </Grid>

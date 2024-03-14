@@ -1,5 +1,6 @@
 package de.mathisburger.resources
 
+import de.mathisburger.data.input.UpdateHousePriceChangeInput
 import de.mathisburger.entity.HousePriceChange
 import de.mathisburger.service.HousePriceChangeService
 import jakarta.inject.Inject
@@ -55,5 +56,13 @@ class HousePriceChangeResource {
     @Query
     fun getAllHousePricesChangeByZip(zip: String): List<HousePriceChange> {
         return this.housePriceChangeService.getAllChangesWithZip(zip);
+    }
+
+    /**
+     * Updates the house price change
+     */
+    @Mutation
+    fun updateHousePriceChange(input: UpdateHousePriceChangeInput): HousePriceChange {
+        return this.housePriceChangeService.updateHousePrices(input);
     }
 }

@@ -33,5 +33,58 @@ data class UpdateRealEstateInput @JsonbCreator constructor(
      * Date the real estate was bought
      */
     @AdaptToScalar(Scalar.Date::class)
-    val dateBought: Date?
+    val dateBought: Date?,
+    /**
+     * Position lat
+     */
+    val positionLat: Double?,
+    /**
+     * Position lon
+     */
+    val positionLon: Double?,
+    /**
+     * Amount of rooms
+     */
+    val rooms: Double?,
+    /**
+     * Space for living
+     */
+    val space: Double?,
+    /**
+     * Type of the object
+     * e.g. house or flat (1. OG, EG)
+     */
+    val objectType: String?,
+    /**
+     * Construction year
+     */
+    val constructionYear: Int?,
+    /**
+     * Renovation year
+     */
+    val renovationYear: Int?,
+    /**
+     * Energy efficiency class
+     */
+    val energyEfficiency: String?,
+    /**
+     * Gross return of the object investment
+     */
+    val grossReturn: Double?,
+    /**
+     * Garden exists
+     */
+    val garden: Boolean?,
+    /**
+     * Kitchen exists
+     */
+    val kitchen: Boolean?,
+    /**
+     * Heating type (wood, oil, gas)
+     */
+    val heatingType: String?,
+    /**
+     * General notes
+     */
+    val notes: String?
 )

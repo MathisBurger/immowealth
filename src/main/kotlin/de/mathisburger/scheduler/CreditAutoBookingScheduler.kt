@@ -3,6 +3,7 @@ package de.mathisburger.scheduler
 import de.mathisburger.entity.CreditRate
 import de.mathisburger.repository.CreditRepository
 import de.mathisburger.util.AutoBookingUtils
+import de.mathisburger.util.DateUtils
 import jakarta.enterprise.context.ApplicationScoped
 import io.quarkus.scheduler.Scheduled;
 import jakarta.inject.Inject
@@ -33,6 +34,7 @@ class CreditAutoBookingScheduler {
             val rate = CreditRate();
             rate.date = Calendar.getInstance().time;
             rate.amount = credit.autoPayAmount;
+            rate.note = "[AUTOBOOKING] Buchung vom " + DateUtils.getTodayFormat();
             this.entityManager.persist(rate);
             credit.nextCreditRate = AutoBookingUtils.getNextAutoPayIntervalDate(credit.autoPayInterval!!)
             credit.rates.add(rate);

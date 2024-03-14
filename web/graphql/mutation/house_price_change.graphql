@@ -7,3 +7,9 @@ mutation AddHousePriceChange($zip: String! $change: Float! $year: Int!) {
 mutation DeleteHousePriceChange($id: BigInteger!) {
     deleteHousePriceChange(id: $id)
 }
+
+mutation UpdateHousePriceChange($input: UpdateHousePriceChangeInputInput!) {
+    updateHousePriceChange(input: $input) {
+        ...HousePriceChangeData
+    }
+}

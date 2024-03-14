@@ -1,6 +1,7 @@
 import {GetObjectQuery} from "@/generated/graphql";
 import {Card, CardContent, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import {formatNumber} from "@/utilts/formatter";
 
 interface ObjectCreditDataCardProps {
     /**
@@ -25,10 +26,10 @@ const ObjectCreditDataCard = ({loading, data}: ObjectCreditDataCardProps) => {
             <CardContent>
                 <LoadingSpinner loading={loading}>
                     <Typography level="h3">Kreditdaten</Typography>
-                    <Typography>Kredithöhe: {data?.object?.realEstate.credit?.amount}€</Typography>
+                    <Typography>Kredithöhe: {formatNumber(data?.object?.realEstate.credit?.amount)}€</Typography>
                     <Typography>Bank: {data?.object?.realEstate.credit?.bank}</Typography>
-                    <Typography>Zins: {data?.object?.realEstate.credit?.interestRate}%</Typography>
-                    <Typography>Tilgung: {data?.object?.realEstate.credit?.redemptionRate}%</Typography>
+                    <Typography>Zins: {formatNumber(data?.object?.realEstate.credit?.interestRate ?? 0)}%</Typography>
+                    <Typography>Tilgung: {formatNumber(data?.object?.realEstate.credit?.redemptionRate ?? 0)}%</Typography>
                 </LoadingSpinner>
             </CardContent>
         </Card>
