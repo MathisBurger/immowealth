@@ -60,6 +60,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Immo portal search
 - [ ] Object location watchlist
 - [ ] Add AFA calculations
+- [ ] Full UNIT test coverage
 - [ ] Add support for measured object prices
 
 ### Planned but not fixed
