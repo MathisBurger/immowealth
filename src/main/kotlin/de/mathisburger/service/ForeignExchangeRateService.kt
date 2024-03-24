@@ -25,6 +25,9 @@ class ForeignExchangeRateService {
     @RestClient
     lateinit var restClient: ForeignExchangeRateApi;
 
+    @Inject
+    lateinit var settingsService: SettingsService;
+
     /**
      * Reloads all foreign exchange rates
      */
@@ -45,5 +48,48 @@ class ForeignExchangeRateService {
             }
         }
         this.entityManager.flush();
+    }
+
+    /**
+     * Converts the given value in EUR to the wanted currency.
+     *
+     * @param value The value as double
+     * @return The converted value
+     */
+    fun convert(value: Double): Double {
+        return value * this.getExchangeRate();
+    }
+
+    /**
+     * Converts the given value in EUR to the wanted currency.
+     *
+     * @param value The value as int
+     * @return The converted value
+     */
+    fun convert(value: Int): Int {
+        return (value * this.getExchangeRate()).toInt();
+    }
+
+    /**
+     * Converts the given value in EUR to the wanted currency.
+     *
+     * @param value The value as double
+     * @return The converted value
+     */
+    fun convert(value: Long): Long {
+        return (value * this.getExchangeRate()).toLong();
+    }
+
+    /**
+     * Gets the exchange rate that is required for calculation.
+     *
+     * @return The exchange rate
+     */
+    private fun getExchangeRate(): Double {
+        val currency = this.settingsService.getSetting("currency").value;
+        if (currency == "EUR") {
+            return 1.0;
+        }
+        return this.foreignExchangeRateRepository.findBySymbol(currency!!).get().rate!!;
     }
 }

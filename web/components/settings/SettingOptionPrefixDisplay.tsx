@@ -1,5 +1,6 @@
 import {SettingOptionPrefix} from "@/generated/graphql";
 import ReactCountryFlag from "react-country-flag";
+import {CurrencyPrefixValues, mapPrefix} from "@/hooks/useCurrencySymbol";
 
 
 interface SettingOptionPrefixProps {
@@ -7,6 +8,10 @@ interface SettingOptionPrefixProps {
 }
 
 const SettingOptionPrefixDisplay = ({name}: SettingOptionPrefixProps) => {
+
+    if (CurrencyPrefixValues.includes(name as SettingOptionPrefix)) {
+        return mapPrefix(name);
+    }
 
     switch (name) {
         case SettingOptionPrefix.DeFlag:

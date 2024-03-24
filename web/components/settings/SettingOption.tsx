@@ -13,6 +13,7 @@ const SettingOption = ({option}: SettingOptionProps) => {
             {option.iconPrefix && (
                 <SettingOptionPrefixDisplay name={option.iconPrefix} />
             )}
+            &nbsp;
             {option.value}
         </Option>
     );

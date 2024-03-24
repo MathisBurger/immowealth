@@ -30,6 +30,17 @@ class SettingsService {
     }
 
     /**
+     * Gets a setting by key.
+     *
+     * @param key The key of the setting
+     *
+     * @return The setting
+     */
+    fun getSetting(key: String): Setting {
+        return this.settingsRepository.getByKey(key).get();
+    }
+
+    /**
      * Updates a specific setting.
      *
      * @param key The key of the setting
