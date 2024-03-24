@@ -1,0 +1,14 @@
+{
+  "settings": {
+    "tab": {
+      "general": "Allgemein"
+    },
+    "section": {
+      "general": "Allgemein"
+    },
+    "messages": {
+      "update-successful": "Einstellung erfolgreich aktualisiert"
+    },
+    "language": "Sprache"
+  }
+}

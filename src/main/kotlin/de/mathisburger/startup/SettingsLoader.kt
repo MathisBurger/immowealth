@@ -30,8 +30,8 @@ class SettingsLoader {
         if (lang.isEmpty) {
             var newLang = Setting()
             newLang.key = "language";
-            newLang.tab = "General";
-            newLang.section = "General";
+            newLang.tab = "general";
+            newLang.section = "general";
             newLang.options = mutableListOf(
                 SettingOption("deu", "Deutsch", SettingOptionPrefix.deFlag),
                 SettingOption("eng", "English", SettingOptionPrefix.enFlag)

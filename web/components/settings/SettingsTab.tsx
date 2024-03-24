@@ -8,6 +8,7 @@ import {
 } from "@/generated/graphql";
 import useSnackbar from "@/hooks/useSnackbar";
 import SettingOption from "@/components/settings/SettingOption";
+import {useTranslation} from "next-export-i18n";
 
 interface SettingsTabProps {
     dataObj: any;
@@ -16,6 +17,7 @@ interface SettingsTabProps {
 const SettingsTab = ({dataObj}: SettingsTabProps) => {
 
     const snackbar = useSnackbar();
+    const {t} = useTranslation();
 
     const [updateSettingMutation] = useUpdateSettingMutation({
         refetchQueries: [
@@ -34,7 +36,9 @@ const SettingsTab = ({dataObj}: SettingsTabProps) => {
                 }
             });
             if (result.errors === undefined) {
-                snackbar.success("Successfully updated setting");
+                snackbar.success(t("settings.messages.update-successful"));
+                let event = new Event("reRenderAll");
+                document.dispatchEvent(event);
             }
         }
     }
@@ -59,10 +63,10 @@ const SettingsTab = ({dataObj}: SettingsTabProps) => {
         <Stack spacing={2}>
             {Object.entries(sectionsObj).map((data: [string, SettingDataFragment[]]) => (
                 <>
-                    <Typography level="h2">{data[0]}</Typography>
+                    <Typography level="h2">{t(`settings.section.${data[0]}`)}</Typography>
                     {Object.values(data[1]).map((el) => (
                         <FormControl>
-                            <FormLabel>{el.key}</FormLabel>
+                            <FormLabel>{t(`settings.${el.key}`)}</FormLabel>
                             {el.options ? (
                                 <Select value={el.value} onChange={(_, c) => updateSetting(`${el.key}`, `${c}`)}>
                                     {el.options.map((option) => (
