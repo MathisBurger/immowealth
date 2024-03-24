@@ -10,5 +10,95 @@
       "update-successful": "Successfully updated setting"
     },
     "language": "Language"
+  },
+  "routes": {
+    "dashboard": "Dashboard",
+    "objects": "Objects",
+    "credits": "Credits",
+    "housingPrices": "Price changes",
+    "map": "Map",
+    "settings": "Settings"
+  },
+  "common": {
+    "credit": "Credit",
+    "credits": "Credits",
+    "sum": "Sum",
+    "creditRateSum": "Paid off",
+    "interestRate": "Interest rate",
+    "redemptionRate": "Redemption rate",
+    "bank": "Bank",
+    "actions": "Actions",
+    "change": "Change",
+    "zip": "Zip",
+    "year": "Year",
+    "years": "Years",
+    "create": "Create",
+    "choose": "Choose",
+    "cancel": "Cancel",
+    "object": "Object",
+    "objects": "Objects",
+    "details": "Details",
+    "general": "general",
+    "creditRates": "Credit rates",
+    "delete": "Delete",
+    "city": "City",
+    "creditSum": "Credit sum",
+    "activated": "Activated",
+    "save": "Save",
+    "update": "Update",
+    "add": "Add",
+    "price": "Price"
+  },
+  "credit": {
+    "tab": {
+      "general": "General",
+      "rates": "Credit rates"
+    },
+    "button": {
+      "add-rate": "Add credit rate",
+      "auto-booking": "Auto booking",
+      "configure-auto-booking": "Configure auto booking"
+    },
+    "currentMarketPrice": "Market value (current)",
+    "priceForecast": "Market value (forecast)",
+    "nextBooking": "Next booking",
+    "bookingSum": "Booking sum",
+    "financingHistory": "Financing history",
+    "creditAmount": "Credit amount",
+    "rate": "Rate",
+    "bookingDate": "Booking date",
+    "note": "Note",
+    "bookingDay": "Booking day"
+  },
+  "housingPrices": {
+    "new": "New price change",
+    "housingPricesChange": "Price changes"
+  },
+  "map": {
+    "in-editing": "You are in editing mode.",
+    "correct-position": "Correct position"
+  },
+  "object": {
+    "message": {
+      "pleaseEnterValue": "Please enter a value.",
+      "noFutureDate": "Future dates are not allowed"
+    },
+    "new": "New object",
+    "baseData": "Base data",
+    "streetAndHouseNr": "Street and house nr",
+    "buyPrice": "Initial price",
+    "buyDate": "Buy date",
+    "rooms": "Rooms",
+    "usageSpace": "Usable space",
+    "objectType": "Object type",
+    "constructionYear": "Construction year",
+    "renovationYear": "Renovated (year)",
+    "energyEfficiency": "Energy efficiency",
+    "return": "Gross return",
+    "heatingType": "Heating type",
+    "garden": "Garden",
+    "kitchen": "Kitchen",
+    "notes": "Notes",
+    "estimatedCurrentMarketValue": "Estimated market value (current)"
   }
 }
