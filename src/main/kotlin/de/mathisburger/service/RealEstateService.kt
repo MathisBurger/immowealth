@@ -21,7 +21,7 @@ import java.util.Calendar
  * The real estate service
  */
 @ApplicationScoped
-class RealEstateService {
+class RealEstateService : AbstractService() {
 
     @Inject
     lateinit var entityManager: EntityManager
@@ -31,6 +31,9 @@ class RealEstateService {
 
     @Inject
     lateinit var priceChangeRepository: HousePriceChangeRepository;
+
+    @Inject
+    lateinit var creditService: CreditService;
 
     @Inject
     @RestClient
@@ -47,14 +50,14 @@ class RealEstateService {
         credit.bank = input.credit.bank;
         credit.interestRate = input.credit.interestRate;
         credit.redemptionRate = input.credit.redemptionRate;
-        credit.amount = input.credit.amount;
+        credit.amount = this.cs.convertBack(input.credit.amount);
         this.entityManager.persist(credit);
 
         val obj = RealEstateObject()
         obj.city = input.city;
         obj.zip = input.zip;
         obj.streetAndHouseNr = input.streetAndHouseNr;
-        obj.initialValue = input.initialValue;
+        obj.initialValue = this.cs.convertBack(input.initialValue);
         obj.credit = credit;
         obj.dateBought = input.dateBought;
         obj.rooms = input.rooms;
@@ -84,7 +87,7 @@ class RealEstateService {
      * Gets all objects
      */
     fun getAllObjects(): List<RealEstateObject> {
-        return this.realEstateRepository.listAll()
+        return this.realEstateRepository.listAll().map { this.convertObjectCurrencies(it) }
     }
 
     /**
@@ -104,12 +107,14 @@ class RealEstateService {
         val priceChanges = this.getPriceChanges(obj);
         val marketValue = if(priceChanges.isEmpty()) obj.initialValue!! else priceChanges.last().value;
         return ObjectResponse(
-            obj,
-            creditRateSum,
-            cum,
+            this.convertObjectCurrencies(obj),
+            this.cs.convert(creditRateSum),
+            cum.map { this.cs.convert(it) },
+            // Price changes is already converted
             priceChanges,
+            // Price forecast is already converted
             this.getPriceForecast(obj, yearsInFuture),
-            marketValue
+            this.cs.convert(marketValue)
         );
     }
 
@@ -123,7 +128,7 @@ class RealEstateService {
         val obj = this.realEstateRepository.findById(input.id);
         obj.zip = input.zip ?: obj.zip;
         obj.dateBought = input.dateBought ?: obj.dateBought;
-        obj.initialValue = input.initialValue ?: obj.initialValue;
+        obj.initialValue = this.cs.convertBack(input.initialValue) ?: obj.initialValue;
         obj.city = input.city ?: obj.city;
         obj.streetAndHouseNr = input.streetAndHouseNr ?: obj.streetAndHouseNr;
         obj.positionLat = input.positionLat ?: obj.positionLat;
@@ -167,11 +172,11 @@ class RealEstateService {
             .filter { it.year!! >= DateUtils.getYearFromDate(obj.dateBought!!) }
             .sortedBy { it.year }
         val data: MutableList<PriceValueRelation> = mutableListOf();
-        data.add(PriceValueRelation(obj.initialValue!!, DateUtils.getYearFromDate(obj.dateBought!!)));
+        data.add(PriceValueRelation(this.cs.convert(obj.initialValue!!), DateUtils.getYearFromDate(obj.dateBought!!)));
         var value = obj.initialValue!!;
         for (change in changes) {
             value = (value + value * (change.change!! / 100)).toLong();
-            data.add(PriceValueRelation(value, change.year!!));
+            data.add(PriceValueRelation(this.cs.convert(value), change.year!!));
         }
         return data;
     }
@@ -188,15 +193,15 @@ class RealEstateService {
         if (priceChanges.isEmpty()) {
             averageGrowth = 2.0;
         } else {
-            val diffMoney = priceChanges.last().value - obj.initialValue!!;
+            val diffMoney = priceChanges.last().value - this.cs.convert(obj.initialValue!!);
             var diffYears = priceChanges.last().year - DateUtils.getYearFromDate(obj.dateBought!!);
             if (diffYears == 0) {
                 diffYears = 1;
             }
             val averageMoneyPerYear = diffMoney / diffYears;
-            averageGrowth = averageMoneyPerYear.toDouble() / obj.initialValue!!
+            averageGrowth = averageMoneyPerYear.toDouble() / this.cs.convert(obj.initialValue!!)
         }
-        var value = (if(priceChanges.isEmpty()) obj.initialValue!! else priceChanges.last().value).toDouble();
+        var value = (if(priceChanges.isEmpty()) this.cs.convert(obj.initialValue!!) else priceChanges.last().value).toDouble();
         val currentYear = if(priceChanges.isEmpty()) DateUtils.getYearFromDate(obj.dateBought!!) else priceChanges.last().year;
         var data: MutableList<PriceValueRelation> = mutableListOf()
         for (i in 1..yearsInFuture) {
@@ -204,5 +209,17 @@ class RealEstateService {
             data.add(PriceValueRelation(value.toLong(), currentYear+i));
         }
         return data;
+    }
+
+    /**
+     * Converts an object with currencies
+     *
+     * @param obj The initial object
+     * @return The updated object
+     */
+    private fun convertObjectCurrencies(obj: RealEstateObject): RealEstateObject {
+        obj.initialValue = this.cs.convert(obj.initialValue!!);
+        obj.credit = this.creditService.convertCreditCurrencies(obj.credit!!);
+        return obj;
     }
 }

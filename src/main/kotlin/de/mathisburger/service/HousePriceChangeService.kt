@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional
  * The house price change service
  */
 @ApplicationScoped
-class HousePriceChangeService {
+class HousePriceChangeService : AbstractService() {
 
     @Inject
     lateinit var entityManager: EntityManager;

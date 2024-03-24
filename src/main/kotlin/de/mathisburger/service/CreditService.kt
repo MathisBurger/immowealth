@@ -22,7 +22,7 @@ import java.util.Date
  * The credit service
  */
 @ApplicationScoped
-class CreditService {
+class CreditService : AbstractService() {
 
     @Inject
     lateinit var creditRepository: CreditRepository;
@@ -52,7 +52,7 @@ class CreditService {
         val credit = this.creditRepository.findById(id);
         val creditRate = CreditRate()
         creditRate.date = date;
-        creditRate.amount = rate;
+        creditRate.amount = this.cs.convertBack(rate);
         creditRate.note = note;
         this.entityManager.persist(creditRate);
         credit.rates.add(creditRate);
@@ -125,7 +125,7 @@ class CreditService {
         }
         credit.autoPayInterval = interval;
         credit.nextCreditRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval);
-        credit.autoPayAmount = amount;
+        credit.autoPayAmount = this.cs.convertBack(amount);
         this.entityManager.persist(credit);
         this.entityManager.flush();
         return this.getResponseObject(credit);
@@ -153,9 +153,31 @@ class CreditService {
         var list: MutableList<Double> = mutableListOf();
         for (rate in credit.rates) {
             sum += rate.amount!!;
-            list.add(sum);
+            list.add(this.cs.convert(sum));
         }
-       val res =
-        return CreditResponse(credit, sum, list, this.realEstateRepository.getByCredit(credit).id!!);
+        return CreditResponse(this.convertCreditCurrencies(credit), this.cs.convert(sum), list, this.realEstateRepository.getByCredit(credit).id!!);
+    }
+
+    /**
+     * Convert currencies of credit object.
+     *
+     * @param credit The initial credit
+     * @return The updated credit
+     */
+    fun convertCreditCurrencies(credit: Credit): Credit {
+        credit.amount = this.cs.convert(credit.amount!!);
+        credit.rates = credit.rates.map { this.convertCreditRate(it) }.toMutableList();
+        return credit;
+    }
+
+    /**
+     * Convert currencies of credit rate
+     *
+     * @param rate The credit rate
+     * @return The updated credit rate
+     */
+    private fun convertCreditRate(rate: CreditRate): CreditRate {
+        rate.amount = this.cs.convert(rate.amount!!);
+        return rate;
     }
 }

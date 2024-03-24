@@ -56,6 +56,9 @@ export const mapPrefix = (name: string) => {
 
 const useCurrencySymbol = () => {
     const settings = useContext(SettingsContext);
+    if (settings.length === 0) {
+        return "";
+    }
     const currency = settings.filter((s) => s.key === "currency")[0].value;
     return mapPrefix(currency!);
 }

@@ -7,7 +7,7 @@
       "general": "General"
     },
     "messages": {
-      "update-successful": "Successfully updated setting"
+      "update-successful": "Successfully updated setting (page may be reloaded to work properly)"
     },
     "language": "Language",
     "currency": "Currency"

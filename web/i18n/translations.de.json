@@ -7,7 +7,7 @@
       "general": "Allgemein"
     },
     "messages": {
-      "update-successful": "Einstellung erfolgreich aktualisiert"
+      "update-successful": "Einstellung erfolgreich aktualisiert (Möglicherweise muss die Seite neu geladen werden, damit sie wie gewünscht funktioniert)"
     },
     "language": "Sprache",
     "currency": "Währung"

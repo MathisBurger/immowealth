@@ -81,6 +81,39 @@ class ForeignExchangeRateService {
     }
 
     /**
+     * Converts the given value from given currency to EUR.
+     *
+     * @param value The value as double
+     * @return The converted value
+     */
+    fun convertBack(value: Double?): Double? {
+        if (value == null) return null;
+        return value / this.getExchangeRate();
+    }
+
+    /**
+     * Converts the given value from given currency to EUR.
+     *
+     * @param value The value as int
+     * @return The converted value
+     */
+    fun convertBack(value: Int?): Int? {
+        if (value == null) return null;
+        return (value / this.getExchangeRate()).toInt();
+    }
+
+    /**
+     * Converts the given value from given currency to EUR.
+     *
+     * @param value The value as double
+     * @return The converted value
+     */
+    fun convertBack(value: Long?): Long? {
+        if (value == null) return null;
+        return (value / this.getExchangeRate()).toLong();
+    }
+
+    /**
      * Gets the exchange rate that is required for calculation.
      *
      * @return The exchange rate
