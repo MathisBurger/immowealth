@@ -10,5 +10,68 @@
       "update-successful": "Einstellung erfolgreich aktualisiert"
     },
     "language": "Sprache"
+  },
+  "common": {
+    "credit": "Kredit",
+    "credits": "Kredite",
+    "sum": "Summe",
+    "creditRateSum": "Getilgt",
+    "interestRate": "Zins",
+    "redemptionRate": "Tilgung",
+    "bank": "Bank",
+    "actions": "Aktionen",
+    "change": "Änderung",
+    "zip": "Postleitzahl",
+    "year": "Jahr",
+    "years": "Jahre",
+    "create": "Erstellen",
+    "choose": "Auswählen",
+    "cancel": "Abbrechen",
+    "object": "Objekt",
+    "objects": "Okjekte",
+    "details": "Details",
+    "general": "Allgemein",
+    "creditRates": "Kreditraten",
+    "delete": "Löschen",
+    "city": "Stadt",
+    "creditSum": "Kreditsumme"
+  },
+  "credit": {
+    "tab": {
+      "general": "Allgemein",
+      "rates": "Kreditraten"
+    },
+    "button": {
+      "add-rate": "Kreditrate hinzufügen",
+      "auto-booking": "Automatische Kreditbuchung"
+    },
+    "currentMarketPrice": "Marktwert (aktuell)",
+    "priceForecast": "Marktwert (Prognose)"
+  },
+  "housingPrices": {
+    "new": "Neue Preisänderung",
+    "housingPricesChange": "Preisänderungen"
+  },
+  "map": {
+    "in-editing": "Du befindest dich im Korrektur-Modus.",
+    "correct-position": "Position korrigieren"
+  },
+  "object": {
+    "new": "Neues Objekt",
+    "baseData": "Grunddaten",
+    "streetAndHouseNr": "Straße und Hausnummer",
+    "buyPrice": "Kaufpreis",
+    "buyDate": "Kaufdatum",
+    "rooms": "Räume",
+    "usageSpace": "Nutzfläche",
+    "objectType": "Wohnungstyp",
+    "constructionYear": "Baujahr",
+    "renovationYear": "Renoviert (Jahr)",
+    "energyEfficiency": "Energie Effizienz",
+    "return": "Rendite",
+    "heatingType": "Heiztyp",
+    "garden": "Garten",
+    "kitchen": "Küche",
+    "notes": "Notizen"
   }
 }

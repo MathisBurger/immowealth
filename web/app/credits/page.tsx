@@ -8,11 +8,13 @@ import {formatNumber} from "@/utilts/formatter";
 import {useMemo} from "react";
 import {GridColDef, GridRenderCellParams, GridValueFormatterParams, GridValueGetterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
+import {useTranslation} from "next-export-i18n";
 
 const CreditsPage = () => {
 
     const {data} = useGetCreditsQuery();
     const router = useRouter();
+    const {t} = useTranslation();
 
     const cols = useMemo<GridColDef[]>(() => [
         {
@@ -22,40 +24,40 @@ const CreditsPage = () => {
         },
         {
             field: 'amount',
-            headerName: 'Summe',
+            headerName: t('common.sum'),
             width: 200,
             valueGetter: ({row}: GridValueGetterParams) => row.credit.amount,
             valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
         },
         {
             field: 'creditRateSum',
-            headerName: 'Getilgt',
+            headerName: t('common.creditRateSum'),
             width: 200,
             valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
         },
         {
             field: 'interestRate',
-            headerName: 'Zins',
+            headerName: t('common.interestRate'),
             width: 100,
             valueGetter: ({row}: GridValueGetterParams) => row.credit.interestRate,
             valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}%`
         },
         {
             field: 'redemptionRate',
-            headerName: 'Tilgung',
+            headerName: t('common.redemptionRate'),
             width: 100,
             valueGetter: ({row}: GridValueGetterParams) => row.credit.redemptionRate,
             valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}%`
         },
         {
             field: 'bank',
-            headerName: 'Bank',
+            headerName: t('common.bank'),
             width: 200,
             valueGetter: ({row}: GridValueGetterParams) => row.credit.bank,
         },
         {
             field: 'actions',
-            headerName: 'Aktionen',
+            headerName: t('common.actions'),
             width: 400,
             renderCell: ({row}: GridRenderCellParams) => (
                 <Grid container direction="row" spacing={2}>
@@ -76,7 +78,7 @@ const CreditsPage = () => {
 
     return (
         <>
-            <Typography level="h1">Kredite</Typography>
+            <Typography level="h1">{t('common.credits')}</Typography>
             <Divider />
             <EntityList
                 rows={data?.allCredits ?? []}

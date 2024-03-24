@@ -15,12 +15,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import {formatNumber} from "@/utilts/formatter";
 import {GridColDef, GridValueFormatterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
+import {useTranslation} from "next-export-i18n";
 
 
 const HousingPrices = () => {
 
     const {data} = useAllHousePriceChangesQuery();
     const router = useRouter();
+    const {t} = useTranslation();
     const [updateObject, setUpdateObject] = useState<HousePriceChangeDataFragment|null>(null);
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteHousePriceChangeMutation({
@@ -47,22 +49,22 @@ const HousingPrices = () => {
         },
         {
             field: 'change',
-            headerName: 'Änderung',
+            headerName: t('common.change'),
             width: 200,
             valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
         },
         {
             field: 'zip',
-            headerName: 'Postleitzahl'
+            headerName: t('common.zip')
         },
         {
             field: 'year',
-            headerName: 'Jahr'
+            headerName: t('common.year')
         },
         {
             field: 'actions',
             width: 400,
-            headerName: 'Aktionen',
+            headerName: t('common.actions'),
             renderCell: ({row}) => (
                 <Grid container direction="row" spacing={2}>
                     <Grid xs={6}>
@@ -99,18 +101,18 @@ const HousingPrices = () => {
 
     return (
         <>
-            <Typography level="h1">Preisänderungen</Typography>
+            <Typography level="h1">{t('housingPrices.housingPricesChange')}</Typography>
             <Button
                 variant="solid"
                 color="primary"
                 sx={{width: '200px'}}
                 onClick={() => router.push("/housingPrices/new")}
             >
-                Neue Preisänderung
+                {t('housingPrices.new')}
             </Button>
             <Divider />
             <Autocomplete
-                placeholder="Choose"
+                placeholder={t('common.choose')}
                 variant="soft"
                 sx={{width: '200px'}}
                 options={zips.map((o) => ({label: o, id: o}))}
