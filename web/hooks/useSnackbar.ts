@@ -14,7 +14,16 @@ const useSnackbar = () => {
         enqueueSnackbar(message, {variant: 'error'});
     }
 
-    return {error};
+    /**
+     * success snackbar
+     *
+     * @param message success message
+     */
+    const success = (message: string) => {
+        enqueueSnackbar(message, {variant: 'success'});
+    }
+
+    return {error, success};
 }
 
 export default useSnackbar;

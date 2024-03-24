@@ -51,6 +51,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Most / recently used document recommendations
 
 ### v1.4.0
+- [ ] Full UNIT test coverage
 - [ ] User account system
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
@@ -60,7 +61,6 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Immo portal search
 - [ ] Object location watchlist
 - [ ] Add AFA calculations
-- [ ] Full UNIT test coverage
 - [ ] Add support for measured object prices
 
 ### Planned but not fixed
