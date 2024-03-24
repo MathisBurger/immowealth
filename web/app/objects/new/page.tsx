@@ -17,6 +17,7 @@ import {useRouter} from "next/navigation";
 import {FormEvent} from "react";
 import {GetAllObjectsDocument, useCreateRealEstateMutation} from "@/generated/graphql";
 import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 
 const NewObject = () => {
@@ -26,6 +27,7 @@ const NewObject = () => {
         refetchQueries: [{query: GetAllObjectsDocument}]
     });
     const {t} = useTranslation();
+    const currency = useCurrencySymbol();
 
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -117,7 +119,7 @@ const NewObject = () => {
                                             variant="soft"
                                             type="number"
                                             fullWidth
-                                            endDecorator={"€"}
+                                            endDecorator={currency}
                                         />
                                     </FormControl>
                                     <FormControl>
@@ -245,7 +247,7 @@ const NewObject = () => {
                                             variant="soft"
                                             type="number"
                                             fullWidth
-                                            endDecorator={"€"}
+                                            endDecorator={currency}
                                         />
                                     </FormControl>
                                     <Grid container direction="row" spacing={2}>

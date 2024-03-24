@@ -3,6 +3,7 @@ import {PieChart} from "@mui/x-charts";
 import React from "react";
 import {WealthResponse} from "@/generated/graphql";
 import {formatNumber} from "@/utilts/formatter";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 interface WealthCardProps {
     /**
@@ -22,7 +23,7 @@ interface WealthCardProps {
  */
 const WealthCard = ({data, label}: WealthCardProps) => {
 
-    //console.log(data);
+    const currency = useCurrencySymbol();
 
     return (
         <Grid xs={6}>
@@ -33,7 +34,7 @@ const WealthCard = ({data, label}: WealthCardProps) => {
                 <Grid container direction="row" spacing={2}>
                     <Grid xs={6} alignItems="center">
                         <Typography level="h2">
-                            {formatNumber(data?.total)}€
+                            {formatNumber(data?.total)}{currency}
                         </Typography>
                     </Grid>
                     <Grid xs={6}>

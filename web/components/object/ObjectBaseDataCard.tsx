@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import EditableDisplay, {DisplayValue, InputType} from "@/components/EditableDisplay";
 import {formatNumber} from "@/utilts/formatter";
 import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 
 interface ObjectBaseDataCard {
@@ -40,6 +41,7 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
     });
 
     const {t} = useTranslation();
+    const currency = useCurrencySymbol();
 
     const updateContent = (field: keyof UpdateRealEstateInputInput) => async (val: DisplayValue): Promise<boolean> => {
         const result = await mutation({
@@ -60,11 +62,11 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.object?.realEstate.initialValue}
-                        customDisplay={(v) => `${t('object.buyPrice')}: ${formatNumber(v as number)}€`}
+                        customDisplay={(v) => `${t('object.buyPrice')}: ${formatNumber(v as number)}${currency}`}
                         onChange={updateContent('initialValue')}
                         loading={mutationLoading}
                     />
-                    <Typography>{t('object.estimatedCurrentMarketValue')}: {data?.object.estimatedMarketValue}€</Typography>
+                    <Typography>{t('object.estimatedCurrentMarketValue')}: {data?.object.estimatedMarketValue}{currency}</Typography>
                     <EditableDisplay
                         inputType={InputType.TEXT}
                         value={data?.object?.realEstate.streetAndHouseNr}

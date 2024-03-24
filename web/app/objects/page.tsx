@@ -9,6 +9,7 @@ import EntityList from "@/components/EntityList";
 import {useCallback, useMemo} from "react";
 import {GridColDef, GridRenderCellParams, GridValueFormatterParams} from "@mui/x-data-grid";
 import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 
 const ObjectsPage = () => {
@@ -16,6 +17,7 @@ const ObjectsPage = () => {
     const {data} = useGetAllObjectsQuery();
     const router = useRouter();
     const {t} = useTranslation();
+    const currency = useCurrencySymbol();
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteRealEstateMutation({
         refetchQueries: [
@@ -40,7 +42,7 @@ const ObjectsPage = () => {
             field: 'initialValue',
             headerName: t('object.buyPrice'),
             width: 200,
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}${currency}`
         },
         {
             field: 'streetAndHouseNr',
@@ -79,7 +81,7 @@ const ObjectsPage = () => {
                 </Grid>
             )
         }
-    ], [deleteLoading, router, deleteObject, t]);
+    ], [deleteLoading, router, deleteObject, t, currency]);
 
     return (
         <>

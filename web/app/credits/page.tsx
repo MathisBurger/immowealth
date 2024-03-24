@@ -9,11 +9,13 @@ import {useMemo} from "react";
 import {GridColDef, GridRenderCellParams, GridValueFormatterParams, GridValueGetterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
 import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 const CreditsPage = () => {
 
     const {data} = useGetCreditsQuery();
     const router = useRouter();
+    const currency = useCurrencySymbol();
     const {t} = useTranslation();
 
     const cols = useMemo<GridColDef[]>(() => [
@@ -27,13 +29,13 @@ const CreditsPage = () => {
             headerName: t('common.sum'),
             width: 200,
             valueGetter: ({row}: GridValueGetterParams) => row.credit.amount,
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}${currency}`
         },
         {
             field: 'creditRateSum',
             headerName: t('common.creditRateSum'),
             width: 200,
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}${currency}`
         },
         {
             field: 'interestRate',

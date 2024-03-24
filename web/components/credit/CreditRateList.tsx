@@ -12,6 +12,7 @@ import {useCallback, useMemo} from "react";
 import {GridColDef, GridRenderCellParams, GridValueFormatterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
 import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 interface CreditRateListProps {
     /**
@@ -28,6 +29,7 @@ interface CreditRateListProps {
 const CreditRateList = ({elements}: CreditRateListProps) => {
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteCreditRateMutation();
+    const currency = useCurrencySymbol();
 
     const deleteObject = useCallback(async (id: string) => {
         await deleteMutation({
@@ -45,7 +47,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
         {
             field: 'amount',
             headerName: t('credit.rate'),
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value ?? 0)}€`
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value ?? 0)}${currency}`
         },
         {
             field: 'date',

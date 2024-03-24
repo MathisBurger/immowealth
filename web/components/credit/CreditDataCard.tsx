@@ -9,6 +9,7 @@ import {
 import EditableDisplay, {DisplayValue, InputType} from "@/components/EditableDisplay";
 import {formatNumber} from "@/utilts/formatter";
 import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 interface CreditDataCardProps {
     /**
@@ -38,6 +39,7 @@ const CreditDataCard = ({loading, data}: CreditDataCardProps) => {
     });
 
     const {t} = useTranslation();
+    const currency = useCurrencySymbol();
 
     const updateContent = (field: keyof UpdateCreditInputInput) => async (val: DisplayValue): Promise<boolean> => {
         const result = await mutation({
@@ -57,11 +59,11 @@ const CreditDataCard = ({loading, data}: CreditDataCardProps) => {
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.credit.credit.amount}
-                        customDisplay={(v) => `${t('credit.creditAmount')}: ${formatNumber(v as number)}€`}
+                        customDisplay={(v) => `${t('credit.creditAmount')}: ${formatNumber(v as number)}${currency}`}
                         onChange={updateContent('amount')}
                         loading={mutationLoading}
                     />
-                    <Typography>Getilgt: {data?.credit.creditRateSum}€</Typography>
+                    <Typography>Getilgt: {data?.credit.creditRateSum}{currency}</Typography>
                     <EditableDisplay
                         inputType={InputType.TEXT}
                         value={data?.credit.credit.bank}

@@ -16,6 +16,7 @@ import {formatNumber} from "@/utilts/formatter";
 import {GridColDef, GridValueFormatterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
 import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 
 const HousingPrices = () => {
@@ -23,6 +24,7 @@ const HousingPrices = () => {
     const {data} = useAllHousePriceChangesQuery();
     const router = useRouter();
     const {t} = useTranslation();
+    const currency = useCurrencySymbol();
     const [updateObject, setUpdateObject] = useState<HousePriceChangeDataFragment|null>(null);
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteHousePriceChangeMutation({
@@ -51,7 +53,7 @@ const HousingPrices = () => {
             field: 'change',
             headerName: t('common.change'),
             width: 200,
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
+            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}${currency}`
         },
         {
             field: 'zip',

@@ -22,6 +22,7 @@ import LoadingButton from "@/components/LoadingButton";
 import {FormEvent, useState} from "react";
 import dayjs from "dayjs";
 import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 interface ConfigureCreditAutoPayModalProps {
     /**
@@ -58,6 +59,7 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
     });
 
     const {t} = useTranslation();
+    const currency = useCurrencySymbol();
 
     const [checked, setChecked] = useState<boolean>(credit?.autoPayInterval !== null && credit?.autoPayInterval !== undefined);
 
@@ -114,7 +116,7 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                                     <Input
                                         type="number"
                                         variant="outlined"
-                                        endDecorator="€"
+                                        endDecorator={currency}
                                         name="amount"
                                         disabled={!checked}
                                         defaultValue={credit?.autoPayAmount ?? 0}
