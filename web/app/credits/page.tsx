@@ -74,7 +74,7 @@ const CreditsPage = () => {
                 </Grid>
             )
         }
-    ], [router]);
+    ], [router, t]);
 
     return (
         <>

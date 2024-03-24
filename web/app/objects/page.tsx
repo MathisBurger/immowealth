@@ -79,7 +79,7 @@ const ObjectsPage = () => {
                 </Grid>
             )
         }
-    ], [deleteLoading, router, deleteObject]);
+    ], [deleteLoading, router, deleteObject, t]);
 
     return (
         <>
