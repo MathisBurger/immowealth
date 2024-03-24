@@ -11,6 +11,7 @@ import {formatNumber} from "@/utilts/formatter";
 import {useCallback, useMemo} from "react";
 import {GridColDef, GridRenderCellParams, GridValueFormatterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
+import {useTranslation} from "next-export-i18n";
 
 interface CreditRateListProps {
     /**
@@ -34,6 +35,8 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
         });
     }, [deleteMutation]);
 
+    const {t} = useTranslation();
+
     const cols = useMemo<GridColDef[]>(() => [
         {
             field: 'id',
@@ -41,22 +44,22 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
         },
         {
             field: 'amount',
-            headerName: 'Rate',
+            headerName: t('credit.rate'),
             valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value ?? 0)}€`
         },
         {
             field: 'date',
-            headerName: 'Buchungsdatum',
+            headerName: t('credit.bookingDate'),
             valueFormatter: ({value}: GridValueFormatterParams) => `${dayjs(value).format("DD.MM.YYYY")}`
         },
         {
             field: 'note',
-            headerName: 'Notiz',
+            headerName: t('credit.note'),
             width: 400
         },
         {
             field: 'actions',
-            headerName: 'Aktionen',
+            headerName: t('common.actions'),
             renderCell: ({row}: GridRenderCellParams) => (
                 <Button color="danger" onClick={() => deleteObject(`${row.id}`)}>
                     <DeleteIcon />

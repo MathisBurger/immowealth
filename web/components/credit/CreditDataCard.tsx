@@ -8,6 +8,7 @@ import {
 } from "@/generated/graphql";
 import EditableDisplay, {DisplayValue, InputType} from "@/components/EditableDisplay";
 import {formatNumber} from "@/utilts/formatter";
+import {useTranslation} from "next-export-i18n";
 
 interface CreditDataCardProps {
     /**
@@ -36,6 +37,8 @@ const CreditDataCard = ({loading, data}: CreditDataCardProps) => {
         ]
     });
 
+    const {t} = useTranslation();
+
     const updateContent = (field: keyof UpdateCreditInputInput) => async (val: DisplayValue): Promise<boolean> => {
         const result = await mutation({
             variables: {input: {
@@ -50,11 +53,11 @@ const CreditDataCard = ({loading, data}: CreditDataCardProps) => {
         <Card variant="outlined">
             <CardContent>
                 <LoadingSpinner loading={loading}>
-                    <Typography level="h3">Kreditdaten</Typography>
+                    <Typography level="h3">{t('common.creditRates')}</Typography>
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.credit.credit.amount}
-                        customDisplay={(v) => `Kredithöhe: ${formatNumber(v as number)}€`}
+                        customDisplay={(v) => `${t('credit.creditAmount')}: ${formatNumber(v as number)}€`}
                         onChange={updateContent('amount')}
                         loading={mutationLoading}
                     />
@@ -62,21 +65,21 @@ const CreditDataCard = ({loading, data}: CreditDataCardProps) => {
                     <EditableDisplay
                         inputType={InputType.TEXT}
                         value={data?.credit.credit.bank}
-                        customDisplay={(v) => `Bank: ${v}`}
+                        customDisplay={(v) => `${t('common.bank')}: ${v}`}
                         onChange={updateContent('bank')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.credit.credit.interestRate}
-                        customDisplay={(v) => `Zins: ${formatNumber(v as number)}%`}
+                        customDisplay={(v) => `${t('common.interestRate')}: ${formatNumber(v as number)}%`}
                         onChange={updateContent('interestRate')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.credit.credit.redemptionRate}
-                        customDisplay={(v) => `Tilgung: ${formatNumber(v as number)}%`}
+                        customDisplay={(v) => `${t('common.redemptionRate')}: ${formatNumber(v as number)}%`}
                         onChange={updateContent('redemptionRate')}
                         loading={mutationLoading}
                     />

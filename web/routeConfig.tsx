@@ -8,32 +8,32 @@ import MapIcon from '@mui/icons-material/Map';
 
 const routes: RouteConfigType[] = [
     {
-        name: 'Dashboard',
+        name: 'dashboard',
         path: '/dashboard',
         icon: <DashboardIcon />
     },
     {
-        name: 'Objekte',
+        name: 'objects',
         path: '/objects',
         icon: <ApartmentIcon />
     },
     {
-        name: 'Kredite',
+        name: 'credits',
         path: '/credits',
         icon: <AttachMoneyIcon />
     },
     {
-        name: 'Preisänderungen',
+        name: 'housingPrices',
         path: '/housingPrices',
         icon: <ShowChartIcon />
     },
     {
-        name: 'Karte',
+        name: 'map',
         path: '/map',
         icon: <MapIcon />
     },
     {
-        name: 'Einstellungen',
+        name: 'settings',
         path: '/settings',
         icon: <SettingsRoundedIcon />
     },

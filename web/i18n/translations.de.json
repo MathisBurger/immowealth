@@ -11,6 +11,14 @@
     },
     "language": "Sprache"
   },
+  "routes": {
+    "dashboard": "Dashboard",
+    "objects": "Objekte",
+    "credits": "Kredite",
+    "housingPrices": "Preisänderungen",
+    "map": "Map",
+    "settings": "Einstellungen"
+  },
   "common": {
     "credit": "Kredit",
     "credits": "Kredite",
@@ -34,7 +42,12 @@
     "creditRates": "Kreditraten",
     "delete": "Löschen",
     "city": "Stadt",
-    "creditSum": "Kreditsumme"
+    "creditSum": "Kreditsumme",
+    "activated": "Aktiviert",
+    "save": "Speichern",
+    "update": "Aktualisieren",
+    "add": "Hinzufügen",
+    "price": "Preis"
   },
   "credit": {
     "tab": {
@@ -43,10 +56,19 @@
     },
     "button": {
       "add-rate": "Kreditrate hinzufügen",
-      "auto-booking": "Automatische Kreditbuchung"
+      "auto-booking": "Automatische Kreditbuchung",
+      "configure-auto-booking": "Automatische Buchung konfigurieren"
     },
     "currentMarketPrice": "Marktwert (aktuell)",
-    "priceForecast": "Marktwert (Prognose)"
+    "priceForecast": "Marktwert (Prognose)",
+    "nextBooking": "Nächste Buchung",
+    "bookingSum": "Buchungssumme",
+    "financingHistory": "Finanzierungsverlauf",
+    "creditAmount": "Kredithöhe",
+    "rate": "Rate",
+    "bookingDate": "Buchungsdatum",
+    "note": "Notiz",
+    "bookingDay": "Buchungstag"
   },
   "housingPrices": {
     "new": "Neue Preisänderung",
@@ -57,6 +79,10 @@
     "correct-position": "Position korrigieren"
   },
   "object": {
+    "message": {
+      "pleaseEnterValue": "Bitte gebe einen Wert ein.",
+      "noFutureDate": "Das Datum darf nicht in der Zukunft liegen"
+    },
     "new": "Neues Objekt",
     "baseData": "Grunddaten",
     "streetAndHouseNr": "Straße und Hausnummer",
@@ -72,6 +98,7 @@
     "heatingType": "Heiztyp",
     "garden": "Garten",
     "kitchen": "Küche",
-    "notes": "Notizen"
+    "notes": "Notizen",
+    "estimatedCurrentMarketValue": "Geschätzter Marktpreis (aktuell)"
   }
 }

@@ -2,6 +2,7 @@ import {GetObjectQuery} from "@/generated/graphql";
 import {Card, CardContent, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import {formatNumber} from "@/utilts/formatter";
+import {useTranslation} from "next-export-i18n";
 
 interface ObjectCreditDataCardProps {
     /**
@@ -21,15 +22,17 @@ interface ObjectCreditDataCardProps {
  */
 const ObjectCreditDataCard = ({loading, data}: ObjectCreditDataCardProps) => {
 
+    const {t} = useTranslation();
+
     return (
         <Card variant="outlined">
             <CardContent>
                 <LoadingSpinner loading={loading}>
-                    <Typography level="h3">Kreditdaten</Typography>
-                    <Typography>Kredithöhe: {formatNumber(data?.object?.realEstate.credit?.amount)}€</Typography>
-                    <Typography>Bank: {data?.object?.realEstate.credit?.bank}</Typography>
-                    <Typography>Zins: {formatNumber(data?.object?.realEstate.credit?.interestRate ?? 0)}%</Typography>
-                    <Typography>Tilgung: {formatNumber(data?.object?.realEstate.credit?.redemptionRate ?? 0)}%</Typography>
+                    <Typography level="h3">{t('common.creditRates')}</Typography>
+                    <Typography>{t('credit.creditAmount')}: {formatNumber(data?.object?.realEstate.credit?.amount)}€</Typography>
+                    <Typography>{t('common.bank')}: {data?.object?.realEstate.credit?.bank}</Typography>
+                    <Typography>{t('common.interestRate')}: {formatNumber(data?.object?.realEstate.credit?.interestRate ?? 0)}%</Typography>
+                    <Typography>{t('common.redemptionRate')}: {formatNumber(data?.object?.realEstate.credit?.redemptionRate ?? 0)}%</Typography>
                 </LoadingSpinner>
             </CardContent>
         </Card>

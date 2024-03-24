@@ -7,6 +7,7 @@ import {formatNumber} from "@/utilts/formatter";
 import {useMemo} from "react";
 import {GridColDef, GridValueFormatterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
+import {useTranslation} from "next-export-i18n";
 
 interface ObjectPriceChangesTabProps {
     /**
@@ -30,16 +31,18 @@ interface ObjectPriceChangesTabProps {
  */
 const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChangesTabProps) => {
 
+    const {t} = useTranslation();
+
     const cols = useMemo<GridColDef[]>(() => [
         {
             field: 'value',
-            headerName: 'Preis',
+            headerName: t('common.price'),
             width: 200,
             valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}€`
         },
         {
             field: 'year',
-            headerName: 'Jahr',
+            headerName: t('common.year'),
         }
     ], []);
 

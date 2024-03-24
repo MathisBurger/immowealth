@@ -3,6 +3,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import {BarChart, BarSeriesType, LineChart} from "@mui/x-charts";
 import {GetObjectQuery} from "@/generated/graphql";
 import {useMemo} from "react";
+import {useTranslation} from "next-export-i18n";
 
 interface ObjectCreditChartCardProps {
     /**
@@ -27,16 +28,18 @@ type BarChartData = Omit<BarSeriesType, 'type'>;
  */
 const ObjectCreditChartCard = ({loading, data}: ObjectCreditChartCardProps) => {
 
+    const {t} = useTranslation();
+
     const series = useMemo<BarChartData[]>(() => [
-        {dataKey: 'paid', label: 'Getilgt'},
-        {dataKey: 'total', label: 'Kredit'},
+        {dataKey: 'paid', label: t('common.creditRateSum')},
+        {dataKey: 'total', label: t('common.credit')},
     ], []);
 
     return (
         <Card variant="outlined">
             <CardContent>
                 <LoadingSpinner loading={loading}>
-                    <Typography level="h3">Finanzierungsverlauf</Typography>
+                    <Typography level="h3">{t('credit.financingHistory')}</Typography>
                     <Grid container direction="row">
                         <Grid xs={4}>
                             <BarChart series={series} height={400} dataset={[
