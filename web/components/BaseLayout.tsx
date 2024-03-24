@@ -5,7 +5,6 @@ import PathDisplay from "@/components/PathDisplay";
 import {ReactNode, useEffect} from "react";
 import NoSSR from "@/components/NoSSR";
 import useSettings, { SettingsContext } from "@/hooks/useSettings";
-import {formatLang} from "@/utilts/lang";
 import {useTranslation} from "next-export-i18n";
 import {SettingDataFragment, useGetAllSettingsQuery} from "@/generated/graphql";
 
@@ -24,7 +23,7 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
     useEffect(() => {
         if (data?.allSettings) {
             let lang = (data?.allSettings ?? []).filter((s) => s?.key === "language")[0]?.value!;
-            window.localStorage.setItem("next-export-i18n-lang", formatLang(lang));
+            window.localStorage.setItem("next-export-i18n-lang", lang.toLocaleLowerCase());
             const event = new Event("localStorageLangChange");
             document.dispatchEvent(event);
         }

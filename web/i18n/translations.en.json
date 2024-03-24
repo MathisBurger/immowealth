@@ -9,7 +9,8 @@
     "messages": {
       "update-successful": "Successfully updated setting"
     },
-    "language": "Language"
+    "language": "Language",
+    "currency": "Currency"
   },
   "routes": {
     "dashboard": "Dashboard",

@@ -37,7 +37,7 @@ docker-compose up -d
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.2.0
-- [ ] Add translations
+- [x] Add translations
 - [ ] Add different currencies
 - [ ] Add activity logging
 - [ ] Save settings like filter selections

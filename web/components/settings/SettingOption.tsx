@@ -9,7 +9,7 @@ interface SettingOptionProps {
 const SettingOption = ({option}: SettingOptionProps) => {
 
     return (
-        <Option value={option.value}>
+        <Option value={option.key}>
             {option.iconPrefix && (
                 <SettingOptionPrefixDisplay name={option.iconPrefix} />
             )}

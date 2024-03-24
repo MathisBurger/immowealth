@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
+import java.util.Currency
 
 @ApplicationScoped
 class SettingsLoader {
@@ -33,11 +34,37 @@ class SettingsLoader {
             newLang.tab = "general";
             newLang.section = "general";
             newLang.options = mutableListOf(
-                SettingOption("deu", "Deutsch", SettingOptionPrefix.deFlag),
-                SettingOption("eng", "English", SettingOptionPrefix.enFlag)
+                SettingOption("DE", "Deutsch", SettingOptionPrefix.deFlag),
+                SettingOption("EN", "English", SettingOptionPrefix.enFlag)
             );
-            newLang.value = "English";
+            newLang.value = "EN";
             this.entityManager.persist(newLang);
+            this.entityManager.flush();
+        }
+        val currency = this.settingsRepository.getByKey("currency");
+        if (currency.isEmpty) {
+            var newCurrency = Setting()
+            newCurrency.key = "currency";
+            newCurrency.tab = "general";
+            newCurrency.section = "general";
+            newCurrency.options = mutableListOf(
+                SettingOption("USD", "US Dollar", SettingOptionPrefix.USD),
+                SettingOption("EUR", "Euro", SettingOptionPrefix.EUR),
+                SettingOption("GBP", "Great Britan", SettingOptionPrefix.GBP),
+                SettingOption("JPY", "Japan", SettingOptionPrefix.JPY),
+                SettingOption("CHF", "Schweizer Franken", SettingOptionPrefix.CHF),
+                SettingOption("CAD", "Canadian Dollar", SettingOptionPrefix.CAD),
+                SettingOption("SEK", "Schwedische Krone", SettingOptionPrefix.SEK),
+                SettingOption("NOK", "Norwegische Krone", SettingOptionPrefix.NOK),
+                SettingOption("CNH", "China", SettingOptionPrefix.CNH),
+                SettingOption("DKK", "Dänische Krone", SettingOptionPrefix.DKK),
+                SettingOption("AED", "AED", SettingOptionPrefix.AED),
+                SettingOption("RUB", "RUB", SettingOptionPrefix.RUB),
+                SettingOption("MXN", "MXN", SettingOptionPrefix.MXN),
+                SettingOption("TRY", "Türkei", SettingOptionPrefix.TRY)
+            );
+            newCurrency.value = "EUR";
+            this.entityManager.persist(newCurrency);
             this.entityManager.flush();
         }
     }
