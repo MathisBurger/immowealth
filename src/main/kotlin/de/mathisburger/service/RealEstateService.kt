@@ -80,6 +80,7 @@ class RealEstateService : AbstractService() {
 
         this.entityManager.persist(obj);
         this.entityManager.flush();
+        this.log.writeLog("Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})");
         return obj;
     }
 
@@ -147,6 +148,7 @@ class RealEstateService : AbstractService() {
 
         this.entityManager.persist(obj);
         this.entityManager.flush();
+        this.log.writeLog("Updated object with ID ${obj.id}");
         return this.getObject(obj.id!!, 10);
     }
 
@@ -160,6 +162,7 @@ class RealEstateService : AbstractService() {
         val obj = this.realEstateRepository.findById(id);
         this.entityManager.remove(obj);
         this.entityManager.flush();
+        this.log.writeLog("Deleted object with ID $id");
     }
 
     /**

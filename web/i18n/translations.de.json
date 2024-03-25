@@ -18,7 +18,8 @@
     "credits": "Kredite",
     "housingPrices": "Preisänderungen",
     "map": "Karte",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "activityLog": "Aktivitäten"
   },
   "common": {
     "credit": "Kredit",
@@ -48,7 +49,9 @@
     "save": "Speichern",
     "update": "Aktualisieren",
     "add": "Hinzufügen",
-    "price": "Preis"
+    "price": "Preis",
+    "message": "Nachricht",
+    "date": "Datum"
   },
   "credit": {
     "tab": {

@@ -12,7 +12,7 @@ import org.eclipse.microprofile.graphql.GraphQLException
  * Service that handles all settings transactions
  */
 @ApplicationScoped
-class SettingsService {
+class SettingsService : AbstractService() {
 
     @Inject
     lateinit var settingsRepository: SettingsRepository;
@@ -58,6 +58,7 @@ class SettingsService {
         instance.value = value;
         this.entityManager.persist(instance);
         this.entityManager.flush();
+        this.log.writeLog("Updated setting ${setting.get().key} (ID: ${setting.get().id})");
         return instance;
     }
 }

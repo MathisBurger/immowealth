@@ -26,11 +26,4 @@ class LogEntry {
      * The date of execution
      */
     var date: Date? = null;
-
-    constructor() {}
-
-    constructor(message: String) {
-        this.message = message;
-        this.date = Date();
-    }
 }

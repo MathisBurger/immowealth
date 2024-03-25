@@ -5,6 +5,7 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import MapIcon from '@mui/icons-material/Map';
+import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 
 const routes: RouteConfigType[] = [
     {
@@ -31,6 +32,11 @@ const routes: RouteConfigType[] = [
         name: 'map',
         path: '/map',
         icon: <MapIcon />
+    },
+    {
+        name: 'activityLog',
+        path: '/activityLog',
+        icon: <ChangeHistoryIcon />
     },
     {
         name: 'settings',

@@ -58,6 +58,7 @@ class CreditService : AbstractService() {
         credit.rates.add(creditRate);
         this.entityManager.persist(credit);
         this.entityManager.flush();
+        this.log.writeLog("Added credit rate (${this.cs.convertBack(rate)}€) to credit with ID ${id}");
     }
 
     /**
@@ -94,6 +95,7 @@ class CreditService : AbstractService() {
         credit.bank = input.bank ?: credit.bank;
         this.entityManager.persist(credit);
         this.entityManager.flush();
+        this.log.writeLog("Updated credit with ID ${credit.id}");
         return this.getCredit(credit.id!!);
 
     }
@@ -115,6 +117,7 @@ class CreditService : AbstractService() {
             credit.autoPayAmount = null;
             this.entityManager.persist(credit);
             this.entityManager.flush();
+            this.log.writeLog("Disabled auto booking for credit with ID ${credit.id}");
             return this.getResponseObject(credit);
         }
         if (interval == null) {
@@ -128,6 +131,7 @@ class CreditService : AbstractService() {
         credit.autoPayAmount = this.cs.convertBack(amount);
         this.entityManager.persist(credit);
         this.entityManager.flush();
+        this.log.writeLog("Configured auto booking (${interval}, ${this.cs.convertBack(amount)}€) for credit with ID ${credit.id}");
         return this.getResponseObject(credit);
     }
 
@@ -141,6 +145,7 @@ class CreditService : AbstractService() {
         val obj = this.creditRateRepository.findById(id);
         this.entityManager.remove(obj);
         this.entityManager.flush();
+        this.log.writeLog("Deleted credit rate with ID $id");
     }
 
     /**

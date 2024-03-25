@@ -1,0 +1,5 @@
+fragment LogData on LogEntry {
+    id
+    message
+    date
+}

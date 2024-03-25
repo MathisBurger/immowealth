@@ -1,6 +1,7 @@
 package de.mathisburger.scheduler
 
 import de.mathisburger.service.ForeignExchangeRateService
+import de.mathisburger.service.LogService
 import io.quarkus.scheduler.Scheduled
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject

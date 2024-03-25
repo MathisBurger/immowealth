@@ -6,7 +6,13 @@ interface EntityListProps extends DataGridProps {}
 
 const EntityList = ({
     rows,
-    columns
+    columns,
+    pagination,
+    paginationMode,
+    pageSizeOptions,
+    paginationModel,
+    onPaginationModelChange,
+    rowCount
 }: EntityListProps) => {
 
     const iDedRows = useMemo<any[]>(
@@ -20,6 +26,12 @@ const EntityList = ({
             rows={iDedRows}
             getRowId={(row) => row.ghostId}
             slots={{toolbar: GridToolbar}}
+            paginationModel={paginationModel}
+            pagination={pagination}
+            pageSizeOptions={pageSizeOptions ?? [25, 50, 100]}
+            paginationMode={paginationMode}
+            onPaginationModelChange={onPaginationModelChange}
+            rowCount={rowCount}
         />
     );
 }

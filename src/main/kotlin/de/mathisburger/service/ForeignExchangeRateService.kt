@@ -13,7 +13,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient
  * Foreign exchange rate service that handles all reloads and calculations
  */
 @ApplicationScoped
-class ForeignExchangeRateService {
+class ForeignExchangeRateService : AbstractService() {
 
     @Inject
     lateinit var foreignExchangeRateRepository: ForeignExchangeRateRepository;
@@ -48,6 +48,7 @@ class ForeignExchangeRateService {
             }
         }
         this.entityManager.flush();
+        this.log.writeLog("Updated all foreign exchange rates");
     }
 
     /**
