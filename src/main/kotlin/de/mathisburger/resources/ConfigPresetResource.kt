@@ -25,6 +25,14 @@ class ConfigPresetResource {
     }
 
     /**
+     * Gets a selection of config presets
+     */
+    @Query
+    fun getAllConfigPresetsForPathname(pathname: String): List<ConfigPreset> {
+        return this.configPresetService.getAllForPathname(pathname);
+    }
+
+    /**
      * Creates or updates config preset.
      */
     @Mutation

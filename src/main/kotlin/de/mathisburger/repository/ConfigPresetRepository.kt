@@ -21,6 +21,15 @@ class ConfigPresetRepository : PanacheRepository<ConfigPreset> {
     }
 
     /**
+     * Gets config presets by pathname.
+     *
+     * @param pathname The pathname
+     */
+    fun getAllByPathname(pathname: String): List<ConfigPreset> {
+        return find("pageRoute", pathname).list();
+    }
+
+    /**
      * Gets config preset by pathname and key.
      *
      * @param pathname The pathname

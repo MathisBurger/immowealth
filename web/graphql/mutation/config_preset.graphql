@@ -1,0 +1,5 @@
+mutation CreateOrUpdateConfigPreset($pathname: String! $key: String $jsonContent: String!) {
+    createOrUpdateConfigPreset(pathname: $pathname key: $key jsonContent: $jsonContent) {
+        ...ConfigPresetData
+    }
+}

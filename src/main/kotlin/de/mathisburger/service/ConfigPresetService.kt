@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
+import java.util.Optional
 
 /**
  * Service that handles all config preset activities
@@ -24,6 +25,15 @@ class ConfigPresetService : AbstractService() {
      */
     fun getAllConfigPresets(): List<ConfigPreset> {
         return this.configPresetRepository.listAll();
+    }
+
+    /**
+     * Gets all config presets for pathname.
+     *
+     * @param pathname The selected pathname
+     */
+    fun getAllForPathname(pathname: String): List<ConfigPreset> {
+        return this.configPresetRepository.getAllByPathname(pathname);
     }
 
     /**
