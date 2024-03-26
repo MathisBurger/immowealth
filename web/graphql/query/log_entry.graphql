@@ -1,0 +1,6 @@
+query GetLogData($pageSize: Int! $pageNr: Int!) {
+    logEntries(pageNr: $pageNr pageSize: $pageSize) {
+        ...LogData
+    }
+    logEntriesCount
+}

@@ -37,10 +37,10 @@ docker-compose up -d
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.2.0
-- [ ] Add translations
-- [ ] Add different currencies
-- [ ] Add activity logging
-- [ ] Save settings like filter selections
+- [x] Add translations
+- [x] Add different currencies
+- [x] Add activity logging
+- [x] Save settings like filter selections
 - [ ] Split rent into credit rate and other expenses
 
 ### v1.3.0
@@ -51,6 +51,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Most / recently used document recommendations
 
 ### v1.4.0
+- [ ] Full UNIT test coverage
 - [ ] User account system
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter

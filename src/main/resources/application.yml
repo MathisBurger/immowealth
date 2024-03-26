@@ -13,6 +13,9 @@ quarkus:
     geocoding:
       url: https://nominatim.openstreetmap.org/
       scope: jakarta.inject.Singleton
+    foreignExchangeRate:
+      url: https://commander.commerzbank.com/
+      scope: jakarta.inject.Singleton
   hibernate-orm:
     dialect: org.hibernate.dialect.PostgreSQLDialect
     database:

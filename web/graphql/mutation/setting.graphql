@@ -1,0 +1,5 @@
+mutation UpdateSetting($key: String! $value: String!) {
+    updateSetting(key: $key value: $value) {
+        ...SettingData
+    }
+}

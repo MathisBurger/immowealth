@@ -13,7 +13,7 @@ import java.util.GregorianCalendar
  * The wealth service
  */
 @ApplicationScoped
-class WealthService {
+class WealthService : AbstractService() {
 
     @Inject
     lateinit var realEstateRepository: RealEstateRepository;
@@ -43,7 +43,7 @@ class WealthService {
             wealth += value;
             detailed.add(WealthSpreadType(obj.id!!, value, obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city))
         }
-        return WealthResponse(wealth, detailed);
+        return this.conveertCurrencies(WealthResponse(wealth, detailed));
     }
 
     /**
@@ -57,7 +57,7 @@ class WealthService {
             wealth += obj.initialValue!!;
             detailed.add(WealthSpreadType(obj.id!!, obj.initialValue!!, obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city))
         }
-        return WealthResponse(wealth, detailed);
+        return this.conveertCurrencies(WealthResponse(wealth, detailed));
     }
 
     /**
@@ -91,7 +91,7 @@ class WealthService {
             netWealth += value;
             detailed.add(WealthSpreadType(obj.id!!, value, obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city));
         }
-        return WealthResponse(netWealth, detailed);
+        return this.conveertCurrencies(WealthResponse(netWealth, detailed));
     }
 
     /**
@@ -114,6 +114,17 @@ class WealthService {
             netWealth += obj.initialValue!!;
             detailed.add(WealthSpreadType(obj.id!!, obj.initialValue!!, obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city));
         }
-        return WealthResponse(netWealth, detailed);
+        return this.conveertCurrencies(WealthResponse(netWealth, detailed));
+    }
+
+    /**
+     * Converts currencies
+     */
+    private fun conveertCurrencies(resp: WealthResponse): WealthResponse {
+
+        return WealthResponse(
+            this.cs.convert(resp.total),
+            resp.detailed.map { WealthSpreadType(it.id, this.cs.convert(it.value), it.label) }
+        );
     }
 }

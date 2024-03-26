@@ -16,7 +16,6 @@ class RealEstateRepository : PanacheRepository<RealEstateObject> {
      * Gets a real estate object by credit
      */
     fun getByCredit(credit: Credit): RealEstateObject {
-        println(credit.id);
         return find("from RealEstateObject o where o.credit.id = ?1", credit.id).firstResult()
     }
 }

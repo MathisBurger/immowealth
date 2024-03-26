@@ -14,12 +14,14 @@ import ObjectDashboardTab from "@/components/object/ObjectDashboardTab";
 import CreditRateList from "@/components/credit/CreditRateList";
 import ObjectPriceChangesTab from "@/components/object/ObjectPriceChangesTab";
 import ConfigureCreditAutoPayModal from "@/components/credit/ConfigureCreditAutoPayModal";
+import {useTranslation} from "next-export-i18n";
 
 
 const ObjectDetailsPage = () => {
 
     const id = useSearchParams().get('id') ?? '';
     const router = useRouter();
+    const {t} = useTranslation();
     const {data, loading, refetch} = useGetObjectQuery({
         variables: {id: parseInt(id, 10)}
     });
@@ -52,22 +54,22 @@ const ObjectDetailsPage = () => {
     const tabs = useMemo<TabLayoutElement[]>(() => [
         {
             id: 'general',
-            label: 'Allgemein',
+            label: t('common.general'),
             content: <ObjectDashboardTab loading={loading} data={data} />
         },
         {
             id: 'creditRates',
-            label: 'Kreditraten',
+            label: t('common.creditRates'),
             content: <CreditRateList elements={(data?.object.realEstate.credit?.rates as CreditRateDataFragment[]) ?? []} />
         },
         {
             id: 'priceChanges',
-            label: 'Marktwert (aktuell)',
+            label: t('credit.currentMarketPrice'),
             content: <ObjectPriceChangesTab loading={loading} data={data} fieldToAccess="priceChanges" />
         },
         {
             id: 'priceForecast',
-            label: 'Marktwert (Prognose)',
+            label: t('credit.priceForecast'),
             content: (
                 <Stack spacing={2}>
                     <Select
@@ -77,7 +79,7 @@ const ObjectDetailsPage = () => {
                         sx={{width: '200px'}}
                     >
                         {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((n) => (
-                            <Option value={n} key={n}>{n} Jahre</Option>
+                            <Option value={n} key={n}>{n} {t('common.years')}</Option>
                         ))}
                     </Select>
                     <ObjectPriceChangesTab loading={loading} data={data} fieldToAccess="priceForecast" />
@@ -89,7 +91,7 @@ const ObjectDetailsPage = () => {
     return (
         <>
             <Typography level="h1">
-                Objekt {id}
+                {t('common.object')} {id}
             </Typography>
             <Grid container direction="row" spacing={2}>
                 <Grid>
@@ -99,7 +101,7 @@ const ObjectDetailsPage = () => {
                         sx={{width: '200px'}}
                         onClick={() => setCreditRateModalOpen(true)}
                     >
-                        Kreditrate hinzufügen
+                        {t('credit.button.add-rate')}
                     </Button>
                 </Grid>
                 <Grid>
@@ -109,7 +111,7 @@ const ObjectDetailsPage = () => {
                         sx={{width: '250px'}}
                         onClick={() => setConfigureAutoBookingModal(true)}
                     >
-                        Automatische Kreditbuchung
+                        {t('credit.button.auto-booking')}
                     </Button>
                 </Grid>
                 <Grid>
@@ -120,7 +122,7 @@ const ObjectDetailsPage = () => {
                         loading={deleteLoading}
                         onClick={deleteObject}
                     >
-                        Löschen
+                        {t('common.delete')}
                     </Button>
                 </Grid>
             </Grid>

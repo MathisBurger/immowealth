@@ -1,0 +1,6 @@
+fragment ConfigPresetData on ConfigPreset {
+    key
+    pageRoute
+    id
+    jsonString
+}

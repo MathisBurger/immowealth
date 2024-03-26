@@ -1,0 +1,17 @@
+fragment SettingData on Setting {
+    id
+    key
+    options {
+        ...SettingOptionData
+    }
+    tab
+    section
+    value
+}
+
+fragment SettingOptionData on SettingOption {
+    id
+    key
+    value
+    iconPrefix
+}

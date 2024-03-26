@@ -2,6 +2,7 @@ package de.mathisburger.scheduler
 
 import de.mathisburger.entity.CreditRate
 import de.mathisburger.repository.CreditRepository
+import de.mathisburger.service.LogService
 import de.mathisburger.util.AutoBookingUtils
 import de.mathisburger.util.DateUtils
 import jakarta.enterprise.context.ApplicationScoped
@@ -23,6 +24,9 @@ class CreditAutoBookingScheduler {
     @Inject
     lateinit var entityManager: EntityManager;
 
+    @Inject
+    lateinit var log: LogService;
+
     /**
      * Executes all bookings every day at 1am.
      */
@@ -41,5 +45,6 @@ class CreditAutoBookingScheduler {
             this.entityManager.persist(credit);
             this.creditRepository.flush();
         }
+        this.log.writeLog("Executed auto bookings of following credits ${credits.map { it.id }}");
     }
 }

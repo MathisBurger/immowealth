@@ -9,6 +9,8 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import dayjs from "dayjs";
 import EditableDisplay, {DisplayValue, InputType} from "@/components/EditableDisplay";
 import {formatNumber} from "@/utilts/formatter";
+import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 
 interface ObjectBaseDataCard {
@@ -38,6 +40,9 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
         ]
     });
 
+    const {t} = useTranslation();
+    const currency = useCurrencySymbol();
+
     const updateContent = (field: keyof UpdateRealEstateInputInput) => async (val: DisplayValue): Promise<boolean> => {
         const result = await mutation({
             variables: {input: {
@@ -52,16 +57,16 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
         <Card variant="outlined">
             <CardContent>
                 <LoadingSpinner loading={loading}>
-                    <Typography level="h3">Grunddaten</Typography>
-                    <Typography>Kaufdatum: {dayjs(data?.object?.realEstate.dateBought).format("DD.MM.YYYY")}</Typography>
+                    <Typography level="h3">{t('object.baseData')}</Typography>
+                    <Typography>{t('object.buyDate')}: {dayjs(data?.object?.realEstate.dateBought).format("DD.MM.YYYY")}</Typography>
                     <EditableDisplay
                         inputType={InputType.NUMBER}
                         value={data?.object?.realEstate.initialValue}
-                        customDisplay={(v) => `Kaufpreis: ${formatNumber(v as number)}€`}
+                        customDisplay={(v) => `${t('object.buyPrice')}: ${formatNumber(v as number)}${currency}`}
                         onChange={updateContent('initialValue')}
                         loading={mutationLoading}
                     />
-                    <Typography>Geschätzter Marktpreis (aktuell): {data?.object.estimatedMarketValue}€</Typography>
+                    <Typography>{t('object.estimatedCurrentMarketValue')}: {data?.object.estimatedMarketValue}{currency}</Typography>
                     <EditableDisplay
                         inputType={InputType.TEXT}
                         value={data?.object?.realEstate.streetAndHouseNr}
@@ -88,77 +93,77 @@ const ObjectBaseDataCard = ({loading, data}: ObjectBaseDataCard) => {
                     </Grid>
                     <EditableDisplay
                         inputType={InputType.NUMBER}
-                        customDisplay={(v) => `Räume: ${v}`}
+                        customDisplay={(v) => `${t('object.rooms')}: ${v}`}
                         value={data?.object?.realEstate.rooms}
                         onChange={updateContent('rooms')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.NUMBER}
-                        customDisplay={(v) => `Wohnfläche: ${v}m²`}
+                        customDisplay={(v) => `${t('object.usageSpace')}: ${v}m²`}
                         value={data?.object?.realEstate.space}
                         onChange={updateContent('space')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.TEXT}
-                        customDisplay={(v) => `Objekt-typ: ${v}`}
+                        customDisplay={(v) => `${t('object.objectType')}: ${v}`}
                         value={data?.object?.realEstate.objectType}
                         onChange={updateContent('objectType')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.NUMBER}
-                        customDisplay={(v) => `Baujahr: ${v}`}
+                        customDisplay={(v) => `${t('object.constructionYear')}: ${v}`}
                         value={data?.object?.realEstate.constructionYear}
                         onChange={updateContent('constructionYear')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.NUMBER}
-                        customDisplay={(v) => `Renoviert: ${v}`}
+                        customDisplay={(v) => `${t('object.renovationYear')}: ${v}`}
                         value={data?.object?.realEstate.renovationYear}
                         onChange={updateContent('renovationYear')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.TEXT}
-                        customDisplay={(v) => `Energie-effizienz: ${v}`}
+                        customDisplay={(v) => `${t('object.energyEfficiency')}: ${v}`}
                         value={data?.object?.realEstate.energyEfficiency}
                         onChange={updateContent('energyEfficiency')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.NUMBER}
-                        customDisplay={(v) => `Rendite: ${formatNumber(v as number)}%`}
+                        customDisplay={(v) => `${t('object.return')}: ${formatNumber(v as number)}%`}
                         value={data?.object?.realEstate.grossReturn}
                         onChange={updateContent('grossReturn')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.BOOLEAN}
-                        customDisplay={(v) => `Garten: ${v ? 'Ja' : 'Nein'}`}
+                        customDisplay={(v) => `${t('object.garden')}: ${v ? 'Ja' : 'Nein'}`}
                         value={data?.object?.realEstate.garden}
                         onChange={updateContent('garden')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.BOOLEAN}
-                        customDisplay={(v) => `Küche: ${v ? 'Ja' : 'Nein'}`}
+                        customDisplay={(v) => `${t('object.kitchen')}: ${v ? 'Ja' : 'Nein'}`}
                         value={data?.object?.realEstate.kitchen}
                         onChange={updateContent('kitchen')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.TEXT}
-                        customDisplay={(v) => `Heizart: ${v}`}
+                        customDisplay={(v) => `${t('object.heatingType')}: ${v}`}
                         value={data?.object?.realEstate.heatingType}
                         onChange={updateContent('heatingType')}
                         loading={mutationLoading}
                     />
                     <EditableDisplay
                         inputType={InputType.TEXT}
-                        customDisplay={(v) => `Notizen: ${v ? v : 'Keine'}`}
+                        customDisplay={(v) => `${t('object.notes')}: ${v ? v : 'Keine'}`}
                         value={data?.object?.realEstate.notes}
                         onChange={updateContent('notes')}
                         loading={mutationLoading}

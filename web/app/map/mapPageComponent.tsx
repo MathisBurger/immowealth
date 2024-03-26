@@ -6,6 +6,7 @@ import {MapObjectFragment, useGetMapObjectsQuery} from "@/generated/graphql";
 import {Alert, Button, CircularProgress, Grid, Typography} from "@mui/joy";
 import {useRouter} from "next/navigation";
 import MapClickListener from "@/components/map/MapClickListener";
+import {useTranslation} from "next-export-i18n";
 
 export interface ChangeElement {
     element: MapObjectFragment;
@@ -20,6 +21,7 @@ const MapPage = () => {
     const router = useRouter();
     const latitude = 48.7760256;
     const longitude = 11.4456758;
+    const {t} = useTranslation();
     const [loaded, setLoaded] = useState<boolean>(false);
     const [changeElement, setChangeElement] = useState<ChangeElement|null>(null);
 
@@ -33,8 +35,8 @@ const MapPage = () => {
             <>
                 {changeElement && (
                     <Alert color="warning">
-                        Du befindest dich im Korrektur-Modus.
-                        <Button color="danger" onClick={() => setChangeElement(null)}>Abbrechen</Button>
+                        {t('map.in-editing')}
+                        <Button color="danger" onClick={() => setChangeElement(null)}>{t('common.cancel')}</Button>
                     </Alert>
                 )}
                 <MapContainer
@@ -55,7 +57,7 @@ const MapPage = () => {
                             <Marker position={[obj?.positionLat ?? 0, obj?.positionLon ?? 0]} key={obj?.id}>
                                 <Popup>
                                     <Typography level="h3">
-                                        Objekt {obj?.id}
+                                        {t('common.object')} {obj?.id}
                                     </Typography>
                                     <Typography level="h4">
                                         {obj?.streetAndHouseNr}, {obj?.zip} {obj?.city}
@@ -63,7 +65,7 @@ const MapPage = () => {
                                     <Grid container direction="row" spacing={2}>
                                         <Grid>
                                             <Button onClick={() => router.push(`/objects/details?id=${obj?.id}`)}>
-                                                Details
+                                                {t('common.details')}
                                             </Button>
                                         </Grid>
                                         <Grid>
@@ -72,7 +74,7 @@ const MapPage = () => {
                                                 clientX: e.clientX,
                                                 clientY: e.clientY
                                             })} color="neutral">
-                                                Position korrigieren
+                                                {t('map.correct-position')}
                                             </Button>
                                         </Grid>
                                     </Grid>

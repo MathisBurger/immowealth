@@ -15,6 +15,7 @@ import {closeSidebar} from "@/utilts/sidebarUtils";
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import routes from "@/routeConfig";
 import {useRouter} from "next/navigation";
+import {useTranslation} from "next-export-i18n";
 
 /**
  * The sidebar
@@ -24,6 +25,7 @@ import {useRouter} from "next/navigation";
 const Sidebar = () => {
 
     const router = useRouter();
+    const {t} = useTranslation();
 
     return (
         <Sheet
@@ -102,7 +104,7 @@ const Sidebar = () => {
                             <ListItemButton onClick={() => router.push(route.path)}>
                                 {route.icon ? route.icon : null}
                                 <ListItemContent>
-                                    <Typography level="title-sm">{route.name}</Typography>
+                                    <Typography level="title-sm">{t(`routes.${route.name}`)}</Typography>
                                 </ListItemContent>
                             </ListItemButton>
                         </ListItem>

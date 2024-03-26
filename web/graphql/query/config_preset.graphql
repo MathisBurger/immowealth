@@ -1,0 +1,5 @@
+query GetAllConfigPresetsForPathname($pathname: String!) {
+    allConfigPresetsForPathname(pathname: $pathname) {
+        ...ConfigPresetData
+    }
+}

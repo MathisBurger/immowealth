@@ -6,6 +6,7 @@ import {useCallback, useEffect, useMemo, useState} from "react";
 import routes from "@/routeConfig";
 import {RouteConfigType} from "@/typings/routeConfig";
 import {usePathname} from "next/navigation";
+import {useTranslation} from "next-export-i18n";
 
 /**
  * Displays the path of the current location
@@ -14,6 +15,7 @@ import {usePathname} from "next/navigation";
 const PathDisplay = () => {
 
     const pathname = usePathname();
+    const {t} = useTranslation();
 
     const findRoute = useCallback((path: string, pos: RouteConfigType[]): RouteConfigType|null => {
         for (let p of pos) {
@@ -79,7 +81,7 @@ const PathDisplay = () => {
                         fontSize={12}
                         fontWeight={500}
                     >
-                        {part.name}
+                        {`${t(`routes.${part.name}`)}`.startsWith('routes.') ? part.name : t(`routes.${part.name}`)}
                     </Link>
                 ))}
                 {route === null ? (

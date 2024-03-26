@@ -3,6 +3,7 @@ import {Card, CardContent, Grid, Typography} from "@mui/joy";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import {BarChart, BarSeriesType, LineChart} from "@mui/x-charts";
 import {GetCreditQuery} from "@/generated/graphql";
+import {useTranslation} from "next-export-i18n";
 
 interface CreditChartCardProps {
     /**
@@ -33,11 +34,13 @@ const CreditChartCard = ({loading, data}: CreditChartCardProps) => {
         {dataKey: 'total', label: 'Kredit'},
     ], []);
 
+    const {t} = useTranslation();
+
     return (
         <Card variant="outlined">
             <CardContent>
                 <LoadingSpinner loading={loading}>
-                    <Typography level="h3">Finanzierungsverlauf</Typography>
+                    <Typography level="h3">{t('credit.financingHistory')}</Typography>
                     <Grid container direction="row">
                         <Grid xs={4}>
                             <BarChart series={series} height={400} dataset={[

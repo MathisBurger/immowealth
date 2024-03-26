@@ -5,35 +5,41 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import MapIcon from '@mui/icons-material/Map';
+import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 
 const routes: RouteConfigType[] = [
     {
-        name: 'Dashboard',
+        name: 'dashboard',
         path: '/dashboard',
         icon: <DashboardIcon />
     },
     {
-        name: 'Objekte',
+        name: 'objects',
         path: '/objects',
         icon: <ApartmentIcon />
     },
     {
-        name: 'Kredite',
+        name: 'credits',
         path: '/credits',
         icon: <AttachMoneyIcon />
     },
     {
-        name: 'Preisänderungen',
+        name: 'housingPrices',
         path: '/housingPrices',
         icon: <ShowChartIcon />
     },
     {
-        name: 'Karte',
+        name: 'map',
         path: '/map',
         icon: <MapIcon />
     },
     {
-        name: 'Einstellungen',
+        name: 'activityLog',
+        path: '/activityLog',
+        icon: <ChangeHistoryIcon />
+    },
+    {
+        name: 'settings',
         path: '/settings',
         icon: <SettingsRoundedIcon />
     },
