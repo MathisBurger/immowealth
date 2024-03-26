@@ -65,4 +65,5 @@ There are many new features planned. You can find a little roadmap of planned fu
 
 ### Planned but not fixed
 - [ ] Auto collect market value change data
+- [ ] Add balance sheet calculation
 
