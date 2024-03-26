@@ -41,7 +41,7 @@ const EntityList = ({
         }
         const columnVisibilityModel = findByKey(baseConfigPresetKey + '_columnVisibility');
         if (columnVisibilityModel) {
-            setFilterModel(JSON.parse(columnVisibilityModel.jsonString ?? "{}"));
+            setColumnVisibilityModel(JSON.parse(columnVisibilityModel.jsonString ?? "{}"));
         }
         const density = findByKey(baseConfigPresetKey + '_density');
         if (density) {
