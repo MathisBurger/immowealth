@@ -40,7 +40,7 @@ const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChange
             field: 'value',
             headerName: t('common.price'),
             width: 200,
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}${currency}`
+            valueFormatter: (value) => `${formatNumber(value)}${currency}`
         },
         {
             field: 'year',
@@ -55,7 +55,7 @@ const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChange
                     <Card>
                         <CardContent>
                             {/* @ts-ignore */}
-                            <EntityList columns={cols} rows={data?.object[fieldToAccess]} />
+                            <EntityList columns={cols} rows={data?.object[fieldToAccess]} configPresetKey={"objectPriceChanges_" + fieldToAccess} />
                         </CardContent>
                     </Card>
                 </Grid>

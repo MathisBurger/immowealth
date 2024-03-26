@@ -40,7 +40,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] Add translations
 - [x] Add different currencies
 - [x] Add activity logging
-- [ ] Save settings like filter selections
+- [x] Save settings like filter selections
 - [ ] Split rent into credit rate and other expenses
 
 ### v1.3.0

@@ -3,6 +3,7 @@ package de.mathisburger.repository
 import de.mathisburger.entity.LogEntry
 import io.quarkus.hibernate.orm.panache.PanacheRepository
 import io.quarkus.panache.common.Page
+import io.quarkus.panache.common.Sort
 import jakarta.enterprise.context.ApplicationScoped
 import org.eclipse.microprofile.graphql.GraphQLException
 
@@ -24,7 +25,7 @@ class LogEntryRepository : PanacheRepository<LogEntry> {
         if (fd.pageCount() < pageNr) {
             throw GraphQLException("Invalid pageNr");
         }
-        return find("").page<LogEntry>(Page.of(pageNr, pageSize)).list();
+        return find("", Sort.by("date", Sort.Direction.Descending)).page<LogEntry>(Page.of(pageNr, pageSize)).list();
     }
 
     /**

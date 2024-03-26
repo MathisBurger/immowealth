@@ -31,7 +31,8 @@ const ActivityLogPage = () => {
         },
         {
             field: 'date',
-            headerName: t('common.date')
+            headerName: t('common.date'),
+            width: 200
         }
     ], [t])
 

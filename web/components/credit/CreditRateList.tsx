@@ -47,12 +47,12 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
         {
             field: 'amount',
             headerName: t('credit.rate'),
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value ?? 0)}${currency}`
+            valueFormatter: (value) => `${formatNumber(value ?? 0)}${currency}`
         },
         {
             field: 'date',
             headerName: t('credit.bookingDate'),
-            valueFormatter: ({value}: GridValueFormatterParams) => `${dayjs(value).format("DD.MM.YYYY")}`
+            valueFormatter: (value) => `${dayjs(value).format("DD.MM.YYYY")}`
         },
         {
             field: 'note',
@@ -71,7 +71,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
     ], [deleteObject, t]);
 
     return (
-        <EntityList columns={cols} rows={elements} />
+        <EntityList columns={cols} rows={elements} configPresetKey="creditRateList" />
     );
 }
 

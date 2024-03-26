@@ -5,7 +5,7 @@ import {
     GridColDef, GridColumnVisibilityModel, GridDensity,
     GridFilterModel,
     GridRowModel,
-    GridRowsProp,
+    GridRowsProp, GridSortModel,
     GridToolbar
 } from "@mui/x-data-grid";
 import {useEffect, useMemo, useState} from "react";
@@ -48,11 +48,16 @@ const EntityList = ({
             // @ts-ignore
             setDensity(density.jsonString ?? 'standard');
         }
+        const sortModel = findByKey(baseConfigPresetKey + '_sortModel');
+        if (sortModel) {
+            setSortModel(JSON.parse(sortModel.jsonString ?? "{}"));
+        }
     }, [data, baseConfigPresetKey]);
 
     const [filterModel, setFilterModel] = useState<GridFilterModel|undefined>(undefined);
     const [columnVisibilitModel, setColumnVisibilityModel] = useState<GridColumnVisibilityModel|undefined>(undefined);
     const [density, setDensity] = useState<GridDensity|undefined>(undefined);
+    const [sortModel, setSortModel] = useState<GridSortModel|undefined>(undefined);
 
     const updateFilterModel = async (model: GridFilterModel, details: any) => {
         await saveConfigPreset(JSON.stringify(model), baseConfigPresetKey + '_filterModel');
@@ -67,6 +72,11 @@ const EntityList = ({
     const updateDensity = async (den: GridDensity) => {
         await saveConfigPreset(den, baseConfigPresetKey + '_density');
         setDensity(den);
+    }
+
+    const updateSortModel = async (model: GridSortModel, details: any) => {
+        await saveConfigPreset(JSON.stringify(model), baseConfigPresetKey + '_sortModel');
+        setSortModel(model);
     }
 
     const iDedRows = useMemo<any[]>(
@@ -93,6 +103,8 @@ const EntityList = ({
             onColumnVisibilityModelChange={updateColumnVisibilityModel}
             density={density}
             onDensityChange={updateDensity}
+            sortModel={sortModel}
+            onSortModelChange={updateSortModel}
         />
     );
 }

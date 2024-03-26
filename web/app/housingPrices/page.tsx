@@ -53,7 +53,7 @@ const HousingPrices = () => {
             field: 'change',
             headerName: t('common.change'),
             width: 200,
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value)}${currency}`
+            valueFormatter: (value) => `${formatNumber(value)}${currency}`
         },
         {
             field: 'zip',
