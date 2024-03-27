@@ -7,14 +7,7 @@ import java.util.Date
  * The real estate entity
  */
 @Entity
-class RealEstateObject {
-
-    /**
-     * The ID of the object
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null
+class RealEstateObject : BaseEntity() {
 
     /**
      * The city of the object
@@ -112,4 +105,10 @@ class RealEstateObject {
      */
     @OneToOne(cascade = [CascadeType.ALL])
     var credit: Credit? = null
+
+    /**
+     * All rent expenses of the object
+     */
+    @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.DETACH])
+    var expenses: MutableList<ObjectRentExpense> = mutableListOf();
 }

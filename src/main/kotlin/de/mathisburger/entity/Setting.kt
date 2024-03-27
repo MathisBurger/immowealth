@@ -6,14 +6,7 @@ import jakarta.persistence.*
  * Simple server side setting that is configured through the web
  */
 @Entity
-class Setting {
-
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
+class Setting : BaseEntity() {
 
     /**
      * The key of the setting

@@ -8,14 +8,7 @@ import jakarta.persistence.Id
  * The config preset entity
  */
 @Entity
-class ConfigPreset {
-
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
+class ConfigPreset : BaseEntity() {
 
     /**
      * The page route the config is located at

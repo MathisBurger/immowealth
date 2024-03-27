@@ -9,13 +9,7 @@ import java.util.Date
  * Entry of event log system
  */
 @Entity
-class LogEntry {
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
+class LogEntry : BaseEntity() {
 
     /**
      * The message of action

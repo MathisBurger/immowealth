@@ -12,14 +12,8 @@ import java.util.Date
  * The credit entity
  */
 @Entity
-class Credit {
+class Credit : BaseEntity() {
 
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
 
     /**
      * The interest rate

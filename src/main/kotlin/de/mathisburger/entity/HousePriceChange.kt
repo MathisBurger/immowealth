@@ -9,14 +9,7 @@ import jakarta.persistence.Id
  * in a specific region as entity
  */
 @Entity
-class HousePriceChange {
-
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
+class HousePriceChange : BaseEntity() {
 
     /**
      * The zip

@@ -9,14 +9,7 @@ import java.util.Date
  * Credit rate entity
  */
 @Entity
-class CreditRate {
-
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
+class CreditRate : BaseEntity() {
 
     /**
      * The date of booking

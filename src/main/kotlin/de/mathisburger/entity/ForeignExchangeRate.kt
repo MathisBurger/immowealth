@@ -8,14 +8,7 @@ import jakarta.persistence.Id
  * Foreign exchange rate for currency calculations
  */
 @Entity
-class ForeignExchangeRate {
-
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
+class ForeignExchangeRate : BaseEntity() {
 
     /**
      * The currency symbol

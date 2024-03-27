@@ -9,14 +9,7 @@ import jakarta.persistence.Id
  * A setting option
  */
 @Entity
-class SettingOption {
-
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
+class SettingOption : BaseEntity {
 
     /**
      * The key of the setting
@@ -33,7 +26,8 @@ class SettingOption {
      */
     var iconPrefix: SettingOptionPrefix? = null;
 
-    constructor() {}
+    constructor() {
+    }
 
     constructor(key: String, value: String, iconPrefix: SettingOptionPrefix) {
         this.key = key;
