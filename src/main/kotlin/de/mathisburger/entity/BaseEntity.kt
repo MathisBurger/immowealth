@@ -15,5 +15,5 @@ abstract class BaseEntity {
      */
     @GeneratedValue
     @Id
-    var id: Long? = null;
+    open var id: Long? = null;
 }

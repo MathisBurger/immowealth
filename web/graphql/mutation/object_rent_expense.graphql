@@ -1,0 +1,15 @@
+mutation AddRentExpense($objectId: BigInteger! $type: ObjectRentType! $value: Float! $name: String!) {
+    addObjectRentExpenseToObject(objectId: $objectId, type: $type, expense: $value, name: $name) {
+        ...RentExpenseData
+    }
+}
+
+mutation UpdateRentExpense($id: BigInteger! $type: ObjectRentType $value: Float $name: String) {
+    updateRentExpense(id: $id, type: $type, expense: $value, name: $name) {
+        ...RentExpenseData
+    }
+}
+
+mutation DeleteRentExpense($id: BigInteger!) {
+    deleteRentExpense(id: $id)
+}

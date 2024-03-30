@@ -60,7 +60,6 @@ There are many new features planned. You can find a little roadmap of planned fu
 ### v1.5.0
 - [ ] Immo portal search
 - [ ] Object location watchlist
-- [ ] Add AFA calculations
 - [ ] Add support for measured object prices
 
 ### Not planned yet
@@ -68,4 +67,5 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Add balance sheet calculation
 - [ ] Rent spread suggestions by fixes rules
 - [ ] Rentability calculations
+- [ ] TAX calculations
 

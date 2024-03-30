@@ -91,7 +91,7 @@ const EntityList = ({
             getRowId={(row) => row.ghostId}
             slots={{toolbar: GridToolbar}}
             paginationModel={paginationModel}
-            pagination={pagination}
+            pagination={pagination ?? true}
             pageSizeOptions={pageSizeOptions ?? [25, 50, 100]}
             paginationMode={paginationMode}
             onPaginationModelChange={onPaginationModelChange}

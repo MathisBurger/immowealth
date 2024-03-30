@@ -143,6 +143,8 @@ class CreditService : AbstractService() {
     @Transactional
     fun deleteCreditRate(id: Long) {
         val obj = this.creditRateRepository.findById(id);
+        obj.credit.rates.remove(obj);
+        this.entityManager.persist(obj.credit);
         this.entityManager.remove(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted credit rate with ID $id");

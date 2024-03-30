@@ -103,6 +103,21 @@
     "garden": "Garten",
     "kitchen": "Küche",
     "notes": "Notizen",
-    "estimatedCurrentMarketValue": "Geschätzter Marktpreis (aktuell)"
+    "estimatedCurrentMarketValue": "Geschätzter Marktpreis (aktuell)",
+    "expenses": "Mietausgaben",
+    "expense": {
+      "add": "Ausgabe hinzufügen",
+      "name": "Name",
+      "value": "Wert",
+      "type": "Typ",
+      "types": {
+        "NK": "Nebenkosten",
+        "REDEMPTION_RATE": "Tilgung",
+        "INTEREST_RATE": "Zins",
+        "RESERVE": "Rücklagen",
+        "INSURANCE": "Versicherung",
+        "OTHER": "Sonstiges"
+      }
+    }
   }
 }

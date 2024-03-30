@@ -1,7 +1,11 @@
 package de.mathisburger.entity
 
 import de.mathisburger.entity.enum.ObjectRentType
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 
 /**
  * A rent expense of an object
@@ -23,4 +27,7 @@ class ObjectRentExpense : BaseEntity() {
      * The monetary value of the expense
      */
     var value: Double? = null;
+
+    @ManyToOne
+    lateinit var realEstateObject: RealEstateObject;
 }

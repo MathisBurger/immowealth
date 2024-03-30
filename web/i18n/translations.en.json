@@ -103,6 +103,20 @@
     "garden": "Garden",
     "kitchen": "Kitchen",
     "notes": "Notes",
-    "estimatedCurrentMarketValue": "Estimated market value (current)"
+    "estimatedCurrentMarketValue": "Estimated market value (current)",
+    "expense": {
+      "add": "Add expense",
+      "name": "Name",
+      "value": "Value",
+      "type": "Type",
+      "types": {
+        "NK": "Side costs",
+        "REDEMPTION_RATE": "Redemption",
+        "INTEREST_RATE": "Interest",
+        "RESERVE": "Reserve",
+        "INSURANCE": "Insurance",
+        "OTHER": "Other"
+      }
+    }
   }
 }

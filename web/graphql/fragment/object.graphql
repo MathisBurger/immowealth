@@ -40,6 +40,9 @@ fragment FullRealEstateData on RealEstateObject {
     kitchen
     heatingType
     notes
+    expenses {
+        ...RentExpenseData
+    }
 }
 
 fragment ObjectData on ObjectResponse {

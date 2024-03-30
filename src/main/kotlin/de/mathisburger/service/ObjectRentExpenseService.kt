@@ -40,6 +40,8 @@ class ObjectRentExpenseService : AbstractService() {
         exp.value = expense;
         exp.type = type;
         exp.name = name;
+        exp.realEstateObject = obj;
+        this.entityManager.persist(exp);
         obj.expenses.add(exp);
         this.entityManager.persist(obj);
         this.entityManager.flush();
@@ -73,7 +75,11 @@ class ObjectRentExpenseService : AbstractService() {
     @Transactional
     fun deleteExpense(id: Long) {
         val obj = this.objectRentExpenseRepository.findById(id);
-        this.entityManager.remove(obj);
-        this.entityManager.flush();
+        if (obj != null) {
+            obj.realEstateObject.expenses.remove(obj);
+            this.entityManager.persist(obj.realEstateObject);
+            this.entityManager.remove(obj);
+            this.entityManager.flush();
+        }
     }
 }

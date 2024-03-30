@@ -3,6 +3,7 @@ package de.mathisburger.entity
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import java.util.Date
 
 /**
@@ -25,4 +26,7 @@ class CreditRate : BaseEntity() {
      * The note of the credit rate
      */
     var note: String? = null;
+
+    @ManyToOne
+    lateinit var credit: Credit;
 }

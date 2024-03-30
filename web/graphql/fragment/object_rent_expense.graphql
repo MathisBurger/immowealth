@@ -1,0 +1,6 @@
+fragment RentExpenseData on ObjectRentExpense {
+    id
+    value
+    name
+    type
+}
