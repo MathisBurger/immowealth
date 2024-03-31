@@ -41,7 +41,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] Add different currencies
 - [x] Add activity logging
 - [x] Save settings like filter selections
-- [ ] Split rent into credit rate and other expenses
+- [x] Split rent into credit rate and other expenses
 
 ### v1.3.0
 - [ ] AutoPayInterval (configure start date)
