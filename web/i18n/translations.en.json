@@ -51,7 +51,9 @@
     "add": "Add",
     "price": "Price",
     "message": "Message",
-    "date": "date"
+    "date": "date",
+    "yes": "Yes",
+    "no": "No"
   },
   "credit": {
     "tab": {
@@ -105,6 +107,8 @@
     "notes": "Notes",
     "estimatedCurrentMarketValue": "Estimated market value (current)",
     "expense": {
+      "configure-auto-booking": "Do you want to update auto booking?",
+      "updated-auto-booking": "Updated auto booking",
       "add": "Add expense",
       "name": "Name",
       "value": "Value",

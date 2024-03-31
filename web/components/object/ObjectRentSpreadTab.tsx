@@ -114,9 +114,10 @@ const ObjectRentSpreadTab = ({expenses}: ObjectRentSpreadTabProps) => {
                     <CardContent>
                         <BarChart
                             series={expenses.map((expense) => ({
-                                data: [expense.value!], label: `${expense.name} (${t(`object.expense.types.${expense.type}`)})`
+                                data: [expense.value!],  stack: 'A', label: `${expense.name} (${t(`object.expense.types.${expense.type}`)})`
                             }))}
                             height={350}
+                            legend={{hidden: true}}
                         />
                     </CardContent>
                 </Card>

@@ -1,6 +1,7 @@
 package de.mathisburger.resources
 
 import de.mathisburger.entity.ObjectRentExpense
+import de.mathisburger.entity.RealEstateObject
 import de.mathisburger.entity.enum.ObjectRentType
 import de.mathisburger.service.ObjectRentExpenseService
 import jakarta.inject.Inject
@@ -39,5 +40,13 @@ class ObjectRentExpenseResource {
     fun deleteRentExpense(id: Long): Boolean {
         this.objectRentExpenseService.deleteExpense(id);
         return true;
+    }
+
+    /**
+     * Sets auto booking by expenses.
+     */
+    @Mutation
+    fun setAutoBookingByExpenses(id: Long): RealEstateObject {
+        return this.objectRentExpenseService.setAutoBookingByExpenses(id);
     }
 }

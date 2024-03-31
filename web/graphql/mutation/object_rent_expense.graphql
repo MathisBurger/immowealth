@@ -13,3 +13,9 @@ mutation UpdateRentExpense($id: BigInteger! $type: ObjectRentType $value: Float 
 mutation DeleteRentExpense($id: BigInteger!) {
     deleteRentExpense(id: $id)
 }
+
+mutation SetAutoBookingByExpenses($id: BigInteger!) {
+    autoBookingByExpenses(id: $id) {
+        ...FullRealEstateData
+    }
+}

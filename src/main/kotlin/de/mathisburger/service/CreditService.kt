@@ -54,6 +54,7 @@ class CreditService : AbstractService() {
         creditRate.date = date;
         creditRate.amount = this.cs.convertBack(rate);
         creditRate.note = note;
+        creditRate.credit = credit;
         this.entityManager.persist(creditRate);
         credit.rates.add(creditRate);
         this.entityManager.persist(credit);

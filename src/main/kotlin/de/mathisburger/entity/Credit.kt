@@ -1,12 +1,7 @@
 package de.mathisburger.entity
 
 import de.mathisburger.entity.enum.AutoPayInterval
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.OneToOne
+import jakarta.persistence.*
 import java.util.Date
 
 /**
@@ -54,6 +49,6 @@ class Credit : BaseEntity() {
     /**
      * All credit rates
      */
-    @OneToMany(mappedBy = "credit", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "credit", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var rates: MutableList<CreditRate> = mutableListOf();
 }

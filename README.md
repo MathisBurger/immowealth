@@ -61,6 +61,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Immo portal search
 - [ ] Object location watchlist
 - [ ] Add support for measured object prices
+- [ ] Tabs are saved in URI
 
 ### Not planned yet
 - [ ] Auto collect market value change data

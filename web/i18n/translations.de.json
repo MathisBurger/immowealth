@@ -51,7 +51,9 @@
     "add": "Hinzufügen",
     "price": "Preis",
     "message": "Nachricht",
-    "date": "Datum"
+    "date": "Datum",
+    "yes": "Ja",
+    "no": "Nein"
   },
   "credit": {
     "tab": {
@@ -106,6 +108,8 @@
     "estimatedCurrentMarketValue": "Geschätzter Marktpreis (aktuell)",
     "expenses": "Mietausgaben",
     "expense": {
+      "configure-auto-booking": "Möchten sie die automatischen Kreditbuchungen aktualisieren?",
+      "updated-auto-booking": "Automatische Kreditbuchungen wurden aktualisiert",
       "add": "Ausgabe hinzufügen",
       "name": "Name",
       "value": "Wert",
