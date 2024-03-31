@@ -50,6 +50,7 @@ class ObjectRentExpenseService : AbstractService() {
         obj.expenses.add(exp);
         this.entityManager.persist(obj);
         this.entityManager.flush();
+        this.log.writeLog("Added rent expense ($expense€, $type, $name) to object with ID ${obj.id}");
         return exp;
     }
 
@@ -69,6 +70,7 @@ class ObjectRentExpenseService : AbstractService() {
         exp.type = type ?: exp.type;
         this.entityManager.persist(exp);
         this.entityManager.flush();
+        this.log.writeLog("Updated rent expense with ID ${exp.id}");
         return exp;
     }
 
@@ -85,6 +87,7 @@ class ObjectRentExpenseService : AbstractService() {
             this.entityManager.persist(obj.realEstateObject);
             this.entityManager.remove(obj);
             this.entityManager.flush();
+            this.log.writeLog("Deleted rent expense with ID ${obj.id}");
         }
     }
 
@@ -107,6 +110,7 @@ class ObjectRentExpenseService : AbstractService() {
         obj.credit?.nextCreditRate = AutoBookingUtils.getNextAutoPayIntervalDate(AutoPayInterval.MONTHLY);
         this.entityManager.persist(obj.credit!!);
         this.entityManager.flush();
+        this.log.writeLog("Updated auto booking by rent expenses on object with ID ${obj.id}");
         return obj;
     }
 }
