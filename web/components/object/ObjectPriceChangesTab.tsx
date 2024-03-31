@@ -46,7 +46,7 @@ const ObjectPriceChangesTab = ({loading, data, fieldToAccess}: ObjectPriceChange
             field: 'year',
             headerName: t('common.year'),
         }
-    ], [t]);
+    ], [t, currency]);
 
     return (
         <LoadingSpinner loading={loading}>

@@ -82,7 +82,7 @@ const HousingPrices = () => {
                 </Grid>
             )
         }
-    ], [deleteLoading, deleteObject, t]);
+    ], [deleteLoading, deleteObject, t, currency]);
 
     const [filter, setFilter] = useState<string>('');
 

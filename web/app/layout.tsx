@@ -24,7 +24,7 @@ export default function RootLayout({
         document.addEventListener('reRenderAll', () => {
             setRerender(reRender+1);
         })
-    }, []);
+    }, [reRender]);
 
   return (
     <html lang="de">

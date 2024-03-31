@@ -79,7 +79,7 @@ const CreditsPage = () => {
                 </Grid>
             )
         }
-    ], [router, t]);
+    ], [router, t, currency]);
 
     return (
         <>

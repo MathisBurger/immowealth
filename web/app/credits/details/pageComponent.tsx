@@ -35,7 +35,7 @@ const CreditDetailsPage = () => {
             label: t('credit.tab.rates'),
             content: <CreditRateList elements={(data?.credit.credit.rates as CreditRateDataFragment[]) ?? []} />
         }
-    ], [data, loading]);
+    ], [data, loading, t]);
 
     return (
         <>

@@ -33,7 +33,7 @@ const ObjectCreditChartCard = ({loading, data}: ObjectCreditChartCardProps) => {
     const series = useMemo<BarChartData[]>(() => [
         {dataKey: 'paid', label: t('common.creditRateSum')},
         {dataKey: 'total', label: t('common.credit')},
-    ], []);
+    ], [t]);
 
     return (
         <Card variant="outlined">

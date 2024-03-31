@@ -36,7 +36,7 @@ const Page = () => {
             // @ts-ignore
             content: <SettingsTab dataObj={dataObj[el]} />
         })
-    ), [dataObj]);
+    ), [dataObj, t]);
 
     return (
         <LoadingSpinner loading={loading}>

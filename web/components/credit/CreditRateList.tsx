@@ -68,7 +68,7 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
                 </Button>
             )
         }
-    ], [deleteObject, t]);
+    ], [deleteObject, t, currency]);
 
     return (
         <EntityList columns={cols} rows={elements} configPresetKey="creditRateList" />

@@ -69,7 +69,7 @@ const ObjectRentSpreadTab = ({expenses}: ObjectRentSpreadTabProps) => {
                 </Grid>
             )
         }
-    ], [t]);
+    ], [t, deleteMutation]);
 
     return (
         <Grid container direction="row" spacing={2}>

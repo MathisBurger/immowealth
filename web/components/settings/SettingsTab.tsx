@@ -65,12 +65,12 @@ const SettingsTab = ({dataObj}: SettingsTabProps) => {
                 <>
                     <Typography level="h2">{t(`settings.section.${data[0]}`)}</Typography>
                     {Object.values(data[1]).map((el) => (
-                        <FormControl>
+                        <FormControl key={el.key}>
                             <FormLabel>{t(`settings.${el.key}`)}</FormLabel>
                             {el.options ? (
                                 <Select value={el.value} onChange={(_, c) => updateSetting(`${el.key}`, `${c}`)}>
                                     {el.options.map((option) => (
-                                        <SettingOption option={option as SettingOptionDataFragment} />
+                                        <SettingOption option={option as SettingOptionDataFragment} key={option?.key} />
                                     ))}
                                 </Select>
                             ) : (

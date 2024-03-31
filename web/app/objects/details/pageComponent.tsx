@@ -92,7 +92,7 @@ const ObjectDetailsPage = () => {
                 </Stack>
             )
         }
-    ], [data, loading, forecastYears]);
+    ], [data, loading, forecastYears, t]);
 
     return (
         <>
