@@ -14,6 +14,8 @@ grow very fast and continously and will always have its users in focus.
 - value forecast
 - Inflation based value calculations
 - Real estate map
+- Multiple currencies
+- Rent expenses
 
 
 # Installation
@@ -35,13 +37,6 @@ docker-compose up -d
 # Roadmap
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
-
-### v1.2.0
-- [x] Add translations
-- [x] Add different currencies
-- [x] Add activity logging
-- [x] Save settings like filter selections
-- [x] Split rent into credit rate and other expenses
 
 ### v1.3.0
 - [ ] AutoPayInterval (configure start date)
