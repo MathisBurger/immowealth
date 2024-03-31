@@ -37,11 +37,11 @@ docker-compose up -d
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.2.0
-- [ ] Add translations
-- [ ] Add different currencies
-- [ ] Add activity logging
-- [ ] Save settings like filter selections
-- [ ] Split rent into credit rate and other expenses
+- [x] Add translations
+- [x] Add different currencies
+- [x] Add activity logging
+- [x] Save settings like filter selections
+- [x] Split rent into credit rate and other expenses
 
 ### v1.3.0
 - [ ] AutoPayInterval (configure start date)
@@ -51,6 +51,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Most / recently used document recommendations
 
 ### v1.4.0
+- [ ] Full UNIT test coverage
 - [ ] User account system
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
@@ -59,9 +60,13 @@ There are many new features planned. You can find a little roadmap of planned fu
 ### v1.5.0
 - [ ] Immo portal search
 - [ ] Object location watchlist
-- [ ] Add AFA calculations
 - [ ] Add support for measured object prices
+- [ ] Tabs are saved in URI
 
-### Planned but not fixed
+### Not planned yet
 - [ ] Auto collect market value change data
+- [ ] Add balance sheet calculation
+- [ ] Rent spread suggestions by fixes rules
+- [ ] Rentability calculations
+- [ ] TAX calculations
 

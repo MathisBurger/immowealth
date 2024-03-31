@@ -3,20 +3,14 @@ package de.mathisburger.entity
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import java.util.Date
 
 /**
  * Credit rate entity
  */
 @Entity
-class CreditRate {
-
-    /**
-     * The ID
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null;
+class CreditRate : BaseEntity() {
 
     /**
      * The date of booking
@@ -32,4 +26,7 @@ class CreditRate {
      * The note of the credit rate
      */
     var note: String? = null;
+
+    @ManyToOne
+    lateinit var credit: Credit;
 }

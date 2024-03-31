@@ -16,6 +16,8 @@ import {DatePicker} from "@mui/x-date-pickers";
 import {useRouter} from "next/navigation";
 import {FormEvent} from "react";
 import {GetAllObjectsDocument, useCreateRealEstateMutation} from "@/generated/graphql";
+import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 
 const NewObject = () => {
@@ -24,6 +26,8 @@ const NewObject = () => {
     const [mutation, {loading}] = useCreateRealEstateMutation({
         refetchQueries: [{query: GetAllObjectsDocument}]
     });
+    const {t} = useTranslation();
+    const currency = useCurrencySymbol();
 
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -61,7 +65,7 @@ const NewObject = () => {
 
     return (
         <>
-            <Typography level="h1">Neues Objekt</Typography>
+            <Typography level="h1">{t('object.new')}</Typography>
             <Divider />
             <form onSubmit={submit}>
                 <Grid container direction="row" spacing={2}>
@@ -69,13 +73,13 @@ const NewObject = () => {
                         <Card>
                             <CardContent>
                                 <Stack spacing={2}>
-                                    <Typography level="h3">Grunddaten</Typography>
+                                    <Typography level="h3">{t('object.baseData')}</Typography>
                                     <FormControl>
-                                        <FormLabel>Straße und Hausnummer *</FormLabel>
+                                        <FormLabel>{t('object.streetAndHouseNr')} *</FormLabel>
                                         <Input
                                             required
                                             name="streetAndHouseNr"
-                                            placeholder="Straße und Hausnummer"
+                                            placeholder={t('object.streetAndHouseNr')}
                                             variant="soft"
                                             fullWidth
                                         />
@@ -83,11 +87,11 @@ const NewObject = () => {
                                     <Grid container direction="row" spacing={2}>
                                         <Grid xs={6}>
                                             <FormControl>
-                                                <FormLabel>Postleitzahl *</FormLabel>
+                                                <FormLabel>{t('common.zip')} *</FormLabel>
                                                 <Input
                                                     required
                                                     name="zip"
-                                                    placeholder="Postleitzahl"
+                                                    placeholder={t('common.zip')}
                                                     variant="soft"
                                                     fullWidth
                                                 />
@@ -95,11 +99,11 @@ const NewObject = () => {
                                         </Grid>
                                         <Grid xs={6}>
                                             <FormControl>
-                                                <FormLabel>Ort *</FormLabel>
+                                                <FormLabel>{t('common.city')} *</FormLabel>
                                                 <Input
                                                     required
                                                     name="city"
-                                                    placeholder="Ort"
+                                                    placeholder={t('common.city')}
                                                     variant="soft"
                                                     fullWidth
                                                 />
@@ -107,111 +111,111 @@ const NewObject = () => {
                                         </Grid>
                                     </Grid>
                                     <FormControl>
-                                        <FormLabel>Kaufpreis *</FormLabel>
+                                        <FormLabel>{t('object.buyPrice')} *</FormLabel>
                                         <Input
                                             required
                                             name="initialPrice"
-                                            placeholder="Kaufpreis"
+                                            placeholder={t('object.buyPrice')}
                                             variant="soft"
                                             type="number"
                                             fullWidth
-                                            endDecorator={"€"}
+                                            endDecorator={currency}
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Kaufdatum *</FormLabel>
+                                        <FormLabel>{t('object.buyDate')} *</FormLabel>
                                         <DatePicker disableFuture name="dateBought" />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Räume *</FormLabel>
+                                        <FormLabel>{t('object.rooms')} *</FormLabel>
                                         <Input
                                             required
                                             name="rooms"
                                             type="number"
-                                            placeholder="Räume"
+                                            placeholder={t('object.rooms')}
                                             variant="soft"
                                             fullWidth
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Nutzfläche *</FormLabel>
+                                        <FormLabel>{t('object.usageSpace')} *</FormLabel>
                                         <Input
                                             required
                                             name="space"
-                                            placeholder="Nutzfläche"
+                                            placeholder={t('object.usageSpace')}
                                             variant="soft"
                                             type="number"
                                             fullWidth
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Wohnungstyp *</FormLabel>
+                                        <FormLabel>{t('object.objectType')} *</FormLabel>
                                         <Input
                                             required
                                             name="objectType"
-                                            placeholder="Wohnungstyp"
+                                            placeholder={t('object.objectType')}
                                             variant="soft"
                                             fullWidth
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Baujahr *</FormLabel>
+                                        <FormLabel>{t('object.constructionYear')} *</FormLabel>
                                         <Input
                                             required
                                             name="constructionYear"
-                                            placeholder="Baujahr"
+                                            placeholder={t('object.constructionYear')}
                                             variant="soft"
                                             type="number"
                                             fullWidth
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Renoviert (Jahr)</FormLabel>
+                                        <FormLabel>{t('object.renovationYear')}</FormLabel>
                                         <Input
                                             name="renovationYear"
                                             type="number"
-                                            placeholder="Renoviert (Jahr)"
+                                            placeholder={t('object.renovationYear')}
                                             variant="soft"
                                             fullWidth
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Energie Effizienz</FormLabel>
+                                        <FormLabel>{t('object.energyEfficiency')}</FormLabel>
                                         <Input
                                             name="energyEfficiency"
-                                            placeholder="Energie Effizienz"
+                                            placeholder={t('object.energyEfficiency')}
                                             variant="soft"
                                             fullWidth
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Rendite *</FormLabel>
+                                        <FormLabel>{t('object.return')} *</FormLabel>
                                         <Input
                                             required
                                             type="number"
                                             name="grossReturn"
-                                            placeholder="Rendite"
+                                            placeholder={t('object.return')}
                                             variant="soft"
                                             fullWidth
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Heiztyp *</FormLabel>
+                                        <FormLabel>{t('object.heatingType')} *</FormLabel>
                                         <Input
                                             required
                                             name="heatingType"
-                                            placeholder="Heiztyp"
+                                            placeholder={t('object.heatingType')}
                                             variant="soft"
                                             fullWidth
                                         />
                                     </FormControl>
-                                    <Checkbox name="garden" label="Garten" />
-                                    <Checkbox name="kitchen" label="Küche" />
+                                    <Checkbox name="garden" label={t('object.garden')} />
+                                    <Checkbox name="kitchen" label={t('object.kitchen')} />
                                     <FormControl>
-                                        <FormLabel>Notizen</FormLabel>
+                                        <FormLabel>{t('object.notes')}</FormLabel>
                                         <Textarea
                                             name="notes"
-                                            placeholder="Notizen"
+                                            placeholder={t('object.notes')}
                                             variant="soft"
                                         />
                                     </FormControl>
@@ -223,37 +227,37 @@ const NewObject = () => {
                         <Card>
                             <CardContent>
                                 <Stack spacing={2}>
-                                    <Typography level="h3">Kreditdaten</Typography>
+                                    <Typography level="h3">{t('common.creditRates')}</Typography>
                                     <FormControl>
-                                        <FormLabel>Bank *</FormLabel>
+                                        <FormLabel>{t('common.bank')} *</FormLabel>
                                         <Input
                                             required
                                             name="bank"
-                                            placeholder="Bank"
+                                            placeholder={t('common.bank')}
                                             variant="soft"
                                             fullWidth
                                         />
                                     </FormControl>
                                     <FormControl>
-                                        <FormLabel>Kreditsumme *</FormLabel>
+                                        <FormLabel>{t('common.creditSum')} *</FormLabel>
                                         <Input
                                             required
                                             name="creditAmount"
-                                            placeholder="Kreditsumme"
+                                            placeholder={t('common.creditSum')}
                                             variant="soft"
                                             type="number"
                                             fullWidth
-                                            endDecorator={"€"}
+                                            endDecorator={currency}
                                         />
                                     </FormControl>
                                     <Grid container direction="row" spacing={2}>
                                         <Grid xs={6}>
                                             <FormControl>
-                                                <FormLabel>Zins *</FormLabel>
+                                                <FormLabel>{t('common.interestRate')} *</FormLabel>
                                                 <Input
                                                     required
                                                     name="interestRate"
-                                                    placeholder="Zins"
+                                                    placeholder={t('common.interestRate')}
                                                     variant="soft"
                                                     type="number"
                                                     fullWidth
@@ -263,11 +267,11 @@ const NewObject = () => {
                                         </Grid>
                                         <Grid xs={6}>
                                             <FormControl>
-                                                <FormLabel>Tilgung *</FormLabel>
+                                                <FormLabel>{t('common.redemptionRate')} *</FormLabel>
                                                 <Input
                                                     required
                                                     name="redemptionRate"
-                                                    placeholder="Tilgung"
+                                                    placeholder={t('common.redemptionRate')}
                                                     variant="soft"
                                                     type="number"
                                                     fullWidth
@@ -285,7 +289,7 @@ const NewObject = () => {
                             <CardContent>
                                 <Grid container direction="row" spacing={2} alignItems="flex-end">
                                     <Grid xs={8}>
-                                        <Typography level="h4">Aktionen</Typography>
+                                        <Typography level="h4">{t('common.actions')}</Typography>
                                     </Grid>
                                     <Grid xs={2}>
                                         <Button
@@ -294,7 +298,7 @@ const NewObject = () => {
                                             fullWidth
                                             onClick={() => router.back()}
                                         >
-                                            Abbrechen
+                                            {t('common.cancel')}
                                         </Button>
                                     </Grid>
                                     <Grid xs={2}>
@@ -305,7 +309,7 @@ const NewObject = () => {
                                             type="submit"
                                             loading={loading}
                                         >
-                                            Erstellen
+                                            {t('common.create')}
                                         </Button>
                                     </Grid>
                                 </Grid>

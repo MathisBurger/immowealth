@@ -9,10 +9,12 @@ import CreditDataTab from "@/components/credit/CreditDataTab";
 import ConfigureCreditAutoPayModal from "@/components/credit/ConfigureCreditAutoPayModal";
 import {useParams, useRouter, useSearchParams} from "next/navigation";
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
+import {useTranslation} from "next-export-i18n";
 
 
 const CreditDetailsPage = () => {
     const id = useSearchParams().get('id') ?? '';
+    const {t} = useTranslation();
 
     const {data, loading} = useGetCreditQuery({
         variables: {id: parseInt(id, 10)}
@@ -25,20 +27,20 @@ const CreditDetailsPage = () => {
     const tabs = useMemo<TabLayoutElement[]>(() => [
         {
             id: 'general',
-            label: 'Allgemein',
+            label: t('credit.tab.general'),
             content: <CreditDataTab loading={loading} data={data} />
         },
         {
             id: 'creditRates',
-            label: 'Kreditraten',
+            label: t('credit.tab.rates'),
             content: <CreditRateList elements={(data?.credit.credit.rates as CreditRateDataFragment[]) ?? []} />
         }
-    ], [data, loading]);
+    ], [data, loading, t]);
 
     return (
         <>
             <Typography level="h1">
-                Kredit {id}
+                {t('common.credit')} {id}
             </Typography>
             <Grid container direction="row" spacing={2}>
                 <Grid>
@@ -48,7 +50,7 @@ const CreditDetailsPage = () => {
                         sx={{width: '200px'}}
                         onClick={() => setCreditRateModalOpen(true)}
                     >
-                        Kreditrate hinzufügen
+                        {t('credit.button.add-rate')}
                     </Button>
                 </Grid>
                 <Grid>
@@ -58,7 +60,7 @@ const CreditDetailsPage = () => {
                         sx={{width: '250px'}}
                         onClick={() => setConfigureAutoBookingModal(true)}
                     >
-                        Automatische Kreditbuchung
+                        {t('credit.button.auto-booking')}
                     </Button>
                 </Grid>
                 <Grid>

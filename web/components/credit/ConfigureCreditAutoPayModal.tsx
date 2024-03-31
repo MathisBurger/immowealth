@@ -21,6 +21,8 @@ import {
 import LoadingButton from "@/components/LoadingButton";
 import {FormEvent, useState} from "react";
 import dayjs from "dayjs";
+import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 interface ConfigureCreditAutoPayModalProps {
     /**
@@ -56,6 +58,9 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
         ]
     });
 
+    const {t} = useTranslation();
+    const currency = useCurrencySymbol();
+
     const [checked, setChecked] = useState<boolean>(credit?.autoPayInterval !== null && credit?.autoPayInterval !== undefined);
 
     const submit = async (e: FormEvent<HTMLFormElement>) => {
@@ -78,7 +83,7 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
         <Modal open onClose={onClose}>
             <ModalDialog variant="outlined">
                 <Typography level="h2">
-                    Automatische Buchung konfigurieren
+                    {t('credit.button.configure-auto-booking')}
                 </Typography>
                 <form onSubmit={submit}>
                     <Grid container direction="row" spacing={2} justifyContent="flex-end">
@@ -86,7 +91,7 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                             <Stack spacing={2}>
                                 {credit?.nextCreditRate && checked && (
                                     <Typography level="h4">
-                                        Nächste Buchung: {dayjs(`${credit.nextCreditRate}`).format("DD.MM.YYYY")}
+                                        {t('credit.nextBooking')}: {dayjs(`${credit.nextCreditRate}`).format("DD.MM.YYYY")}
                                     </Typography>
                                 )}
                                 <Typography component="label" endDecorator={
@@ -96,7 +101,7 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                                         onChange={(event) => setChecked(event.target.checked)}
                                     />
                                 }>
-                                    Aktiviert
+                                    {t('common.activated')}
                                 </Typography>
                                 <FormControl>
                                     <FormLabel>Interval</FormLabel>
@@ -107,11 +112,11 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                                     </Select>
                                 </FormControl>
                                 <FormControl>
-                                    <FormLabel>Buchungssumme</FormLabel>
+                                    <FormLabel>{t('credit.bookingSum')}</FormLabel>
                                     <Input
                                         type="number"
                                         variant="outlined"
-                                        endDecorator="€"
+                                        endDecorator={currency}
                                         name="amount"
                                         disabled={!checked}
                                         defaultValue={credit?.autoPayAmount ?? 0}
@@ -125,12 +130,12 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                                 color="neutral"
                                 onClick={onClose}
                             >
-                                Abbrechen
+                                {t('common.cancel')}
                             </Button>
                         </Grid>
                         <Grid>
                             <LoadingButton variant="solid" color="primary" type="submit" loading={loading}>
-                                Speichern
+                                {t('common.save')}
                             </LoadingButton>
                         </Grid>
                     </Grid>

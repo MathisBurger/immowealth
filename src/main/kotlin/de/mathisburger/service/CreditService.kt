@@ -22,7 +22,7 @@ import java.util.Date
  * The credit service
  */
 @ApplicationScoped
-class CreditService {
+class CreditService : AbstractService() {
 
     @Inject
     lateinit var creditRepository: CreditRepository;
@@ -52,12 +52,14 @@ class CreditService {
         val credit = this.creditRepository.findById(id);
         val creditRate = CreditRate()
         creditRate.date = date;
-        creditRate.amount = rate;
+        creditRate.amount = this.cs.convertBack(rate);
         creditRate.note = note;
+        creditRate.credit = credit;
         this.entityManager.persist(creditRate);
         credit.rates.add(creditRate);
         this.entityManager.persist(credit);
         this.entityManager.flush();
+        this.log.writeLog("Added credit rate (${this.cs.convertBack(rate)}€) to credit with ID ${id}");
     }
 
     /**
@@ -94,6 +96,7 @@ class CreditService {
         credit.bank = input.bank ?: credit.bank;
         this.entityManager.persist(credit);
         this.entityManager.flush();
+        this.log.writeLog("Updated credit with ID ${credit.id}");
         return this.getCredit(credit.id!!);
 
     }
@@ -115,6 +118,7 @@ class CreditService {
             credit.autoPayAmount = null;
             this.entityManager.persist(credit);
             this.entityManager.flush();
+            this.log.writeLog("Disabled auto booking for credit with ID ${credit.id}");
             return this.getResponseObject(credit);
         }
         if (interval == null) {
@@ -125,9 +129,10 @@ class CreditService {
         }
         credit.autoPayInterval = interval;
         credit.nextCreditRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval);
-        credit.autoPayAmount = amount;
+        credit.autoPayAmount = this.cs.convertBack(amount);
         this.entityManager.persist(credit);
         this.entityManager.flush();
+        this.log.writeLog("Configured auto booking (${interval}, ${this.cs.convertBack(amount)}€) for credit with ID ${credit.id}");
         return this.getResponseObject(credit);
     }
 
@@ -139,8 +144,11 @@ class CreditService {
     @Transactional
     fun deleteCreditRate(id: Long) {
         val obj = this.creditRateRepository.findById(id);
+        obj.credit.rates.remove(obj);
+        this.entityManager.persist(obj.credit);
         this.entityManager.remove(obj);
         this.entityManager.flush();
+        this.log.writeLog("Deleted credit rate with ID $id");
     }
 
     /**
@@ -153,9 +161,31 @@ class CreditService {
         var list: MutableList<Double> = mutableListOf();
         for (rate in credit.rates) {
             sum += rate.amount!!;
-            list.add(sum);
+            list.add(this.cs.convert(sum));
         }
-       val res =
-        return CreditResponse(credit, sum, list, this.realEstateRepository.getByCredit(credit).id!!);
+        return CreditResponse(this.convertCreditCurrencies(credit), this.cs.convert(sum), list, this.realEstateRepository.getByCredit(credit).id!!);
+    }
+
+    /**
+     * Convert currencies of credit object.
+     *
+     * @param credit The initial credit
+     * @return The updated credit
+     */
+    fun convertCreditCurrencies(credit: Credit): Credit {
+        credit.amount = this.cs.convert(credit.amount!!);
+        credit.rates = credit.rates.map { this.convertCreditRate(it) }.toMutableList();
+        return credit;
+    }
+
+    /**
+     * Convert currencies of credit rate
+     *
+     * @param rate The credit rate
+     * @return The updated credit rate
+     */
+    private fun convertCreditRate(rate: CreditRate): CreditRate {
+        rate.amount = this.cs.convert(rate.amount!!);
+        return rate;
     }
 }

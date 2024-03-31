@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional
  * The house price change service
  */
 @ApplicationScoped
-class HousePriceChangeService {
+class HousePriceChangeService : AbstractService() {
 
     @Inject
     lateinit var entityManager: EntityManager;
@@ -36,6 +36,7 @@ class HousePriceChangeService {
         change.year = year;
         this.entityManager.persist(change);
         this.entityManager.flush();
+        this.log.writeLog("Added house price change at ($zip, $year) with $cng%");
         return change;
     }
 
@@ -49,6 +50,7 @@ class HousePriceChangeService {
         val obj = this.housePriceChangeRepository.findById(id);
         this.entityManager.remove(obj);
         this.entityManager.flush();
+        this.log.writeLog("Deleted house price change with ID $id");
     }
 
     /**
@@ -80,6 +82,7 @@ class HousePriceChangeService {
         obj.year = input.year ?: obj.year;
         this.entityManager.persist(obj);
         this.entityManager.flush();
+        this.log.writeLog("Updated house price change with id ${obj.id}");
         return obj;
     }
 }

@@ -3,10 +3,12 @@ import {Button, Divider, FormControl, FormLabel, Input, Stack, Typography} from 
 import {AllHousePriceChangesDocument, useAddHousePriceChangeMutation} from "@/generated/graphql";
 import {FormEvent} from "react";
 import {useRouter} from "next/navigation";
+import {useTranslation} from "next-export-i18n";
 
 const NewHousingPriceChange = () => {
 
     const router = useRouter();
+    const {t} = useTranslation();
 
     const [mutation, {loading}] = useAddHousePriceChangeMutation({
         refetchQueries: [
@@ -33,16 +35,16 @@ const NewHousingPriceChange = () => {
 
     return (
         <>
-            <Typography level="h1">Neue Preisänderung</Typography>
+            <Typography level="h1">{t('housingPrices.new')}</Typography>
             <Divider />
             <form onSubmit={onSubmit}>
                 <Stack spacing={2}>
                     <FormControl>
-                        <FormLabel>Änderung</FormLabel>
+                        <FormLabel>{t('common.change')}</FormLabel>
                         <Input
                             required
                             name="change"
-                            placeholder="Änderung"
+                            placeholder={t('common.change')}
                             variant="soft"
                             type="number"
                             fullWidth
@@ -50,21 +52,21 @@ const NewHousingPriceChange = () => {
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Postleitzahl</FormLabel>
+                        <FormLabel>{t('common.zip')}</FormLabel>
                         <Input
                             required
                             name="zip"
-                            placeholder="Postleitzahl"
+                            placeholder={t('common.zip')}
                             variant="soft"
                             fullWidth
                         />
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Jahr</FormLabel>
+                        <FormLabel>{t('common.year')}</FormLabel>
                         <Input
                             required
                             name="year"
-                            placeholder="Jahr"
+                            placeholder={t('common.year')}
                             variant="soft"
                             type="number"
                             fullWidth
@@ -77,7 +79,7 @@ const NewHousingPriceChange = () => {
                         type="submit"
                         loading={loading}
                     >
-                        Erstellen
+                        {t('common.create')}
                     </Button>
                 </Stack>
             </form>

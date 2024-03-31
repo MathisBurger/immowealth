@@ -1,0 +1,127 @@
+{
+  "settings": {
+    "tab": {
+      "general": "Allgemein"
+    },
+    "section": {
+      "general": "Allgemein"
+    },
+    "messages": {
+      "update-successful": "Einstellung erfolgreich aktualisiert (Möglicherweise muss die Seite neu geladen werden, damit sie wie gewünscht funktioniert)"
+    },
+    "language": "Sprache",
+    "currency": "Währung"
+  },
+  "routes": {
+    "dashboard": "Dashboard",
+    "objects": "Objekte",
+    "credits": "Kredite",
+    "housingPrices": "Preisänderungen",
+    "map": "Karte",
+    "settings": "Einstellungen",
+    "activityLog": "Aktivitäten"
+  },
+  "common": {
+    "credit": "Kredit",
+    "credits": "Kredite",
+    "sum": "Summe",
+    "creditRateSum": "Getilgt",
+    "interestRate": "Zins",
+    "redemptionRate": "Tilgung",
+    "bank": "Bank",
+    "actions": "Aktionen",
+    "change": "Änderung",
+    "zip": "Postleitzahl",
+    "year": "Jahr",
+    "years": "Jahre",
+    "create": "Erstellen",
+    "choose": "Auswählen",
+    "cancel": "Abbrechen",
+    "object": "Objekt",
+    "objects": "Okjekte",
+    "details": "Details",
+    "general": "Allgemein",
+    "creditRates": "Kreditraten",
+    "delete": "Löschen",
+    "city": "Stadt",
+    "creditSum": "Kreditsumme",
+    "activated": "Aktiviert",
+    "save": "Speichern",
+    "update": "Aktualisieren",
+    "add": "Hinzufügen",
+    "price": "Preis",
+    "message": "Nachricht",
+    "date": "Datum",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "credit": {
+    "tab": {
+      "general": "Allgemein",
+      "rates": "Kreditraten"
+    },
+    "button": {
+      "add-rate": "Kreditrate hinzufügen",
+      "auto-booking": "Automatische Kreditbuchung",
+      "configure-auto-booking": "Automatische Buchung konfigurieren"
+    },
+    "currentMarketPrice": "Marktwert (aktuell)",
+    "priceForecast": "Marktwert (Prognose)",
+    "nextBooking": "Nächste Buchung",
+    "bookingSum": "Buchungssumme",
+    "financingHistory": "Finanzierungsverlauf",
+    "creditAmount": "Kredithöhe",
+    "rate": "Rate",
+    "bookingDate": "Buchungsdatum",
+    "note": "Notiz",
+    "bookingDay": "Buchungstag"
+  },
+  "housingPrices": {
+    "new": "Neue Preisänderung",
+    "housingPricesChange": "Preisänderungen"
+  },
+  "map": {
+    "in-editing": "Du befindest dich im Korrektur-Modus.",
+    "correct-position": "Position korrigieren"
+  },
+  "object": {
+    "message": {
+      "pleaseEnterValue": "Bitte gebe einen Wert ein.",
+      "noFutureDate": "Das Datum darf nicht in der Zukunft liegen"
+    },
+    "new": "Neues Objekt",
+    "baseData": "Grunddaten",
+    "streetAndHouseNr": "Straße und Hausnummer",
+    "buyPrice": "Kaufpreis",
+    "buyDate": "Kaufdatum",
+    "rooms": "Räume",
+    "usageSpace": "Nutzfläche",
+    "objectType": "Wohnungstyp",
+    "constructionYear": "Baujahr",
+    "renovationYear": "Renoviert (Jahr)",
+    "energyEfficiency": "Energie Effizienz",
+    "return": "Rendite",
+    "heatingType": "Heiztyp",
+    "garden": "Garten",
+    "kitchen": "Küche",
+    "notes": "Notizen",
+    "estimatedCurrentMarketValue": "Geschätzter Marktpreis (aktuell)",
+    "expenses": "Mietausgaben",
+    "expense": {
+      "configure-auto-booking": "Möchten sie die automatischen Kreditbuchungen aktualisieren?",
+      "updated-auto-booking": "Automatische Kreditbuchungen wurden aktualisiert",
+      "add": "Ausgabe hinzufügen",
+      "name": "Name",
+      "value": "Wert",
+      "type": "Typ",
+      "types": {
+        "NK": "Nebenkosten",
+        "REDEMPTION_RATE": "Tilgung",
+        "INTEREST_RATE": "Zins",
+        "RESERVE": "Rücklagen",
+        "INSURANCE": "Versicherung",
+        "OTHER": "Sonstiges"
+      }
+    }
+  }
+}

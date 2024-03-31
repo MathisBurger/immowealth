@@ -11,6 +11,8 @@ import {formatNumber} from "@/utilts/formatter";
 import {useCallback, useMemo} from "react";
 import {GridColDef, GridRenderCellParams, GridValueFormatterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
+import {useTranslation} from "next-export-i18n";
+import useCurrencySymbol from "@/hooks/useCurrencySymbol";
 
 interface CreditRateListProps {
     /**
@@ -27,12 +29,15 @@ interface CreditRateListProps {
 const CreditRateList = ({elements}: CreditRateListProps) => {
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteCreditRateMutation();
+    const currency = useCurrencySymbol();
 
     const deleteObject = useCallback(async (id: string) => {
         await deleteMutation({
             variables: {id: parseInt(`${id}`)}
         });
     }, [deleteMutation]);
+
+    const {t} = useTranslation();
 
     const cols = useMemo<GridColDef[]>(() => [
         {
@@ -41,32 +46,32 @@ const CreditRateList = ({elements}: CreditRateListProps) => {
         },
         {
             field: 'amount',
-            headerName: 'Rate',
-            valueFormatter: ({value}: GridValueFormatterParams) => `${formatNumber(value ?? 0)}€`
+            headerName: t('credit.rate'),
+            valueFormatter: (value) => `${formatNumber(value ?? 0)}${currency}`
         },
         {
             field: 'date',
-            headerName: 'Buchungsdatum',
-            valueFormatter: ({value}: GridValueFormatterParams) => `${dayjs(value).format("DD.MM.YYYY")}`
+            headerName: t('credit.bookingDate'),
+            valueFormatter: (value) => `${dayjs(value).format("DD.MM.YYYY")}`
         },
         {
             field: 'note',
-            headerName: 'Notiz',
+            headerName: t('credit.note'),
             width: 400
         },
         {
             field: 'actions',
-            headerName: 'Aktionen',
+            headerName: t('common.actions'),
             renderCell: ({row}: GridRenderCellParams) => (
                 <Button color="danger" onClick={() => deleteObject(`${row.id}`)}>
                     <DeleteIcon />
                 </Button>
             )
         }
-    ], [deleteObject]);
+    ], [deleteObject, t, currency]);
 
     return (
-        <EntityList columns={cols} rows={elements} />
+        <EntityList columns={cols} rows={elements} configPresetKey="creditRateList" />
     );
 }
 

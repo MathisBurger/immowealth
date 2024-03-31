@@ -1,20 +1,16 @@
 package de.mathisburger.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import java.util.Date
 
 /**
  * The real estate entity
  */
 @Entity
-class RealEstateObject {
-
-    /**
-     * The ID of the object
-     */
-    @GeneratedValue
-    @Id
-    var id: Long? = null
+class RealEstateObject : BaseEntity() {
 
     /**
      * The city of the object
@@ -112,4 +108,10 @@ class RealEstateObject {
      */
     @OneToOne(cascade = [CascadeType.ALL])
     var credit: Credit? = null
+
+    /**
+     * All rent expenses of the object
+     */
+    @OneToMany(mappedBy = "realEstateObject", cascade = [CascadeType.ALL])
+    lateinit var expenses: MutableList<ObjectRentExpense>;
 }

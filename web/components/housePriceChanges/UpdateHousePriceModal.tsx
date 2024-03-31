@@ -5,6 +5,7 @@ import {
 } from "@/generated/graphql";
 import {Button, FormControl, FormLabel, Grid, Input, Modal, ModalDialog, Stack, Typography} from "@mui/joy";
 import {FormEvent} from "react";
+import {useTranslation} from "next-export-i18n";
 
 interface UpdateHousePriceModalProps {
     /**
@@ -27,6 +28,8 @@ const UpdateHousePriceModal = ({onClose, housePrice}: UpdateHousePriceModalProps
         ]
     });
 
+    const {t} = useTranslation();
+
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let data = new FormData(e.currentTarget);
@@ -47,31 +50,31 @@ const UpdateHousePriceModal = ({onClose, housePrice}: UpdateHousePriceModalProps
       <Modal open onClose={onClose}>
         <ModalDialog>
             <Typography level="h2">
-                Aktualisieren
+                {t('common.update')}
             </Typography>
             <form onSubmit={submit}>
                 <Stack spacing={2}>
                     <FormControl>
-                        <FormLabel>Änderung</FormLabel>
+                        <FormLabel>{t('common.change')}</FormLabel>
                         <Input endDecorator="%" name="change" type="number" variant="soft" defaultValue={housePrice.change ?? 0}/>
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Jahr</FormLabel>
+                        <FormLabel>{t('common.year')}</FormLabel>
                         <Input name="year" type="number" variant="soft" defaultValue={housePrice.year ?? 0} />
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Postleitzahl</FormLabel>
+                        <FormLabel>{t('common.zip')}</FormLabel>
                         <Input name="zip" type="text" variant="soft" defaultValue={housePrice.zip ?? ''} />
                     </FormControl>
                     <Grid container direction="row" spacing={2}>
                         <Grid>
                             <Button color="neutral" variant="soft" onClick={onClose}>
-                                Abbrechen
+                                {t('common.cancel')}
                             </Button>
                         </Grid>
                         <Grid>
                             <Button color="primary" variant="solid" type="submit">
-                                Speichern
+                                {t('common.save')}
                             </Button>
                         </Grid>
                     </Grid>
