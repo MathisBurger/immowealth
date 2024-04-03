@@ -1,5 +1,4 @@
 fragment SettingData on Setting {
-    id
     key
     options {
         ...SettingOptionData
@@ -10,7 +9,6 @@ fragment SettingData on Setting {
 }
 
 fragment SettingOptionData on SettingOption {
-    id
     key
     value
     iconPrefix

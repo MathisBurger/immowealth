@@ -67,5 +67,30 @@ class SettingsLoader {
             this.entityManager.persist(newCurrency);
             this.entityManager.flush();
         }
+
+        this.initMailerSetting("realEstateObject");
+        this.initMailerSetting("credit");
+        this.initMailerSetting("housePrices");
+    }
+
+    private fun initMailerSetting(suffix: String) {
+        val mailerNotification = this.settingsRepository.getByKey("mailerNotification_$suffix");
+        if (mailerNotification.isEmpty) {
+            val newMailerNotification = Setting();
+            newMailerNotification.key = "mailerNotification_$suffix";
+            newMailerNotification.tab = "notification";
+            newMailerNotification.section = "mailer";
+            newMailerNotification.options = mutableListOf(
+                SettingOption("NONE", "None", null),
+                SettingOption("UPDATE_ONLY", "Update only", null),
+                SettingOption("CREATE_ONLY", "Create only", null),
+                SettingOption("BOOKING_ONLY", "Booking only", null),
+                SettingOption("DELETE_ONLY", "Delete only", null),
+                SettingOption("ALL", "All", null)
+            );
+            newMailerNotification.value = "NONE";
+            this.entityManager.persist(newMailerNotification);
+            this.entityManager.flush();
+        }
     }
 }

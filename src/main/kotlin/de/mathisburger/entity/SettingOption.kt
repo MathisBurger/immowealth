@@ -29,7 +29,7 @@ class SettingOption : BaseEntity {
     constructor() {
     }
 
-    constructor(key: String, value: String, iconPrefix: SettingOptionPrefix) {
+    constructor(key: String, value: String, iconPrefix: SettingOptionPrefix?) {
         this.key = key;
         this.value = value;
         this.iconPrefix = iconPrefix;

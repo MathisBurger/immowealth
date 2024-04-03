@@ -39,7 +39,7 @@ docker-compose up -d
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.3.0
-- [ ] AutoPayInterval (configure start date)
+- [x] AutoPayInterval (configure start date)
 - [ ] Add mail notifications
 - [ ] Archiving feature
 - [ ] Add document upload for important documents
@@ -50,6 +50,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] User account system
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
+- [ ] Update mail notifications with favourites
 - [ ] Performance calculations
 
 ### v1.5.0
