@@ -11,6 +11,8 @@ import de.mathisburger.repository.CreditRateRepository
 import de.mathisburger.repository.CreditRepository
 import de.mathisburger.repository.RealEstateRepository
 import de.mathisburger.util.AutoBookingUtils
+import de.mathisburger.util.DateUtils
+import io.smallrye.graphql.api.Scalar.DateTime
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
@@ -110,7 +112,7 @@ class CreditService : AbstractService() {
      * @param amount The booking amount of money per interval
      */
     @Transactional
-    fun configureAutoBooking(id: Long, enabled: Boolean, interval: AutoPayInterval?, amount: Double?): CreditResponse {
+    fun configureAutoBooking(id: Long, enabled: Boolean, interval: AutoPayInterval?, amount: Double?, startDate: Date?): CreditResponse {
         var credit = this.creditRepository.findById(id);
         if (!enabled) {
             credit.autoPayInterval = null;
@@ -127,8 +129,26 @@ class CreditService : AbstractService() {
         if (amount == null) {
             throw GraphQLException("Amount must be configured if auto booking is enabled")
         }
+        if (startDate == null) {
+            throw GraphQLException("Start date must be configured if auto booking is enabled")
+        }
         credit.autoPayInterval = interval;
         credit.nextCreditRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval);
+        if (startDate.before(Date())) {
+            var nextRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval, DateUtils.dateToCalendar(startDate));
+            while (nextRate.time < Date().time) {
+                this.addCreditRate(
+                    credit.id!!,
+                    this.cs.convertBack(amount)!!,
+                    nextRate,
+                    "[AUTOBOOKING] Backward autobooking"
+                    );
+                nextRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval, DateUtils.dateToCalendar(nextRate));
+            }
+            this.log.writeLog("Added backward autobooking on credit with ID ${credit.id}");
+        } else {
+            credit.nextCreditRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval, DateUtils.dateToCalendar(startDate));
+        }
         credit.autoPayAmount = this.cs.convertBack(amount);
         this.entityManager.persist(credit);
         this.entityManager.flush();
@@ -144,11 +164,13 @@ class CreditService : AbstractService() {
     @Transactional
     fun deleteCreditRate(id: Long) {
         val obj = this.creditRateRepository.findById(id);
-        obj.credit.rates.remove(obj);
-        this.entityManager.persist(obj.credit);
-        this.entityManager.remove(obj);
-        this.entityManager.flush();
-        this.log.writeLog("Deleted credit rate with ID $id");
+        if (obj != null) {
+            obj.credit.rates.remove(obj);
+            this.entityManager.persist(obj.credit);
+            this.entityManager.remove(obj);
+            this.entityManager.flush();
+            this.log.writeLog("Deleted credit rate with ID $id");
+        }
     }
 
     /**

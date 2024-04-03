@@ -53,7 +53,8 @@
     "message": "Message",
     "date": "date",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "startDate": "Start date"
   },
   "credit": {
     "tab": {

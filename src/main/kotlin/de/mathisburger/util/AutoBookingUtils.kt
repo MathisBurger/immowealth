@@ -15,8 +15,8 @@ class AutoBookingUtils {
          *
          * @param interval The auto booking interval
          */
-        fun getNextAutoPayIntervalDate(interval: AutoPayInterval): Date {
-            val today = Calendar.getInstance();
+        fun getNextAutoPayIntervalDate(interval: AutoPayInterval, startDay: Calendar? = null): Date {
+            val today = startDay ?: Calendar.getInstance();
             val next =  when (interval) {
                 AutoPayInterval.DAILY -> this.getNextDay(today)
                 AutoPayInterval.WEEKLY -> this.getNextWeeklyDay(today)

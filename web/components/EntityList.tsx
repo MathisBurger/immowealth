@@ -52,7 +52,7 @@ const EntityList = ({
         if (sortModel) {
             setSortModel(JSON.parse(sortModel.jsonString ?? "{}"));
         }
-    }, [data, baseConfigPresetKey, findByKey]);
+    }, [data, baseConfigPresetKey]);
 
     const [filterModel, setFilterModel] = useState<GridFilterModel|undefined>(undefined);
     const [columnVisibilitModel, setColumnVisibilityModel] = useState<GridColumnVisibilityModel|undefined>(undefined);
@@ -93,9 +93,9 @@ const EntityList = ({
             paginationModel={paginationModel}
             pagination={pagination ?? true}
             pageSizeOptions={pageSizeOptions ?? [25, 50, 100]}
-            paginationMode={paginationMode}
+            paginationMode={paginationMode ?? "client"}
             onPaginationModelChange={onPaginationModelChange}
-            rowCount={rowCount}
+            rowCount={rowCount ?? iDedRows.length}
             loading={loading}
             filterModel={filterModel}
             onFilterModelChange={updateFilterModel}
