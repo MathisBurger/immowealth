@@ -3,6 +3,8 @@ package de.mathisburger.service
 import de.mathisburger.entity.ObjectRentExpense
 import de.mathisburger.entity.RealEstateObject
 import de.mathisburger.entity.enum.AutoPayInterval
+import de.mathisburger.entity.enum.MailEntityContext
+import de.mathisburger.entity.enum.MailerSettingAction
 import de.mathisburger.entity.enum.ObjectRentType
 import de.mathisburger.exception.ParameterException
 import de.mathisburger.repository.ObjectRentExpenseRepository
@@ -51,6 +53,13 @@ class ObjectRentExpenseService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Added rent expense ($expense€, $type, $name) to object with ID ${obj.id}");
+        this.mail.sendEntityActionMail(
+            "Added rent expense",
+            "Added rent expense ($expense€, $type, $name) to object with ID ${obj.id}",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.realEstateObject,
+            MailerSettingAction.UPDATE_ONLY
+        );
         return exp;
     }
 
@@ -71,6 +80,13 @@ class ObjectRentExpenseService : AbstractService() {
         this.entityManager.persist(exp);
         this.entityManager.flush();
         this.log.writeLog("Updated rent expense with ID ${exp.id}");
+        this.mail.sendEntityActionMail(
+            "Updated rent expense",
+            "Updated rent expense with ID ${exp.id}",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.realEstateObject,
+            MailerSettingAction.UPDATE_ONLY
+        );
         return exp;
     }
 
@@ -88,6 +104,13 @@ class ObjectRentExpenseService : AbstractService() {
             this.entityManager.remove(obj);
             this.entityManager.flush();
             this.log.writeLog("Deleted rent expense with ID ${obj.id}");
+            this.mail.sendEntityActionMail(
+                "Deleted rent expense",
+                "Deleted rent expense with ID ${obj.id}",
+                "kontakt@mathis-burger.de",
+                MailEntityContext.realEstateObject,
+                MailerSettingAction.UPDATE_ONLY
+            );
         }
     }
 

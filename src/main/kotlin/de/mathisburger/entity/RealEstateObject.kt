@@ -112,6 +112,6 @@ class RealEstateObject : BaseEntity() {
     /**
      * All rent expenses of the object
      */
-    @OneToMany(mappedBy = "realEstateObject", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "realEstateObject", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var expenses: MutableList<ObjectRentExpense> = mutableListOf();
 }

@@ -61,6 +61,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 
 ### Not planned yet
 - [ ] Mail templates to send
+- [ ] Backend translations
 - [ ] Auto collect market value change data
 - [ ] Add balance sheet calculation
 - [ ] Rent spread suggestions by fixes rules

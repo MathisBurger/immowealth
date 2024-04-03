@@ -6,6 +6,8 @@ import de.mathisburger.entity.Credit
 import de.mathisburger.entity.CreditRate
 import de.mathisburger.entity.RealEstateObject
 import de.mathisburger.entity.enum.AutoPayInterval
+import de.mathisburger.entity.enum.MailEntityContext
+import de.mathisburger.entity.enum.MailerSettingAction
 import de.mathisburger.exception.DateNotAllowedException
 import de.mathisburger.repository.CreditRateRepository
 import de.mathisburger.repository.CreditRepository
@@ -45,9 +47,10 @@ class CreditService : AbstractService() {
      * @param rate The credit rate amount
      * @param date The date of booking
      * @param note The note of the booking
+     * @param mail If email should be sent
      */
     @Transactional
-    fun addCreditRate(id: Long, rate: Double, date: Date, note: String?) {
+    fun addCreditRate(id: Long, rate: Double, date: Date, note: String?, mail: Boolean = true) {
         if (date.after(Date())) {
             throw DateNotAllowedException("Date in future is not allowed");
         }
@@ -62,6 +65,15 @@ class CreditService : AbstractService() {
         this.entityManager.persist(credit);
         this.entityManager.flush();
         this.log.writeLog("Added credit rate (${this.cs.convertBack(rate)}€) to credit with ID ${id}");
+        if (mail) {
+            this.mail.sendEntityActionMail(
+                "Added credit rate",
+                "Credit rate has been added to credit with ID $id",
+                "kontakt@mathis-burger.de",
+                MailEntityContext.credit,
+                MailerSettingAction.UPDATE_ONLY
+            );
+        }
     }
 
     /**
@@ -99,6 +111,13 @@ class CreditService : AbstractService() {
         this.entityManager.persist(credit);
         this.entityManager.flush();
         this.log.writeLog("Updated credit with ID ${credit.id}");
+        this.mail.sendEntityActionMail(
+            "Updated credit",
+            "Updated credit with ID ${credit.id}",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.credit,
+            MailerSettingAction.UPDATE_ONLY
+        );
         return this.getCredit(credit.id!!);
 
     }
@@ -141,7 +160,8 @@ class CreditService : AbstractService() {
                     credit.id!!,
                     this.cs.convertBack(amount)!!,
                     nextRate,
-                    "[AUTOBOOKING] Backward autobooking"
+                    "[AUTOBOOKING] Backward autobooking",
+                    false
                     );
                 nextRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval, DateUtils.dateToCalendar(nextRate));
             }
@@ -153,6 +173,13 @@ class CreditService : AbstractService() {
         this.entityManager.persist(credit);
         this.entityManager.flush();
         this.log.writeLog("Configured auto booking (${interval}, ${this.cs.convertBack(amount)}€) for credit with ID ${credit.id}");
+        this.mail.sendEntityActionMail(
+            "Configured auto booking",
+            "Configured auto booking (${interval}, ${this.cs.convertBack(amount)}€) for credit with ID ${credit.id}",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.credit,
+            MailerSettingAction.UPDATE_ONLY
+        );
         return this.getResponseObject(credit);
     }
 
@@ -170,6 +197,13 @@ class CreditService : AbstractService() {
             this.entityManager.remove(obj);
             this.entityManager.flush();
             this.log.writeLog("Deleted credit rate with ID $id");
+            this.mail.sendEntityActionMail(
+                "Deleted credit rate",
+                "Deleted credit rate with ID ${id}",
+                "kontakt@mathis-burger.de",
+                MailEntityContext.credit,
+                MailerSettingAction.DELETE_ONLY
+            );
         }
     }
 

@@ -7,6 +7,8 @@ import de.mathisburger.data.response.ObjectResponse
 import de.mathisburger.data.response.PriceValueRelation
 import de.mathisburger.entity.Credit
 import de.mathisburger.entity.RealEstateObject
+import de.mathisburger.entity.enum.MailEntityContext
+import de.mathisburger.entity.enum.MailerSettingAction
 import de.mathisburger.repository.HousePriceChangeRepository
 import de.mathisburger.repository.RealEstateRepository
 import de.mathisburger.util.DateUtils
@@ -81,6 +83,13 @@ class RealEstateService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})");
+        this.mail.sendEntityActionMail(
+            "Created real estate object",
+            "Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.realEstateObject,
+            MailerSettingAction.CREATE_ONLY
+        );
         return obj;
     }
 
@@ -149,6 +158,13 @@ class RealEstateService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Updated object with ID ${obj.id}");
+        this.mail.sendEntityActionMail(
+            "Updated real estate object",
+            "Updated real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.realEstateObject,
+            MailerSettingAction.UPDATE_ONLY
+        );
         return this.getObject(obj.id!!, 10);
     }
 
@@ -163,6 +179,13 @@ class RealEstateService : AbstractService() {
         this.entityManager.remove(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted object with ID $id");
+        this.mail.sendEntityActionMail(
+            "Deleted real estate object",
+            "Deleted real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.realEstateObject,
+            MailerSettingAction.DELETE_ONLY
+        );
     }
 
     /**

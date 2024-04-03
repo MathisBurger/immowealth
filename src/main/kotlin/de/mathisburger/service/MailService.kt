@@ -30,7 +30,6 @@ class MailService {
      * @param context The sending context
      * @param action The required action
      */
-    @Blocking
     fun sendEntityActionMail(subject: String, message: String, to: String, context: MailEntityContext, action: MailerSettingAction) {
         val setting = this.settingsService.getSetting("mailerNotification_${context.name}");
         if (action.name.equals(setting.value) || (setting.value ?: "").equals("ALL")) {
