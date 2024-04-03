@@ -45,6 +45,10 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Add document upload for important documents
 - [ ] Most / recently used document recommendations
 
+### v1.3.1
+- [ ] Update and improve docker integration
+- [ ] Add Mail sender templated mail (replace kontakt@mathis-burger.de by config setting)
+
 ### v1.4.0
 - [ ] Full UNIT test coverage
 - [ ] User account system
