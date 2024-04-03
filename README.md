@@ -60,6 +60,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Tabs are saved in URI
 
 ### Not planned yet
+- [ ] Mail templates to send
 - [ ] Auto collect market value change data
 - [ ] Add balance sheet calculation
 - [ ] Rent spread suggestions by fixes rules

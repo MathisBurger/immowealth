@@ -12,4 +12,5 @@ fragment SettingOptionData on SettingOption {
     key
     value
     iconPrefix
+    translationKey
 }

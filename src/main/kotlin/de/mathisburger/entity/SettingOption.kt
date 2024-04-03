@@ -26,12 +26,15 @@ class SettingOption : BaseEntity {
      */
     var iconPrefix: SettingOptionPrefix? = null;
 
+    var translationKey: String? = null;
+
     constructor() {
     }
 
-    constructor(key: String, value: String, iconPrefix: SettingOptionPrefix?) {
+    constructor(key: String, value: String, iconPrefix: SettingOptionPrefix?, translationKey: String?) {
         this.key = key;
         this.value = value;
         this.iconPrefix = iconPrefix;
+        this.translationKey = translationKey;
     }
 }

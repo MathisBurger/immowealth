@@ -20,4 +20,10 @@ abstract class AbstractService {
      */
     @Inject
     lateinit var log: LogService;
+
+    /**
+     * Mail service
+     */
+    @Inject
+    lateinit var mail: MailService;
 }
