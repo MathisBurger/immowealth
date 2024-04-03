@@ -9,7 +9,7 @@ import java.util.Optional
  * Foreign exchange rate repository
  */
 @ApplicationScoped
-class ForeignExchangeRateRepository : PanacheRepository<ForeignExchangeRate> {
+class ForeignExchangeRateRepository : AbstractRepository<ForeignExchangeRate>() {
 
     /**
      * Finds an exchange rate by symbol.

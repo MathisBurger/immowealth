@@ -19,9 +19,6 @@ class ForeignExchangeRateService : AbstractService() {
     lateinit var foreignExchangeRateRepository: ForeignExchangeRateRepository;
 
     @Inject
-    lateinit var entityManager: EntityManager;
-
-    @Inject
     @RestClient
     lateinit var restClient: ForeignExchangeRateApi;
 

@@ -17,9 +17,6 @@ import jakarta.transaction.Transactional
 class HousePriceChangeService : AbstractService() {
 
     @Inject
-    lateinit var entityManager: EntityManager;
-
-    @Inject
     lateinit var housePriceChangeRepository: HousePriceChangeRepository;
 
 
@@ -57,7 +54,7 @@ class HousePriceChangeService : AbstractService() {
     @Transactional
     fun delete(id: Long) {
         val obj = this.housePriceChangeRepository.findById(id);
-        this.entityManager.remove(obj);
+        this.delete(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted house price change with ID $id");
         this.mail.sendEntityActionMail(

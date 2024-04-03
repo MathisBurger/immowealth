@@ -12,7 +12,7 @@ import org.eclipse.microprofile.graphql.GraphQLException
  * with log entries
  */
 @ApplicationScoped
-class LogEntryRepository : PanacheRepository<LogEntry> {
+class LogEntryRepository : AbstractRepository<LogEntry>() {
 
     /**
      * Pages all log entries by the given value

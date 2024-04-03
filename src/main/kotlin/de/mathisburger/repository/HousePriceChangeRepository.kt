@@ -8,7 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped
  * House price change repository
  */
 @ApplicationScoped
-class HousePriceChangeRepository : PanacheRepository<HousePriceChange> {
+class HousePriceChangeRepository : AbstractRepository<HousePriceChange>() {
 
     /**
      * Finds all with specific zip

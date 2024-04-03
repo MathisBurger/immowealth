@@ -9,7 +9,7 @@ import java.util.Optional
  * The settings repository
  */
 @ApplicationScoped
-class SettingsRepository : PanacheRepository<Setting> {
+class SettingsRepository : AbstractRepository<Setting>() {
 
     /**
      * Finds a result by key

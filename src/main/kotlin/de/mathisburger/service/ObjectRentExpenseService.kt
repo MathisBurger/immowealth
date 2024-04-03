@@ -15,8 +15,6 @@ import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 
-// TODO: Add logging
-
 /**
  * Service that handles all actions on object rent expenses
  */
@@ -28,9 +26,6 @@ class ObjectRentExpenseService : AbstractService() {
 
     @Inject
     lateinit var objectRentExpenseRepository: ObjectRentExpenseRepository;
-
-    @Inject
-    lateinit var entityManager: EntityManager;
 
     /**
      * Adds a new object rent expense to rental object

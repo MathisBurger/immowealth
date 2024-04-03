@@ -16,4 +16,9 @@ abstract class BaseEntity {
     @GeneratedValue
     @Id
     open var id: Long? = null;
+
+    /**
+     * If the entity is archived
+     */
+    open var archived: Boolean = false;
 }

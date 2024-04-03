@@ -4,7 +4,6 @@ import de.mathisburger.entity.LogEntry
 import de.mathisburger.repository.LogEntryRepository
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
-import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import java.util.*
 
@@ -15,7 +14,7 @@ import java.util.*
 class LogService {
 
     @Inject
-    lateinit var entityManager: EntityManager;
+    lateinit var entityManager: ExtendedEntityManager;
 
     @Inject
     lateinit var logEntryRepository: LogEntryRepository;

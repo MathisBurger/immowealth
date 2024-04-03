@@ -17,9 +17,6 @@ class ConfigPresetService : AbstractService() {
     @Inject
     lateinit var configPresetRepository: ConfigPresetRepository;
 
-    @Inject
-    lateinit var entityManager: EntityManager;
-
     /**
      * Gets all config presets
      */

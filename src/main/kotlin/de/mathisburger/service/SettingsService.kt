@@ -17,9 +17,6 @@ class SettingsService : AbstractService() {
     @Inject
     lateinit var settingsRepository: SettingsRepository;
 
-    @Inject
-    lateinit var entityManager: EntityManager;
-
     /**
      * Gets all settings
      *

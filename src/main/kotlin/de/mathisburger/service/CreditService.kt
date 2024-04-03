@@ -32,9 +32,6 @@ class CreditService : AbstractService() {
     lateinit var creditRepository: CreditRepository;
 
     @Inject
-    lateinit var entityManager: EntityManager;
-
-    @Inject
     lateinit var creditRateRepository: CreditRateRepository;
 
     @Inject
@@ -194,7 +191,7 @@ class CreditService : AbstractService() {
         if (obj != null) {
             obj.credit.rates.remove(obj);
             this.entityManager.persist(obj.credit);
-            this.entityManager.remove(obj);
+            this.delete(obj);
             this.entityManager.flush();
             this.log.writeLog("Deleted credit rate with ID $id");
             this.mail.sendEntityActionMail(

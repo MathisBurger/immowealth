@@ -8,5 +8,5 @@ import jakarta.enterprise.context.ApplicationScoped
  * Credit rate repository
  */
 @ApplicationScoped
-class CreditRateRepository : PanacheRepository<CreditRate> {
+class CreditRateRepository : AbstractRepository<CreditRate>() {
 }

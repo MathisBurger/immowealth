@@ -9,7 +9,7 @@ import java.util.Calendar
  * Credit repository
  */
 @ApplicationScoped
-class CreditRepository : PanacheRepository<Credit> {
+class CreditRepository : AbstractRepository<Credit>() {
 
     /**
      * Finds all that are enabled and required for auto booking
