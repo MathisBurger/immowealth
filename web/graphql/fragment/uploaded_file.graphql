@@ -1,0 +1,6 @@
+fragment UploadedFile on UploadedFile {
+    id
+    archived
+    fileName
+    fileRoot
+}

@@ -9,6 +9,9 @@ fragment SimpleObjectData on RealEstateObject {
         ...SimpleCredit
     }
     archived
+    uploadedFiles {
+        id
+    }
 }
 
 fragment MapObject on RealEstateObject {
@@ -46,6 +49,9 @@ fragment FullRealEstateData on RealEstateObject {
         ...RentExpenseData
     }
     archived
+    uploadedFiles {
+        ...UploadedFile
+    }
 }
 
 fragment ObjectData on ObjectResponse {
