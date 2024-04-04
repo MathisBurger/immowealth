@@ -75,7 +75,8 @@
     "date": "Datum",
     "yes": "Ja",
     "no": "Nein",
-    "startDate": "Startdatum"
+    "startDate": "Startdatum",
+    "archived": "Archiviert"
   },
   "credit": {
     "tab": {

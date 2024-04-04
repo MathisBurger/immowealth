@@ -22,5 +22,9 @@ data class CreditResponse @JsonbCreator constructor(
     /**
      * Linked real estate object id
      */
-    val realEstateObjectId: Long
+    val realEstateObjectId: Long,
+    /**
+     * Archived state
+     */
+    val archived: Boolean
 );

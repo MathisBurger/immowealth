@@ -3,7 +3,7 @@ import {
     DataGrid,
     DataGridProps,
     GridColDef, GridColumnVisibilityModel, GridDensity,
-    GridFilterModel,
+    GridFilterModel, GridRenderCellParams,
     GridRowModel,
     GridRowsProp, GridSortModel,
     GridToolbar
@@ -12,6 +12,7 @@ import {useEffect, useMemo, useState} from "react";
 import useConfigPresets from "@/hooks/useConfigPresets";
 import {Property} from "csstype";
 import Grid = Property.Grid;
+import {useTranslation} from "next-export-i18n";
 
 interface EntityListProps extends DataGridProps {
     configPresetKey?: string;
@@ -31,6 +32,7 @@ const EntityList = ({
 }: EntityListProps) => {
 
     const {data, loading, findByKey, saveConfigPreset} = useConfigPresets();
+    const {t} = useTranslation();
 
     const baseConfigPresetKey = useMemo<string>(() => configPresetKey ?? "", [configPresetKey]);
 
@@ -54,7 +56,36 @@ const EntityList = ({
         }
     }, [data, baseConfigPresetKey]);
 
-    const [filterModel, setFilterModel] = useState<GridFilterModel|undefined>(undefined);
+    const iDedRows = useMemo<any[]>(
+        () => (rows ?? []).map((r, index) => ({...r, ghostId: index+1})),
+        [rows]
+    );
+
+    const containsArchivedField = useMemo<boolean>(
+        () => iDedRows.length > 0 ? iDedRows[0]?.archived !== undefined : false,
+        [iDedRows]
+    );
+
+    const updatedCols = useMemo<readonly GridColDef[]>(() => {
+        if (containsArchivedField) {
+            return columns.concat({
+                field: 'archived',
+                headerName: t('common.archived'),
+                renderCell: ({value}: GridRenderCellParams) => value ? t('common.yes') : t('common.no')
+            });
+        }
+        return columns;
+    }, [columns, containsArchivedField, t])
+
+    const defaultFilterModel = useMemo<GridFilterModel|undefined>(() => {
+
+        if (containsArchivedField) {
+            return {"items":[{"field":"archived","operator":"equals","value":"false"}]} as GridFilterModel;
+        }
+        return undefined;
+    }, [containsArchivedField]);
+
+    const [filterModel, setFilterModel] = useState<GridFilterModel|undefined>(defaultFilterModel);
     const [columnVisibilitModel, setColumnVisibilityModel] = useState<GridColumnVisibilityModel|undefined>(undefined);
     const [density, setDensity] = useState<GridDensity|undefined>(undefined);
     const [sortModel, setSortModel] = useState<GridSortModel|undefined>(undefined);
@@ -79,14 +110,9 @@ const EntityList = ({
         setSortModel(model);
     }
 
-    const iDedRows = useMemo<any[]>(
-        () => (rows ?? []).map((r, index) => ({...r, ghostId: index+1})),
-        [rows]
-    );
-
     return (
         <DataGrid
-            columns={columns}
+            columns={updatedCols}
             rows={iDedRows}
             getRowId={(row) => row.ghostId}
             slots={{toolbar: GridToolbar}}

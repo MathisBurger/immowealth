@@ -6,6 +6,7 @@ fragment SettingData on Setting {
     tab
     section
     value
+    archived
 }
 
 fragment SettingOptionData on SettingOption {
@@ -13,4 +14,5 @@ fragment SettingOptionData on SettingOption {
     value
     iconPrefix
     translationKey
+    archived
 }

@@ -121,7 +121,8 @@ class RealEstateService : AbstractService() {
             priceChanges,
             // Price forecast is already converted
             this.getPriceForecast(obj, yearsInFuture),
-            this.cs.convert(marketValue)
+            this.cs.convert(marketValue),
+            obj.archived
         );
     }
 

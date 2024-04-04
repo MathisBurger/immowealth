@@ -3,4 +3,5 @@ fragment ConfigPresetData on ConfigPreset {
     pageRoute
     id
     jsonString
+    archived
 }

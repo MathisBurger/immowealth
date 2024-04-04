@@ -3,4 +3,5 @@ fragment HousePriceChangeData on HousePriceChange {
     change
     year
     zip
+    archived
 }

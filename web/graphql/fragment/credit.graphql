@@ -4,6 +4,7 @@ fragment SimpleCredit on Credit {
     redemptionRate
     amount
     bank
+    archived
 }
 
 fragment CreditData on Credit {
@@ -18,6 +19,7 @@ fragment CreditData on Credit {
     rates {
         ...CreditRateData
     }
+    archived
 }
 
 fragment CreditObject on CreditResponse {
@@ -27,4 +29,5 @@ fragment CreditObject on CreditResponse {
     creditRateSum
     creditRateCummulationSteps
     realEstateObjectId
+    archived
 }

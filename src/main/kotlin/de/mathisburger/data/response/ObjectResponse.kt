@@ -30,5 +30,9 @@ data class ObjectResponse @JsonbCreator constructor(
     /**
      * The estimated market value
      */
-    val estimatedMarketValue: Long
+    val estimatedMarketValue: Long,
+    /**
+     * Archived state
+     */
+    val archived: Boolean
 );

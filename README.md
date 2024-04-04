@@ -67,6 +67,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Mail templates to send
 - [ ] Backend translations
 - [ ] Auto collect market value change data
+- [ ] Exclude archived data from calculations
 - [ ] Add balance sheet calculation
 - [ ] Rent spread suggestions by fixes rules
 - [ ] Rentability calculations

@@ -216,7 +216,7 @@ class CreditService : AbstractService() {
             sum += rate.amount!!;
             list.add(this.cs.convert(sum));
         }
-        return CreditResponse(this.convertCreditCurrencies(credit), this.cs.convert(sum), list, this.realEstateRepository.getByCredit(credit).id!!);
+        return CreditResponse(this.convertCreditCurrencies(credit), this.cs.convert(sum), list, this.realEstateRepository.getByCredit(credit).id!!, credit.archived);
     }
 
     /**
