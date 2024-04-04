@@ -17,6 +17,6 @@ class HousePriceChangeRepository : AbstractRepository<HousePriceChange>() {
      * @return All changes with zip
      */
     fun findByZip(zip: String): List<HousePriceChange> {
-        return find("zip", zip).list();
+        return findArchived("zip", zip, true).list();
     }
 }

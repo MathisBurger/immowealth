@@ -108,8 +108,10 @@ class RealEstateService : AbstractService() {
         var creditRateSum = 0.0;
         var cum: MutableList<Double> = mutableListOf();
         for (rate in obj.credit!!.rates) {
-            creditRateSum += rate.amount!!;
-            cum.add(creditRateSum);
+            if (!rate.archived) {
+                creditRateSum += rate.amount!!;
+                cum.add(creditRateSum);
+            }
         }
         val priceChanges = this.getPriceChanges(obj);
         val marketValue = if(priceChanges.isEmpty()) obj.initialValue!! else priceChanges.last().value;
@@ -193,7 +195,7 @@ class RealEstateService : AbstractService() {
      */
     private fun getPriceChanges(obj: RealEstateObject): List<PriceValueRelation> {
         val changes = this.priceChangeRepository.findByZip(obj.zip!!)
-            .filter { it.year!! >= DateUtils.getYearFromDate(obj.dateBought!!) }
+            .filter { it.year!! >= DateUtils.getYearFromDate(obj.dateBought!!) && !it.archived }
             .sortedBy { it.year }
         val data: MutableList<PriceValueRelation> = mutableListOf();
         data.add(PriceValueRelation(this.cs.convert(obj.initialValue!!), DateUtils.getYearFromDate(obj.dateBought!!)));

@@ -213,8 +213,10 @@ class CreditService : AbstractService() {
         var sum = 0.0;
         var list: MutableList<Double> = mutableListOf();
         for (rate in credit.rates) {
-            sum += rate.amount!!;
-            list.add(this.cs.convert(sum));
+            if (!rate.archived) {
+                sum += rate.amount!!;
+                list.add(this.cs.convert(sum));
+            }
         }
         return CreditResponse(this.convertCreditCurrencies(credit), this.cs.convert(sum), list, this.realEstateRepository.getByCredit(credit).id!!, credit.archived);
     }
