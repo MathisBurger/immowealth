@@ -18,6 +18,6 @@ class CreditRepository : AbstractRepository<Credit>() {
      */
     fun findAllWithAutoBookingRequired(): List<Credit> {
         val today = Calendar.getInstance().time;
-        return findArchived("autoPayInterval IS NOT NULL AND nextCreditRate <= ?1", today, true).list();
+        return find("archived IS FALSE AND autoPayInterval IS NOT NULL AND nextCreditRate <= ?1", today).list();
     }
 }
