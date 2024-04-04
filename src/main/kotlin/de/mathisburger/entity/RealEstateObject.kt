@@ -114,4 +114,10 @@ class RealEstateObject : BaseEntity() {
      */
     @OneToMany(mappedBy = "realEstateObject", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var expenses: MutableList<ObjectRentExpense> = mutableListOf();
+
+    /**
+     * All uploaded files
+     */
+    @OneToMany(mappedBy = "realEstateObject", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    var uploadedFiles: MutableList<UploadedFile> = mutableListOf();
 }
