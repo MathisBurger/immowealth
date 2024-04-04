@@ -41,7 +41,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 ### v1.3.0
 - [x] AutoPayInterval (configure start date)
 - [x] Add mail notifications
-- [ ] Archiving feature
+- [x] Archiving feature
 - [ ] Add document upload for important documents
 - [ ] Most / recently used document recommendations
 
