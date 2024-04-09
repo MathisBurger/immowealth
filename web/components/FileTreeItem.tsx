@@ -1,14 +1,19 @@
 import {GetObjectDocument, UploadedFileFragment, useDeleteFileMutation} from "@/generated/graphql";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import {TreeItem} from "@mui/x-tree-view";
 import FolderIcon from '@mui/icons-material/Folder';
 import {Grid, IconButton} from "@mui/joy";
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import {useTranslation} from "next-export-i18n";
+import UploadFileModal from "@/components/object/modal/UploadFileModal";
 
 interface FileTreeItemProps {
     docs: UploadedFileFragment[];
     objectId: number;
+    refetch: () => void;
+    path: string;
 }
 
 interface NestedHelper {
@@ -16,7 +21,9 @@ interface NestedHelper {
     elements: UploadedFileFragment[];
 }
 
-const FileTreeItem = ({docs, objectId}: FileTreeItemProps) => {
+const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
+
+    console.log(path);
 
     const [deleteMutation] = useDeleteFileMutation({
         refetchQueries: [
@@ -26,6 +33,9 @@ const FileTreeItem = ({docs, objectId}: FileTreeItemProps) => {
             }
         ]
     });
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    const {t} = useTranslation();
 
     const rootDocs = useMemo<UploadedFileFragment[]>(
         () => docs.filter((d) => d.fileRoot!.split("/").length === 1 || d.fileRoot === ""),
@@ -55,7 +65,6 @@ const FileTreeItem = ({docs, objectId}: FileTreeItemProps) => {
                 }
             }
         }
-        console.log(arr);
         return arr;
     }, [folders, nonRootDocs]);
 
@@ -73,7 +82,7 @@ const FileTreeItem = ({docs, objectId}: FileTreeItemProps) => {
                         {f.path}
                     </Grid>
                 }>
-                    <FileTreeItem docs={f.elements} objectId={objectId} />
+                    <FileTreeItem docs={f.elements} objectId={objectId} refetch={refetch} path={path === "" ? f.path : path + "/" + f.path} />
                 </TreeItem>
             ))}
             {rootDocs.map((d, i) => (
@@ -93,6 +102,15 @@ const FileTreeItem = ({docs, objectId}: FileTreeItemProps) => {
                     </Grid>
                 } />
             ))}
+            <TreeItem itemId={"add" + (docs.length > 0 ? docs[0].fileRoot : "OKOK")} label={
+                <Grid container direction="row">
+                    <AddBoxIcon sx={{marginRight: '5px'}} />
+                    {t('common.add')}
+                </Grid>
+            } onClick={() => setModalOpen(true)} />
+            {modalOpen && (
+                <UploadFileModal objectId={objectId} onClose={() => setModalOpen(false)} refetch={refetch} rootPath={path} />
+            )}
         </>
     )
 }

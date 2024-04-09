@@ -72,7 +72,11 @@ const ObjectDetailsPage = () => {
         {
             id: 'documents',
             label: t('common.documents'),
-            content: <DocumentsTab docs={(data?.object.realEstate.uploadedFiles ?? []) as UploadedFileFragment[]} objectId={data?.object.realEstate.id} />
+            content: <DocumentsTab
+                docs={(data?.object.realEstate.uploadedFiles ?? []) as UploadedFileFragment[]}
+                objectId={data?.object.realEstate.id}
+                refetch={() => refetch({id: parseInt(id, 10)})}
+            />
         },
         {
             id: 'priceChanges',
