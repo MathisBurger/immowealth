@@ -41,7 +41,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 
 ### v1.3.1
 - [x] Update and improve docker integration
-- [ ] Add Mail sender templated mail (replace kontakt@mathis-burger.de by config setting)
+- [x] Add Mail sender templated mail (replace kontakt@mathis-burger.de by config setting)
 - [ ] Archive restore feature
 
 ### v1.4.0

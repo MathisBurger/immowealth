@@ -7,6 +7,7 @@ import io.quarkus.mailer.Mailer
 import io.smallrye.common.annotation.Blocking
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
+import org.eclipse.microprofile.config.inject.ConfigProperty
 
 /**
  * The mail service that handles mail sending
@@ -19,6 +20,9 @@ class MailService {
 
     @Inject
     lateinit var settingsService: SettingsService;
+
+    @ConfigProperty(name = "immowealth.defaultMail")
+    lateinit var defaultMail: String
 
 
     /**
@@ -35,7 +39,7 @@ class MailService {
         if (action.name.equals(setting.value) || (setting.value ?: "").equals("ALL")) {
             this.mailer.send(
                 // TODO: Add HTML mail templates
-                Mail.withText(to, subject, message)
+                Mail.withText(this.defaultMail, subject, message)
             );
         }
     }

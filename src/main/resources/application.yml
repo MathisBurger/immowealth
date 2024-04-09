@@ -20,3 +20,5 @@ quarkus:
     dialect: org.hibernate.dialect.PostgreSQLDialect
     database:
       generation: update
+immowealth:
+  defaultMail: kontakt@mathis-burger.de
