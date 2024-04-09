@@ -4,13 +4,14 @@ import {SimpleTreeView} from "@mui/x-tree-view";
 
 interface DocumentsTabProps {
     docs: UploadedFileFragment[];
+    objectId: number;
 }
 
-const DocumentsTab = ({docs}: DocumentsTabProps) => {
+const DocumentsTab = ({docs, objectId}: DocumentsTabProps) => {
 
     return (
         <SimpleTreeView>
-            <FileTreeItem docs={docs} />
+            <FileTreeItem docs={docs} objectId={objectId} />
         </SimpleTreeView>
     );
 }

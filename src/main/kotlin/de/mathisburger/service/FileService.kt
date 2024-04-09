@@ -9,6 +9,8 @@ import jakarta.inject.Inject
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.core.Response
 import java.io.File
+import java.io.IOException
+import java.lang.RuntimeException
 import java.nio.file.CopyOption
 import java.nio.file.Files
 import java.nio.file.Path
@@ -63,6 +65,27 @@ class FileService : AbstractService() {
         this.entityManager.persist(file);
         obj.uploadedFiles.add(file);
         this.entityManager.persist(obj);
+        this.entityManager.flush();
+    }
+
+    /**
+     * Deletes a file
+     *
+     * @param id The ID of the file
+     */
+    @Transactional
+    fun deleteFile(id: Long) {
+        val obj = this.uploadedFileRepository.findById(id);
+        try {
+            Files.delete(Path(obj.realFilePath!!));
+        } catch (e: IOException) {
+            // Do nothing
+        }
+        if (obj.realEstateObject != null) {
+            obj.realEstateObject!!.uploadedFiles.remove(obj);
+            this.entityManager.persist(obj.realEstateObject);
+        }
+        this.entityManager.remove(obj);
         this.entityManager.flush();
     }
 

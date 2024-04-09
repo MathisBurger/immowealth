@@ -72,7 +72,7 @@ const ObjectDetailsPage = () => {
         {
             id: 'documents',
             label: t('common.documents'),
-            content: <DocumentsTab docs={(data?.object.realEstate.uploadedFiles ?? []) as UploadedFileFragment[]} />
+            content: <DocumentsTab docs={(data?.object.realEstate.uploadedFiles ?? []) as UploadedFileFragment[]} objectId={data?.object.realEstate.id} />
         },
         {
             id: 'priceChanges',

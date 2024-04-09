@@ -43,7 +43,6 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] Add mail notifications
 - [x] Archiving feature
 - [ ] Add document upload for important documents
-- [ ] Most / recently used document recommendations
 
 ### v1.3.1
 - [ ] Update and improve docker integration

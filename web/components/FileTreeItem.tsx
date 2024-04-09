@@ -1,12 +1,14 @@
-import {UploadedFileFragment} from "@/generated/graphql";
+import {GetObjectDocument, UploadedFileFragment, useDeleteFileMutation} from "@/generated/graphql";
 import {useMemo} from "react";
 import {TreeItem} from "@mui/x-tree-view";
 import FolderIcon from '@mui/icons-material/Folder';
 import {Grid, IconButton} from "@mui/joy";
 import DownloadIcon from '@mui/icons-material/Download';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface FileTreeItemProps {
     docs: UploadedFileFragment[];
+    objectId: number;
 }
 
 interface NestedHelper {
@@ -14,7 +16,16 @@ interface NestedHelper {
     elements: UploadedFileFragment[];
 }
 
-const FileTreeItem = ({docs}: FileTreeItemProps) => {
+const FileTreeItem = ({docs, objectId}: FileTreeItemProps) => {
+
+    const [deleteMutation] = useDeleteFileMutation({
+        refetchQueries: [
+            {
+                query: GetObjectDocument,
+                variables: {id: objectId}
+            }
+        ]
+    });
 
     const rootDocs = useMemo<UploadedFileFragment[]>(
         () => docs.filter((d) => d.fileRoot!.split("/").length === 1 || d.fileRoot === ""),
@@ -62,7 +73,7 @@ const FileTreeItem = ({docs}: FileTreeItemProps) => {
                         {f.path}
                     </Grid>
                 }>
-                    <FileTreeItem docs={f.elements} />
+                    <FileTreeItem docs={f.elements} objectId={objectId} />
                 </TreeItem>
             ))}
             {rootDocs.map((d, i) => (
@@ -74,6 +85,9 @@ const FileTreeItem = ({docs}: FileTreeItemProps) => {
                         <Grid xs={1}>
                             <IconButton size="sm" onClick={() => downloadFile(d.id)}>
                                 <DownloadIcon fontSize="small" />
+                            </IconButton>
+                            <IconButton size="sm" onClick={() => deleteMutation({variables: {id: d.id}})}>
+                                <DeleteIcon fontSize="small" color="error" />
                             </IconButton>
                         </Grid>
                     </Grid>
