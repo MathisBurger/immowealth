@@ -3,7 +3,7 @@ import {useRouter, useSearchParams} from "next/navigation";
 import {Button, Divider, Grid, Option, Select, Stack, Typography} from "@mui/joy";
 import {
     CreditDataFragment,
-    CreditRateDataFragment, GetAllObjectsDocument, RentExpenseDataFragment,
+    CreditRateDataFragment, GetAllObjectsDocument, RentExpenseDataFragment, UploadedFileFragment,
     useDeleteRealEstateMutation,
     useGetObjectQuery
 } from "@/generated/graphql";
@@ -16,6 +16,7 @@ import ObjectPriceChangesTab from "@/components/object/ObjectPriceChangesTab";
 import ConfigureCreditAutoPayModal from "@/components/credit/ConfigureCreditAutoPayModal";
 import {useTranslation} from "next-export-i18n";
 import ObjectRentSpreadTab from "@/components/object/ObjectRentSpreadTab";
+import DocumentsTab from "@/components/object/DocumentsTab";
 
 
 const ObjectDetailsPage = () => {
@@ -67,6 +68,11 @@ const ObjectDetailsPage = () => {
             id: 'rentExpenses',
             label: t('object.expenses'),
             content: <ObjectRentSpreadTab expenses={(data?.object.realEstate.expenses as RentExpenseDataFragment[]) ?? []} />
+        },
+        {
+            id: 'documents',
+            label: t('common.documents'),
+            content: <DocumentsTab docs={(data?.object.realEstate.uploadedFiles ?? []) as UploadedFileFragment[]} />
         },
         {
             id: 'priceChanges',
