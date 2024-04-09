@@ -13,5 +13,7 @@ services:
       - postgres
     image: ghcr.io/mathisburger/immowealth:latest
     platform: linux/amd64
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/immowealth
     ports:
       - "8081:8080"
