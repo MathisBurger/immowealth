@@ -20,7 +20,7 @@ const UploadFileModal = ({objectId, onClose, rootPath, refetch}: UploadFileModal
             const form = new FormData();
             form.append("file", file);
             form.append("fileName", file.name);
-            form.append("fileRoot", rootPath);
+            form.append("fileRoot", rootPath + "/");
             form.append("objectId", `${objectId}`);
             const options = {
                 method: 'POST',

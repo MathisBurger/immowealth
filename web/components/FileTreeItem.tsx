@@ -23,8 +23,6 @@ interface NestedHelper {
 
 const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
 
-    console.log(path);
-
     const [deleteMutation] = useDeleteFileMutation({
         refetchQueries: [
             {
@@ -102,7 +100,7 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
                     </Grid>
                 } />
             ))}
-            <TreeItem itemId={"add" + (docs.length > 0 ? docs[0].fileRoot : "OKOK")} label={
+            <TreeItem itemId={"add" + Math.random()*100000} label={
                 <Grid container direction="row">
                     <AddBoxIcon sx={{marginRight: '5px'}} />
                     {t('common.add')}
