@@ -25,4 +25,4 @@ ENV DATABASE_URL=jdbc:postgresql://localhost:5432/immowealth
 ENV ORM_GENERATION=drop-and-create
 
 EXPOSE 8080
-CMD ["java", "-Dquarkus.datasource.username=$DATABASE_USER", "-Dquarkus.datasource.password=$DATABASE_PASSWORD", "-Dquarkus.datasource.jdbc.url=$DATABASE_URL", "-Dquarkus.hibernate-orm.database.generation=$ORM_GENERATION", "-jar", "server.jar"]
+CMD ["java", "-Dquarkus.datasource.username=${DATABASE_USER}", "-Dquarkus.datasource.password=${DATABASE_PASSWORD}", "-Dquarkus.datasource.jdbc.url=${DATABASE_URL}", "-Dquarkus.hibernate-orm.database.generation=${ORM_GENERATION}", "-jar", "server.jar"]
