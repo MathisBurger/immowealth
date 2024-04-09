@@ -8,7 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped
  * House price change repository
  */
 @ApplicationScoped
-class HousePriceChangeRepository : PanacheRepository<HousePriceChange> {
+class HousePriceChangeRepository : AbstractRepository<HousePriceChange>() {
 
     /**
      * Finds all with specific zip
@@ -17,6 +17,6 @@ class HousePriceChangeRepository : PanacheRepository<HousePriceChange> {
      * @return All changes with zip
      */
     fun findByZip(zip: String): List<HousePriceChange> {
-        return find("zip", zip).list();
+        return find("archived IS FALSE AND zip = ?1", zip).list();
     }
 }

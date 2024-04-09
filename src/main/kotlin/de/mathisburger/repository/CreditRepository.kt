@@ -9,7 +9,7 @@ import java.util.Calendar
  * Credit repository
  */
 @ApplicationScoped
-class CreditRepository : PanacheRepository<Credit> {
+class CreditRepository : AbstractRepository<Credit>() {
 
     /**
      * Finds all that are enabled and required for auto booking
@@ -18,6 +18,6 @@ class CreditRepository : PanacheRepository<Credit> {
      */
     fun findAllWithAutoBookingRequired(): List<Credit> {
         val today = Calendar.getInstance().time;
-        return find("autoPayInterval IS NOT NULL AND nextCreditRate <= ?1", today).list();
+        return find("archived IS FALSE AND autoPayInterval IS NOT NULL AND nextCreditRate <= ?1", today).list();
     }
 }

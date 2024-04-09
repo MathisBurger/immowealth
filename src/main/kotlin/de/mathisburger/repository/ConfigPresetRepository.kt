@@ -9,7 +9,7 @@ import java.util.Optional
  * Handles all getter activities for config presets
  */
 @ApplicationScoped
-class ConfigPresetRepository : PanacheRepository<ConfigPreset> {
+class ConfigPresetRepository : AbstractRepository<ConfigPreset>() {
 
     /**
      * Gets config preset by pathname.

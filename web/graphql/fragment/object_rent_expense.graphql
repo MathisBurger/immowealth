@@ -3,4 +3,5 @@ fragment RentExpenseData on ObjectRentExpense {
     value
     name
     type
+    archived
 }

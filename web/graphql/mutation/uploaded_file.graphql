@@ -1,0 +1,3 @@
+mutation DeleteFile($id: BigInteger!) {
+    deleteFile(id: $id)
+}

@@ -2,6 +2,8 @@ package de.mathisburger.service
 
 import de.mathisburger.data.input.UpdateHousePriceChangeInput
 import de.mathisburger.entity.HousePriceChange
+import de.mathisburger.entity.enum.MailEntityContext
+import de.mathisburger.entity.enum.MailerSettingAction
 import de.mathisburger.repository.HousePriceChangeRepository
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -13,9 +15,6 @@ import jakarta.transaction.Transactional
  */
 @ApplicationScoped
 class HousePriceChangeService : AbstractService() {
-
-    @Inject
-    lateinit var entityManager: EntityManager;
 
     @Inject
     lateinit var housePriceChangeRepository: HousePriceChangeRepository;
@@ -37,6 +36,13 @@ class HousePriceChangeService : AbstractService() {
         this.entityManager.persist(change);
         this.entityManager.flush();
         this.log.writeLog("Added house price change at ($zip, $year) with $cng%");
+        this.mail.sendEntityActionMail(
+            "Added house price change",
+            "Added house price change at ($zip, $year) with $cng%",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.housePrices,
+            MailerSettingAction.CREATE_ONLY
+        );
         return change;
     }
 
@@ -48,9 +54,16 @@ class HousePriceChangeService : AbstractService() {
     @Transactional
     fun delete(id: Long) {
         val obj = this.housePriceChangeRepository.findById(id);
-        this.entityManager.remove(obj);
+        this.delete(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted house price change with ID $id");
+        this.mail.sendEntityActionMail(
+            "Deleted house price change",
+            "Deleted house price change with ID $id",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.housePrices,
+            MailerSettingAction.DELETE_ONLY
+        );
     }
 
     /**
@@ -83,6 +96,13 @@ class HousePriceChangeService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Updated house price change with id ${obj.id}");
+        this.mail.sendEntityActionMail(
+            "Updated house price change",
+            "Updated house price change with id ${obj.id}",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.housePrices,
+            MailerSettingAction.UPDATE_ONLY
+        );
         return obj;
     }
 }

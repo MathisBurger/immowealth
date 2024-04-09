@@ -1,16 +1,37 @@
 {
   "settings": {
     "tab": {
-      "general": "General"
+      "general": "General",
+      "notification": "Notification"
     },
     "section": {
-      "general": "General"
+      "general": "General",
+      "mailer": "Mailer"
     },
     "messages": {
       "update-successful": "Successfully updated setting (page may be reloaded to work properly)"
     },
     "language": "Language",
-    "currency": "Currency"
+    "currency": "Currency",
+    "mailerNotification_realEstateObject": "Objects",
+    "mailerNotification_credit": "Credits",
+    "mailerNotification_housePrices": "House price changes",
+    "options": {
+      "lang": {
+        "de": "German",
+        "en": "English"
+      },
+      "notification": {
+        "mailer": {
+          "none": "None",
+          "update_only": "Updates only",
+          "create_only": "Create only",
+          "booking_only": "Booking only",
+          "delete_only": "Delete only",
+          "all": "All"
+        }
+      }
+    }
   },
   "routes": {
     "dashboard": "Dashboard",
@@ -53,7 +74,11 @@
     "message": "Message",
     "date": "date",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "startDate": "Start date",
+    "archived": "Archived",
+    "documents": "Documents",
+    "add-folder": "Add folder"
   },
   "credit": {
     "tab": {

@@ -14,6 +14,7 @@ val quarkusPlatformArtifactId: String by project
 val quarkusPlatformVersion: String by project
 
 dependencies {
+    implementation("io.quarkus:quarkus-resteasy-multipart")
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
     implementation("io.quarkus:quarkus-hibernate-orm")
     implementation("io.quarkus:quarkus-config-yaml")
@@ -27,6 +28,7 @@ dependencies {
     implementation("io.quarkus:quarkus-scheduler")
     implementation("io.quarkus:quarkus-resteasy-client")
     implementation("io.quarkus:quarkus-resteasy-client-jackson")
+    implementation("io.quarkus:quarkus-mailer")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
 }

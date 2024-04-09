@@ -7,6 +7,8 @@ import de.mathisburger.data.response.ObjectResponse
 import de.mathisburger.data.response.PriceValueRelation
 import de.mathisburger.entity.Credit
 import de.mathisburger.entity.RealEstateObject
+import de.mathisburger.entity.enum.MailEntityContext
+import de.mathisburger.entity.enum.MailerSettingAction
 import de.mathisburger.repository.HousePriceChangeRepository
 import de.mathisburger.repository.RealEstateRepository
 import de.mathisburger.util.DateUtils
@@ -22,9 +24,6 @@ import java.util.Calendar
  */
 @ApplicationScoped
 class RealEstateService : AbstractService() {
-
-    @Inject
-    lateinit var entityManager: EntityManager
 
     @Inject
     lateinit var realEstateRepository: RealEstateRepository
@@ -81,6 +80,13 @@ class RealEstateService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})");
+        this.mail.sendEntityActionMail(
+            "Created real estate object",
+            "Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.realEstateObject,
+            MailerSettingAction.CREATE_ONLY
+        );
         return obj;
     }
 
@@ -102,8 +108,10 @@ class RealEstateService : AbstractService() {
         var creditRateSum = 0.0;
         var cum: MutableList<Double> = mutableListOf();
         for (rate in obj.credit!!.rates) {
-            creditRateSum += rate.amount!!;
-            cum.add(creditRateSum);
+            if (!rate.archived) {
+                creditRateSum += rate.amount!!;
+                cum.add(creditRateSum);
+            }
         }
         val priceChanges = this.getPriceChanges(obj);
         val marketValue = if(priceChanges.isEmpty()) obj.initialValue!! else priceChanges.last().value;
@@ -115,7 +123,8 @@ class RealEstateService : AbstractService() {
             priceChanges,
             // Price forecast is already converted
             this.getPriceForecast(obj, yearsInFuture),
-            this.cs.convert(marketValue)
+            this.cs.convert(marketValue),
+            obj.archived
         );
     }
 
@@ -149,6 +158,13 @@ class RealEstateService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Updated object with ID ${obj.id}");
+        this.mail.sendEntityActionMail(
+            "Updated real estate object",
+            "Updated real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.realEstateObject,
+            MailerSettingAction.UPDATE_ONLY
+        );
         return this.getObject(obj.id!!, 10);
     }
 
@@ -160,9 +176,16 @@ class RealEstateService : AbstractService() {
     @Transactional
     fun deleteObject(id: Long) {
         val obj = this.realEstateRepository.findById(id);
-        this.entityManager.remove(obj);
+        this.delete(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted object with ID $id");
+        this.mail.sendEntityActionMail(
+            "Deleted real estate object",
+            "Deleted real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
+            "kontakt@mathis-burger.de",
+            MailEntityContext.realEstateObject,
+            MailerSettingAction.DELETE_ONLY
+        );
     }
 
     /**
@@ -172,7 +195,7 @@ class RealEstateService : AbstractService() {
      */
     private fun getPriceChanges(obj: RealEstateObject): List<PriceValueRelation> {
         val changes = this.priceChangeRepository.findByZip(obj.zip!!)
-            .filter { it.year!! >= DateUtils.getYearFromDate(obj.dateBought!!) }
+            .filter { it.year!! >= DateUtils.getYearFromDate(obj.dateBought!!) && !it.archived }
             .sortedBy { it.year }
         val data: MutableList<PriceValueRelation> = mutableListOf();
         data.add(PriceValueRelation(this.cs.convert(obj.initialValue!!), DateUtils.getYearFromDate(obj.dateBought!!)));

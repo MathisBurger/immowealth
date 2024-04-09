@@ -8,5 +8,5 @@ import jakarta.enterprise.context.ApplicationScoped
  * Repository for object rent expenses
  */
 @ApplicationScoped
-class ObjectRentExpenseRepository : PanacheRepository<ObjectRentExpense> {
+class ObjectRentExpenseRepository : AbstractRepository<ObjectRentExpense>() {
 }

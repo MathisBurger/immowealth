@@ -1,14 +1,19 @@
 package de.mathisburger.resources
 
+import de.mathisburger.data.input.ConfigureAutoPayInput
 import de.mathisburger.data.input.CreditRateInput
 import de.mathisburger.data.input.UpdateCreditInput
 import de.mathisburger.data.response.CreditResponse
 import de.mathisburger.entity.enum.AutoPayInterval
 import de.mathisburger.service.CreditService
+import io.smallrye.graphql.api.AdaptToScalar
+import io.smallrye.graphql.api.Scalar
+import io.smallrye.graphql.api.Scalar.DateTime
 import jakarta.inject.Inject
 import org.eclipse.microprofile.graphql.GraphQLApi
 import org.eclipse.microprofile.graphql.Mutation
 import org.eclipse.microprofile.graphql.Query
+import java.util.Date
 
 /**
  * Credit graphQL resource
@@ -39,8 +44,8 @@ class CreditResource {
      * @param amount The pay amount
      */
     @Mutation
-    fun configureCreditAutoPay(id: Long, enabled: Boolean, interval: AutoPayInterval?, amount: Double?): CreditResponse {
-        return this.creditService.configureAutoBooking(id, enabled, interval, amount);
+    fun configureCreditAutoPay(input: ConfigureAutoPayInput): CreditResponse {
+        return this.creditService.configureAutoBooking(input.id, input.enabled, input.interval, input.amount, input.startDate);
     }
 
     /**

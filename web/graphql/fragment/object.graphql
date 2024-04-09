@@ -8,6 +8,10 @@ fragment SimpleObjectData on RealEstateObject {
     credit {
         ...SimpleCredit
     }
+    archived
+    uploadedFiles {
+        id
+    }
 }
 
 fragment MapObject on RealEstateObject {
@@ -17,6 +21,7 @@ fragment MapObject on RealEstateObject {
     zip
     positionLat
     positionLon
+    archived
 }
 
 fragment FullRealEstateData on RealEstateObject {
@@ -43,6 +48,10 @@ fragment FullRealEstateData on RealEstateObject {
     expenses {
         ...RentExpenseData
     }
+    archived
+    uploadedFiles {
+        ...UploadedFile
+    }
 }
 
 fragment ObjectData on ObjectResponse {
@@ -58,4 +67,5 @@ fragment ObjectData on ObjectResponse {
     priceForecast {
         ...PriceValueRelation
     }
+    archived
 }

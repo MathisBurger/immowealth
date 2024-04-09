@@ -25,7 +25,7 @@ class WealthService : AbstractService() {
      * Gets gross wealth with inflation
      */
     fun getGrossWealthWithInflation(): WealthResponse {
-        val objects = this.realEstateRepository.listAll();
+        val objects = this.realEstateRepository.findAllArchived();
         var wealth = 0L;
         val detailed: MutableList<WealthSpreadType> = mutableListOf();
         for (obj in objects) {
@@ -50,7 +50,7 @@ class WealthService : AbstractService() {
      * Gets gross wealth without inflation
      */
     fun getGrossWealthWithoutInflation(): WealthResponse {
-        val objects = this.realEstateRepository.listAll();
+        val objects = this.realEstateRepository.findAllArchived();
         var wealth = 0L;
         val detailed: MutableList<WealthSpreadType> = mutableListOf();
         for (obj in objects) {
@@ -64,7 +64,7 @@ class WealthService : AbstractService() {
      * Gets net wealth with inflation
      */
     fun getNetWealthWithInflation(): WealthResponse {
-        val objects = this.realEstateRepository.listAll();
+        val objects = this.realEstateRepository.findAllArchived();
         var netWealth = 0L;
         val detailed: MutableList<WealthSpreadType> = mutableListOf()
         for (obj in objects) {
@@ -98,7 +98,7 @@ class WealthService : AbstractService() {
      * Gets net wealth without inflation
      */
     fun getNetWealthWithoutInflation(): WealthResponse {
-        val objects = this.realEstateRepository.listAll();
+        val objects = this.realEstateRepository.findAllArchived();
         var netWealth = 0L;
         val detailed: MutableList<WealthSpreadType> = mutableListOf()
         for (obj in objects) {

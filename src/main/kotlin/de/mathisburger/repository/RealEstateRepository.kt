@@ -10,7 +10,7 @@ import java.util.Optional
  * Real estate repository
  */
 @ApplicationScoped
-class RealEstateRepository : PanacheRepository<RealEstateObject> {
+class RealEstateRepository : AbstractRepository<RealEstateObject>() {
 
     /**
      * Gets a real estate object by credit
