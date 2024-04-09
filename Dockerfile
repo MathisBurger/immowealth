@@ -17,7 +17,7 @@ RUN ./gradlew build -Dquarkus.package.type=uber-jar
 
 FROM openjdk:21
 WORKDIR /app
-COPY --from=serverBuild ./app/build/immowealth-1.0-SNAPSHOT.jar ./server.jar
+COPY --from=serverBuild ./app/build/immowealth-1.0-SNAPSHOT-runner.jar ./server.jar
 
 ENV DATABASE_PASSWORD=mysecretpassword
 ENV DATABASE_USER=postgres
