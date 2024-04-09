@@ -28,6 +28,7 @@ dependencies {
     implementation("io.quarkus:quarkus-scheduler")
     implementation("io.quarkus:quarkus-resteasy-client")
     implementation("io.quarkus:quarkus-resteasy-client-jackson")
+    implementation("io.quarkus:quarkus-webjars-locator")
     implementation("io.quarkus:quarkus-mailer")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")

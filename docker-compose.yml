@@ -11,7 +11,7 @@ services:
   server:
     depends_on:
       - postgres
-    image: ghcr.io/mathisburger/immowealth:latest
+    image: ghcr.io/mathisburger/immowealth:v1.3.0.1
     platform: linux/amd64
     environment:
       DATABASE_URL: jdbc:postgresql://postgres:5432/immowealth

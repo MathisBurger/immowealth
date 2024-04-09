@@ -12,12 +12,13 @@ FROM gradle:jdk21-alpine AS serverBuild
 WORKDIR /app
 COPY . .
 RUN mkdir ./src/main/resources/META-INF.resources
-COPY --from=webBuild ./web/out ./src/main/resources/META-INF.resources
 RUN ./gradlew build -Dquarkus.package.type=uber-jar
 
 FROM openjdk:21
 WORKDIR /app
 COPY --from=serverBuild ./app/build/immowealth-1.0-SNAPSHOT-runner.jar ./server.jar
+RUN mkdir static
+COPY --from=webBuild ./web/out ./static
 
 ENV DATABASE_PASSWORD=mysecretpassword
 ENV DATABASE_USER=postgres
