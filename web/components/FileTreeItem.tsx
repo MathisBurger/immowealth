@@ -2,7 +2,7 @@ import {GetObjectDocument, UploadedFileFragment, useDeleteFileMutation} from "@/
 import {useMemo, useState} from "react";
 import {TreeItem} from "@mui/x-tree-view";
 import FolderIcon from '@mui/icons-material/Folder';
-import {Grid, IconButton} from "@mui/joy";
+import {Grid, IconButton, Input} from "@mui/joy";
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
@@ -32,6 +32,8 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
         ]
     });
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [folderName, setFolderName] = useState<string|null>(null);
+    const [clickedFolder, setClickedFolder] = useState<boolean>(false);
 
     const {t} = useTranslation();
 
@@ -74,7 +76,7 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
     return (
         <>
             {foldersWithFiles.map((f, i) => (
-                <TreeItem key={f.path + i} itemId={f.path} label={
+                <TreeItem key={f.path + i + Math.random()} itemId={f.path + Math.random()*1000} label={
                     <Grid container direction="row">
                         <FolderIcon color="primary" sx={{marginRight: '5px'}} />
                         {f.path}
@@ -83,6 +85,16 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
                     <FileTreeItem docs={f.elements} objectId={objectId} refetch={refetch} path={path === "" ? f.path : path + "/" + f.path} />
                 </TreeItem>
             ))}
+            {folderName && (
+                <TreeItem key={path + folderName} itemId={path + folderName} label={
+                    <Grid container direction="row">
+                        <FolderIcon color="primary" sx={{marginRight: '5px'}} />
+                        {folderName}
+                    </Grid>
+                }>
+                    <FileTreeItem docs={[]} objectId={objectId} refetch={() => {setFolderName(null);refetch()}} path={(path === "" ? "" : path + "/") + folderName} />
+                </TreeItem>
+            )}
             {rootDocs.map((d, i) => (
                 <TreeItem key={d.fileName! + i} itemId={d.fileRoot! + d.fileName!} label={
                     <Grid container direction="row">
@@ -106,9 +118,25 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
                     {t('common.add')}
                 </Grid>
             } onClick={() => setModalOpen(true)} />
+            <TreeItem itemId={"folder" + Math.random()*1000000} label={
+                <Grid container direction="row">
+                    <FolderIcon sx={{marginRight: '5px'}} />
+                    {clickedFolder ? (
+                        <form onSubmit={(e) => {
+                            e.preventDefault();
+                            const formData = new FormData(e.currentTarget);
+                            setFolderName(`${formData.get("txt")}`);
+                            setClickedFolder(false);
+                        }}>
+                            <Input type="text" autoFocus={true} name="txt"/>
+                        </form>
+                    ) : t('common.add-folder')}
+                </Grid>
+            } onClick={() => setClickedFolder(true)} onKeyUp={(e) => e.key === 'Escape' ? setClickedFolder(false) : null} />
             {modalOpen && (
-                <UploadFileModal objectId={objectId} onClose={() => setModalOpen(false)} refetch={refetch} rootPath={path} />
+                <UploadFileModal objectId={objectId} onClose={() => {setModalOpen(false);setFolderName(null);}} refetch={() => {refetch()}} rootPath={path} />
             )}
+
         </>
     )
 }
