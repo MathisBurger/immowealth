@@ -42,7 +42,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] AutoPayInterval (configure start date)
 - [x] Add mail notifications
 - [x] Archiving feature
-- [ ] Add document upload for important documents
+- [x] Add document upload for important documents
 
 ### v1.3.1
 - [ ] Update and improve docker integration

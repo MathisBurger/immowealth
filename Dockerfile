@@ -3,7 +3,7 @@ FROM node:20-alpine AS webBuild
 WORKDIR /web
 COPY /web .
 RUN cat schema.graphql
-RUN npm ci --include=dev
+RUN npm ci --include=dev --force
 RUN npm run compile-pipeline
 RUN npm run build
 
