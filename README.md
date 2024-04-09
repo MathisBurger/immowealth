@@ -16,6 +16,7 @@ grow very fast and continously and will always have its users in focus.
 - Real estate map
 - Multiple currencies
 - Rent expenses
+- Document storage
 
 
 # Installation
@@ -37,12 +38,6 @@ docker-compose up -d
 # Roadmap
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
-
-### v1.3.0
-- [x] AutoPayInterval (configure start date)
-- [x] Add mail notifications
-- [x] Archiving feature
-- [x] Add document upload for important documents
 
 ### v1.3.1
 - [ ] Update and improve docker integration
