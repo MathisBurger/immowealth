@@ -14,4 +14,11 @@ abstract class AbstractRepository<T: BaseEntity> : PanacheRepository<T> {
     fun findAllArchived(): List<T> {
         return find("archived IS FALSE").list<T>();
     }
+
+    /**
+     * Finds all archived entities
+     */
+    fun findAllThatAreArchived(): List<T> {
+        return find("archived IS TRUE").list<T>();
+    }
 }

@@ -13,5 +13,10 @@ interface Archivable {
     /**
      * Gets the name of the entity
      */
-    fun getEntityName(): String
+    fun getEntityName(): String;
+
+    /**
+     * Gets the direct url to entity
+     */
+    fun getDirectUrl(): String?;
 }

@@ -36,4 +36,8 @@ class UploadedFile : BaseEntity(), Archivable {
     override fun getEntityName(): String {
         return this.javaClass.toString();
     }
+
+    override fun getDirectUrl(): String? {
+        return null;
+    }
 }

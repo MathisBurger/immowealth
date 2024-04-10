@@ -59,4 +59,8 @@ class Credit : BaseEntity(), Archivable {
     override fun getEntityName(): String {
         return this.javaClass.toString();
     }
+
+    override fun getDirectUrl(): String {
+        return "/credits/details?id=${this.id}";
+    }
 }
