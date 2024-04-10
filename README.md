@@ -40,9 +40,9 @@ docker-compose up -d
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.3.1
-- [ ] Update and improve docker integration
-- [ ] Add Mail sender templated mail (replace kontakt@mathis-burger.de by config setting)
-- [ ] Archive restore feature
+- [x] Update and improve docker integration
+- [x] Add Mail sender templated mail (replace kontakt@mathis-burger.de by config setting)
+- [x] Archive restore feature
 
 ### v1.4.0
 - [ ] Full UNIT test coverage

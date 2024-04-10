@@ -1,0 +1,3 @@
+mutation UnarchiveEntity($id: BigInteger! $entityName: String!) {
+    removeArchival(id: $id entityName: $entityName)
+}
