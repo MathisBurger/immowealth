@@ -19,4 +19,9 @@ interface Archivable {
      * Gets the direct url to entity
      */
     fun getDirectUrl(): String?;
+
+    /**
+     * The ID of the entity
+     */
+    var id: Long?;
 }

@@ -40,7 +40,8 @@
     "housingPrices": "Price changes",
     "map": "Map",
     "settings": "Settings",
-    "activityLog": "Activity log"
+    "activityLog": "Activity log",
+    "archived": "Archive"
   },
   "common": {
     "credit": "Credit",
@@ -78,7 +79,10 @@
     "startDate": "Start date",
     "archived": "Archived",
     "documents": "Documents",
-    "add-folder": "Add folder"
+    "add-folder": "Add folder",
+    "value": " Value",
+    "entityName": "Entity",
+    "unarchive": "Unarchive"
   },
   "credit": {
     "tab": {

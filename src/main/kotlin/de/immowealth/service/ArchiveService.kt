@@ -52,6 +52,7 @@ class ArchiveService : AbstractService() {
      * @param id The ID of the entity
      * @param entityName The name of the entity
      */
+    @Transactional
     fun removeArchival(id: Long, entityName: String) {
         val cred = Credit()
         val obj = this.entityManager.find(Class.forName(entityName), id);
@@ -85,6 +86,6 @@ class ArchiveService : AbstractService() {
      * Converts all instances to responses
      */
     private fun convertToResponse(input: List<Archivable>): List<ArchivedResponse> {
-        return input.map { ArchivedResponse(it.toString(), it.getEntityName().replace("class ", ""), it.getDirectUrl()) };
+        return input.map { ArchivedResponse(it.toString(), it.getEntityName().replace("class ", ""), it.getDirectUrl(), it.id!!) };
     }
 }

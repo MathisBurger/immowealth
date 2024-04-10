@@ -17,5 +17,9 @@ data class ArchivedResponse @JsonbCreator constructor(
     /**
      * The direct url to object
      */
-    val directUrl: String?
+    val directUrl: String?,
+    /**
+     * The ID of the entity
+     */
+    val entityID: Long
 )

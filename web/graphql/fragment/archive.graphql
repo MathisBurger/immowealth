@@ -1,0 +1,6 @@
+fragment Archived on ArchivedResponse {
+    value
+    directUrl
+    entityName
+    entityID
+}
