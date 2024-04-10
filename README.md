@@ -17,6 +17,7 @@ grow very fast and continously and will always have its users in focus.
 - Multiple currencies
 - Rent expenses
 - Document storage
+- Archive
 
 
 # Installation
@@ -38,11 +39,6 @@ docker-compose up -d
 # Roadmap
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
-
-### v1.3.1
-- [x] Update and improve docker integration
-- [x] Add Mail sender templated mail (replace kontakt@mathis-burger.de by config setting)
-- [x] Archive restore feature
 
 ### v1.4.0
 - [ ] Full UNIT test coverage
