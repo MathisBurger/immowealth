@@ -22,15 +22,19 @@ quarkus:
   hibernate-orm:
     dialect: org.hibernate.dialect.PostgreSQLDialect
     database:
-      generation: create
+      generation: update
 immowealth:
   defaultMail: kontakt@mathis-burger.de
-
+  signSecret: AyM1SysPpbyDfgZld3umj1qzKObwVMko
+smallrye:
+  jwt:
+    sign:
+      key:
+        location: privateKey.pem
+    new-token:
+      lifespan: 3600
 mp:
   jwt:
     verify:
-      issuer: http://localhost
       publickey:
         location: publicKey.pem
-  
-  quarkus.native.resources.includes=publicKey.pem

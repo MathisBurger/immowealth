@@ -41,3 +41,5 @@ nb-configuration.xml
 publicKey.pem
 rsaPrivateKey.pem
 privateKey.pem
+src/main/resources/privateKey.pem
+src/main/resources/publicKey.pem

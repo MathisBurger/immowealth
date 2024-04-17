@@ -63,3 +63,19 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Rentability calculations
 - [ ] TAX calculations
 
+## Local setup
+
+1. Clone repo
+```shell
+git clone https://github.com/MathisBurger/immowealth.git
+```
+2. Generate keys
+
+```shell
+openssl genrsa -out rsaPrivateKey.pem 2048
+openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
+openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform pem -out privateKey.pem
+```
+3. Setup your POstgreSQL DB
+4. Build the code and start developing
+
