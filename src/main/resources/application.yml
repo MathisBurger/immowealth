@@ -1,4 +1,7 @@
 quarkus:
+  native:
+    resources:
+      includes: publicKey.pem
   http:
     cors:
       ~: true
@@ -19,6 +22,15 @@ quarkus:
   hibernate-orm:
     dialect: org.hibernate.dialect.PostgreSQLDialect
     database:
-      generation: update
+      generation: create
 immowealth:
   defaultMail: kontakt@mathis-burger.de
+
+mp:
+  jwt:
+    verify:
+      issuer: http://localhost
+      publickey:
+        location: publicKey.pem
+  
+  quarkus.native.resources.includes=publicKey.pem

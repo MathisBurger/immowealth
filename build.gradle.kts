@@ -30,7 +30,8 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-client-jackson")
     implementation("io.quarkus:quarkus-webjars-locator")
     implementation("io.quarkus:quarkus-mailer")
-    implementation("io.quarkus:quarkus-elytron-security-oauth2")
+    implementation("io.quarkus:quarkus-smallrye-jwt")
+    implementation("io.quarkus:quarkus-smallrye-jwt-build")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
 }
