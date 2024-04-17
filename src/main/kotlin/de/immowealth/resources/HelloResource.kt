@@ -1,2 +1,0 @@
-package de.immowealth.resources
-
