@@ -1,9 +1,8 @@
-package de.mathisburger.util
+package de.immowealth.util
 
-import de.mathisburger.CustomAssert.Companion.assertCalendarSame
-import de.mathisburger.entity.enum.AutoPayInterval
+import de.immowealth.CustomAssert.Companion.assertCalendarSame
+import de.immowealth.entity.enum.AutoPayInterval
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Assertions.*;
 import java.util.Calendar;
 
 

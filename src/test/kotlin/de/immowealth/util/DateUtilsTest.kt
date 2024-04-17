@@ -1,4 +1,4 @@
-package de.mathisburger.util
+package de.immowealth.util
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
