@@ -2,6 +2,7 @@ package de.immowealth.util
 
 import de.immowealth.CustomAssert.Companion.assertCalendarSame
 import de.immowealth.entity.enum.AutoPayInterval
+import io.quarkus.test.junit.QuarkusTest
 import org.junit.jupiter.api.*;
 import java.util.Calendar;
 
@@ -9,6 +10,7 @@ import java.util.Calendar;
 /**
  * Tests the autobooking utils
  */
+@QuarkusTest
 class AutoBookingUtilsTest {
 
     @Test

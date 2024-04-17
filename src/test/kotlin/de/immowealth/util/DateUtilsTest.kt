@@ -1,5 +1,6 @@
 package de.immowealth.util
 
+import io.quarkus.test.junit.QuarkusTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.Calendar
@@ -7,6 +8,7 @@ import java.util.Calendar
 /**
  * Tests all date utils
  */
+@QuarkusTest
 class DateUtilsTest {
 
     @Test
