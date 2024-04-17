@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint",
     "compile": "graphql-codegen-esm --config codegen.yml",
@@ -21,6 +21,7 @@
     "@mui/x-charts": "6.19.5",
     "@mui/x-data-grid": "^7.0.0",
     "@mui/x-date-pickers": "^6.19.5",
+    "@mui/x-tree-view": "^7.1.1",
     "dayjs": "^1.11.10",
     "graphql": "^16.8.1",
     "leaflet": "^1.9.4",
@@ -31,6 +32,7 @@
     "react-country-flag": "^3.1.0",
     "react-dom": "^18",
     "react-leaflet": "^4.2.1",
+    "react-mui-dropzone": "^4.0.7",
     "string-width": "^7.1.0"
   },
   "devDependencies": {

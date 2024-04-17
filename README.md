@@ -16,6 +16,8 @@ grow very fast and continously and will always have its users in focus.
 - Real estate map
 - Multiple currencies
 - Rent expenses
+- Document storage
+- Archive
 
 
 # Installation
@@ -38,18 +40,12 @@ docker-compose up -d
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
-### v1.3.0
-- [ ] AutoPayInterval (configure start date)
-- [ ] Add mail notifications
-- [ ] Archiving feature
-- [ ] Add document upload for important documents
-- [ ] Most / recently used document recommendations
-
 ### v1.4.0
 - [ ] Full UNIT test coverage
 - [ ] User account system
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
+- [ ] Update mail notifications with favourites
 - [ ] Performance calculations
 
 ### v1.5.0
@@ -59,6 +55,8 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Tabs are saved in URI
 
 ### Not planned yet
+- [ ] Mail templates to send
+- [ ] Backend translations
 - [ ] Auto collect market value change data
 - [ ] Add balance sheet calculation
 - [ ] Rent spread suggestions by fixes rules

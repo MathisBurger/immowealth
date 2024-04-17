@@ -23,6 +23,7 @@ import {FormEvent, useState} from "react";
 import dayjs from "dayjs";
 import {useTranslation} from "next-export-i18n";
 import useCurrencySymbol from "@/hooks/useCurrencySymbol";
+import {DatePicker} from "@mui/x-date-pickers";
 
 interface ConfigureCreditAutoPayModalProps {
     /**
@@ -68,10 +69,13 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
         let formData = new FormData(e.currentTarget);
         const result = await mutation({
             variables: {
-                id: credit?.id ?? -1,
-                enabled: checked,
-                interval: formData.get("intervalType") as AutoPayInterval,
-                amount: parseFloat(`${formData.get("amount")}`)
+                input: {
+                    id: credit?.id ?? -1,
+                    enabled: checked,
+                    interval: formData.get("intervalType") as AutoPayInterval,
+                    amount: parseFloat(`${formData.get("amount")}`),
+                    startDate: formData.get("startDate") ? new Date(`${formData.get("startDate")}`) : new Date()
+                }
             }
         });
         if (result.errors === undefined) {
@@ -103,6 +107,10 @@ const ConfigureCreditAutoPayModal = ({credit, onClose, refetchId, isObjectRefetc
                                 }>
                                     {t('common.activated')}
                                 </Typography>
+                                <FormControl>
+                                    <FormLabel>{t('common.startDate')}</FormLabel>
+                                    <DatePicker name="startDate" disabled={!checked || credit?.autoPayInterval !== null} />
+                                </FormControl>
                                 <FormControl>
                                     <FormLabel>Interval</FormLabel>
                                     <Select name="intervalType" defaultValue={credit?.autoPayInterval} disabled={!checked}>

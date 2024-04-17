@@ -1,16 +1,37 @@
 {
   "settings": {
     "tab": {
-      "general": "Allgemein"
+      "general": "Allgemein",
+      "notification": "Benachrichtigung"
     },
     "section": {
-      "general": "Allgemein"
+      "general": "Allgemein",
+      "mailer": "Mail"
     },
     "messages": {
       "update-successful": "Einstellung erfolgreich aktualisiert (Möglicherweise muss die Seite neu geladen werden, damit sie wie gewünscht funktioniert)"
     },
     "language": "Sprache",
-    "currency": "Währung"
+    "currency": "Währung",
+    "mailerNotification_realEstateObject": "Objekte",
+    "mailerNotification_credit": "Kredite",
+    "mailerNotification_housePrices": "Haus-Preisänderungen",
+    "options": {
+        "lang": {
+          "de": "Deutsch",
+          "en": "Englisch"
+        },
+        "notification": {
+          "mailer": {
+            "none": "Keine",
+            "update_only": "Nur Aktualisierungen",
+            "create_only": "Nur Erstellen",
+            "booking_only": "Nur Buchungen",
+            "delete_only": "Nur Löschungen",
+            "all": "Alle"
+          }
+        }
+    }
   },
   "routes": {
     "dashboard": "Dashboard",
@@ -19,7 +40,8 @@
     "housingPrices": "Preisänderungen",
     "map": "Karte",
     "settings": "Einstellungen",
-    "activityLog": "Aktivitäten"
+    "activityLog": "Aktivitäten",
+    "archived": "Archiv"
   },
   "common": {
     "credit": "Kredit",
@@ -53,7 +75,14 @@
     "message": "Nachricht",
     "date": "Datum",
     "yes": "Ja",
-    "no": "Nein"
+    "no": "Nein",
+    "startDate": "Startdatum",
+    "archived": "Archiviert",
+    "documents": "Dokumente",
+    "add-folder": "Ordner erstellen",
+    "value": "Wert",
+    "entityName": "Entität",
+    "unarchive": "Entarchivieren"
   },
   "credit": {
     "tab": {

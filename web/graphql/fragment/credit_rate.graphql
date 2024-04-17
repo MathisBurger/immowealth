@@ -3,4 +3,5 @@ fragment CreditRateData on CreditRate {
     amount
     date
     note
+    archived
 }
