@@ -1,5 +1,6 @@
 package de.immowealth.service
 
+import de.immowealth.entity.Archived
 import de.immowealth.entity.BaseEntity
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -40,7 +41,7 @@ abstract class AbstractService {
      *
      * @param entity The entity that should be deleted
      */
-    fun <T: BaseEntity> delete(entity: T) {
+    fun <T: Archived> delete(entity: T) {
         if (entity.archived) {
             this.entityManager.remove(entity);
         } else {
