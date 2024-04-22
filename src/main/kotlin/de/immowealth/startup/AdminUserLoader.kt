@@ -29,7 +29,7 @@ class AdminUserLoader {
             val admin = User()
             admin.username = "admin"
             admin.password = BcryptUtil.bcryptHash("admin123")
-            admin.roles = mutableListOf("ADMIN");
+            admin.roles = mutableListOf("ROLE_ADMIN");
             this.entityManager.persist(admin)
             this.entityManager.flush()
         }

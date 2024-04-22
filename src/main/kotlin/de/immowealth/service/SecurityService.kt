@@ -1,12 +1,16 @@
 package de.immowealth.service
 
+import de.immowealth.entity.Archived
 import de.immowealth.entity.User
 import de.immowealth.repository.UserRepository
+import de.immowealth.voter.VoterInterface
 import io.quarkus.elytron.security.common.BcryptUtil
 import io.smallrye.jwt.build.Jwt
 import jakarta.enterprise.context.ApplicationScoped
+import jakarta.enterprise.inject.Instance
 import jakarta.inject.Inject
 import jakarta.ws.rs.NotAuthorizedException
+import jakarta.ws.rs.core.SecurityContext
 import org.wildfly.security.password.Password
 import org.wildfly.security.password.PasswordFactory
 import org.wildfly.security.password.WildFlyElytronPasswordProvider
@@ -22,6 +26,36 @@ class SecurityService  : AbstractService() {
 
     @Inject
     lateinit var userRepository: UserRepository;
+
+    @Inject
+    lateinit var voter: Instance<VoterInterface>
+
+    @Inject
+    lateinit var ctx: SecurityContext;
+
+    /**
+     * Checks if user is granted for action
+     *
+     * @param attribute The attribute that should be voted on
+     * @param entity The entity that should be voted on
+     */
+    fun isGranted(attribute: String, entity: Archived): Boolean {
+        var requiredVoter: VoterInterface? = null;
+        for (vt in this.voter) {
+            if (vt.votedType() === entity::class.java.toString()) {
+                requiredVoter = vt;
+                break;
+            }
+        }
+        if (requiredVoter == null) {
+            return false;
+        }
+        if (ctx.userPrincipal === null) {
+            return false;
+        }
+        val user = this.userRepository.findByUserName(ctx.userPrincipal.name).get();
+        return requiredVoter.voteOnAttribute(user, attribute, entity);
+    }
 
 
     /**

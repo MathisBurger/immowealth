@@ -1,6 +1,7 @@
 package de.immowealth.service
 
 import de.immowealth.entity.Tenant
+import de.immowealth.entity.UserRoles
 import de.immowealth.repository.TenantRepository
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -32,7 +33,7 @@ class TenantService : AbstractService() {
         tenant.name = name;
         this.entityManager.persist(tenant);
         this.entityManager.flush();
-        this.userService.registerUser(username, password, email, mutableListOf("TENANT_OWNER"), tenant.id);
+        this.userService.registerUser(username, password, email, mutableListOf(UserRoles.TENANT_OWNER), tenant.id);
         return tenant;
     }
 }
