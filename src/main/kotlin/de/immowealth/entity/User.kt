@@ -1,9 +1,6 @@
 package de.immowealth.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.ElementCollection
-import jakarta.persistence.Entity
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 
 /**
  * The user entity
@@ -23,6 +20,11 @@ class User : BaseEntity(), Archivable {
     var password: String = "";
 
     /**
+     * The email of the user
+     */
+    var email: String = "";
+
+    /**
      * All roles of the user
      */
     @ElementCollection
@@ -31,7 +33,7 @@ class User : BaseEntity(), Archivable {
     /**
      * The tenant the user is assigned to
      */
-    @ManyToOne
+    @ManyToOne(cascade = [(CascadeType.PERSIST)])
     var tenant: Tenant? = null;
 
     override fun toString(): String {
