@@ -7,7 +7,7 @@ import jakarta.persistence.Entity
  * A setting option
  */
 @Entity
-class SettingOption : BaseEntity, Archivable {
+class SettingOption : AuthorizedBaseEntity, Archivable {
 
     /**
      * The key of the setting

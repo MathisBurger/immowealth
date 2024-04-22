@@ -7,7 +7,7 @@ import java.util.Date
  * The real estate entity
  */
 @Entity
-class RealEstateObject : BaseEntity(), Archivable {
+class RealEstateObject : AuthorizedBaseEntity(), Archivable {
 
     /**
      * The city of the object

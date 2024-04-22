@@ -3,6 +3,7 @@ package de.immowealth.entity
 import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
 
 /**
  * The user entity
@@ -26,6 +27,12 @@ class User : BaseEntity(), Archivable {
      */
     @ElementCollection
     var roles: MutableList<String> = mutableListOf();
+
+    /**
+     * The tenant the user is assigned to
+     */
+    @ManyToOne
+    var tenant: Tenant? = null;
 
     override fun toString(): String {
         return this.username;

@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToOne
  * File that has been uploaded to server
  */
 @Entity
-class UploadedFile : BaseEntity(), Archivable {
+class UploadedFile : AuthorizedBaseEntity(), Archivable {
 
     /**
      * Name of the file

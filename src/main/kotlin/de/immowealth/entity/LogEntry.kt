@@ -7,7 +7,7 @@ import java.util.Date
  * Entry of event log system
  */
 @Entity
-class LogEntry : BaseEntity(), Archivable {
+class LogEntry : AuthorizedBaseEntity(), Archivable {
 
     /**
      * The message of action

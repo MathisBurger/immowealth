@@ -8,8 +8,6 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
-import org.wildfly.security.password.PasswordFactory
-import org.wildfly.security.password.interfaces.BCryptPassword
 
 /**
  * Initializes the admin user

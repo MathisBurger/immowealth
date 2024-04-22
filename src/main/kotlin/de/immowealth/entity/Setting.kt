@@ -6,7 +6,7 @@ import jakarta.persistence.*
  * Simple server side setting that is configured through the web
  */
 @Entity
-class Setting : BaseEntity(), Archivable {
+class Setting : UserAuthorizedBaseEntity(), Archivable {
 
     /**
      * The key of the setting
