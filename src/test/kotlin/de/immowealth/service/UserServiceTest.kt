@@ -9,6 +9,9 @@ import jakarta.ws.rs.core.SecurityContext
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
+/**
+ * Tests the functionality of the user service
+ */
 @QuarkusTest
 class UserServiceTest : AbstractServiceTest() {
 
@@ -20,6 +23,9 @@ class UserServiceTest : AbstractServiceTest() {
 
     @Inject
     lateinit var userRepository: UserRepository;
+
+    @Inject
+    lateinit var tenantService: TenantService;
 
     @Inject
     override lateinit var securityContext: SecurityContext;
@@ -77,6 +83,17 @@ class UserServiceTest : AbstractServiceTest() {
         } catch (_: Throwable) {
             assertTrue(true);
         }
+    }
+
+    @Test
+    fun testCreateUserAsTenantOwner() {
+        this.removeAllUsersExceptAdmin(userRepository, entityManager);
+        this.loginAsUser("admin");
+        val ten = this.tenantService.createTenant("ten1", "owner", "123", "owner@chef.de");
+        this.loginAsUser("owner");
+        val usr = this.userService.registerUser("usr", "123", "a@chef.de", mutableListOf(), ten.id);
+        assertEquals(usr.username, "usr")
+        assertEquals(usr.tenant?.id ?: -1, ten.id)
     }
 
 }

@@ -47,17 +47,20 @@ class UserService : AbstractService() {
         user.password = BcryptUtil.bcryptHash(password)
         user.email = email;
         user.roles = roles;
-
-        if (tenantId != null) {
+        if (tenantId == null) {
+            this.denyUnlessGranted(UserVoter.CREATE, user)
+            this.entityManager.persist(user);
+        } else {
             val tenant = this.tenantRepository.findByIdOptional(tenantId);
             if (tenant.isEmpty) {
                 throw ParameterException("Tenant not found");
             }
             tenant.get().users.add(user);
+            user.tenant = tenant.get();
+            this.denyUnlessGranted(UserVoter.CREATE, user)
+            this.entityManager.persist(user);
             this.entityManager.persist(tenant.get());
         }
-        this.denyUnlessGranted(UserVoter.CREATE, user);
-        this.entityManager.persist(user)
         this.entityManager.flush();
         this.settingsLoader.initWithUser(user);
         return user;

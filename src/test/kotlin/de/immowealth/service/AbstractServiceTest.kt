@@ -15,7 +15,7 @@ abstract class AbstractServiceTest {
     /**
      * The user security context
      */
-    open lateinit var securityContext: SecurityContext;
+    abstract var securityContext: SecurityContext;
 
 
     /**

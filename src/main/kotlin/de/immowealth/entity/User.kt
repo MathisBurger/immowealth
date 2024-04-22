@@ -1,6 +1,8 @@
 package de.immowealth.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 
 /**
  * The user entity
@@ -33,7 +35,8 @@ class User : BaseEntity(), Archivable {
     /**
      * The tenant the user is assigned to
      */
-    @ManyToOne(cascade = [(CascadeType.PERSIST)])
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     var tenant: Tenant? = null;
 
     override fun toString(): String {
