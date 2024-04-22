@@ -2,6 +2,8 @@ package de.immowealth.entity
 
 import jakarta.persistence.*
 import org.hibernate.annotations.ColumnDefault
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 
 /**
  * The authorized base entity that maps user authorized entities
@@ -26,6 +28,7 @@ abstract class UserAuthorizedBaseEntity : Archived {
     /**
      * The user the entity is assigned to
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     open var user: User? = null;
 }

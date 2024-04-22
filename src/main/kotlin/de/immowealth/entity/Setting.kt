@@ -16,7 +16,7 @@ class Setting : UserAuthorizedBaseEntity(), Archivable {
     /**
      * All options for the value
      */
-    @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.ALL], fetch = FetchType.EAGER)
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER, mappedBy = "setting")
     var options: MutableList<SettingOption> = mutableListOf();
 
     /**

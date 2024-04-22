@@ -46,7 +46,7 @@ class SecurityService {
     fun isGranted(attribute: String, entity: Archived): Boolean {
         var requiredVoter: VoterInterface? = null;
         for (vt in this.voter) {
-            if (vt.votedType() === entity::class.java.toString()) {
+            if (vt.votedType() == entity::class.java.toString()) {
                 requiredVoter = vt;
                 break;
             }
