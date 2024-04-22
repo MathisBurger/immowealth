@@ -6,6 +6,7 @@ import de.immowealth.exception.UserExistsException
 import de.immowealth.repository.TenantRepository
 import de.immowealth.repository.UserRepository
 import de.immowealth.startup.SettingsLoader
+import de.immowealth.voter.UserVoter
 import io.quarkus.elytron.security.common.BcryptUtil
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -46,8 +47,6 @@ class UserService : AbstractService() {
         user.password = BcryptUtil.bcryptHash(password)
         user.email = email;
         user.roles = roles;
-        this.entityManager.persist(user);
-        this.entityManager.flush();
 
         if (tenantId != null) {
             val tenant = this.tenantRepository.findByIdOptional(tenantId);
@@ -56,8 +55,11 @@ class UserService : AbstractService() {
             }
             tenant.get().users.add(user);
             this.entityManager.persist(tenant.get());
-            this.entityManager.flush();
         }
+        this.denyUnlessGranted(UserVoter.CREATE, user);
+        this.entityManager.persist(user)
+        this.entityManager.flush();
+        this.settingsLoader.initWithUser(user);
         return user;
     }
 }

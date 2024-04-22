@@ -14,11 +14,15 @@ import jakarta.persistence.EntityManager
 @ApplicationScoped
 class TenantVoter : VoterInterface {
 
+    companion object {
+        final val CREATE = "CREATE";
+    }
+
     @Inject
     lateinit var entityManager: EntityManager;
 
     override fun <T : Archived> voteOnAttribute(user: User, attributeName: String, value: T): Boolean {
-        if (attributeName === "CREATE") {
+        if (attributeName === TenantVoter.CREATE) {
             return user.roles.contains(UserRoles.ADMIN);
         }
         return false;

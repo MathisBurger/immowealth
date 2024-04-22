@@ -9,6 +9,7 @@ import io.smallrye.jwt.build.Jwt
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.enterprise.inject.Instance
 import jakarta.inject.Inject
+import jakarta.persistence.EntityManager
 import jakarta.ws.rs.NotAuthorizedException
 import jakarta.ws.rs.core.SecurityContext
 import org.wildfly.security.password.Password
@@ -22,7 +23,7 @@ import org.wildfly.security.password.util.ModularCrypt
  * The security service that handles all arround security
  */
 @ApplicationScoped
-class SecurityService  : AbstractService() {
+class SecurityService {
 
     @Inject
     lateinit var userRepository: UserRepository;
@@ -32,6 +33,9 @@ class SecurityService  : AbstractService() {
 
     @Inject
     lateinit var ctx: SecurityContext;
+
+    @Inject
+    lateinit var entityManager: EntityManager;
 
     /**
      * Checks if user is granted for action

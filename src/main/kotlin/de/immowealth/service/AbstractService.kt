@@ -36,6 +36,18 @@ abstract class AbstractService {
     @Inject
     lateinit var entityManager: EntityManager;
 
+    @Inject
+    lateinit var securityService: SecurityService;
+
+    /**
+     * Denies unless granted
+     */
+    fun denyUnlessGranted(attribute: String, value: Archived) {
+        if (!this.securityService.isGranted(attribute, value)) {
+            throw Exception("No access");
+        }
+    }
+
     /**
      * Deletes an entity that implements archival features
      *

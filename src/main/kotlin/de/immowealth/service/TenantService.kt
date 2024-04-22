@@ -3,6 +3,7 @@ package de.immowealth.service
 import de.immowealth.entity.Tenant
 import de.immowealth.entity.UserRoles
 import de.immowealth.repository.TenantRepository
+import de.immowealth.voter.TenantVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -30,6 +31,7 @@ class TenantService : AbstractService() {
     @Transactional
     fun createTenant(name: String, username: String, password: String, email: String): Tenant {
         val tenant = Tenant()
+        this.denyUnlessGranted(TenantVoter.CREATE, tenant);
         tenant.name = name;
         this.entityManager.persist(tenant);
         this.entityManager.flush();
