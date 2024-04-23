@@ -54,6 +54,8 @@ jobs:
           openssl genrsa -out rsaPrivateKey.pem 2048
           openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
           openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform pem -out privateKey.pem
+          cp ./privateKey.pem ./src/main/resources/privateKey.pem
+          cp ./publicKey.pem ./src/main/resources/publicKey.pem
       - name: Build with Gradle
         run: ./gradlew build -Dquarkus.package.type=uber-jar
       - name: Start application
