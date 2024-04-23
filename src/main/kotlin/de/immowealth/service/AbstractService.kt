@@ -10,7 +10,7 @@ import jakarta.persistence.EntityManager
 /**
  * Abstract service that is used by all other services
  */
-@ApplicationScoped
+//@ApplicationScoped
 abstract class AbstractService {
 
     /**
@@ -55,7 +55,7 @@ abstract class AbstractService {
      * @param attribute The attribute that should be checked for
      * @param value The values that should be checked for
      */
-    fun filterAccess(attribute: String, value: List<Archived>): List<Archived> {
+    fun <T: Archived> filterAccess(attribute: String, value: List<T>): List<T> {
         return value.filter { this.securityService.isGranted(attribute, it) }
     }
 

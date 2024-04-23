@@ -16,7 +16,10 @@ class UserVoter : VoterInterface {
         final val CREATE = "CREATE"
     }
 
-    override fun <T : Archived> voteOnAttribute(user: User, attributeName: String, value: T): Boolean {
+    override fun <T : Archived> voteOnAttribute(user: User?, attributeName: String, value: T): Boolean {
+        if (user == null) {
+            return false
+        }
         if (value is User) {
             if (attributeName == CREATE) {
                 return user.roles.contains(UserRoles.ADMIN)

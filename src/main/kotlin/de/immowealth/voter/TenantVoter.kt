@@ -21,7 +21,10 @@ class TenantVoter : VoterInterface {
     @Inject
     lateinit var entityManager: EntityManager;
 
-    override fun <T : Archived> voteOnAttribute(user: User, attributeName: String, value: T): Boolean {
+    override fun <T : Archived> voteOnAttribute(user: User?, attributeName: String, value: T): Boolean {
+        if (user == null) {
+            return false;
+        }
         if (attributeName === TenantVoter.CREATE) {
             return user.roles.contains(UserRoles.ADMIN);
         }

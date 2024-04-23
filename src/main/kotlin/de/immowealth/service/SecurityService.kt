@@ -67,6 +67,20 @@ class SecurityService {
         return requiredVoter.voteOnAttribute(user, attribute, entity);
     }
 
+    /**
+     * Gets the current user that is logged in
+     */
+    fun getCurrentUser(): User? {
+        if (this.ctx.userPrincipal == null) {
+            return null;
+        }
+        val user =  this.userRepository.findByUserName(ctx.userPrincipal.name);
+        if (user.isEmpty) {
+            return null;
+        }
+        return user.get();
+    }
+
 
     /**
      * Logs in a user

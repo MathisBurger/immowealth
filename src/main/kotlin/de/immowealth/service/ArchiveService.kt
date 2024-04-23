@@ -81,7 +81,7 @@ class ArchiveService : AbstractService() {
         responses.addAll(this.realEstateRepository.findAllThatAreArchived());
         responses.addAll(this.settingsRepository.findAllThatAreArchived());
         responses.addAll(this.uploadedFileRepository.findAllThatAreArchived());
-        return this.convertToResponse(this.filterAccessArchivable("READ", responses));
+        return this.convertToResponse(this.filterAccessArchivable(UserRoles.ADMIN, responses));
     }
 
     /**
