@@ -13,6 +13,8 @@ import de.immowealth.repository.CreditRepository
 import de.immowealth.repository.RealEstateRepository
 import de.immowealth.util.AutoBookingUtils
 import de.immowealth.util.DateUtils
+import de.immowealth.voter.CreditRateVoter
+import de.immowealth.voter.CreditVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -49,11 +51,14 @@ class CreditService : AbstractService() {
             throw DateNotAllowedException("Date in future is not allowed");
         }
         val credit = this.creditRepository.findById(id);
+        this.denyUnlessGranted(CreditVoter.READ, credit);
         val creditRate = CreditRate()
         creditRate.date = date;
         creditRate.amount = this.cs.convertBack(rate);
         creditRate.note = note;
         creditRate.credit = credit;
+        creditRate.tenant = credit.tenant;
+        this.denyUnlessGranted(CreditRateVoter.CREATE, creditRate);
         this.entityManager.persist(creditRate);
         credit.rates.add(creditRate);
         this.entityManager.persist(credit);
@@ -74,7 +79,7 @@ class CreditService : AbstractService() {
      * Gets all credits
      */
     fun getAllCredits(): List<CreditResponse> {
-        val credits = this.creditRepository.listAll();
+        val credits: List<Credit> = this.filterAccess(CreditVoter.READ, this.creditRepository.listAll());
         val transform: (Credit) -> CreditResponse = {this.getResponseObject(it)};
         return credits.map(transform);
     }
@@ -86,6 +91,7 @@ class CreditService : AbstractService() {
      */
     fun getCredit(id: Long): CreditResponse {
         val credit = this.creditRepository.findById(id);
+        this.denyUnlessGranted(CreditVoter.READ, credit);
         return this.getResponseObject(credit);
     }
 
@@ -102,6 +108,7 @@ class CreditService : AbstractService() {
         credit.interestRate = input.interestRate ?: credit.interestRate;
         credit.redemptionRate = input.redemptionRate ?: credit.redemptionRate;
         credit.bank = input.bank ?: credit.bank;
+        this.denyUnlessGranted(CreditVoter.UPDATE, credit);
         this.entityManager.persist(credit);
         this.entityManager.flush();
         this.log.writeLog("Updated credit with ID ${credit.id}");
@@ -131,6 +138,7 @@ class CreditService : AbstractService() {
             credit.autoPayInterval = null;
             credit.nextCreditRate = null;
             credit.autoPayAmount = null;
+            this.denyUnlessGranted(CreditVoter.UPDATE, credit);
             this.entityManager.persist(credit);
             this.entityManager.flush();
             this.log.writeLog("Disabled auto booking for credit with ID ${credit.id}");
@@ -164,6 +172,7 @@ class CreditService : AbstractService() {
             credit.nextCreditRate = AutoBookingUtils.getNextAutoPayIntervalDate(interval, DateUtils.dateToCalendar(startDate));
         }
         credit.autoPayAmount = this.cs.convertBack(amount);
+        this.denyUnlessGranted(CreditRateVoter.UPDATE, credit);
         this.entityManager.persist(credit);
         this.entityManager.flush();
         this.log.writeLog("Configured auto booking (${interval}, ${this.cs.convertBack(amount)}€) for credit with ID ${credit.id}");
@@ -185,6 +194,7 @@ class CreditService : AbstractService() {
     @Transactional
     fun deleteCreditRate(id: Long) {
         val obj = this.creditRateRepository.findById(id);
+        this.denyUnlessGranted(CreditRateVoter.DELETE, obj);
         if (obj != null) {
             obj.credit.rates.remove(obj);
             this.entityManager.persist(obj.credit);

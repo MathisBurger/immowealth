@@ -20,6 +20,9 @@ class UserVoter : VoterInterface {
         if (user == null) {
             return false
         }
+        if (user.roles.contains(UserRoles.ADMIN)) {
+            return true;
+        }
         if (value is User) {
             if (attributeName == CREATE) {
                 return user.roles.contains(UserRoles.ADMIN)

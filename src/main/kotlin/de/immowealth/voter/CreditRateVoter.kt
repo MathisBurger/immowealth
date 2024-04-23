@@ -1,25 +1,25 @@
 package de.immowealth.voter
 
 import de.immowealth.entity.Archived
-import de.immowealth.entity.Tenant
+import de.immowealth.entity.CreditRate
 import de.immowealth.entity.User
 import de.immowealth.entity.UserRoles
+import de.immowealth.service.SecurityService
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
-import jakarta.persistence.EntityManager
 
 /**
- * Votes on tenants
+ * Handles credit rate voting
  */
 @ApplicationScoped
-class TenantVoter : VoterInterface {
+class CreditRateVoter : VoterInterface {
 
     companion object {
-        final val CREATE = "CREATE";
+        val CREATE = "CREATE";
+        val UPDATE = "UPDATE";
+        val DELETE = "DELETE";
+        val READ = "READ";
     }
-
-    @Inject
-    lateinit var entityManager: EntityManager;
 
     override fun <T : Archived> voteOnAttribute(user: User?, attributeName: String, value: T): Boolean {
         if (user == null) {
@@ -28,13 +28,15 @@ class TenantVoter : VoterInterface {
         if (user.roles.contains(UserRoles.ADMIN)) {
             return true;
         }
-        if (attributeName === TenantVoter.CREATE) {
-            return user.roles.contains(UserRoles.ADMIN);
+        if (value is CreditRate) {
+            if (attributeName == CREATE || attributeName == UPDATE || attributeName == DELETE || attributeName == READ) {
+                return value.tenant?.id == user.tenant?.id;
+            }
         }
-        return false;
+        return false
     }
 
     override fun votedType(): String {
-        return Tenant::class.java.toString()
+        return CreditRate::class.java.toString()
     }
 }

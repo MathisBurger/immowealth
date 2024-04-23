@@ -44,10 +44,12 @@ class RealEstateService : AbstractService() {
      */
     @Transactional
     fun createObject(input: RealEstateInput): RealEstateObject {
+        val user = this.securityService.getCurrentUser();
         val credit = Credit();
         credit.bank = input.credit.bank;
         credit.interestRate = input.credit.interestRate;
         credit.redemptionRate = input.credit.redemptionRate;
+        credit.tenant = user?.tenant;
         credit.amount = this.cs.convertBack(input.credit.amount);
         this.entityManager.persist(credit);
 
