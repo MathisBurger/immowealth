@@ -1,5 +1,6 @@
 package de.immowealth.service
 
+import de.immowealth.entity.Archivable
 import de.immowealth.entity.Archived
 import de.immowealth.entity.BaseEntity
 import jakarta.enterprise.context.ApplicationScoped
@@ -42,10 +43,30 @@ abstract class AbstractService {
     /**
      * Denies unless granted
      */
-    fun denyUnlessGranted(attribute: String, value: Archived) {
+    fun denyUnlessGranted(attribute: String, value: Archived? = null) {
         if (!this.securityService.isGranted(attribute, value)) {
             throw Exception("No access");
         }
+    }
+
+    /**
+     * Filters the user access
+     *
+     * @param attribute The attribute that should be checked for
+     * @param value The values that should be checked for
+     */
+    fun filterAccess(attribute: String, value: List<Archived>): List<Archived> {
+        return value.filter { this.securityService.isGranted(attribute, it) }
+    }
+
+    /**
+     * Filters the user access
+     *
+     * @param attribute The attribute that should be checked for
+     * @param value The values that should be checked for
+     */
+    fun filterAccessArchivable(attribute: String, value: List<Archivable>): List<Archivable> {
+        return value.filter { it is Archived && this.securityService.isGranted(attribute, it) }
     }
 
     /**

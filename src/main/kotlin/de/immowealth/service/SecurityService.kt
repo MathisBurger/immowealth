@@ -43,7 +43,17 @@ class SecurityService {
      * @param attribute The attribute that should be voted on
      * @param entity The entity that should be voted on
      */
-    fun isGranted(attribute: String, entity: Archived): Boolean {
+    fun isGranted(attribute: String, entity: Archived? = null): Boolean {
+        if (ctx.userPrincipal === null) {
+            return false;
+        }
+        val user = this.userRepository.findByUserName(ctx.userPrincipal.name).get();
+        if (user.roles.contains(attribute)) {
+            return true;
+        }
+        if (entity == null) {
+            return false;
+        }
         var requiredVoter: VoterInterface? = null;
         for (vt in this.voter) {
             if (vt.votedType() == entity::class.java.toString()) {
@@ -54,10 +64,6 @@ class SecurityService {
         if (requiredVoter == null) {
             return false;
         }
-        if (ctx.userPrincipal === null) {
-            return false;
-        }
-        val user = this.userRepository.findByUserName(ctx.userPrincipal.name).get();
         return requiredVoter.voteOnAttribute(user, attribute, entity);
     }
 
