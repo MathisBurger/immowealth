@@ -47,20 +47,24 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Update mail notifications with favourites
 - [ ] Performance calculations
 
-### v1.5.0
+### v1.5.0 (not scheduled yet)
 - [ ] Full UNIT test coverage (resources)
 - [ ] Immo portal search
 - [ ] Object location watchlist
 - [ ] Add support for measured object prices
 - [ ] Tabs are saved in URI
 
-### Not planned yet
-- [ ] Mail templates to send
+### v1.5.3 (not scheduled yet)
 - [ ] Backend translations
-- [ ] Auto collect market value change data
-- [ ] Add balance sheet calculation
 - [ ] Rent spread suggestions by fixes rules
+
+### v1.6.0 (not scheduled yet)
+- [ ] Mail templates to send
 - [ ] Rentability calculations
+- [ ] Auto collect market value change data
+
+### Not planned yet
+- [ ] Add balance sheet calculation
 - [ ] TAX calculations
 
 ## Local setup
