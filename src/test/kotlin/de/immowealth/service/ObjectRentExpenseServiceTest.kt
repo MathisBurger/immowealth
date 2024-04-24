@@ -83,7 +83,8 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
     @Test
     @Order(4)
     fun testUpdateRentExpense() {
-        this.loginAsUser("admin")
+        this.loginAsUser("admin");
+        throw Exception(objectId.toString())
         val expense = this.objectService.getObject(objectId).realEstate.expenses.get(0);
         this.loginAsUser("expense_tenUser");
         val updated = this.objectRentExpenseService.updateRentExpense(expense.id!!, 300.0, null, null)
