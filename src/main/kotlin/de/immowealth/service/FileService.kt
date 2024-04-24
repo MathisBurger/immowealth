@@ -4,6 +4,7 @@ import de.immowealth.data.input.UploadedResource
 import de.immowealth.entity.UploadedFile
 import de.immowealth.repository.RealEstateRepository
 import de.immowealth.repository.UploadedFileRepository
+import de.immowealth.voter.FileVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -37,6 +38,7 @@ class FileService : AbstractService() {
      */
     fun getFile(id: Long): Response {
         val obj = this.uploadedFileRepository.findById(id);
+        this.denyUnlessGranted(FileVoter.READ, obj);
         var file = File(obj.realFilePath!!);
         return Response.ok(file)
             .header("Content-Disposition", "attachment; filename=\"" + obj.fileName + "\"")
@@ -56,6 +58,8 @@ class FileService : AbstractService() {
         file.fileName = resource.fileName;
         file.fileRoot = resource.fileRoot;
         file.realEstateObject = obj;
+        file.tenant = this.securityService.getCurrentUser()?.tenant;
+        this.denyUnlessGranted(FileVoter.CREATE, file);
         val newPath = this.getNewFilePath(resource.file!!, resource.fileName!!);
         newPath.toFile().createNewFile();
         file.realFilePath = newPath.toFile().absolutePath;
@@ -74,6 +78,7 @@ class FileService : AbstractService() {
     @Transactional
     fun deleteFile(id: Long) {
         val obj = this.uploadedFileRepository.findById(id);
+        this.denyUnlessGranted(FileVoter.DELETE, obj);
         try {
             Files.delete(Path(obj.realFilePath!!));
         } catch (e: IOException) {

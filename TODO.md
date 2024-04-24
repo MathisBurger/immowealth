@@ -8,3 +8,4 @@
 - [ ] Create subtenants with roles
 - [ ] Display tenant in username
 - [ ] User password change
+- [ ] Make fields of services private
