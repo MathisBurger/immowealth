@@ -22,6 +22,7 @@ class ConfigPresetServiceTest : AbstractServiceTest() {
 
     @Test
     fun testGetAllForConfigPresetsWithoutLogin() {
+        this.logout();
         val data = this.configPresetService.getAllConfigPresets();
         assertEquals(0, data.size)
     }
@@ -35,6 +36,7 @@ class ConfigPresetServiceTest : AbstractServiceTest() {
 
     @Test
     fun testCreateWithoutLogin() {
+        this.logout();
         try {
             this.configPresetService.createOrUpdateConfigPreset("/test", "key", "{}");
             fail<String>("Should not be able to create config preset without login")
