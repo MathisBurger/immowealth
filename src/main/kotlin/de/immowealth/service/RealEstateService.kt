@@ -13,6 +13,7 @@ import de.immowealth.entity.enum.MailerSettingAction
 import de.immowealth.repository.HousePriceChangeRepository
 import de.immowealth.repository.RealEstateRepository
 import de.immowealth.util.DateUtils
+import de.immowealth.voter.RealEstateObjectVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -72,6 +73,7 @@ class RealEstateService : AbstractService() {
         obj.notes = input.notes;
         obj.tenant = user?.tenant;
 
+        this.denyUnlessGranted(RealEstateObjectVoter.CREATE, obj)
         this.entityManager.persist(credit);
         val results = this.geocodingApi.getLocations(input.streetAndHouseNr + " " + input.zip + " " + input.city);
         if (results.isNotEmpty()) {
@@ -96,7 +98,7 @@ class RealEstateService : AbstractService() {
      * Gets all objects
      */
     fun getAllObjects(): List<RealEstateObject> {
-        return this.realEstateRepository.listAll().map { this.convertObjectCurrencies(it) }
+        return this.filterAccess(RealEstateObjectVoter.READ, this.realEstateRepository.listAll()).map { this.convertObjectCurrencies(it) }
     }
 
     /**
@@ -107,6 +109,7 @@ class RealEstateService : AbstractService() {
      */
     fun getObject(id: Long, yearsInFuture: Int = 10): ObjectResponse {
         val obj =  this.realEstateRepository.findById(id);
+        this.denyUnlessGranted(RealEstateObjectVoter.READ, obj);
         var creditRateSum = 0.0;
         var cum: MutableList<Double> = mutableListOf();
         for (rate in obj.credit!!.rates) {
@@ -139,6 +142,7 @@ class RealEstateService : AbstractService() {
     @Transactional
     fun updateObject(input: UpdateRealEstateInput): ObjectResponse {
         val obj = this.realEstateRepository.findById(input.id);
+        this.denyUnlessGranted(RealEstateObjectVoter.UPDATE, obj);
         obj.zip = input.zip ?: obj.zip;
         obj.dateBought = input.dateBought ?: obj.dateBought;
         obj.initialValue = this.cs.convertBack(input.initialValue) ?: obj.initialValue;
@@ -179,6 +183,7 @@ class RealEstateService : AbstractService() {
     @Transactional
     fun deleteObject(id: Long) {
         val obj = this.realEstateRepository.findById(id);
+        this.denyUnlessGranted(RealEstateObjectVoter.DELETE, obj);
         this.delete(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted object with ID $id");

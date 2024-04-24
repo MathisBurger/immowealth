@@ -3,6 +3,7 @@ package de.immowealth.service
 import de.immowealth.entity.Archivable
 import de.immowealth.entity.Archived
 import de.immowealth.entity.BaseEntity
+import io.quarkus.security.UnauthorizedException
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
@@ -45,7 +46,7 @@ abstract class AbstractService {
      */
     fun denyUnlessGranted(attribute: String, value: Archived? = null) {
         if (!this.securityService.isGranted(attribute, value)) {
-            throw Exception("No access");
+            throw UnauthorizedException("No access");
         }
     }
 
