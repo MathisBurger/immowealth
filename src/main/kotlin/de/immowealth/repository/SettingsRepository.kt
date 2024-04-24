@@ -19,9 +19,9 @@ class SettingsRepository : AbstractRepository<Setting>() {
      *
      * @return The setting with the key
      */
-    fun getByKey(key: String): Optional<Setting> {
+    /*fun getByKey(key: String): Optional<Setting> {
         return find("key", key).firstResultOptional();
-    }
+    }*/
 
     /**
      * Finds a result by key

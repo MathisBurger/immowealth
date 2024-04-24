@@ -2,6 +2,8 @@ package de.immowealth.service
 
 import de.immowealth.entity.Setting
 import de.immowealth.repository.SettingsRepository
+import de.immowealth.voter.SettingsVoter
+import io.quarkus.security.UnauthorizedException
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -22,7 +24,7 @@ class SettingsService : AbstractService() {
      * @return All settings
      */
     fun getAllSettings(): List<Setting> {
-        return this.settingsRepository.listAll();
+        return this.filterAccess(SettingsVoter.READ, this.settingsRepository.listAll());
     }
 
     /**
@@ -33,7 +35,8 @@ class SettingsService : AbstractService() {
      * @return The setting
      */
     fun getSetting(key: String): Setting {
-        return this.settingsRepository.getByKey(key).get();
+        val user = this.securityService.getCurrentUser() ?: throw UnauthorizedException();
+        return this.settingsRepository.getByKey(key, user)!!;
     }
 
     /**
@@ -46,15 +49,12 @@ class SettingsService : AbstractService() {
      */
     @Transactional
     fun updateSetting(key: String, value: String): Setting {
-        val setting = this.settingsRepository.getByKey(key);
-        if (setting.isEmpty) {
-            throw GraphQLException("Settings does not exist");
-        }
-        var instance = setting.get();
-        instance.value = value;
-        this.entityManager.persist(instance);
+        val user = this.securityService.getCurrentUser() ?: throw UnauthorizedException();
+        val setting = this.settingsRepository.getByKey(key, user) ?: throw GraphQLException("Settings does not exist");
+        setting.value = value;
+        this.entityManager.persist(setting);
         this.entityManager.flush();
-        this.log.writeLog("Updated setting ${setting.get().key} (ID: ${setting.get().id})");
-        return instance;
+        this.log.writeLog("Updated setting ${setting.key} (ID: ${setting.id})");
+        return setting;
     }
 }
