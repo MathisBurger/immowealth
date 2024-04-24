@@ -84,7 +84,9 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
     @Order(4)
     fun testUpdateRentExpense() {
         this.loginAsUser("admin");
-        val expense = this.objectService.getObject(objectId).realEstate.expenses.get(0);
+        val obj = this.objectService.getObject(objectId);
+        assertNotNull(obj);
+        val expense = obj.realEstate.expenses[0];
         this.loginAsUser("expense_tenUser");
         val updated = this.objectRentExpenseService.updateRentExpense(expense.id!!, 300.0, null, null)
         assertEquals(updated.value, 300.0)

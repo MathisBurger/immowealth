@@ -21,6 +21,9 @@ class AdminUserLoader {
     @Inject
     lateinit var entityManager: EntityManager;
 
+    @Inject
+    lateinit var settingsLoader: SettingsLoader
+
     @Startup
     @Transactional
     fun run() {
@@ -31,7 +34,8 @@ class AdminUserLoader {
             admin.password = BcryptUtil.bcryptHash("admin123")
             admin.roles = mutableListOf("ROLE_ADMIN");
             this.entityManager.persist(admin)
-            this.entityManager.flush()
+            this.entityManager.flush();
+            this.settingsLoader.initWithUser(admin);
         }
     }
 }
