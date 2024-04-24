@@ -3,8 +3,8 @@
 ### Usersystem
 
 - [ ] Create users on tenant
-- [ ] UNIT test coverage for all existing services
-- [ ] Voter system role based
+- [x] UNIT test coverage for all existing services
+- [x] Voter system role based
 - [ ] Move users between tenants
 - [ ] Create subtenants with roles
 - [ ] Display tenant in username

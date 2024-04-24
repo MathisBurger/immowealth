@@ -40,7 +40,7 @@ docker-compose up -d
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.4.0
-- [ ] Full UNIT test coverage (services)
+- [x] Full UNIT test coverage (services)
 - [ ] User account system
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
