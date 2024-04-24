@@ -51,7 +51,6 @@ class RealEstateService : AbstractService() {
         credit.redemptionRate = input.credit.redemptionRate;
         credit.tenant = user?.tenant;
         credit.amount = this.cs.convertBack(input.credit.amount);
-        this.entityManager.persist(credit);
 
         val obj = RealEstateObject()
         obj.city = input.city;
@@ -71,7 +70,9 @@ class RealEstateService : AbstractService() {
         obj.kitchen = input.kitchen;
         obj.heatingType = input.heatingType;
         obj.notes = input.notes;
+        obj.tenant = user?.tenant;
 
+        this.entityManager.persist(credit);
         val results = this.geocodingApi.getLocations(input.streetAndHouseNr + " " + input.zip + " " + input.city);
         if (results.isNotEmpty()) {
             obj.positionLat = results.first().lat.toDouble();

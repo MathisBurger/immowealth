@@ -10,6 +10,7 @@ import de.immowealth.exception.ParameterException
 import de.immowealth.repository.ObjectRentExpenseRepository
 import de.immowealth.repository.RealEstateRepository
 import de.immowealth.util.AutoBookingUtils
+import de.immowealth.voter.ObjectRentExpenseVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -42,6 +43,8 @@ class ObjectRentExpenseService : AbstractService() {
         exp.type = type;
         exp.name = name;
         exp.realEstateObject = obj;
+        exp.tenant = this.securityService.getCurrentUser()?.tenant;
+        this.denyUnlessGranted(ObjectRentExpenseVoter.CREATE, exp)
         this.entityManager.persist(exp);
         obj.expenses.add(exp);
         this.entityManager.persist(obj);
@@ -71,6 +74,7 @@ class ObjectRentExpenseService : AbstractService() {
         exp.value = expense ?: exp.value;
         exp.name = name ?: exp.name;
         exp.type = type ?: exp.type;
+        this.denyUnlessGranted(ObjectRentExpenseVoter.UPDATE, exp);
         this.entityManager.persist(exp);
         this.entityManager.flush();
         this.log.writeLog("Updated rent expense with ID ${exp.id}");
@@ -93,6 +97,7 @@ class ObjectRentExpenseService : AbstractService() {
     fun deleteExpense(id: Long) {
         val obj = this.objectRentExpenseRepository.findById(id);
         if (obj != null) {
+            this.denyUnlessGranted(ObjectRentExpenseVoter.DELETE, obj)
             obj.realEstateObject.expenses.remove(obj);
             this.entityManager.persist(obj.realEstateObject);
             this.entityManager.remove(obj);
@@ -116,6 +121,7 @@ class ObjectRentExpenseService : AbstractService() {
     @Transactional
     fun setAutoBookingByExpenses(objectId: Long): RealEstateObject {
         val obj = this.objectRepository.findById(objectId);
+        this.denyUnlessGranted(ObjectRentExpenseVoter.UPDATE, obj)
         var expenseCount: Double = 0.0;
         for (exp in obj.expenses) {
             if (listOf(ObjectRentType.INTEREST_RATE, ObjectRentType.REDEMPTION_RATE).contains(exp.type!!)) {
