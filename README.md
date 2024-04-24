@@ -35,13 +35,12 @@ Execute the docker compose:
 docker-compose up -d
 ```
 
-
 # Roadmap
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.4.0
-- [ ] Full UNIT test coverage
+- [ ] Full UNIT test coverage (services)
 - [ ] User account system
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
@@ -49,6 +48,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Performance calculations
 
 ### v1.5.0
+- [ ] Full UNIT test coverage (resources)
 - [ ] Immo portal search
 - [ ] Object location watchlist
 - [ ] Add support for measured object prices
