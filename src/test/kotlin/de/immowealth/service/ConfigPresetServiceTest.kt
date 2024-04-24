@@ -4,10 +4,8 @@ import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.ws.rs.core.SecurityContext
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.fail
 import org.opentest4j.AssertionFailedError
 
 /**
@@ -39,7 +37,7 @@ class ConfigPresetServiceTest : AbstractServiceTest() {
     fun testCreateWithoutLogin() {
         try {
             this.configPresetService.createOrUpdateConfigPreset("/test", "key", "{}");
-            fail("Should not be able to create config preset without login")
+            fail<String>("Should not be able to create config preset without login")
         } catch (e: UnauthorizedException) {
             assertTrue(true)
         } catch (e: AssertionFailedError) {
