@@ -26,7 +26,7 @@ class UserVoter : VoterInterface {
         if (value is User) {
             if (attributeName == CREATE) {
                 return user.roles.contains(UserRoles.ADMIN)
-                        || (user.tenant?.id === value.tenant?.id && user.roles.contains(UserRoles.TENANT_OWNER));
+                        || (user.tenant?.id === value.tenant?.id && user.roles.contains(UserRoles.TENANT_OWNER) && user.tenant?.id != null);
             }
         }
         return false

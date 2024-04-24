@@ -46,7 +46,7 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         this.tenantService.createTenant("expense_ten1", "expense_tenUser", "123", "a@b.com");
         this.loginAsUser("expense_tenUser")
         this.createObject();
-        val expense = this.objectRentExpenseService.addObjectRentExpenseToObject(objectId ?: -1L, 200.0, ObjectRentType.RESERVE, "expense");
+        val expense = this.objectRentExpenseService.addObjectRentExpenseToObject(objectId, 200.0, ObjectRentType.RESERVE, "expense");
         assertEquals(ObjectRentType.RESERVE, expense.type)
     }
 
@@ -84,7 +84,6 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
     @Order(4)
     fun testUpdateRentExpense() {
         this.loginAsUser("admin");
-        throw Exception(objectId.toString())
         val expense = this.objectService.getObject(objectId).realEstate.expenses.get(0);
         this.loginAsUser("expense_tenUser");
         val updated = this.objectRentExpenseService.updateRentExpense(expense.id!!, 300.0, null, null)

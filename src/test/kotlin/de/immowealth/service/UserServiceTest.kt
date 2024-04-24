@@ -61,7 +61,8 @@ class UserServiceTest : AbstractServiceTest() {
                 "admin3",
                 "123",
                 "test@test.de",
-                mutableListOf(UserRoles.ADMIN)
+                mutableListOf(UserRoles.ADMIN),
+                null
             );
             fail<String>("Failed to create user")
         } catch (e: UnauthorizedException) {
@@ -74,7 +75,6 @@ class UserServiceTest : AbstractServiceTest() {
     @Test
     fun testRegisterUserAsUnknownUser() {
         this.removeAllUsersExceptAdmin(userRepository, entityManager);
-        this.loginAsUser("admin");
         this.loginAsUser("admin2");
         try {
             this.userService.registerUser(

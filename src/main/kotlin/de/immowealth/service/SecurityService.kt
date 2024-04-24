@@ -47,7 +47,11 @@ class SecurityService {
         if (ctx.userPrincipal === null) {
             return false;
         }
-        val user = this.userRepository.findByUserName(ctx.userPrincipal.name).get();
+        val rawUser = this.userRepository.findByUserName(ctx.userPrincipal.name);
+        if (rawUser.isEmpty) {
+            return false;
+        }
+        val user = rawUser.get();
         if (user.roles.contains(attribute)) {
             return true;
         }
