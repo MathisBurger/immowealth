@@ -32,8 +32,9 @@ class TenantServiceTest : AbstractServiceTest() {
 
     @Test
     fun testCreateTenantAsUnknownUser() {
+        this.logout();
         try {
-            this.tenantService.createTenant("ren1", "usr", "pwd", "test@test.de")
+            this.tenantService.createTenant("ren2", "usr2", "pwd", "test@test.de")
             fail<String>("Cannot create tenant without login")
         } catch (e: UnauthorizedException) {
             assertTrue(true)

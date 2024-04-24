@@ -5,6 +5,7 @@ import de.immowealth.entity.UploadedFile
 import de.immowealth.repository.RealEstateRepository
 import de.immowealth.repository.UploadedFileRepository
 import de.immowealth.voter.FileVoter
+import de.immowealth.voter.RealEstateObjectVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -54,6 +55,7 @@ class FileService : AbstractService() {
     @Transactional
     fun uploadFileToObject(resource: UploadedResource) {
         val obj = this.realEstateRepository.findById(resource.objectId?.toLong() ?: -1);
+        this.denyUnlessGranted(RealEstateObjectVoter.READ, obj)
         val file = UploadedFile()
         file.fileName = resource.fileName;
         file.fileRoot = resource.fileRoot;

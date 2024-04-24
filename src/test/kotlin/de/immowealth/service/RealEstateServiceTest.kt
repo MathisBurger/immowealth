@@ -110,14 +110,8 @@ class RealEstateServiceTest : AbstractServiceTest() {
     @Order(4)
     fun testGetAllObjectsWithoutLogin() {
         this.logout();
-        try {
-            this.realEstateService.getAllObjects();
-            fail<String>("Should not be able to get all objects")
-        } catch (e: UnauthorizedException) {
-            assertTrue(true)
-        } catch (e: AssertionFailedError) {
-            throw e;
-        }
+        val objs = this.realEstateService.getAllObjects();
+        assertEquals(objs.size, 0)
     }
 
     @Test

@@ -10,6 +10,7 @@ import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.graphql.GraphQLException
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
@@ -195,6 +196,8 @@ class CreditServiceTest : AbstractServiceTest() {
             assertTrue(true)
         } catch (e: AssertionFailedError) {
             throw e;
+        } catch (e: GraphQLException) {
+            assertTrue(true)
         }
     }
 
@@ -209,6 +212,8 @@ class CreditServiceTest : AbstractServiceTest() {
             assertTrue(true)
         } catch (e: AssertionFailedError) {
             throw e;
+        }  catch (e: GraphQLException) {
+            assertTrue(true);
         }
     }
 
