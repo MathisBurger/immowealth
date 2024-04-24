@@ -1,10 +1,12 @@
 package de.immowealth.service
 
+import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.ws.rs.core.SecurityContext
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.opentest4j.AssertionFailedError
 
 /**
  * Tests the functionality of the tenant service
@@ -33,8 +35,10 @@ class TenantServiceTest : AbstractServiceTest() {
         try {
             this.tenantService.createTenant("ren1", "usr", "pwd", "test@test.de")
             fail<String>("Cannot create tenant without login")
-        } catch (ex: Throwable) {
-            assertTrue(ex is Exception)
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -46,8 +50,10 @@ class TenantServiceTest : AbstractServiceTest() {
             this.loginAsUser("nonAdmin")
             this.tenantService.createTenant("ren1", "usr", "pwd", "test@test.de");
             fail<String>("Cannot create as non admin")
-        } catch (_: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 }

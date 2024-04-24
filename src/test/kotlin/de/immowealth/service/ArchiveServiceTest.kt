@@ -2,6 +2,7 @@ package de.immowealth.service
 
 import de.immowealth.entity.UserRoles
 import de.immowealth.repository.UserRepository
+import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
+import org.opentest4j.AssertionFailedError
 
 /**
  * Tests the archive service
@@ -52,8 +54,10 @@ class ArchiveServiceTest : AbstractServiceTest() {
         try {
             this.archiveService.removeArchival(1L, "test");
             fail("Should not be able to remove archival");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 }

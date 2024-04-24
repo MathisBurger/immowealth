@@ -2,12 +2,14 @@ package de.immowealth.service
 
 import de.immowealth.entity.UserRoles
 import de.immowealth.repository.UserRepository
+import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.ws.rs.core.SecurityContext
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.opentest4j.AssertionFailedError
 
 /**
  * Tests the functionality of the user service
@@ -62,8 +64,10 @@ class UserServiceTest : AbstractServiceTest() {
                 mutableListOf(UserRoles.ADMIN)
             );
             fail<String>("Failed to create user")
-        } catch (_: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -80,8 +84,10 @@ class UserServiceTest : AbstractServiceTest() {
                 mutableListOf(UserRoles.ADMIN)
             );
             fail<String>("Failed to create user")
-        } catch (_: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 

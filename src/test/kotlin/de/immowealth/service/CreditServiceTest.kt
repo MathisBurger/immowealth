@@ -5,6 +5,7 @@ import de.immowealth.data.input.RealEstateInput
 import de.immowealth.data.input.UpdateCreditInput
 import de.immowealth.entity.enum.AutoPayInterval
 import de.immowealth.repository.CreditRepository
+import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
+import org.opentest4j.AssertionFailedError
 import java.util.*
 
 /**
@@ -81,8 +83,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.getCredit(creditId);
             fail<String>("Should have thrown an exception")
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -93,8 +97,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.getCredit(creditId);
             fail<String>("Should have thrown an exception")
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -113,8 +119,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.updateCredit(UpdateCreditInput(creditId, 1L, null, null, null))
             fail<String>("Should have thrown an exception");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -125,8 +133,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.updateCredit(UpdateCreditInput(creditId, 1L, null, null, null))
             fail<String>("Should have thrown an exception");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -145,8 +155,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.addCreditRate(creditId, 300.0, Date(), "Note");
             fail<String>("Should have thrown an exception");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -157,8 +169,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.addCreditRate(creditId, 300.0, Date(), "Note");
             fail<String>("Should have thrown an exception");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -177,8 +191,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.configureAutoBooking(creditId, true, AutoPayInterval.MONTHLY, 300.0, null);
             fail<String>("Should have thrown an exception");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -189,8 +205,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.configureAutoBooking(creditId, true, AutoPayInterval.MONTHLY, 300.0, null);
             fail<String>("Should have thrown an exception");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -202,8 +220,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.deleteCreditRate(credit.rates.get(0).id ?: -1L)
             fail<String>("Should have thrown an exception");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -215,8 +235,10 @@ class CreditServiceTest : AbstractServiceTest() {
         try {
             this.creditService.deleteCreditRate(credit.rates.get(0).id ?: -1L)
             fail<String>("Should have thrown an exception");
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 

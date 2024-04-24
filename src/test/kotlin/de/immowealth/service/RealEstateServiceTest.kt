@@ -113,8 +113,10 @@ class RealEstateServiceTest : AbstractServiceTest() {
         try {
             this.realEstateService.getAllObjects();
             fail<String>("Should not be able to get all objects")
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 

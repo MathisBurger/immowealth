@@ -1,5 +1,6 @@
 package de.immowealth.service
 
+import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.ws.rs.core.SecurityContext
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
+import org.opentest4j.AssertionFailedError
 
 /**
  * Tests the config service
@@ -38,8 +40,10 @@ class ConfigPresetServiceTest : AbstractServiceTest() {
         try {
             this.configPresetService.createOrUpdateConfigPreset("/test", "key", "{}");
             fail("Should not be able to create config preset without login")
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 

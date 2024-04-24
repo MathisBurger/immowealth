@@ -3,12 +3,14 @@ package de.immowealth.service
 import de.immowealth.data.input.CreditInput
 import de.immowealth.data.input.RealEstateInput
 import de.immowealth.data.input.UploadedResource
+import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.core.SecurityContext
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
+import org.opentest4j.AssertionFailedError
 import java.io.File
 import java.util.*
 
@@ -66,8 +68,10 @@ class FileServiceTest : AbstractServiceTest() {
         try {
             this.fileService.uploadFileToObject(resource);
             fail<String>("Expected file not to be uploaded")
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -83,8 +87,10 @@ class FileServiceTest : AbstractServiceTest() {
         try {
             this.fileService.uploadFileToObject(resource);
             fail<String>("Expected file not to be uploaded")
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -108,8 +114,10 @@ class FileServiceTest : AbstractServiceTest() {
         try {
             this.fileService.getFile(wantedID ?: -1L);
             fail<String>("Expected file not to be uploaded")
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -123,8 +131,10 @@ class FileServiceTest : AbstractServiceTest() {
         try {
             this.fileService.getFile(wantedID ?: -1L);
             fail<String>("Expected file not to be uploaded")
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -138,8 +148,10 @@ class FileServiceTest : AbstractServiceTest() {
         try {
             this.fileService.deleteFile(wantedID ?: -1L);
             fail<String>("Expected file not to be deleted")
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -153,8 +165,10 @@ class FileServiceTest : AbstractServiceTest() {
         try {
             this.fileService.deleteFile(wantedID ?: -1L);
             fail<String>("Expected file not to be deleted")
-        } catch (e: Throwable) {
-            assertTrue(true);
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 

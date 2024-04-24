@@ -3,6 +3,7 @@ package de.immowealth.service
 import de.immowealth.data.input.CreditInput
 import de.immowealth.data.input.RealEstateInput
 import de.immowealth.entity.enum.ObjectRentType
+import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
+import org.opentest4j.AssertionFailedError
 import java.util.*
 
 /**
@@ -57,8 +59,10 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         try {
             this.objectRentExpenseService.addObjectRentExpenseToObject(objectId ?: -1L, 200.0, ObjectRentType.RESERVE, "expense");
             fail<String>("Should not be able to add rent expense");
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -69,8 +73,10 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         try {
             this.objectRentExpenseService.addObjectRentExpenseToObject(objectId ?: -1L, 200.0, ObjectRentType.RESERVE, "expense");
             fail<String>("Should not be able to add rent expense");
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -93,8 +99,10 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         try {
             this.objectRentExpenseService.updateRentExpense(expense.id!!, 300.0, null, null)
             fail<String>("Should not be able to update rent expense");
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -107,8 +115,10 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         try {
             this.objectRentExpenseService.updateRentExpense(expense.id!!, 300.0, null, null)
             fail<String>("Should not be able to update rent expense");
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -121,8 +131,10 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         try {
             this.objectRentExpenseService.deleteExpense(expense.id!!)
             fail<String>("Should not be able to update rent expense");
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -135,8 +147,10 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         try {
             this.objectRentExpenseService.deleteExpense(expense.id!!)
             fail<String>("Should not be able to update rent expense");
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -155,8 +169,10 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         try {
             this.objectRentExpenseService.setAutoBookingByExpenses(objectId)
             fail<String>("Should not be able to set auto booking by expenses");
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
@@ -167,8 +183,10 @@ class ObjectRentExpenseServiceTest : AbstractServiceTest() {
         try {
             this.objectRentExpenseService.setAutoBookingByExpenses(objectId)
             fail<String>("Should not be able to set auto booking by expenses");
-        } catch (e: Throwable) {
+        } catch (e: UnauthorizedException) {
             assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
         }
     }
 
