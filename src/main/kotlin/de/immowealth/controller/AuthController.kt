@@ -32,8 +32,11 @@ class AuthController {
     @GET
     @Path("/checkAuth")
     @PermitAll
-    fun getAuthorized(@Context securityContext: SecurityContext): String {
-        return securityContext.userPrincipal.name;
+    fun getAuthorized(@Context securityContext: SecurityContext): Response {
+        if (securityContext.userPrincipal !== null) {
+            return Response.ok().build();
+        }
+        return Response.status(401).build()
     }
 
     /**
