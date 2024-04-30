@@ -14,6 +14,9 @@ class UserVoter : VoterInterface {
 
     companion object {
         final val CREATE = "CREATE"
+        final val UPDATE = "UPDATE"
+        final val DELETE = "DELETE"
+        final val READ = "READ"
     }
 
     override fun <T : Archived> voteOnAttribute(user: User?, attributeName: String, value: T): Boolean {
@@ -26,7 +29,10 @@ class UserVoter : VoterInterface {
         if (value is User) {
             if (attributeName == CREATE) {
                 return user.roles.contains(UserRoles.ADMIN)
-                        || (user.tenant?.id === value.tenant?.id && user.roles.contains(UserRoles.TENANT_OWNER) && user.tenant?.id != null);
+                        || (user.tenant?.id === value.tenant?.id && user.roles.contains(UserRoles.TENANT_OWNER) && user.tenant?.id != null && !value.roles.contains(UserRoles.ADMIN));
+            }
+            if (attributeName == READ) {
+                return user.roles.contains(UserRoles.TENANT_OWNER) && user.tenant?.id === value.tenant?.id;
             }
         }
         return false

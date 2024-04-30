@@ -72,4 +72,11 @@ class UserService : AbstractService() {
     fun getCurrentUser(): User? {
         return this.securityService.getCurrentUser();
     }
+
+    /**
+     * Gets all users the user has access to
+     */
+    fun getAllUsers(): List<User> {
+        return this.filterAccess(UserVoter.READ, this.userRepository.listAll());
+    }
 }
