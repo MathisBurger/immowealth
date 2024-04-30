@@ -1,8 +1,11 @@
 import {ReactNode} from "react";
 import useSnackbar from "@/hooks/useSnackbar";
-import {ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache} from "@apollo/client";
+import {ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache, ServerError} from "@apollo/client";
 import {onError} from "@apollo/client/link/error";
 import {useCookies} from "react-cookie";
+import {NetworkError} from "@apollo/client/errors";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 interface ApolloBuilderProps {
     children: ReactNode;
@@ -17,6 +20,7 @@ const ApolloBuilder = ({children}: ApolloBuilderProps) => {
 
     const {error} = useSnackbar();
     const [cookies] = useCookies(['jwt']);
+    const router = useRouter();
 
     const createHttpLink = () => new HttpLink({
         uri: process.env.NODE_ENV === 'production' ? '/graphql/' : 'http://localhost:8080/graphql/',
@@ -36,6 +40,9 @@ const ApolloBuilder = ({children}: ApolloBuilderProps) => {
     });
 
     const globalErrorHandler = () => onError((err) => {
+        if ((err?.networkError as ServerError).statusCode === 401) {
+            router.push("/login")
+        }
         (err.graphQLErrors ?? []).map((e) => e.message).forEach((e) => error(e));
     });
 

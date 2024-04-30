@@ -16,6 +16,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import routes from "@/routeConfig";
 import {useRouter} from "next/navigation";
 import {useTranslation} from "next-export-i18n";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 /**
  * The sidebar
@@ -26,6 +27,12 @@ const Sidebar = () => {
 
     const router = useRouter();
     const {t} = useTranslation();
+    const currentUser = useCurrentUser();
+
+    const logout = () => {
+        document.cookie = "";
+        router.push("/login");
+    }
 
     return (
         <Sheet
@@ -112,20 +119,22 @@ const Sidebar = () => {
                 </List>
             </Box>
             <Divider />
-            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                <Avatar
-                    variant="outlined"
-                    size="sm"
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                />
-                <Box sx={{ minWidth: 0, flex: 1 }}>
-                    <Typography level="title-sm">Investor</Typography>
-                    <Typography level="body-xs">test@account.com</Typography>
+            {currentUser && (
+                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                    <Avatar
+                        variant="outlined"
+                        size="sm"
+                        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+                    />
+                    <Box sx={{ minWidth: 0, flex: 1 }}>
+                        <Typography level="title-sm">{currentUser.username}</Typography>
+                        <Typography level="body-xs">{currentUser.email}</Typography>
+                    </Box>
+                    <IconButton size="sm" variant="plain" color="neutral" onClick={logout}>
+                        <LogoutRoundedIcon />
+                    </IconButton>
                 </Box>
-                <IconButton size="sm" variant="plain" color="neutral">
-                    <LogoutRoundedIcon />
-                </IconButton>
-            </Box>
+            )}
         </Sheet>
     );
 }

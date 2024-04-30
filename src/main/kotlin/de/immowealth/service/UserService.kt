@@ -65,4 +65,11 @@ class UserService : AbstractService() {
         this.settingsLoader.initWithUser(user);
         return user;
     }
+
+    /**
+     * Gets the data of the current logged-in user
+     */
+    fun getCurrentUser(): User? {
+        return this.securityService.getCurrentUser();
+    }
 }

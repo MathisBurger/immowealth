@@ -12,42 +12,50 @@ const routes: RouteConfigType[] = [
     {
         name: 'dashboard',
         path: '/dashboard',
-        icon: <DashboardIcon />
+        icon: <DashboardIcon />,
+        authorized: true
     },
     {
         name: 'objects',
         path: '/objects',
-        icon: <ApartmentIcon />
+        icon: <ApartmentIcon />,
+        authorized: true
     },
     {
         name: 'credits',
         path: '/credits',
-        icon: <AttachMoneyIcon />
+        icon: <AttachMoneyIcon />,
+        authorized: true
     },
     {
         name: 'housingPrices',
         path: '/housingPrices',
-        icon: <ShowChartIcon />
+        icon: <ShowChartIcon />,
+        authorized: true
     },
     {
         name: 'map',
         path: '/map',
-        icon: <MapIcon />
+        icon: <MapIcon />,
+        authorized: true
     },
     {
         name: 'activityLog',
         path: '/activityLog',
-        icon: <ChangeHistoryIcon />
+        icon: <ChangeHistoryIcon />,
+        authorized: true
     },
     {
       name: 'archived',
       path: '/archived',
-      icon: <ArchiveIcon />
+      icon: <ArchiveIcon />,
+        authorized: true
     },
     {
         name: 'settings',
         path: '/settings',
-        icon: <SettingsRoundedIcon />
+        icon: <SettingsRoundedIcon />,
+        authorized: true
     },
 ];
 

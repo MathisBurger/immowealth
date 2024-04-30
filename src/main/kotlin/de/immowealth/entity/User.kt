@@ -1,5 +1,7 @@
 package de.immowealth.entity
 
+import de.immowealth.graphql.PasswordAdapter
+import io.smallrye.graphql.api.AdaptWith
 import jakarta.persistence.*
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
@@ -19,6 +21,7 @@ class User : BaseEntity(), Archivable {
     /**
      * The password of the user
      */
+    @AdaptWith(PasswordAdapter::class)
     var password: String = "";
 
     /**
