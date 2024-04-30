@@ -1,11 +1,11 @@
 package de.immowealth.service
 
 import de.immowealth.entity.User
-import de.immowealth.mock.MockSecurityContext
+import de.immowealth.mock.MockWebToken
 import de.immowealth.repository.UserRepository
 import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
-import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.jwt.JsonWebToken
 
 /**
  * Abstract test case utils
@@ -15,15 +15,15 @@ abstract class AbstractServiceTest {
     /**
      * The user security context
      */
-    abstract var securityContext: SecurityContext;
+    abstract var securityContext: JsonWebToken;
 
 
     /**
      * Logs in a user by user
      */
     fun loginAsUser(user: User) {
-        if (securityContext is MockSecurityContext) {
-            (this.securityContext as MockSecurityContext).principalName = user.username;
+        if (securityContext is MockWebToken) {
+            (this.securityContext as MockWebToken).internalName = user.username;
         }
     }
 
@@ -31,8 +31,8 @@ abstract class AbstractServiceTest {
      * Logs in a user by username
      */
     fun loginAsUser(username: String) {
-        if (securityContext is MockSecurityContext) {
-            (this.securityContext as MockSecurityContext).principalName = username;
+        if (securityContext is MockWebToken) {
+            (this.securityContext as MockWebToken).internalName = username;
         }
     }
 
@@ -40,8 +40,8 @@ abstract class AbstractServiceTest {
      * Logs out the user
      */
     fun logout() {
-        if (securityContext is MockSecurityContext) {
-            (this.securityContext as MockSecurityContext).principalName = null;
+        if (securityContext is MockWebToken) {
+            (this.securityContext as MockWebToken).internalName = null;
         }
     }
 

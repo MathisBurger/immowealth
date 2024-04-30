@@ -7,6 +7,7 @@ import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.jwt.JsonWebToken
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -20,7 +21,7 @@ import org.opentest4j.AssertionFailedError
 class ArchiveServiceTest : AbstractServiceTest() {
 
     @Inject
-    override lateinit var securityContext: SecurityContext;
+    override lateinit var securityContext: JsonWebToken;
 
     @Inject
     lateinit var archiveService: ArchiveService;

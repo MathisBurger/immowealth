@@ -11,6 +11,7 @@ import jakarta.inject.Inject
 import jakarta.transaction.Transactional
 import jakarta.ws.rs.core.SecurityContext
 import org.eclipse.microprofile.graphql.GraphQLException
+import org.eclipse.microprofile.jwt.JsonWebToken
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
@@ -31,7 +32,7 @@ class CreditServiceTest : AbstractServiceTest() {
     }
 
     @Inject
-    override lateinit var securityContext: SecurityContext;
+    override lateinit var securityContext: JsonWebToken;
 
     @Inject
     lateinit var securityService: SecurityService;

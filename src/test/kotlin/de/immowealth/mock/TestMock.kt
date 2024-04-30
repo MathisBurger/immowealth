@@ -16,6 +16,6 @@ class TestMock {
 
     @Test
     fun testInjection() {
-        assert(this.securityContext is MockSecurityContext);
+        assert(this.securityContext is MockWebToken);
     }
 }

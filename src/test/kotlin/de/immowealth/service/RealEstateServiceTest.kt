@@ -9,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.ws.rs.NotAuthorizedException
 import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.jwt.JsonWebToken
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
@@ -25,7 +26,7 @@ import java.util.*
 class RealEstateServiceTest : AbstractServiceTest() {
 
     @Inject
-    override lateinit var securityContext: SecurityContext;
+    override lateinit var securityContext: JsonWebToken;
 
     @Inject
     lateinit var realEstateService: RealEstateService;

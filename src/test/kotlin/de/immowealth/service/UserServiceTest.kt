@@ -7,6 +7,7 @@ import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.jwt.JsonWebToken
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.opentest4j.AssertionFailedError
@@ -30,7 +31,7 @@ class UserServiceTest : AbstractServiceTest() {
     lateinit var tenantService: TenantService;
 
     @Inject
-    override lateinit var securityContext: SecurityContext;
+    override lateinit var securityContext: JsonWebToken;
 
     @Test
     fun testRegisterUserAsAdmin() {

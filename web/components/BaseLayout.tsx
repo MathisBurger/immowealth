@@ -1,12 +1,12 @@
 'use client';
-import {Box, CssBaseline, CssVarsProvider} from "@mui/joy";
+import {Box} from "@mui/joy";
 import Sidebar from "@/components/Sidebar";
 import PathDisplay from "@/components/PathDisplay";
 import {ReactNode, useEffect} from "react";
 import NoSSR from "@/components/NoSSR";
-import useSettings, { SettingsContext } from "@/hooks/useSettings";
-import {useTranslation} from "next-export-i18n";
+import  { SettingsContext } from "@/hooks/useSettings";
 import {SettingDataFragment, useGetAllSettingsQuery} from "@/generated/graphql";
+import {usePathname} from "next/navigation";
 
 interface BaseLayoutProps {
     children: ReactNode;
@@ -19,10 +19,11 @@ interface BaseLayoutProps {
  */
 const BaseLayout = ({children}: BaseLayoutProps) => {
     const {data, loading} = useGetAllSettingsQuery();
+    const pathname = usePathname();
 
     useEffect(() => {
         if (data?.allSettings) {
-            let lang = (data?.allSettings ?? []).filter((s) => s?.key === "language")[0]?.value!;
+            let lang = (data?.allSettings ?? []).filter((s) => s?.key === "language")[0]?.value ?? "en";
             window.localStorage.setItem("next-export-i18n-lang", lang.toLocaleLowerCase());
             const event = new Event("localStorageLangChange");
             document.dispatchEvent(event);
@@ -33,7 +34,9 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
         <NoSSR>
             <SettingsContext.Provider value={(data?.allSettings ?? []) as SettingDataFragment[]}>
                 <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
-                    <Sidebar />
+                    {!pathname.includes("login") && (
+                        <Sidebar />
+                    )}
                     <Box
                         component="main"
                         className="MainContent"
@@ -53,7 +56,9 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
                             gap: 1,
                         }}
                     >
-                        <PathDisplay />
+                        {!pathname.includes("login") && (
+                            <PathDisplay />
+                        )}
                         {children}
                     </Box>
                 </Box>

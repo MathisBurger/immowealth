@@ -51,6 +51,10 @@ class SettingsLoader {
                 SettingOption("EN", "English", SettingOptionPrefix.enFlag, "lang.en")
             );
             newLang.value = "EN";
+            for (option in newLang.options) {
+                option.setting = newLang;
+                this.entityManager.persist(option);
+            }
             this.entityManager.persist(newLang);
             this.entityManager.flush();
         }
@@ -79,6 +83,10 @@ class SettingsLoader {
             );
             newCurrency.value = "EUR";
             this.entityManager.persist(newCurrency);
+            for (option in newCurrency.options) {
+                option.setting = newCurrency;
+                this.entityManager.persist(option);
+            }
             this.entityManager.flush();
         }
 
@@ -104,6 +112,10 @@ class SettingsLoader {
                 SettingOption(MailerSettingAction.ALL.name, "All", null, "notification.mailer.all")
             );
             newMailerNotification.value = "NONE";
+            for (option in newMailerNotification.options) {
+                option.setting = newMailerNotification;
+                this.entityManager.persist(option);
+            }
             this.entityManager.persist(newMailerNotification);
             this.entityManager.flush();
         }

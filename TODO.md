@@ -10,3 +10,4 @@
 - [ ] Display tenant in username
 - [ ] User password change
 - [ ] Make fields of services private
+- [ ] Handle auth stuff for prod env (Cookie settings, etc.)

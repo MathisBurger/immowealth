@@ -5,6 +5,7 @@ import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.jwt.JsonWebToken
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
@@ -20,7 +21,7 @@ import org.opentest4j.AssertionFailedError
 class HousePriceChangeServiceTest : AbstractServiceTest() {
 
     @Inject
-    override lateinit var securityContext: SecurityContext
+    override lateinit var securityContext: JsonWebToken
 
     @Inject
     lateinit var housePriceChangeService: HousePriceChangeService;

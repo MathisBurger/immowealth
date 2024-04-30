@@ -2,6 +2,7 @@ import {ReactNode} from "react";
 import useSnackbar from "@/hooks/useSnackbar";
 import {ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache} from "@apollo/client";
 import {onError} from "@apollo/client/link/error";
+import {useCookies} from "react-cookie";
 
 interface ApolloBuilderProps {
     children: ReactNode;
@@ -15,8 +16,14 @@ interface ApolloBuilderProps {
 const ApolloBuilder = ({children}: ApolloBuilderProps) => {
 
     const {error} = useSnackbar();
+    const [cookies] = useCookies(['jwt']);
 
-    const createHttpLink = () => new HttpLink({uri: process.env.NODE_ENV === 'production' ? '/graphql/' : 'http://localhost:8080/graphql/'});
+    const createHttpLink = () => new HttpLink({
+        uri: process.env.NODE_ENV === 'production' ? '/graphql/' : 'http://localhost:8080/graphql/',
+        headers: {
+            authorization: `Bearer ${cookies.jwt ?? "132"}`
+        }
+    });
 
     const typenameFilter = () => new ApolloLink((operation, forward) => {
         if (operation.variables) {

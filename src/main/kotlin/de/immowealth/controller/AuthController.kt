@@ -47,11 +47,20 @@ class AuthController {
     fun login(body: LoginRequest): Response {
         try {
             val res = this.securityService.login(body.username, body.password);
-            val cookie = Cookie.Builder("jwt").value(res).path("/").build();
-            val now = Calendar.getInstance();
-            now.add(Calendar.HOUR, 1);
-            val newCookie = NewCookie.Builder(cookie).expiry(now.time).build();
-            return Response.ok().cookie(newCookie).build();
+            val cookie = Cookie.Builder("jwt")
+                .value(res)
+                .path("/")
+                .build();
+            val newCookie = NewCookie.Builder(cookie)
+                .maxAge(3600)
+                .httpOnly(false)
+                .secure(true)
+                .sameSite(NewCookie.SameSite.STRICT)
+                .build();
+            return Response
+                .ok()
+                .cookie(newCookie)
+                .build();
         } catch (e: NotAuthorizedException) {
             return Response.status(401).entity(e.message).build();
         }

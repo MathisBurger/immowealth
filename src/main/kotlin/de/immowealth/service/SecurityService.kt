@@ -11,7 +11,9 @@ import jakarta.enterprise.inject.Instance
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
 import jakarta.ws.rs.NotAuthorizedException
+import jakarta.ws.rs.core.Context
 import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.jwt.JsonWebToken
 import org.wildfly.security.password.Password
 import org.wildfly.security.password.PasswordFactory
 import org.wildfly.security.password.WildFlyElytronPasswordProvider
@@ -32,7 +34,7 @@ class SecurityService {
     lateinit var voter: Instance<VoterInterface>
 
     @Inject
-    lateinit var ctx: SecurityContext;
+    lateinit var ctx: JsonWebToken;
 
     @Inject
     lateinit var entityManager: EntityManager;
@@ -44,10 +46,10 @@ class SecurityService {
      * @param entity The entity that should be voted on
      */
     fun isGranted(attribute: String, entity: Archived? = null): Boolean {
-        if (ctx.userPrincipal === null) {
+        if (ctx.name === null) {
             return false;
         }
-        val rawUser = this.userRepository.findByUserName(ctx.userPrincipal.name);
+        val rawUser = this.userRepository.findByIdOptional(ctx.name.toLong());
         if (rawUser.isEmpty) {
             return false;
         }
@@ -75,10 +77,10 @@ class SecurityService {
      * Gets the current user that is logged in
      */
     fun getCurrentUser(): User? {
-        if (this.ctx.userPrincipal == null) {
+        if (this.ctx.name == null) {
             return null;
         }
-        val user =  this.userRepository.findByUserName(ctx.userPrincipal.name);
+        val user =  this.userRepository.findByIdOptional(ctx.name.toLong());
         if (user.isEmpty) {
             return null;
         }

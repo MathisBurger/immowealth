@@ -5,7 +5,9 @@ quarkus:
   http:
     cors:
       ~: true
-      origins: /.*/
+      origins: http://localhost:3000
+      exposed-headers: Set-Cookie
+      access-control-allow-credentials: true
   datasource:
     db-kind: postgresql
     username: postgres
