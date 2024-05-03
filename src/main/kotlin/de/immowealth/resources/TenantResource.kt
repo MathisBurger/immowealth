@@ -33,8 +33,6 @@ class TenantResource {
         return this.tenantService.getTenant(id);
     }
 
-    // TODO: Test implementation for tenant and user (get, create actions)
-
     /**
      * Creates a new tenant
      */

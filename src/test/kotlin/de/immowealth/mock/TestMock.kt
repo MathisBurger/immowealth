@@ -3,6 +3,7 @@ package de.immowealth.mock
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.jwt.JsonWebToken
 import org.junit.jupiter.api.Test
 
 /**
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Test
 class TestMock {
 
     @Inject
-    lateinit var securityContext: SecurityContext;
+    lateinit var securityContext: JsonWebToken;
 
     @Test
     fun testInjection() {

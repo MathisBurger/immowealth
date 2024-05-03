@@ -21,8 +21,8 @@ class MockWebToken : JsonWebToken {
         return mutableSetOf("")
     }
 
-    override fun <T : Any?> getClaim(claimName: String?): T {
-        return null as T
+    override fun <T : Any?> getClaim(claimName: String?): T? {
+        return null
     }
 
 }
