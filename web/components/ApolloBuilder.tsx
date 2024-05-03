@@ -43,7 +43,10 @@ const ApolloBuilder = ({children}: ApolloBuilderProps) => {
         if ((err?.networkError as ServerError).statusCode === 401) {
             router.push("/login")
         }
-        (err.graphQLErrors ?? []).map((e) => e.message).forEach((e) => error(e));
+        // @ts-ignore
+        if (err.graphQLErrors !== "") {
+            (err.graphQLErrors ?? []).map((e) => e.message).forEach((e) => error(e));
+        }
     });
 
     const client = new ApolloClient({

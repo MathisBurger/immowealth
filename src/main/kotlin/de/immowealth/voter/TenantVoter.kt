@@ -1,9 +1,6 @@
 package de.immowealth.voter
 
-import de.immowealth.entity.Archived
-import de.immowealth.entity.Tenant
-import de.immowealth.entity.User
-import de.immowealth.entity.UserRoles
+import de.immowealth.entity.*
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
@@ -16,6 +13,7 @@ class TenantVoter : VoterInterface {
 
     companion object {
         final val CREATE = "CREATE";
+        val READ = "READ"
     }
 
     @Inject
@@ -30,6 +28,9 @@ class TenantVoter : VoterInterface {
         }
         if (attributeName === TenantVoter.CREATE) {
             return user.roles.contains(UserRoles.ADMIN);
+        }
+        if (attributeName === READ && value is User) {
+            return user.tenant?.id === value.tenant?.id;
         }
         return false;
     }
