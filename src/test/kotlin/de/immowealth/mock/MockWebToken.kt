@@ -1,6 +1,7 @@
 package de.immowealth.mock
 
 import io.quarkus.test.Mock
+import jakarta.annotation.Priority
 import jakarta.enterprise.context.ApplicationScoped
 import org.eclipse.microprofile.jwt.JsonWebToken
 
@@ -9,6 +10,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken
  */
 @Mock
 @ApplicationScoped
+@Priority(100)
 class MockWebToken : JsonWebToken {
 
     var internalName: String? = null;
