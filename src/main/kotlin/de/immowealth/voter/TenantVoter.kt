@@ -29,8 +29,8 @@ class TenantVoter : VoterInterface {
         if (attributeName === TenantVoter.CREATE) {
             return user.roles.contains(UserRoles.ADMIN);
         }
-        if (attributeName === READ && value is User) {
-            return user.tenant?.id === value.tenant?.id;
+        if (attributeName === READ && value is Tenant) {
+            return user.tenant?.id === value.id;
         }
         return false;
     }

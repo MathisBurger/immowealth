@@ -87,6 +87,7 @@ class TenantServiceTest : AbstractServiceTest() {
     fun testGetAllTenantsAsOwner() {
         this.loginAsUser("usr");
         val tenants = this.tenantService.getAllTenants();
+        println(tenants);
         assertSame(1, tenants.size)
     }
 
