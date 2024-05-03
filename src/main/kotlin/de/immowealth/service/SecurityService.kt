@@ -86,11 +86,16 @@ class SecurityService {
         if (this.ctx.name == null) {
             return null;
         }
-        val user =  this.userRepository.findByIdOptional(ctx.name.toLong());
-        if (user.isEmpty) {
+        var rawUser: Optional<User> = Optional.empty();
+        try {
+            rawUser = this.userRepository.findByIdOptional(ctx.name.toLong())
+        } catch (e: NumberFormatException) {
+            rawUser = this.userRepository.findByUserName(ctx.name);
+        }
+        if (rawUser.isEmpty) {
             return null;
         }
-        return user.get();
+        return rawUser.get();
     }
 
 
