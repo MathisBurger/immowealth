@@ -19,6 +19,7 @@ import org.wildfly.security.password.PasswordFactory
 import org.wildfly.security.password.WildFlyElytronPasswordProvider
 import org.wildfly.security.password.interfaces.BCryptPassword
 import org.wildfly.security.password.util.ModularCrypt
+import java.util.*
 
 
 /**
@@ -49,7 +50,12 @@ class SecurityService {
         if (ctx.name === null) {
             return false;
         }
-        val rawUser = this.userRepository.findByIdOptional(ctx.name.toLong());
+        var rawUser: Optional<User> = Optional.empty();
+        try {
+            rawUser = this.userRepository.findByIdOptional(ctx.name.toLong())
+        } catch (e: NumberFormatException) {
+            rawUser = this.userRepository.findByUserName(ctx.name);
+        }
         if (rawUser.isEmpty) {
             return false;
         }
