@@ -41,11 +41,14 @@
     "map": "Map",
     "settings": "Settings",
     "activityLog": "Activity log",
-    "archived": "Archive"
+    "archived": "Archive",
+    "tenants": "Tenants",
+    "tenant": "Tenant"
   },
   "common": {
     "credit": "Credit",
     "credits": "Credits",
+    "name": "Name",
     "sum": "Sum",
     "creditRateSum": "Paid off",
     "interestRate": "Interest rate",
@@ -82,7 +85,8 @@
     "add-folder": "Add folder",
     "value": " Value",
     "entityName": "Entity",
-    "unarchive": "Unarchive"
+    "unarchive": "Unarchive",
+    "users": "Users"
   },
   "credit": {
     "tab": {

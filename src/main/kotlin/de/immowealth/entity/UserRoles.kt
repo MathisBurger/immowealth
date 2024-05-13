@@ -15,5 +15,10 @@ class UserRoles {
          * Tenant owner
          */
         final val TENANT_OWNER = "ROLE_TENANT_OWNER";
+
+        /**
+         * Tenant assigned
+         */
+        final val TENANT_ASSIGNED = "ROLE_TENANT_ASSIGNED"
     }
 }

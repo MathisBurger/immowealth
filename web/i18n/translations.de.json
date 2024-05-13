@@ -41,11 +41,14 @@
     "map": "Karte",
     "settings": "Einstellungen",
     "activityLog": "Aktivitäten",
-    "archived": "Archiv"
+    "archived": "Archiv",
+    "tenants": "Abteilungen",
+    "tenant": "Abteilung"
   },
   "common": {
     "credit": "Kredit",
     "credits": "Kredite",
+    "name": "Name",
     "sum": "Summe",
     "creditRateSum": "Getilgt",
     "interestRate": "Zins",
@@ -82,7 +85,8 @@
     "add-folder": "Ordner erstellen",
     "value": "Wert",
     "entityName": "Entität",
-    "unarchive": "Entarchivieren"
+    "unarchive": "Entarchivieren",
+    "users": "Nutzer"
   },
   "credit": {
     "tab": {

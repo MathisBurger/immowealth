@@ -17,6 +17,9 @@ import routes from "@/routeConfig";
 import {useRouter} from "next/navigation";
 import {useTranslation} from "next-export-i18n";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import {useMemo} from "react";
+import {RouteConfigType} from "@/typings/routeConfig";
+import {isUniqueArray} from "@/utilts/arrayUtils";
 
 /**
  * The sidebar
@@ -28,6 +31,12 @@ const Sidebar = () => {
     const router = useRouter();
     const {t} = useTranslation();
     const currentUser = useCurrentUser();
+
+    const filteredRoutes = useMemo<RouteConfigType[]>(
+        () => routes.filter((r) => r.authorized ? currentUser !== null : true)
+            .filter((r) => r.roles ? !isUniqueArray([...r.roles, ...(currentUser?.roles ?? [])]) : true),
+        [router, currentUser]
+    );
 
     const logout = () => {
         document.cookie = "";
@@ -106,7 +115,7 @@ const Sidebar = () => {
                         '--ListItem-radius': (theme) => theme.vars.radius.sm,
                     }}
                 >
-                    {routes.map((route) => (
+                    {filteredRoutes.map((route) => (
                         <ListItem key={route.path}>
                             <ListItemButton onClick={() => router.push(route.path)}>
                                 {route.icon ? route.icon : null}

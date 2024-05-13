@@ -7,6 +7,8 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import MapIcon from '@mui/icons-material/Map';
 import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 import ArchiveIcon from '@mui/icons-material/Archive';
+import GroupsIcon from '@mui/icons-material/Groups';
+import UserRoles from "@/utilts/userRoles";
 
 const routes: RouteConfigType[] = [
     {
@@ -57,6 +59,20 @@ const routes: RouteConfigType[] = [
         icon: <SettingsRoundedIcon />,
         authorized: true
     },
+    {
+        name: 'tenants',
+        path: '/tenants',
+        icon: <GroupsIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN]
+    },
+    {
+        name: 'tenant',
+        path: '/tenant',
+        icon: <GroupsIcon />,
+        authorized: true,
+        roles: [UserRoles.TENANT_ASSIGNED, UserRoles.TENANT_OWNER]
+    }
 ];
 
 export default routes;
