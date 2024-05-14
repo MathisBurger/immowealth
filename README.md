@@ -1,4 +1,5 @@
 # Immowealth
+[![](https://tokei.rs/b1/github/MathisBurger/immowealth?category=lines)](https://github.com/XAMPPRocky/tokei).
 
 Immowealth is a project build to monitor your real estate investments
 with a simple easy to use UI. The application provides forecasts, simple analysis 
