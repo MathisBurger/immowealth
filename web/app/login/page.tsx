@@ -21,7 +21,7 @@ const LoginPage = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: "include",
+            credentials: "include"
         });
         if (resp.status === 200) {
             router.push("/dashboard");

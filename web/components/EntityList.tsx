@@ -10,8 +10,6 @@ import {
 } from "@mui/x-data-grid";
 import {useEffect, useMemo, useState} from "react";
 import useConfigPresets from "@/hooks/useConfigPresets";
-import {Property} from "csstype";
-import Grid = Property.Grid;
 import {useTranslation} from "next-export-i18n";
 
 interface EntityListProps extends DataGridProps {
