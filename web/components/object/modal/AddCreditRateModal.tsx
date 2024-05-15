@@ -73,7 +73,7 @@ const AddCreditRateModal = ({onClose, creditId, objectId}: AddCreditRateModalPro
                     </Alert>
                 )}
                 <DatePicker
-                    label={t('credit.boookingDay')}
+                    label={t('credit.bookingDay')}
                     value={dayjs(date)}
                     disableFuture
                     onChange={(newDate) => setDate(newDate !== null ? newDate.toDate() : new Date())}

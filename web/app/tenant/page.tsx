@@ -3,11 +3,12 @@ import {useSearchParams} from "next/navigation";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import {useGetTenantLazyQuery} from "@/generated/graphql";
 import {useEffect, useMemo, useState} from "react";
-import {Button, Grid, Typography} from "@mui/joy";
+import {Button, Typography} from "@mui/joy";
 import EntityList from "@/components/EntityList";
 import {GridColDef} from "@mui/x-data-grid";
 import {useTranslation} from "next-export-i18n";
 import CreateTenantMemberModal from "@/components/tenant/CreateTenantMemberModal";
+import UserRoles, {isGranted} from "@/utilts/userRoles";
 
 
 const TenantPage = () => {
@@ -45,12 +46,14 @@ const TenantPage = () => {
     return (
         <>
             <Typography level="h1">{data?.tenant.name}</Typography>
-            <Button
-                color="primary"
-                variant="soft"
-                sx={{width: 200}}
-                onClick={() => setModalOpen(true)}
-            >{t('tenant.createMember')}</Button>
+            {isGranted(currentUser, [UserRoles.ADMIN]) && (
+                <Button
+                    color="primary"
+                    variant="soft"
+                    sx={{width: 200}}
+                    onClick={() => setModalOpen(true)}
+                >{t('tenant.createMember')}</Button>
+            )}
             <EntityList
                 columns={cols}
                 rows={data?.tenant.users ?? []}
