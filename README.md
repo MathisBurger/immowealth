@@ -46,10 +46,11 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
 - [ ] Update mail notifications with favourites
-- [ ] Performance calculations
+- [ ] Performance calculations (by input of data)
 
 ### v1.5.0 (not scheduled yet)
 - [ ] Full UNIT test coverage (resources)
+- [ ] Subtenants
 - [ ] Immo portal search
 - [ ] Object location watchlist
 - [ ] Add support for measured object prices
