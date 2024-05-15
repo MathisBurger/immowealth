@@ -1,8 +1,10 @@
 package de.immowealth.resources
 
 import de.immowealth.data.input.CreateTenantInput
+import de.immowealth.data.input.TenantMoveInput
 import de.immowealth.entity.Tenant
 import de.immowealth.service.TenantService
+import graphql.GraphQLException
 import jakarta.inject.Inject
 import org.eclipse.microprofile.graphql.GraphQLApi
 import org.eclipse.microprofile.graphql.Mutation
@@ -44,5 +46,17 @@ class TenantResource {
             input.password,
             input.email
         );
+    }
+
+    /**
+     * Moves users between tenants
+     */
+    @Mutation
+    fun moveUsers(input: TenantMoveInput): Tenant {
+        try{
+            return this.tenantService.moveUsersBetweenTenant(input.id, input.users);
+        } catch (e: Exception) {
+            throw GraphQLException(e.message);
+        }
     }
 }

@@ -14,6 +14,7 @@ class TenantVoter : VoterInterface {
     companion object {
         final val CREATE = "CREATE";
         val READ = "READ"
+        val SWITCH_USERS = "SWITCH_USERS"
     }
 
     @Inject
@@ -26,7 +27,7 @@ class TenantVoter : VoterInterface {
         if (user.roles.contains(UserRoles.ADMIN)) {
             return true;
         }
-        if (attributeName === TenantVoter.CREATE) {
+        if (attributeName === TenantVoter.CREATE || attributeName === TenantVoter.SWITCH_USERS) {
             return user.roles.contains(UserRoles.ADMIN);
         }
         if (attributeName === READ && value is Tenant) {
