@@ -86,7 +86,10 @@
     "value": " Value",
     "entityName": "Entity",
     "unarchive": "Unarchive",
-    "users": "Users"
+    "users": "Users",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email"
   },
   "credit": {
     "tab": {
@@ -155,5 +158,8 @@
         "OTHER": "Other"
       }
     }
+  },
+  "tenant": {
+    "createMember": "Create employee"
   }
 }

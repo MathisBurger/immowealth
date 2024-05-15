@@ -5,6 +5,7 @@ import de.immowealth.entity.User
 import de.immowealth.service.UserService
 import jakarta.inject.Inject
 import org.eclipse.microprofile.graphql.GraphQLApi
+import org.eclipse.microprofile.graphql.GraphQLException
 import org.eclipse.microprofile.graphql.Mutation
 import org.eclipse.microprofile.graphql.Query
 
@@ -38,12 +39,16 @@ class UserResource {
      */
     @Mutation
     fun registerUser(input: UserInput): User {
-        return this.userService.registerUser(
-            input.username,
-            input.password,
-            input.email,
-            input.roles,
-            input.tenantId
-        )
+        try {
+            return this.userService.registerUser(
+                input.username,
+                input.password,
+                input.email,
+                input.roles,
+                input.tenantId
+            )
+        } catch (e: Exception) {
+            throw GraphQLException(e.message)
+        }
     }
 }

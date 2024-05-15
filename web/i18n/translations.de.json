@@ -43,7 +43,7 @@
     "activityLog": "Aktivitäten",
     "archived": "Archiv",
     "tenants": "Abteilungen",
-    "tenant": "Abteilung"
+    "tenant": " Abteilung"
   },
   "common": {
     "credit": "Kredit",
@@ -86,7 +86,10 @@
     "value": "Wert",
     "entityName": "Entität",
     "unarchive": "Entarchivieren",
-    "users": "Nutzer"
+    "users": "Nutzer",
+    "username": "Nutzername",
+    "password": "Passwort",
+    "email": "Email"
   },
   "credit": {
     "tab": {
@@ -156,5 +159,8 @@
         "OTHER": "Sonstiges"
       }
     }
+  },
+  "tenant": {
+    "createMember": "Mitarbeiter erstellen"
   }
 }

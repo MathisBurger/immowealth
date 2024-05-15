@@ -2,11 +2,12 @@
 import {useSearchParams} from "next/navigation";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import {useGetTenantLazyQuery} from "@/generated/graphql";
-import {useEffect, useMemo} from "react";
-import {Grid, Typography} from "@mui/joy";
+import {useEffect, useMemo, useState} from "react";
+import {Button, Grid, Typography} from "@mui/joy";
 import EntityList from "@/components/EntityList";
 import {GridColDef} from "@mui/x-data-grid";
 import {useTranslation} from "next-export-i18n";
+import CreateTenantMemberModal from "@/components/tenant/CreateTenantMemberModal";
 
 
 const TenantPage = () => {
@@ -14,6 +15,12 @@ const TenantPage = () => {
     const currentUser = useCurrentUser();
     const {t} = useTranslation();
     const [query,{data, loading}] = useGetTenantLazyQuery();
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    const tenantId = useMemo<number>(
+        () => id === null ? currentUser?.tenant?.id : parseInt(id, 10),
+        [currentUser, id]
+    );
 
     useEffect(() => {
         if (id !== null) {
@@ -38,10 +45,22 @@ const TenantPage = () => {
     return (
         <>
             <Typography level="h1">{data?.tenant.name}</Typography>
+            <Button
+                color="primary"
+                variant="soft"
+                sx={{width: 200}}
+                onClick={() => setModalOpen(true)}
+            >{t('tenant.createMember')}</Button>
             <EntityList
                 columns={cols}
                 rows={data?.tenant.users ?? []}
             />
+            {modalOpen && (
+                <CreateTenantMemberModal
+                    tenantId={tenantId}
+                    onClose={() => setModalOpen(false)}
+                />
+            )}
         </>
     );
 }
