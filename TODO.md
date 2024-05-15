@@ -2,12 +2,10 @@
 
 ### User system
 
-- [ ] Create users on tenant
+- [x] Create users on tenant
 - [x] UNIT test coverage for all existing services
 - [x] Voter system role based
 - [ ] Move users between tenants
-- [ ] Create subtenants with roles
-- [ ] Display tenant in username
 - [ ] User password change
-- [ ] Make fields of services private
+- [ ] Display tenant in username
 - [ ] Handle auth stuff for prod env (Cookie settings, etc.)
