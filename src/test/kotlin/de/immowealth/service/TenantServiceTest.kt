@@ -1,5 +1,6 @@
 package de.immowealth.service
 
+import de.immowealth.entity.UserRoles
 import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
@@ -118,6 +119,59 @@ class TenantServiceTest : AbstractServiceTest() {
         try {
             this.tenantService.getTenant(tenant.id!!);
             fail<String>("Should not be able to get tenant")
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
+        }
+    }
+
+    @Test
+    @Order(10)
+    fun testMoveUsersAsAdmin() {
+        this.loginAsUser("admin");
+        var ten1 = this.tenantService.createTenant("mv_1", "mv1", "123", "test@test.de");
+        var ten2 = this.tenantService.createTenant("mv_2", "mv2", "123", "test@test.de");
+        val usr = this.userService.registerUser("mv3", "123", "a@a.a", mutableListOf(UserRoles.TENANT_ASSIGNED), ten1.id);
+        ten1 = this.tenantService.getTenant(ten1.id!!)
+        assertEquals(ten1.users.size,2);
+        ten2 = this.tenantService.moveUsersBetweenTenant(ten2.id!!, mutableListOf(usr.id!!, ten2.users.get(0).id!!));
+        assertEquals(ten2.users.size, 2);
+    }
+
+    @Test
+    @Order(11)
+    fun testMoveUsersAsTenantOwner() {
+        this.loginAsUser("admin");
+        var ten1 = this.tenantService.createTenant("mv_11", "mv11", "123", "test@test.de");
+        val ten2 = this.tenantService.createTenant("mv_21", "mv21", "123", "test@test.de");
+        val usr = this.userService.registerUser("mv31", "123", "a@a.a", mutableListOf(UserRoles.TENANT_ASSIGNED), ten1.id);
+        ten1 = this.tenantService.getTenant(ten1.id!!)
+        assertEquals(ten1.users.size,2);
+        this.loginAsUser("mv21");
+        try {
+            this.tenantService.moveUsersBetweenTenant(ten2.id!!, mutableListOf(usr.id!!, ten2.users.get(0).id!!));
+            fail<String>("This should not be allowed");
+        } catch (e: UnauthorizedException) {
+            assertTrue(true)
+        } catch (e: AssertionFailedError) {
+            throw e;
+        }
+    }
+
+    @Test
+    @Order(12)
+    fun testMoveUsersAsRandomUser() {
+        this.loginAsUser("admin");
+        var ten1 = this.tenantService.createTenant("mv_11", "mv11", "123", "test@test.de");
+        val ten2 = this.tenantService.createTenant("mv_21", "mv21", "123", "test@test.de");
+        val usr = this.userService.registerUser("mv31", "123", "a@a.a", mutableListOf(UserRoles.TENANT_ASSIGNED), ten1.id);
+        ten1 = this.tenantService.getTenant(ten1.id!!)
+        assertEquals(ten1.users.size,2);
+        this.loginAsUser("mv31");
+        try {
+            this.tenantService.moveUsersBetweenTenant(ten2.id!!, mutableListOf(usr.id!!, ten2.users.get(0).id!!));
+            fail<String>("This should not be allowed");
         } catch (e: UnauthorizedException) {
             assertTrue(true)
         } catch (e: AssertionFailedError) {
