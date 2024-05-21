@@ -161,6 +161,7 @@
     }
   },
   "tenant": {
-    "createMember": "Mitarbeiter erstellen"
+    "createMember": "Mitarbeiter erstellen",
+    "manageMembers": "Mitglieder verwalten"
   }
 }

@@ -3,12 +3,13 @@ import {useSearchParams} from "next/navigation";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import {useGetTenantLazyQuery} from "@/generated/graphql";
 import {useEffect, useMemo, useState} from "react";
-import {Button, Typography} from "@mui/joy";
+import {Button, ButtonGroup, Typography} from "@mui/joy";
 import EntityList from "@/components/EntityList";
 import {GridColDef} from "@mui/x-data-grid";
 import {useTranslation} from "next-export-i18n";
 import CreateTenantMemberModal from "@/components/tenant/CreateTenantMemberModal";
 import UserRoles, {isGranted} from "@/utilts/userRoles";
+import ManageTenantMembersModal from "@/components/tenant/ManageTenantMembersModal";
 
 
 const TenantPage = () => {
@@ -17,6 +18,7 @@ const TenantPage = () => {
     const {t} = useTranslation();
     const [query,{data, loading}] = useGetTenantLazyQuery();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [membersModalOpen, setMembersModalOpen] = useState<boolean>(false);
 
     const tenantId = useMemo<number>(
         () => id === null ? currentUser?.tenant?.id : parseInt(id, 10),
@@ -47,12 +49,20 @@ const TenantPage = () => {
         <>
             <Typography level="h1">{data?.tenant.name}</Typography>
             {isGranted(currentUser, [UserRoles.ADMIN]) && (
-                <Button
-                    color="primary"
-                    variant="soft"
-                    sx={{width: 200}}
-                    onClick={() => setModalOpen(true)}
-                >{t('tenant.createMember')}</Button>
+                <ButtonGroup>
+                    <Button
+                        color="primary"
+                        variant="soft"
+                        sx={{width: 200}}
+                        onClick={() => setModalOpen(true)}
+                    >{t('tenant.createMember')}</Button>
+                    <Button
+                        color="primary"
+                        variant="soft"
+                        sx={{width: 200}}
+                        onClick={() => setMembersModalOpen(true)}
+                    >{t('tenant.manageMembers')}</Button>
+                </ButtonGroup>
             )}
             <EntityList
                 columns={cols}
@@ -62,6 +72,12 @@ const TenantPage = () => {
                 <CreateTenantMemberModal
                     tenantId={tenantId}
                     onClose={() => setModalOpen(false)}
+                />
+            )}
+            {membersModalOpen && data?.tenant && (
+                <ManageTenantMembersModal
+                    onClose={() => setMembersModalOpen(true)}
+                    tenant={data?.tenant!}
                 />
             )}
         </>

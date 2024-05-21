@@ -85,7 +85,7 @@ const CreateTenantMemberModal = ({tenantId, onClose}: CreateTenantMemberModalPro
                         </FormControl>
                         <ButtonGroup>
                             <Button type="submit" color="primary" variant="soft">{t('common.create')}</Button>
-                            <Button color="neutral" variant="soft">{t('common.cancel')}</Button>
+                            <Button color="neutral" variant="soft" onClick={onClose}>{t('common.cancel')}</Button>
                         </ButtonGroup>
                     </Stack>
                 </form>
