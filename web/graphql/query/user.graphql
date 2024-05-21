@@ -3,3 +3,9 @@ query GetCurrentUser {
         ...SimpleUser
     }
 }
+
+query GetAllUsers {
+    allUsers {
+        ...SimpleUser
+    }
+}

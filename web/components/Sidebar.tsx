@@ -80,7 +80,7 @@ const Sidebar = () => {
                 className="Sidebar-overlay"
                 sx={{
                     position: 'fixed',
-                    zIndex: 9998,
+                    zIndex: 9997,
                     top: 0,
                     left: 0,
                     width: '100vw',
