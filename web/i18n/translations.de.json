@@ -162,6 +162,7 @@
   },
   "tenant": {
     "createMember": "Mitarbeiter erstellen",
-    "manageMembers": "Mitglieder verwalten"
+    "manageMembers": "Mitarbeiter verwalten",
+    "moveMembers": "Mitarbeiter verschieben"
   }
 }

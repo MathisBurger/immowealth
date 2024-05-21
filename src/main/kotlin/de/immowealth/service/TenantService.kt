@@ -74,6 +74,7 @@ class TenantService : AbstractService() {
      * @param users All users that should now be members
      * @return The updated tenant
      */
+    @Transactional
     fun moveUsersBetweenTenant(id: Long, users: MutableList<Long>): Tenant {
         val ten = this.tenantRepository.findByIdOptional(id);
         if (ten.isEmpty) {

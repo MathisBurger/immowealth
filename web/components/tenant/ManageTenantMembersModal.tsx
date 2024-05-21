@@ -1,5 +1,11 @@
-import {SimpleUserFragment, TenantFragment, useGetAllUsersQuery} from "@/generated/graphql";
-import {Modal, ModalDialog, Typography} from "@mui/joy";
+import {
+    GetTenantDocument,
+    SimpleUserFragment,
+    TenantFragment,
+    useGetAllUsersQuery,
+    useMoveTenantMembersMutation
+} from "@/generated/graphql";
+import {Button, ButtonGroup, Modal, ModalDialog, Typography} from "@mui/joy";
 import {useTranslation} from "next-export-i18n";
 import MoverList, {MoverListData} from "@/components/MoverList";
 import {useEffect, useMemo, useState} from "react";
@@ -15,6 +21,14 @@ const ManageTenantMembersModal = ({onClose, tenant}: ManageTenantMembersModalPro
 
     const {t} = useTranslation();
     const [data, setData] = useState<MoverListData<SimpleUserFragment>>({left: [], right: tenant.users as SimpleUserFragment[] ?? []});
+    const [mutation] = useMoveTenantMembersMutation({
+        refetchQueries: [
+            {
+                query: GetTenantDocument,
+                variables: {id: tenant.id}
+            }
+        ]
+    });
     const {data: allUsers} = useGetAllUsersQuery();
 
     useEffect(() => {
@@ -23,16 +37,17 @@ const ManageTenantMembersModal = ({onClose, tenant}: ManageTenantMembersModalPro
         }
     }, [allUsers]);
 
-    const cols = useMemo<GridColDef[]>(() => [
-        {
-            field: 'id',
-            headerName: 'ID',
-        } ,
-        {
-            field: 'username',
-            headerName: t('common.username')
+    const moveMembers = async () => {
+        const response = await mutation({
+            variables: {input: {
+                    id: tenant.id,
+                    users: data.right.map((e) => e.id)
+                }}
+        });
+        if (response.errors === undefined) {
+            onClose();
         }
-    ], [t]);
+    }
 
     return (
         <Modal open onClose={onClose} sx={{zIndex: 10001}}>
@@ -40,9 +55,13 @@ const ManageTenantMembersModal = ({onClose, tenant}: ManageTenantMembersModalPro
                 <Typography level="h1">{t('tenant.manageMembers')}</Typography>
                 <MoverList<SimpleUserFragment>
                     data={data}
-                    cols={cols}
+                    fieldToAccess="username"
                     setData={setData}
                 />
+                <ButtonGroup>
+                    <Button color="primary" variant="soft" onClick={moveMembers}>{t('tenant.moveMembers')}</Button>
+                    <Button color="neutral" variant="soft" onClick={onClose}>{t('common.cancel')}</Button>
+                </ButtonGroup>
             </ModalDialog>
         </Modal>
     );

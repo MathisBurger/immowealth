@@ -1,0 +1,5 @@
+mutation MoveTenantMembers($input: TenantMoveInputInput!) {
+    moveUsers(input: $input) {
+        ...Tenant
+    }
+}

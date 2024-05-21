@@ -161,6 +161,7 @@
   },
   "tenant": {
     "createMember": "Create employee",
-    "manageMembers": "Manage members"
+    "manageMembers": "Manage employees",
+    "moveMembers": "Move employees"
   }
 }

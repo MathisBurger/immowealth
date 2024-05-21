@@ -76,7 +76,7 @@ const TenantPage = () => {
             )}
             {membersModalOpen && data?.tenant && (
                 <ManageTenantMembersModal
-                    onClose={() => setMembersModalOpen(true)}
+                    onClose={() => setMembersModalOpen(false)}
                     tenant={data?.tenant!}
                 />
             )}

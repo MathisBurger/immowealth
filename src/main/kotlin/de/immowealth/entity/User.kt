@@ -32,7 +32,7 @@ class User : BaseEntity(), Archivable {
     /**
      * All roles of the user
      */
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     var roles: MutableList<String> = mutableListOf();
 
     /**

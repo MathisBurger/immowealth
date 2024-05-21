@@ -1,8 +1,7 @@
-import {GridColDef, GridRowSelectionModel} from "@mui/x-data-grid";
 import {Button, Grid} from "@mui/joy";
-import EntityList from "@/components/EntityList";
 import {ArrowBack, ArrowForward} from "@mui/icons-material";
 import {useState} from "react";
+import MoverListDataList from "@/components/MoverListDataList";
 
 type IdAble = {
     id: string|number|undefined;
@@ -15,30 +14,32 @@ export interface MoverListData<T> {
 
 interface MoverListProps<T> {
     data: MoverListData<T>;
-    cols: GridColDef[];
     setData: (data: MoverListData<T>) => void;
+    fieldToAccess: string;
 }
 
-const MoverList = <T, >({data, setData, cols}: MoverListProps<T>) => {
+const MoverList = <T, >({data, setData, fieldToAccess}: MoverListProps<T>) => {
 
-    const [leftSelection, setLeftSelection] = useState<GridRowSelectionModel|undefined>(undefined);
-    const [rightSelection, setRightSelection] = useState<GridRowSelectionModel|undefined>(undefined);
+    const [leftSelection, setLeftSelection] = useState<T[]>([]);
+    const [rightSelection, setRightSelection] = useState<T[]>([]);
 
     const moveRight = () => {
         console.log(leftSelection);
         if (leftSelection && leftSelection.length > 0) {
+            const ids = leftSelection.map((e) => (e as IdAble).id);
             setData({
-                left: data.left.filter((e) => (e as IdAble).id !== leftSelection[0]),
-                right: [...data.right, data.left.find((e) => (e as IdAble).id === leftSelection[0]) as T]
+                left: data.left.filter((e) => ids.indexOf((e as IdAble).id) === -1),
+                right: [...data.right, data.left.find((e) => ids.indexOf((e as IdAble).id) > -1) as T]
             })
         }
     }
 
     const moveLeft = () => {
         if (rightSelection && rightSelection.length > 0) {
+            const ids = rightSelection.map((e) => (e as IdAble).id);
             setData({
-                right: data.right.filter((e) => (e as IdAble).id !== rightSelection[0]),
-                left: [...data.left, data.right.find((e) => (e as IdAble).id === rightSelection[0]) as T]
+                right: data.right.filter((e) => ids.indexOf((e as IdAble).id) === -1),
+                left: [...data.left, data.right.find((e) => ids.indexOf((e as IdAble).id) > -1) as T]
             })
         }
     }
@@ -47,12 +48,11 @@ const MoverList = <T, >({data, setData, cols}: MoverListProps<T>) => {
     return (
         <Grid container direction="row" alignItems="center" justifyContent="center">
             <Grid xs={5}>
-                <EntityList
-                    columns={cols}
-                    rows={data.left}
-                    onRowSelectionModelChange={setLeftSelection}
-                    rowSelection
-                    rowSelectionModel={leftSelection}
+                <MoverListDataList<T>
+                    data={data.left}
+                    selected={leftSelection}
+                    setSelected={setLeftSelection}
+                    fieldToAccess={fieldToAccess}
                 />
             </Grid>
             <Grid xs={2} container direction="row" alignItems="center" justifyContent="center">
@@ -68,12 +68,11 @@ const MoverList = <T, >({data, setData, cols}: MoverListProps<T>) => {
                 </Grid>
             </Grid>
             <Grid xs={5}>
-                <EntityList
-                    columns={cols}
-                    rows={data.right}
-                    onRowSelectionModelChange={setRightSelection}
-                    rowSelection
-                    rowSelectionModel={rightSelection}
+                <MoverListDataList<T>
+                    data={data.right}
+                    selected={rightSelection}
+                    setSelected={setRightSelection}
+                    fieldToAccess={fieldToAccess}
                 />
             </Grid>
         </Grid>
