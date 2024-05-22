@@ -8,4 +8,3 @@
 - [x] Move users between tenants
 - [ ] User password change
 - [x] Display tenant in username
-- [ ] Handle auth stuff for prod env (Cookie settings, etc.)
