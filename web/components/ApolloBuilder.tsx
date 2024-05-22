@@ -3,8 +3,6 @@ import useSnackbar from "@/hooks/useSnackbar";
 import {ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache, ServerError} from "@apollo/client";
 import {onError} from "@apollo/client/link/error";
 import {useCookies} from "react-cookie";
-import {NetworkError} from "@apollo/client/errors";
-import {router} from "next/client";
 import {useRouter} from "next/navigation";
 
 interface ApolloBuilderProps {
@@ -22,6 +20,30 @@ const ApolloBuilder = ({children}: ApolloBuilderProps) => {
     const [cookies] = useCookies(['jwt']);
     const router = useRouter();
 
+    const tenantUsername = (data: any) => {
+        if (data === null) {
+            return null;
+        }
+        if (typeof data !== "object") {
+            return data;
+        }
+        if (data.__typename === 'User' && data["tenant"] !== null) {
+            data["username"] = `${data["username"]} (${data["tenant"]["name"]})`
+            return data;
+        }
+        Object.keys(data).map(key => {
+            if (!Array.isArray(data[key]) && typeof data[key] !== "object") return;
+            if (Array.isArray(data[key])) {
+                data[key] = data[key].map((item: any) => {
+                    return tenantUsername(item);
+                })
+            } else {
+                data[key] = tenantUsername(data[key]);
+            }
+        })
+        return data;
+    }
+
     const createHttpLink = () => new HttpLink({
         uri: process.env.NODE_ENV === 'production' ? '/graphql/' : 'http://localhost:8080/graphql/',
         headers: {
@@ -36,7 +58,10 @@ const ApolloBuilder = ({children}: ApolloBuilderProps) => {
                 (key, value) => (key === '__typename' ? undefined : value)
             );
         }
-        return forward(operation);
+        return forward(operation).map(response => {
+            response.data = tenantUsername(response.data as any);
+            return response;
+        })
     });
 
     const globalErrorHandler = () => onError((err) => {
