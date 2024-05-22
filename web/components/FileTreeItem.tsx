@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import {useTranslation} from "next-export-i18n";
 import UploadFileModal from "@/components/object/modal/UploadFileModal";
+import {useCookies} from "react-cookie";
 
 interface FileTreeItemProps {
     docs: UploadedFileFragment[];
@@ -23,6 +24,7 @@ interface NestedHelper {
 
 const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
 
+    const [cookies] = useCookies(['jwt']);
     const [deleteMutation] = useDeleteFileMutation({
         refetchQueries: [
             {
@@ -69,7 +71,20 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
     }, [folders, nonRootDocs]);
 
     const downloadFile = (id: number) => {
-        window.open(`${process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:8080/'}file?id=${id}`, '_blank');
+        const url = `${process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:8080/'}file?id=${id}`;
+        fetch(url, {
+            headers: {
+                'Authorization': 'Bearer ' + cookies.jwt
+            }
+        } )
+            .then((response) => response.blob())
+            .then((blob) => {
+                const _url = window.URL.createObjectURL(blob);
+                // @ts-ignore
+                window.open(_url, "_blank").focus();
+            }).catch((err) => {
+            console.log(err);
+        });
     }
 
 
