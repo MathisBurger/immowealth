@@ -7,5 +7,5 @@
 - [x] Voter system role based
 - [x] Move users between tenants
 - [ ] User password change
-- [ ] Display tenant in username
+- [x] Display tenant in username
 - [ ] Handle auth stuff for prod env (Cookie settings, etc.)
