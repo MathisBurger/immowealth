@@ -1,6 +1,8 @@
 package de.immowealth.controller
 
 import de.immowealth.data.request.LoginRequest
+import de.immowealth.data.request.ResetPasswordRequest
+import de.immowealth.data.request.SetPasswordRequest
 import de.immowealth.service.SecurityService
 import io.smallrye.jwt.auth.principal.JWTParser
 import jakarta.annotation.security.PermitAll
@@ -64,5 +66,28 @@ class AuthController {
         } catch (e: NotAuthorizedException) {
             return Response.status(401).entity(e.message).build();
         }
+    }
+
+    /**
+     * Resets the password and sends the email with reset link
+     */
+    @POST
+    @Path("/resetPassword")
+    fun resetPassword(body: ResetPasswordRequest): Response {
+        this.securityService.resetPassword(body.username);
+        return Response.ok().build();
+    }
+
+    /**
+     * Sets the new password of the user
+     */
+    @POST
+    @Path("/setPassword")
+    fun setPassword(body: SetPasswordRequest, @Context securityContext: SecurityContext): Response {
+        if (securityContext.userPrincipal === null) {
+            return Response.status(401).build();
+        }
+        this.securityService.setNewPassword(securityContext.userPrincipal.name.toLong(), body.password);
+        return Response.ok().build();
     }
 }

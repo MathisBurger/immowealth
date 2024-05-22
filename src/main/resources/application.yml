@@ -27,6 +27,7 @@ quarkus:
       generation: update
 immowealth:
   defaultMail: kontakt@mathis-burger.de
+  applicationHost: http://localhost:3000
   signSecret: AyM1SysPpbyDfgZld3umj1qzKObwVMko
 smallrye:
   jwt:

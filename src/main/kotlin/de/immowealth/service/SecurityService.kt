@@ -3,6 +3,7 @@ package de.immowealth.service
 import de.immowealth.entity.Archived
 import de.immowealth.entity.User
 import de.immowealth.repository.UserRepository
+import de.immowealth.util.RandomUtils
 import de.immowealth.voter.VoterInterface
 import io.quarkus.elytron.security.common.BcryptUtil
 import io.smallrye.jwt.build.Jwt
@@ -10,9 +11,11 @@ import jakarta.enterprise.context.ApplicationScoped
 import jakarta.enterprise.inject.Instance
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
+import jakarta.transaction.Transactional
 import jakarta.ws.rs.NotAuthorizedException
 import jakarta.ws.rs.core.Context
 import jakarta.ws.rs.core.SecurityContext
+import org.eclipse.microprofile.config.inject.ConfigProperty
 import org.eclipse.microprofile.jwt.JsonWebToken
 import org.wildfly.security.password.Password
 import org.wildfly.security.password.PasswordFactory
@@ -39,6 +42,12 @@ class SecurityService {
 
     @Inject
     lateinit var entityManager: EntityManager;
+
+    @Inject
+    lateinit var mailService: MailService;
+
+    @ConfigProperty(name = "immowealth.applicationHost")
+    lateinit var applicationHost: String;
 
     /**
      * Checks if user is granted for action
@@ -125,5 +134,44 @@ class SecurityService {
         return Jwt
             .upn(user.id!!.toString())
             .sign();
+    }
+
+    /**
+     * Resets the password of the user and sends an email
+     *
+     * @param username The username of the user that should be resetted
+     */
+    @Transactional
+    fun resetPassword(username: String) {
+        val user = this.userRepository.findByUserName(username);
+        if (user.isEmpty) {
+            return;
+        }
+        val fetchedUser = user.get();
+        fetchedUser.password = RandomUtils.getRandomString(254);
+        this.entityManager.persist(fetchedUser);
+        this.entityManager.flush();
+        val jwt = this.generateJWT(fetchedUser);
+        val url = this.applicationHost + "/resetPassword?session=" + jwt;
+        val mailTemplate = "<a href=\"$url\">Reset password</a>";
+        this.mailService.sendMail("Password reset", mailTemplate, fetchedUser.email);
+    }
+
+    /**
+     * Sets the new password of a user
+     *
+     * @param username The username of the user
+     * @param password The new password of the user
+     */
+    @Transactional
+    fun setNewPassword(id: Long, password: String) {
+        val user = this.userRepository.findByIdOptional(id);
+        if (user.isEmpty) {
+            return;
+        }
+        val fetchedUser = user.get();
+        fetchedUser.password = BcryptUtil.bcryptHash(password);
+        this.entityManager.persist(fetchedUser);
+        this.entityManager.flush();
     }
 }

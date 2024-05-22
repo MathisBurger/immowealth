@@ -58,6 +58,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 
 ### v1.5.3 (not scheduled yet)
 - [ ] Backend translations
+- [ ] 2FA
 - [ ] Rent spread suggestions by fixes rules
 
 ### v1.6.0 (not scheduled yet)

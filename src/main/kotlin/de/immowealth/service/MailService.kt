@@ -1,5 +1,6 @@
 package de.immowealth.service
 
+import de.immowealth.entity.User
 import de.immowealth.entity.enum.MailEntityContext
 import de.immowealth.entity.enum.MailerSettingAction
 import io.quarkus.mailer.Mail
@@ -41,5 +42,18 @@ class MailService {
                 Mail.withText(this.defaultMail, subject, message)
             );
         }
+    }
+
+    /**
+     * Sends an generic mail.
+     *
+     * @param subject The subject of the mail
+     * @param message The message of the mail
+     * @param to The target mail
+     */
+    fun sendMail(subject: String, message: String, to: String) {
+        this.mailer.send(
+            Mail.withText(to, subject, message)
+        );
     }
 }

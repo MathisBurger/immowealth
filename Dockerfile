@@ -26,6 +26,7 @@ ENV DATABASE_USER=postgres
 ENV DATABASE_URL=jdbc:postgresql://localhost:5432/immowealth
 ENV ORM_GENERATION=update
 ENV DEFAULT_MAIL=default@mail.com
+ENV APPLICATION_HOST=http://localhost:3000
 ENV JWT_ISSUER=http://localhost
 
 EXPOSE 8080
