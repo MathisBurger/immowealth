@@ -2,7 +2,7 @@
 import {Box} from "@mui/joy";
 import Sidebar from "@/components/Sidebar";
 import PathDisplay from "@/components/PathDisplay";
-import {ReactNode, useEffect} from "react";
+import {ReactNode, useEffect, useMemo} from "react";
 import NoSSR from "@/components/NoSSR";
 import  { SettingsContext } from "@/hooks/useSettings";
 import {SettingDataFragment, useGetAllSettingsQuery, useGetCurrentUserQuery} from "@/generated/graphql";
@@ -23,6 +23,11 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
     const {data: userData} = useGetCurrentUserQuery();
     const pathname = usePathname();
 
+    const displaySidebar = useMemo(
+        () => !(pathname.includes("login") || pathname.includes("reset")),
+        [pathname]
+    );
+
     useEffect(() => {
         if (data?.allSettings) {
             let lang = (data?.allSettings ?? []).filter((s) => s?.key === "language")[0]?.value ?? "en";
@@ -37,7 +42,7 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
             <CurrentUserContext.Provider value={userData?.currentUser ?? null}>
                 <SettingsContext.Provider value={(data?.allSettings ?? []) as SettingDataFragment[]}>
                     <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
-                        {!pathname.includes("login") && (
+                        {displaySidebar && (
                             <Sidebar />
                         )}
                         <Box
@@ -59,7 +64,7 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
                                 gap: 1,
                             }}
                         >
-                            {!pathname.includes("login") && (
+                            {displaySidebar && (
                                 <PathDisplay />
                             )}
                             {children}

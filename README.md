@@ -48,6 +48,9 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Update mail notifications with favourites
 - [ ] Performance calculations (by input of data)
 
+### v1.4.1 (after stable React 19 release)
+- [ ] Upgrade to a Next version that supports React compiler
+
 ### v1.5.0 (not scheduled yet)
 - [ ] Full UNIT test coverage (resources)
 - [ ] Subtenants

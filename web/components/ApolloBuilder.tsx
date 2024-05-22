@@ -1,9 +1,9 @@
-import {ReactNode} from "react";
+import {ReactNode, useMemo} from "react";
 import useSnackbar from "@/hooks/useSnackbar";
 import {ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache, ServerError} from "@apollo/client";
 import {onError} from "@apollo/client/link/error";
 import {useCookies} from "react-cookie";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 
 interface ApolloBuilderProps {
     children: ReactNode;
@@ -19,6 +19,12 @@ const ApolloBuilder = ({children}: ApolloBuilderProps) => {
     const {error} = useSnackbar();
     const [cookies] = useCookies(['jwt']);
     const router = useRouter();
+    const pathname = usePathname();
+
+    const redirectToLogin = useMemo(
+        () => !(pathname.includes("login") || pathname.includes("reset")),
+        [pathname]
+    );
 
     const tenantUsername = (data: any) => {
         if (data === null) {
@@ -66,7 +72,9 @@ const ApolloBuilder = ({children}: ApolloBuilderProps) => {
 
     const globalErrorHandler = () => onError((err) => {
         if ((err?.networkError as ServerError).statusCode === 401) {
-            router.push("/login")
+            if (redirectToLogin) {
+                router.push("/login");
+            }
         }
         // @ts-ignore
         if (err.graphQLErrors !== "") {

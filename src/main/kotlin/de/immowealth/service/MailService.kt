@@ -51,9 +51,9 @@ class MailService {
      * @param message The message of the mail
      * @param to The target mail
      */
-    fun sendMail(subject: String, message: String, to: String) {
+    fun sendMailHTML(subject: String, message: String, to: String) {
         this.mailer.send(
-            Mail.withText(to, subject, message)
+            Mail.withHtml(to, subject, message)
         );
     }
 }

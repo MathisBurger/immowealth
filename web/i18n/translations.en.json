@@ -89,7 +89,10 @@
     "users": "Users",
     "username": "Username",
     "password": "Password",
-    "email": "Email"
+    "email": "Email",
+    "requestPasswordReset": "Request reset",
+    "resetPassword": "Reset password",
+    "pleaseCheckYourInbox": "E-Mail has been sent. Please check your inbox"
   },
   "credit": {
     "tab": {

@@ -154,7 +154,7 @@ class SecurityService {
         val jwt = this.generateJWT(fetchedUser);
         val url = this.applicationHost + "/resetPassword?session=" + jwt;
         val mailTemplate = "<a href=\"$url\">Reset password</a>";
-        this.mailService.sendMail("Password reset", mailTemplate, fetchedUser.email);
+        this.mailService.sendMailHTML("Password reset", mailTemplate, fetchedUser.email);
     }
 
     /**

@@ -65,6 +65,8 @@ class AuthController {
                 .build();
         } catch (e: NotAuthorizedException) {
             return Response.status(401).entity(e.message).build();
+        } catch (e: Throwable) {
+            return Response.status(401).entity("Internal server error").build();
         }
     }
 

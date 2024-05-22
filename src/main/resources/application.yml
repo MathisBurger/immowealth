@@ -1,4 +1,10 @@
 quarkus:
+  mailer:
+    host: 127.0.0.1
+    from: noreply@immowealth.local
+    port: 1025
+    mock: false
+    start-tls: null
   native:
     resources:
       includes: publicKey.pem

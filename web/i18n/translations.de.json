@@ -89,7 +89,10 @@
     "users": "Nutzer",
     "username": "Nutzername",
     "password": "Passwort",
-    "email": "Email"
+    "email": "Email",
+    "requestPasswordReset": "Zurücksetzen anfragen",
+    "resetPassword": "Password zurücksetzen",
+    "pleaseCheckYourInbox": "Die E-Mail wurde versendet. Bitte überprüfen sie ihr Postfach."
   },
   "credit": {
     "tab": {

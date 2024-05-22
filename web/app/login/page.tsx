@@ -3,11 +3,13 @@ import {Button, FormControl, FormLabel, Input, Link, Sheet, Typography} from "@m
 import {FormEvent} from "react";
 import {useRouter} from "next/navigation";
 import useSnackbar from "@/hooks/useSnackbar";
+import {useTranslation} from "next-export-i18n";
 
 const LoginPage = () => {
 
     const router = useRouter();
     const snackbar = useSnackbar();
+    const {t} = useTranslation();
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -69,6 +71,7 @@ const LoginPage = () => {
                         placeholder="password"
                     />
                 </FormControl>
+                <Link href="/resetPassword">{t('common.resetPassword')}</Link>
                 <Button sx={{mt: 1 /* margin top */}} type="submit">Log in</Button>
             </Sheet>
         </form>

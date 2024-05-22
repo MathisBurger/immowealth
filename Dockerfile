@@ -28,6 +28,10 @@ ENV ORM_GENERATION=update
 ENV DEFAULT_MAIL=default@mail.com
 ENV APPLICATION_HOST=http://localhost:3000
 ENV JWT_ISSUER=http://localhost
+ENV MAILER_FROM=noreply@immowealth.local
+ENV MAILER_HOST=localhost
+ENV MAILER_PORT=1025
+ENV MAILER_START_TLS=REQUIRED
 
 EXPOSE 8080
 ENTRYPOINT ["runner.sh"]
