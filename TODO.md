@@ -1,11 +1,9 @@
 # Handles general intra-version TODOs
 
-### User system
+### Renter support chat
 
-- [x] Create users on tenant
-- [x] UNIT test coverage for all existing services
-- [x] Voter system role based
-- [x] Move users between tenants
-- [ ] Create tenant 
-- [ ] User password change
-- [x] Display tenant in username
+- [ ] Create renter on object
+- [ ] Delete renter from object
+- [ ] Add general chat feature (internal chat)
+- [ ] Create renter login & user accounts
+- [ ] Create rental support chats (all allowed users can communicate with single renter => Renter only has one chat with all of them

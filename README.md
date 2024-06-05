@@ -42,7 +42,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 
 ### v1.4.0
 - [x] Full UNIT test coverage (services)
-- [ ] User account system
+- [x] User account system
 - [ ] Support Chat for renter
 - [ ] Rental status / statistics about the renter
 - [ ] Update mail notifications with favourites
@@ -73,6 +73,10 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Add balance sheet calculation
 - [ ] New password rule validation
 - [ ] Translation test coverage
+- [ ] Add code quality linting with Prettier and eslint and also for kotlin
+- [ ] Login with LDAP
+- [ ] Assign chat to specific people
+- [ ] Profile picture upload
 - [ ] TAX calculations
 
 ## Local setup
