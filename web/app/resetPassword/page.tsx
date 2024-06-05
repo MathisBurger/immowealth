@@ -32,8 +32,9 @@ const ResetPasswordPage = () => {
     }
 
     const onUpdate = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         const data = new FormData(e.currentTarget);
-        const resp = await fetch(`${process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080'}/api/auth/resetPassword`, {
+        const resp = await fetch(`${process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080'}/api/auth/setPassword`, {
             method: "POST",
             body: JSON.stringify({
                 password: `${data.get("password")}`,

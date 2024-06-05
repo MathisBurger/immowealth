@@ -40,13 +40,15 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
     const {t} = useTranslation();
 
     const rootDocs = useMemo<UploadedFileFragment[]>(
-        () => docs.filter((d) => d.fileRoot!.split("/").length === 1 || d.fileRoot === ""),
+        () => docs.filter((d) => d.fileRoot!.startsWith("/") || d.fileRoot === ""),
         [docs]
     );
     const nonRootDocs = useMemo<UploadedFileFragment[]>(
-        () => docs.filter((d) => d.fileRoot!.split("/").length > 1),
+        () => docs.filter((d) => !d.fileRoot!.startsWith("/") && d.fileRoot !== ""),
         [docs]
     );
+
+    console.log(nonRootDocs);
 
     const folders = useMemo<string[]>(
         () => nonRootDocs.map((d) => d.fileRoot!.split("/")[0]).filter((el, pos, self) => self.indexOf(el) === pos),
@@ -111,7 +113,7 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
                 </TreeItem>
             )}
             {rootDocs.map((d, i) => (
-                <TreeItem key={d.fileName! + i} itemId={d.fileRoot! + d.fileName!} label={
+                <TreeItem key={d.fileName! + d.fileRoot! + i} itemId={d.fileRoot! + d.fileName! + i} label={
                     <Grid container direction="row">
                         <Grid xs={11}>
                             {d.fileName!}
