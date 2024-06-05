@@ -165,6 +165,10 @@
   "tenant": {
     "createMember": "Create employee",
     "manageMembers": "Manage employees",
-    "moveMembers": "Move employees"
+    "moveMembers": "Move employees",
+    "new": "New Tenant",
+    "name": "Name",
+    "baseData": "Base data",
+    "owner": "Owner"
   }
 }

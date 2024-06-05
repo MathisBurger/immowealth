@@ -3,3 +3,9 @@ mutation MoveTenantMembers($input: TenantMoveInputInput!) {
         ...Tenant
     }
 }
+
+mutation CreateTenant($input: CreateTenantInputInput!) {
+    createTenant(input: $input) {
+        ...Tenant
+    }
+}

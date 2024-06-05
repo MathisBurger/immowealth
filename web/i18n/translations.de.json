@@ -166,6 +166,10 @@
   "tenant": {
     "createMember": "Mitarbeiter erstellen",
     "manageMembers": "Mitarbeiter verwalten",
-    "moveMembers": "Mitarbeiter verschieben"
+    "moveMembers": "Mitarbeiter verschieben",
+    "new": "Neue Abteilung",
+    "name": "Name",
+    "baseData": "Grunddaten",
+    "owner": "Abteilungsleiter"
   }
 }

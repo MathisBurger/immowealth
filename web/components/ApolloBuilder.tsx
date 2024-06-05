@@ -33,7 +33,7 @@ const ApolloBuilder = ({children}: ApolloBuilderProps) => {
         if (typeof data !== "object") {
             return data;
         }
-        if (data.__typename === 'User' && data["tenant"] !== null) {
+        if (data.__typename === 'User' && 'tenant' in data &&data["tenant"] !== null) {
             data["username"] = `${data["username"]} (${data["tenant"]["name"]})`
             return data;
         }

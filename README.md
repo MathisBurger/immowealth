@@ -71,6 +71,8 @@ There are many new features planned. You can find a little roadmap of planned fu
 
 ### Not planned yet
 - [ ] Add balance sheet calculation
+- [ ] New password rule validation
+- [ ] Translation test coverage
 - [ ] TAX calculations
 
 ## Local setup

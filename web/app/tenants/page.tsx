@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const TenantsPage = () => {
 
-    const {data, loading} = useGetAllTenantsQuery();
+    const {data} = useGetAllTenantsQuery();
     const {t} = useTranslation();
     const router = useRouter();
 
@@ -47,9 +47,16 @@ const TenantsPage = () => {
         }
     ], [t, router]);
 
+    console.log(data)
+
     return (
         <>
             <Typography level="h1">{t('routes.tenants')}</Typography>
+            <Button
+                variant="soft"
+                color="primary"
+                onClick={() => router.push("/tenants/create")}
+            >{t('tenant.new')}</Button>
             <EntityList
                 columns={cols}
                 rows={data?.allTenants ?? []}
