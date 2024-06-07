@@ -4,6 +4,7 @@ import de.immowealth.data.input.CreateRenterInput
 import de.immowealth.entity.Renter
 import de.immowealth.exception.ParameterException
 import de.immowealth.repository.RealEstateRepository
+import de.immowealth.repository.RenterRepository
 import de.immowealth.voter.RealEstateObjectVoter
 import de.immowealth.voter.RenterVoter
 import jakarta.enterprise.context.ApplicationScoped
@@ -18,6 +19,10 @@ class RenterService : AbstractService() {
 
     @Inject
     lateinit var realEstateRepository: RealEstateRepository;
+
+    @Inject
+    lateinit var renterRepository: RenterRepository;
+
 
     /**
      * Creates a renter on real estate object
@@ -46,5 +51,25 @@ class RenterService : AbstractService() {
         this.entityManager.persist(realEstate);
         this.entityManager.flush();
         return renter;
+    }
+
+    /**
+     * Deletes a renter from the object and from the system itself
+     */
+    @Transactional
+    fun deleteRenterFromObject(renterId: Long) {
+        val renterOption = this.renterRepository.findByIdOptional(renterId);
+        if (renterOption.isEmpty) {
+            throw ParameterException("The given renter does not exist");
+        }
+        val renter = renterOption.get();
+        this.denyUnlessGranted(RenterVoter.DELETE, renter);
+        if (renter.realEstateObject !== null) {
+            renter.realEstateObject!!.renters.remove(renter);
+            this.entityManager.persist(renter.realEstateObject!!);
+        }
+        this.delete(renter);
+        this.entityManager.flush();
+
     }
 }

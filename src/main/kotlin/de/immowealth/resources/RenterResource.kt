@@ -4,7 +4,6 @@ import de.immowealth.data.input.CreateRenterInput
 import de.immowealth.entity.Renter
 import de.immowealth.exception.ParameterException
 import de.immowealth.service.RenterService
-import graphql.GraphQLError
 import graphql.GraphQLException
 import io.quarkus.security.UnauthorizedException
 import jakarta.inject.Inject
@@ -27,6 +26,21 @@ class RenterResource {
     fun createRenterOnObject(input: CreateRenterInput): Renter {
         try {
             return this.renterService.createRenterOnObject(input);
+        } catch (e: UnauthorizedException) {
+            throw GraphQLException(e.message);
+        } catch (e: ParameterException) {
+            throw GraphQLException(e.message);
+        }
+    }
+
+    /**
+     * Deletes a renter from an object
+     */
+    @Mutation
+    fun deleteRenterFromObject(renterId: Long): Boolean {
+        try {
+            this.renterService.deleteRenterFromObject(renterId);
+            return true;
         } catch (e: UnauthorizedException) {
             throw GraphQLException(e.message);
         } catch (e: ParameterException) {
