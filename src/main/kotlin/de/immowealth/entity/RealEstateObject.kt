@@ -113,10 +113,17 @@ class RealEstateObject : AuthorizedBaseEntity(), Archivable {
     var expenses: MutableList<ObjectRentExpense> = mutableListOf();
 
     /**
+     * All renters of the object
+     */
+    @OneToMany(mappedBy = "realEstateObject", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    var renters: MutableList<Renter> = mutableListOf();
+
+    /**
      * All uploaded files
      */
     @OneToMany(mappedBy = "realEstateObject", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var uploadedFiles: MutableList<UploadedFile> = mutableListOf();
+
     override fun toString(): String {
         return this.id.toString();
     }
