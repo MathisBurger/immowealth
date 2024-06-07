@@ -1,7 +1,6 @@
 package de.immowealth.service
 
 import de.immowealth.data.input.CreateRenterInput
-import de.immowealth.data.input.CreateTenantInput
 import de.immowealth.data.input.CreditInput
 import de.immowealth.data.input.RealEstateInput
 import de.immowealth.entity.UserRoles
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
 import java.util.*
 
 /**
@@ -108,6 +108,59 @@ class RenterServiceTest() : AbstractServiceTest() {
                 "User",
                 Date()
             ));
+        }
+    }
+
+    @Test
+    @Order(6)
+    fun testDeleteRenterFromObjectAsAdmin() {
+        this.loginAsUser("admin");
+        val obj = this.realEstateRepository.findByCity("obj_renter_01")
+        val renter = obj.renters.first();
+        assertDoesNotThrow {
+            this.renterService.deleteRenterFromObject(renter.id!!)
+        }
+    }
+
+    @Test
+    @Order(7)
+    fun testDeleteRenterFromObjectAsAssigned() {
+        this.loginAsUser("ten1_renter_user")
+        val obj = this.realEstateRepository.findByCity("obj_renter_01")
+        val renter = obj.renters.first();
+        assertDoesNotThrow {
+            this.renterService.deleteRenterFromObject(renter.id!!)
+        }
+    }
+
+    @Test
+    @Order(8)
+    fun testDeleteRenterFromObjectAsUnassigned() {
+        this.loginAsUser("ten_test_renter_unass");
+        val obj = this.realEstateRepository.findByCity("obj_renter_01")
+        val renter = obj.renters.first();
+        assertThrows(UnauthorizedException::class.java) {
+            this.renterService.deleteRenterFromObject(renter.id!!)
+        }
+    }
+
+    @Test
+    @Order(9)
+    fun testDeleteRenterFromObjectAsUnknown() {
+        this.loginAsUser("unknown");
+        val obj = this.realEstateRepository.findByCity("obj_renter_01")
+        val renter = obj.renters.first();
+        assertThrows(UnauthorizedException::class.java) {
+            this.renterService.deleteRenterFromObject(renter.id!!)
+        }
+    }
+
+    @Test
+    @Order(10)
+    fun testDeleteRenterFromObjectWithInvalidParams() {
+        this.loginAsUser("admin");
+        assertThrows(ParameterException::class.java) {
+            this.renterService.deleteRenterFromObject(-1);
         }
     }
 
