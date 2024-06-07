@@ -52,7 +52,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Upgrade to a Next version that supports React compiler
 
 ### v1.5.0 (not scheduled yet)
-- [ ] Full UNIT test coverage (resources)
+- [ ] Full UNIT test coverage (all classes, doesn`t matter how simple they are)
 - [ ] Subtenants
 - [ ] Immo portal search
 - [ ] Object location watchlist
@@ -63,6 +63,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Backend translations
 - [ ] 2FA
 - [ ] Rent spread suggestions by fixes rules
+- [ ] Validation of emails and other fields with strict rules
 
 ### v1.6.0 (not scheduled yet)
 - [ ] Mail templates to send

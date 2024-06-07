@@ -8,6 +8,7 @@ import de.immowealth.voter.RealEstateObjectVoter
 import de.immowealth.voter.RenterVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
+import jakarta.transaction.Transactional
 
 /**
  * Service handling renter actions
@@ -24,6 +25,7 @@ class RenterService : AbstractService() {
      * @param id The ID of the real estate object
      * @param input The creation input
      */
+    @Transactional
     fun createRenterOnObject(input: CreateRenterInput): Renter {
         val obj = this.realEstateRepository.findByIdOptional(input.objectID);
         if (obj.isEmpty) {
@@ -36,9 +38,11 @@ class RenterService : AbstractService() {
         renter.firstName = input.firstName;
         renter.lastName = input.lastName;
         renter.birthDay = input.birthDay;
+        renter.tenant = realEstate.tenant;
         this.denyUnlessGranted(RenterVoter.CREATE, renter);
         realEstate.renters.add(renter);
         this.entityManager.persist(renter);
+        this.entityManager.persist(renter.tenant);
         this.entityManager.persist(realEstate);
         this.entityManager.flush();
         return renter;
