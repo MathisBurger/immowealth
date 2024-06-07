@@ -1,0 +1,9 @@
+mutation CreateRenterOnObject($input: CreateRenterInputInput!) {
+    createRenterOnObject(input: $input) {
+        ...Renter
+    }
+}
+
+mutation DeleteRenterFromObject($renterId: BigInteger!) {
+    deleteRenterFromObject(renterId: $renterId)
+}
