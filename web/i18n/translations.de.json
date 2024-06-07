@@ -92,7 +92,11 @@
     "email": "Email",
     "requestPasswordReset": "Zurücksetzen anfragen",
     "resetPassword": "Password zurücksetzen",
-    "pleaseCheckYourInbox": "Die E-Mail wurde versendet. Bitte überprüfen sie ihr Postfach."
+    "pleaseCheckYourInbox": "Die E-Mail wurde versendet. Bitte überprüfen sie ihr Postfach.",
+    "renters": "Mieter",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "birthday": "Geburtstag"
   },
   "credit": {
     "tab": {
@@ -161,6 +165,9 @@
         "INSURANCE": "Versicherung",
         "OTHER": "Sonstiges"
       }
+    },
+    "renter": {
+      "createRenter": "Mieter anlegen"
     }
   },
   "tenant": {

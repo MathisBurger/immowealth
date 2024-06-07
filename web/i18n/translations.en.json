@@ -92,7 +92,11 @@
     "email": "Email",
     "requestPasswordReset": "Request reset",
     "resetPassword": "Reset password",
-    "pleaseCheckYourInbox": "E-Mail has been sent. Please check your inbox"
+    "pleaseCheckYourInbox": "E-Mail has been sent. Please check your inbox",
+    "renters": "Renters",
+    "firstName": "Firstname",
+    "lastName": "Lastname",
+    "birthday": "Birthday"
   },
   "credit": {
     "tab": {
@@ -160,6 +164,9 @@
         "INSURANCE": "Insurance",
         "OTHER": "Other"
       }
+    },
+    "renter": {
+      "createRenter": "Create renter"
     }
   },
   "tenant": {
