@@ -47,7 +47,6 @@ class RenterService : AbstractService() {
         this.denyUnlessGranted(RenterVoter.CREATE, renter);
         realEstate.renters.add(renter);
         this.entityManager.persist(renter);
-        this.entityManager.persist(renter.tenant);
         this.entityManager.persist(realEstate);
         this.entityManager.flush();
         return renter;
