@@ -7,6 +7,7 @@ import de.immowealth.repository.UserRepository
 import de.immowealth.voter.ChatVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
+import jakarta.transaction.Transactional
 
 /**
  * The service handling chats
@@ -20,6 +21,12 @@ class ChatService : AbstractService() {
     @Inject
     lateinit var chatRepository: ChatRepository;
 
+    /**
+     * Creates a chat with another user.
+     *
+     * @param userId The ID of the other user
+     */
+    @Transactional
     fun createChatWithUser(userId: Long): Chat {
         val otherUser = this.userRepository.findByIdOptional(userId)
         if (otherUser.isEmpty) {
@@ -29,13 +36,13 @@ class ChatService : AbstractService() {
         if (currentUser === null) {
             throw ParameterException("Current user not present in security");
         }
-        val chat = Chat()
+        val chat = Chat();
         chat.participants.add(currentUser);
-        currentUser.chats.add(chat);
         chat.participants.add(otherUser.get());
-        otherUser.get().chats.add(chat);
         this.denyUnlessGranted(ChatVoter.CREATE, chat);
         this.entityManager.persist(chat);
+        currentUser.chats.add(chat);
+        otherUser.get().chats.add(chat);
         this.entityManager.persist(currentUser);
         this.entityManager.persist(otherUser.get());
         this.entityManager.flush();
