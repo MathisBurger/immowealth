@@ -1,11 +1,13 @@
 "use client";
-import {RenterFragment} from "@/generated/graphql";
+import {GetObjectDocument, RenterFragment, useDeleteRenterFromObjectMutation} from "@/generated/graphql";
 import EntityList from "@/components/EntityList";
 import {useMemo, useState} from "react";
-import {GridColDef} from "@mui/x-data-grid";
+import {GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
 import {useTranslation} from "next-export-i18n";
 import {Button, Card, CardContent, Grid, Stack} from "@mui/joy";
 import CreateRenterModal from "@/components/object/modal/CreateRenterModal";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface ObjectRentersTabProps {
     renters: RenterFragment[];
@@ -17,6 +19,14 @@ const ObjectRentersTab = ({renters, objectId, refetch}: ObjectRentersTabProps) =
 
     const {t} = useTranslation();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [deleteMutation, {loading}] = useDeleteRenterFromObjectMutation({
+        refetchQueries: [
+            {
+                query: GetObjectDocument,
+                variables: {id: objectId}
+            }
+        ]
+    });
 
     const cols = useMemo<GridColDef[]>(() => [
         {
@@ -30,6 +40,19 @@ const ObjectRentersTab = ({renters, objectId, refetch}: ObjectRentersTabProps) =
         {
             field: 'birthDay',
             headerName: t('common.birthday')
+        },
+        {
+            field: '_actions',
+            headerName: t('common.actions'),
+            renderCell: ({row}: GridRenderCellParams) => (
+                <Grid container direction="row" spacing={2}>
+                    <Grid>
+                        <Button onClick={() => deleteMutation({variables: {renterId: row.id}})} color="danger" loading={loading}>
+                            <DeleteIcon />
+                        </Button>
+                    </Grid>
+                </Grid>
+            )
         }
     ], [t]);
 
