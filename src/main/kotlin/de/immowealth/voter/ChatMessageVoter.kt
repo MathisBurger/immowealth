@@ -1,30 +1,31 @@
 package de.immowealth.voter
 
 import de.immowealth.entity.Archived
-import de.immowealth.entity.Chat
+import de.immowealth.entity.ChatMessage
 import de.immowealth.entity.User
 import jakarta.enterprise.context.ApplicationScoped
 
+/**
+ * The voter to vote on chat messages
+ */
 @ApplicationScoped
-class ChatVoter : VoterInterface {
+class ChatMessageVoter : VoterInterface {
 
     companion object {
         val CREATE = "CREATE"
-        val READ = "READ"
-        val SEND_MESSAGE = "SEND_MESSAGE"
     }
 
     override fun <T : Archived> voteOnAttribute(user: User?, attributeName: String, value: T): Boolean {
         if (user == null) {
             return false
         }
-        if (value is Chat) {
-            return value.participants.contains(user)
+        if (value is ChatMessage) {
+            return value.sender?.id === user.id;
         }
-        return false;
+        return false
     }
 
     override fun votedType(): String {
-        return Chat::class.java.toString();
+        return ChatMessage::class.java.toString()
     }
 }

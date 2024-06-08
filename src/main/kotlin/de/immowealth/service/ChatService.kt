@@ -1,9 +1,11 @@
 package de.immowealth.service
 
 import de.immowealth.entity.Chat
+import de.immowealth.entity.ChatMessage
 import de.immowealth.exception.ParameterException
 import de.immowealth.repository.ChatRepository
 import de.immowealth.repository.UserRepository
+import de.immowealth.voter.ChatMessageVoter
 import de.immowealth.voter.ChatVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -47,5 +49,31 @@ class ChatService : AbstractService() {
         this.entityManager.persist(otherUser.get());
         this.entityManager.flush();
         return chat;
+    }
+
+    /**
+     * Sends a message to a chat
+     *
+     * @param chatId The ID of the chat
+     * @param message The message to send
+     */
+    @Transactional
+    fun sendMessage(chatId: Long, message: String): ChatMessage {
+        val optionalChat = this.chatRepository.findByIdOptional(chatId)
+        if (optionalChat.isEmpty) {
+            throw ParameterException("Chat not found");
+        }
+        val chat = optionalChat.get();
+        val msg = ChatMessage()
+        msg.chat = chat;
+        msg.message = message;
+        msg.sender = this.securityService.getCurrentUser()
+        this.denyUnlessGranted(ChatMessageVoter.CREATE, msg)
+        this.entityManager.persist(msg);
+        chat.messages.add(msg)
+        this.denyUnlessGranted(ChatVoter.SEND_MESSAGE, chat)
+        this.entityManager.persist(chat);
+        this.entityManager.flush()
+        return msg;
     }
 }
