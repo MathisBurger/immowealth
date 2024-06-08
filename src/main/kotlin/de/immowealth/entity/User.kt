@@ -42,6 +42,18 @@ class User : BaseEntity(), Archivable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     var tenant: Tenant? = null;
 
+    /**
+     * All chats the user is member of
+     */
+    @ManyToMany
+    var chats: MutableList<Chat> = mutableListOf();
+
+    /**
+     * The messages that were sent by the user
+     */
+    @OneToMany
+    var messages: MutableList<ChatMessage> = mutableListOf();
+
     override fun toString(): String {
         return this.username;
     }
