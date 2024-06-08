@@ -2,6 +2,7 @@ package de.immowealth.service
 
 import de.immowealth.entity.User
 import de.immowealth.exception.ParameterException
+import de.immowealth.repository.ChatRepository
 import de.immowealth.repository.UserRepository
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
@@ -28,6 +29,9 @@ class ChatServiceTest : AbstractServiceTest() {
     @Inject
     lateinit var chatService: ChatService
 
+    @Inject
+    lateinit var chatRepository: ChatRepository
+
     @Test
     @Order(1)
     fun testCreateChatAsUser() {
@@ -50,6 +54,31 @@ class ChatServiceTest : AbstractServiceTest() {
     fun testCreateChatWithInvalidUser() {
         this.loginAsUser("admin")
         assertThrows(ParameterException::class.java) { this.chatService.createChatWithUser(-1);}
+    }
+
+    @Test
+    @Order(4)
+    fun testSendMessageAsUser() {
+        val admin = this.userRepository.findByUserName("admin").get();
+        val chat = this.chatRepository.findByUser(admin).get(0);
+        this.loginAsUser("chat_user");
+        assertDoesNotThrow { this.chatService.sendMessage(chat.id!!, "Message"); }
+    }
+
+    @Test
+    @Order(5)
+    fun testSendMessageAsNonUser() {
+        val admin = this.userRepository.findByUserName("admin").get();
+        val chat = this.chatRepository.findByUser(admin).get(0);
+        this.logout()
+        assertThrows(ParameterException::class.java) { this.chatService.sendMessage(chat.id!!, "msg");}
+    }
+
+    @Test
+    @Order(6)
+    fun testSendMessageWithInvalidChat() {
+        this.loginAsUser("admin")
+        assertThrows(ParameterException::class.java) { this.chatService.sendMessage(-1, "msg");}
     }
 
     @Transactional
