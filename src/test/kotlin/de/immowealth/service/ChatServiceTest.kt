@@ -4,6 +4,7 @@ import de.immowealth.entity.User
 import de.immowealth.exception.ParameterException
 import de.immowealth.repository.ChatRepository
 import de.immowealth.repository.UserRepository
+import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
 import jakarta.persistence.EntityManager
@@ -11,6 +12,7 @@ import jakarta.transaction.Transactional
 import org.eclipse.microprofile.jwt.JsonWebToken
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 
@@ -71,7 +73,7 @@ class ChatServiceTest : AbstractServiceTest() {
         val admin = this.userRepository.findByUserName("admin").get();
         val chat = this.chatRepository.findByUser(admin).get(0);
         this.logout()
-        assertThrows(ParameterException::class.java) { this.chatService.sendMessage(chat.id!!, "msg");}
+        assertThrows(UnauthorizedException::class.java) { this.chatService.sendMessage(chat.id!!, "msg");}
     }
 
     @Test
@@ -80,6 +82,47 @@ class ChatServiceTest : AbstractServiceTest() {
         this.loginAsUser("admin")
         assertThrows(ParameterException::class.java) { this.chatService.sendMessage(-1, "msg");}
     }
+
+    @Test
+    @Order(7)
+    fun testGetChatMessagesAsUser() {
+        val admin = this.userRepository.findByUserName("admin").get();
+        val chat = this.chatRepository.findByUser(admin).get(0);
+        this.loginAsUser("chat_user");
+        assertDoesNotThrow { this.chatService.getChatMessages(chat.id!!, 100, null); }
+    }
+
+    @Test
+    @Order(8)
+    fun testGetChatMessagesAsNonUser() {
+        val admin = this.userRepository.findByUserName("admin").get();
+        val chat = this.chatRepository.findByUser(admin).get(0);
+        this.logout()
+        assertThrows(UnauthorizedException::class.java) { this.chatService.getChatMessages(chat.id!!, 100, null);}
+    }
+
+    @Test
+    @Order(9)
+    fun testGetChatMessagesWithInvalidChat() {
+        this.loginAsUser("admin")
+        assertThrows(ParameterException::class.java) { this.chatService.getChatMessages(-1, 100, null);}
+    }
+
+    @Test
+    @Order(10)
+    fun testGetChatsAsUser() {
+        this.loginAsUser("chat_user");
+        val res = this.chatService.getUserChats();
+        assertTrue(res.isNotEmpty())
+    }
+
+    @Test
+    @Order(11)
+    fun testGetChatsAsNonUser() {
+        this.logout()
+        assertThrows(ParameterException::class.java) { this.chatService.getUserChats() }
+    }
+
 
     @Transactional
     fun createUsers() {
