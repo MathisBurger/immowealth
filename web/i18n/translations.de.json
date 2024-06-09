@@ -98,7 +98,8 @@
     "firstName": "Vorname",
     "lastName": "Nachname",
     "birthday": "Geburtstag",
-    "chats": "Chats"
+    "chats": "Chats",
+    "send": "Senden"
   },
   "credit": {
     "tab": {

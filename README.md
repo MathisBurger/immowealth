@@ -64,6 +64,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] 2FA
 - [ ] Rent spread suggestions by fixes rules
 - [ ] Validation of emails and other fields with strict rules
+- [ ] Data backup functionality
 
 ### v1.6.0 (not scheduled yet)
 - [ ] Mail templates to send

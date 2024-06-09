@@ -9,6 +9,8 @@ fragment ChatMessage on ChatMessage {
     id
     sender {
         id
+        username
     }
+    createdAt
     message
 }
