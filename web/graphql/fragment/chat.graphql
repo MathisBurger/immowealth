@@ -1,0 +1,14 @@
+fragment Chat on Chat {
+    id
+    participants {
+        ...SimpleUser
+    }
+}
+
+fragment ChatMessage on ChatMessage {
+    id
+    sender {
+        id
+    }
+    message
+}

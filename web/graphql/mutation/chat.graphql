@@ -1,0 +1,11 @@
+mutation CreateChatWithUser($userId: BigInteger!) {
+    createChatWithUser(userId: $userId) {
+        ...Chat
+    }
+}
+
+mutation SendChatMessage($chatId: BigInteger! $message: String!) {
+    sendMessage(chatId: $chatId message: $message) {
+        ...ChatMessage
+    }
+}
