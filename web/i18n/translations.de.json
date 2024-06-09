@@ -43,7 +43,8 @@
     "activityLog": "Aktivitäten",
     "archived": "Archiv",
     "tenants": "Abteilungen",
-    "tenant": " Abteilung"
+    "tenant": " Abteilung",
+    "chats": "Chats"
   },
   "common": {
     "credit": "Kredit",
@@ -96,7 +97,8 @@
     "renters": "Mieter",
     "firstName": "Vorname",
     "lastName": "Nachname",
-    "birthday": "Geburtstag"
+    "birthday": "Geburtstag",
+    "chats": "Chats"
   },
   "credit": {
     "tab": {

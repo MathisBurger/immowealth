@@ -8,6 +8,7 @@ import MapIcon from '@mui/icons-material/Map';
 import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import GroupsIcon from '@mui/icons-material/Groups';
+import {Chat} from '@mui/icons-material';
 import UserRoles from "@/utilts/userRoles";
 
 const routes: RouteConfigType[] = [
@@ -39,6 +40,12 @@ const routes: RouteConfigType[] = [
         name: 'map',
         path: '/map',
         icon: <MapIcon />,
+        authorized: true
+    },
+    {
+        name: 'chats',
+        path: '/chats',
+        icon: <Chat />,
         authorized: true
     },
     {
