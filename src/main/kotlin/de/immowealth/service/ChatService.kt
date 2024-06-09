@@ -3,6 +3,7 @@ package de.immowealth.service
 import de.immowealth.entity.Chat
 import de.immowealth.entity.ChatMessage
 import de.immowealth.exception.ParameterException
+import de.immowealth.repository.ChatMessageRepository
 import de.immowealth.repository.ChatRepository
 import de.immowealth.repository.UserRepository
 import de.immowealth.voter.ChatMessageVoter
@@ -10,6 +11,7 @@ import de.immowealth.voter.ChatVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
+import java.util.*
 
 /**
  * The service handling chats
@@ -22,6 +24,9 @@ class ChatService : AbstractService() {
 
     @Inject
     lateinit var chatRepository: ChatRepository;
+
+    @Inject
+    lateinit var chatMessageRepository: ChatMessageRepository
 
     /**
      * Creates a chat with another user.
@@ -67,6 +72,7 @@ class ChatService : AbstractService() {
         val msg = ChatMessage()
         msg.chat = chat;
         msg.message = message;
+        msg.createdAt = Date();
         msg.sender = this.securityService.getCurrentUser()
         this.denyUnlessGranted(ChatMessageVoter.CREATE, msg)
         this.entityManager.persist(msg);
@@ -75,5 +81,32 @@ class ChatService : AbstractService() {
         this.entityManager.persist(chat);
         this.entityManager.flush()
         return msg;
+    }
+
+    /**
+     * Gets all user chats
+     */
+    fun getUserChats(): List<Chat> {
+        val currentUser = this.securityService.getCurrentUser();
+        if (currentUser == null) {
+            throw ParameterException("Current user not present in security");
+        }
+        return this.chatRepository.findByUser(currentUser);
+    }
+
+    /**
+     * Gets chat messages in chat
+     *
+     * @param chatId The ID of the chat
+     * @param limit The limit of messages
+     * @param maxId The max id
+     */
+    fun getChatMessages(chatId: Long, limit: Int, maxId: Long?): List<ChatMessage> {
+        val chat = this.chatRepository.findByIdOptional(chatId)
+        if (chat.isEmpty) {
+            throw ParameterException("Chat not found");
+        }
+        this.denyUnlessGranted(ChatVoter.READ, chat.get())
+        return this.chatMessageRepository.findChatMessagesByChatIdAndLimit(chatId, limit, maxId)
     }
 }
