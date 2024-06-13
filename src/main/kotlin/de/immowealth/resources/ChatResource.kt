@@ -1,5 +1,6 @@
 package de.immowealth.resources
 
+import de.immowealth.data.response.ChatResponse
 import de.immowealth.entity.Chat
 import de.immowealth.entity.ChatMessage
 import de.immowealth.exception.ParameterException
@@ -24,7 +25,7 @@ class ChatResource {
      * Gets all user chats
      */
     @Query
-    fun getUserChats(): List<Chat> {
+    fun getUserChats(): List<ChatResponse> {
         try {
             return this.chatService.getUserChats()
         } catch (e: ParameterException) {

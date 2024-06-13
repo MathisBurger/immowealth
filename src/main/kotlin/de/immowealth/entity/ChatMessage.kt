@@ -2,7 +2,6 @@ package de.immowealth.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.ManyToMany
 import jakarta.persistence.ManyToOne
 import java.util.*
 
@@ -34,4 +33,9 @@ class ChatMessage : BaseEntity() {
      * When the message has been created
      */
     var createdAt: Date? = null
+
+    /**
+     * Whether a message has been read or not
+     */
+    var read: Boolean = false
 }

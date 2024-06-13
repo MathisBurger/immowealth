@@ -1,5 +1,6 @@
 package de.immowealth.service
 
+import de.immowealth.data.response.ChatResponse
 import de.immowealth.entity.Chat
 import de.immowealth.entity.ChatMessage
 import de.immowealth.exception.ParameterException
@@ -86,12 +87,23 @@ class ChatService : AbstractService() {
     /**
      * Gets all user chats
      */
-    fun getUserChats(): List<Chat> {
+    fun getUserChats(): List<ChatResponse> {
         val currentUser = this.securityService.getCurrentUser();
         if (currentUser == null) {
             throw ParameterException("Current user not present in security");
         }
-        return this.chatRepository.findByUser(currentUser);
+        val chats = this.chatRepository.findByUser(currentUser);
+        var responses = mutableListOf<ChatResponse>();
+        for (chat in chats) {
+            var count = 0;
+            var index = chat.messages.lastIndex;
+            while (index >= 0 && !chat.messages.get(index).read) {
+                count++;
+                index--;
+            }
+            responses.add(ChatResponse(chat, count));
+        }
+        return responses;
     }
 
     /**
