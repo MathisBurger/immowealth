@@ -99,7 +99,8 @@
     "lastName": "Lastname",
     "birthday": "Birthday",
     "chats": "Chats",
-    "send": "Senden"
+    "send": "Senden",
+    "loadMore": "Load more"
   },
   "credit": {
     "tab": {

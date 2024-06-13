@@ -80,6 +80,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Assign chat to specific people
 - [ ] Profile picture upload
 - [ ] TAX calculations
+- [ ] Extended chat functionality
 
 ## Local setup
 

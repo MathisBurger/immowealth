@@ -107,6 +107,6 @@ class ChatService : AbstractService() {
             throw ParameterException("Chat not found");
         }
         this.denyUnlessGranted(ChatVoter.READ, chat.get())
-        return this.chatMessageRepository.findChatMessagesByChatIdAndLimit(chatId, limit, maxId)
+        return this.chatMessageRepository.findChatMessagesByChatIdAndLimit(chatId, limit, maxId).reversed()
     }
 }

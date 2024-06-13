@@ -1,7 +1,6 @@
 import {
-    Chat,
     ChatFragment,
-    ChatMessage, GetChatMessagesDocument,
+    ChatMessage,
     useGetChatMessagesLazyQuery, useSendChatMessageMutation,
 } from "@/generated/graphql";
 import {Avatar, Box, Button, Card, CardContent, Grid, Input, Sheet, Stack, Textarea} from "@mui/joy";
@@ -17,12 +16,20 @@ interface ChatComponentProps {
 
 const ChatComponent = ({chat}: ChatComponentProps) => {
 
-    const [query] = useGetChatMessagesLazyQuery();
+    const [query] = useGetChatMessagesLazyQuery({
+        fetchPolicy: 'network-only'
+    });
     const currentUser = useCurrentUser();
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const {t} = useTranslation();
     const [sendMessageMutation] = useSendChatMessageMutation();
     const inputRef = useRef(null);
+
+    const fetchMoreMessages = async () => {
+        const res = await query({variables: {chatID: chat.id, limit: 100, maxID: messages[0].id}});
+        // @ts-ignore
+        setMessages([...(res.data?.chatMessages ?? []), ...messages]);
+    }
 
 
     const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
@@ -43,7 +50,12 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
         query({variables: {chatID: chat.id, limit: 100, maxID: null}})
             .then((res) => {
                 let msgs = (res.data?.chatMessages ?? []) as ChatMessage[];
-                setMessages(msgs.reverse());
+                if (msgs.length > 0) {
+                    setMessages(msgs);
+                } else {
+                    setMessages([]);
+                }
+
             });
     }, [chat]);
 
@@ -71,6 +83,11 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
                         }}
                     >
                         <Stack spacing={2} justifyContent="flex-end">
+                            {messages.length >= 100 && (
+                                <Button size="sm" color="primary" variant="soft" onClick={fetchMoreMessages}>
+                                    {t('common.loadMore')}
+                                </Button>
+                            )}
                             {messages.map((message: ChatMessage, index: number) => {
                                 const isYou = message.sender?.id === currentUser?.id;
                                 return (
