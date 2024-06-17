@@ -123,6 +123,33 @@ class ChatServiceTest : AbstractServiceTest() {
         assertThrows(ParameterException::class.java) { this.chatService.getUserChats() }
     }
 
+    @Test
+    @Order(12)
+    fun testReadMessagesAsChatUser() {
+        val admin = this.userRepository.findByUserName("admin").get();
+        val chat = this.chatRepository.findByUser(admin).get(0);
+        this.loginAsUser("chat_user");
+        assertDoesNotThrow { this.chatService.readChatMessages(chat.id!!) }
+    }
+
+    @Test
+    @Order(13)
+    fun testReadMessagesAsNonChatUser() {
+        val admin = this.userRepository.findByUserName("admin").get();
+        val chat = this.chatRepository.findByUser(admin).get(0);
+        this.loginAsUser("admin2");
+        assertThrows(UnauthorizedException::class.java) { this.chatService.readChatMessages(chat.id!!) }
+    }
+
+    @Test
+    @Order(14)
+    fun testReadMessagesAsNonUser() {
+        val admin = this.userRepository.findByUserName("admin").get();
+        val chat = this.chatRepository.findByUser(admin).get(0);
+        this.logout()
+        assertThrows(ParameterException::class.java) { this.chatService.readChatMessages(chat.id!!) }
+    }
+
 
     @Transactional
     fun createUsers() {
