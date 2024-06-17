@@ -52,7 +52,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Upgrade to a Next version that supports React compiler
 
 ### v1.5.0 (not scheduled yet)
-- [ ] Full UNIT test coverage (all classes, doesn`t matter how simple they are)
+- [ ] Full UNIT test coverage (all classes, doesn`t matter how simple they are => more complex edge-cases)
 - [ ] Subtenants
 - [ ] Immo portal search
 - [ ] Object location watchlist

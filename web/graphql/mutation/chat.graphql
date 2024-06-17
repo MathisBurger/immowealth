@@ -9,3 +9,7 @@ mutation SendChatMessage($chatId: BigInteger! $message: String!) {
         ...ChatMessage
     }
 }
+
+mutation ReadMessages($chatId: BigInteger!) {
+    readMessages(chatId: $chatId)
+}

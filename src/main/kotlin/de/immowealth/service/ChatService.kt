@@ -127,6 +127,7 @@ class ChatService : AbstractService() {
      *
      * @param chatId The ID of the chat
      */
+    @Transactional
     fun readChatMessages(chatId: Long) {
         val currentUser = this.securityService.getCurrentUser();
         if (currentUser == null) {

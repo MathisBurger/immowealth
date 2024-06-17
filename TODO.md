@@ -7,7 +7,7 @@
 - [x] Add general chat feature (internal chat)
 - [x] Fetch messages that are more far away...
 - [x] Create new chats
-- [ ] Functionality to read messages
+- [x] Functionality to read messages
 - [x] Display amount of unread messages
 - [ ] Websocket chat integration
 - [ ] Create renter login & user accounts

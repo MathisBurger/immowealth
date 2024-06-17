@@ -1,7 +1,7 @@
 import {
     ChatFragment,
-    ChatMessage, ChatResponseFragment,
-    useGetChatMessagesLazyQuery, useSendChatMessageMutation,
+    ChatMessage, ChatResponseFragment, GetAllChatsDocument,
+    useGetChatMessagesLazyQuery, useReadMessagesMutation, useSendChatMessageMutation,
 } from "@/generated/graphql";
 import {Avatar, Box, Button, Card, CardContent, Grid, Input, Sheet, Stack, Textarea} from "@mui/joy";
 import ChatHeader from "@/components/chat/ChatHeader";
@@ -23,6 +23,13 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const {t} = useTranslation();
     const [sendMessageMutation] = useSendChatMessageMutation();
+    const [readMessagesMutation] = useReadMessagesMutation({
+        refetchQueries: [
+            {
+                query: GetAllChatsDocument
+            }
+        ]
+    });
     const inputRef = useRef(null);
 
     const fetchMoreMessages = async () => {
@@ -56,7 +63,12 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
                     setMessages([]);
                 }
 
-            });
+            })
+            .finally(() => {
+                if (chat.unreadMessagesCount > 0) {
+                    readMessagesMutation({variables: {chatId: chat.chat.id}});
+                }
+            })
     }, [chat]);
 
     return (
