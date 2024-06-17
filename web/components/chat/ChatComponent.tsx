@@ -1,6 +1,6 @@
 import {
     ChatFragment,
-    ChatMessage,
+    ChatMessage, ChatResponseFragment,
     useGetChatMessagesLazyQuery, useSendChatMessageMutation,
 } from "@/generated/graphql";
 import {Avatar, Box, Button, Card, CardContent, Grid, Input, Sheet, Stack, Textarea} from "@mui/joy";
@@ -11,7 +11,7 @@ import ChatMessageComponent from "@/components/chat/ChatMessageComponent";
 import {useTranslation} from "next-export-i18n";
 
 interface ChatComponentProps {
-    chat: ChatFragment;
+    chat: ChatResponseFragment;
 }
 
 const ChatComponent = ({chat}: ChatComponentProps) => {
@@ -26,7 +26,7 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
     const inputRef = useRef(null);
 
     const fetchMoreMessages = async () => {
-        const res = await query({variables: {chatID: chat.id, limit: 100, maxID: messages[0].id}});
+        const res = await query({variables: {chatID: chat.chat.id, limit: 100, maxID: messages[0].id}});
         // @ts-ignore
         setMessages([...(res.data?.chatMessages ?? []), ...messages]);
     }
@@ -37,7 +37,7 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
         const data = new FormData(e.currentTarget);
         if (`${data.get("text")}`.trim() !== "") {
             const res = await sendMessageMutation({
-                variables: {chatId: chat.id, message: `${data.get("text")}`}
+                variables: {chatId: chat.chat.id, message: `${data.get("text")}`}
             });
             // @ts-ignore
             inputRef.current.children[0].value = "";
@@ -47,7 +47,7 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
     }
 
     useEffect(() => {
-        query({variables: {chatID: chat.id, limit: 100, maxID: null}})
+        query({variables: {chatID: chat.chat.id, limit: 100, maxID: null}})
             .then((res) => {
                 let msgs = (res.data?.chatMessages ?? []) as ChatMessage[];
                 if (msgs.length > 0) {

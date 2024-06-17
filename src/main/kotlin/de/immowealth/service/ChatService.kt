@@ -93,7 +93,7 @@ class ChatService : AbstractService() {
             throw ParameterException("Current user not present in security");
         }
         val chats = this.chatRepository.findByUser(currentUser);
-        var responses = mutableListOf<ChatResponse>();
+        val responses = mutableListOf<ChatResponse>();
         for (chat in chats) {
             var count = 0;
             var index = chat.messages.lastIndex;

@@ -1,6 +1,6 @@
 query GetAllChats {
     userChats {
-        ...Chat
+        ...ChatResponse
     }
 }
 

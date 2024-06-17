@@ -1,12 +1,12 @@
 import {Box, Card, CardContent, IconButton, List} from "@mui/joy";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import {ChatFragment} from "@/generated/graphql";
+import {ChatResponseFragment} from "@/generated/graphql";
 import ChatListItem from "@/components/chat/ChatListItem";
 import {useState} from "react";
 import CreateChatModal from "@/components/chat/CreateChatModal";
 
 interface ChatListProps {
-    chats: ChatFragment[];
+    chats: ChatResponseFragment[];
     selected: number;
     setSelected: (id: number) => void;
 }
@@ -34,10 +34,10 @@ const ChatList = ({chats, selected, setSelected}: ChatListProps) => {
                     >
                         {chats.map((c) => (
                             <ChatListItem
-                                key={c.id}
+                                key={c.chat.id}
                                 chat={c}
-                                selected={c.id === selected}
-                                setSelected={() => setSelected(c.id)}
+                                selected={c.chat.id === selected}
+                                setSelected={() => setSelected(c.chat.id)}
                             />
                         ))}
                     </List>

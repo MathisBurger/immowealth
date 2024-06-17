@@ -1,3 +1,10 @@
+fragment ChatResponse on ChatResponse {
+    chat {
+        ...Chat
+    }
+    unreadMessagesCount
+}
+
 fragment Chat on Chat {
     id
     participants {

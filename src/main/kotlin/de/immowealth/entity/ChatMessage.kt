@@ -3,6 +3,7 @@ package de.immowealth.entity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.ManyToOne
+import org.hibernate.annotations.ColumnDefault
 import java.util.*
 
 /**
@@ -37,5 +38,6 @@ class ChatMessage : BaseEntity() {
     /**
      * Whether a message has been read or not
      */
+    @ColumnDefault("false")
     var read: Boolean = false
 }

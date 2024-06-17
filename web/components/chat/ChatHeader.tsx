@@ -1,10 +1,10 @@
 import {Avatar, Stack, Typography} from "@mui/joy";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import {useMemo} from "react";
-import {ChatFragment} from "@/generated/graphql";
+import {ChatFragment, ChatResponseFragment} from "@/generated/graphql";
 
 interface ChatHeaderProps {
-    chat: ChatFragment;
+    chat: ChatResponseFragment;
 }
 
 const ChatHeader = ({chat}: ChatHeaderProps) => {
@@ -12,7 +12,7 @@ const ChatHeader = ({chat}: ChatHeaderProps) => {
     const currentUser = useCurrentUser();
 
     const chatName = useMemo<string>(() => {
-        let withoutCurrent = chat.participants.filter((p) => p?.id !== currentUser?.id);
+        let withoutCurrent = chat.chat.participants.filter((p) => p?.id !== currentUser?.id);
         let usernames = withoutCurrent.map((u) => u?.username);
         return usernames.join(", ");
     }, [currentUser, chat]);

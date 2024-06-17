@@ -1,7 +1,7 @@
 "use client";
 import {Card, CardContent, Grid, Typography} from "@mui/joy";
 import {useTranslation} from "next-export-i18n";
-import {ChatFragment, useGetAllChatsQuery} from "@/generated/graphql";
+import {ChatFragment, ChatResponseFragment, useGetAllChatsQuery} from "@/generated/graphql";
 import ChatList from "@/components/chat/ChatList";
 import {useEffect, useMemo, useState} from "react";
 import ChatComponent from "@/components/chat/ChatComponent";
@@ -14,8 +14,8 @@ const ChatsPage = () => {
     const {data} = useGetAllChatsQuery();
 
     const chatComponent = useMemo(() => {
-        const chats = (data?.userChats ?? []) as ChatFragment[];
-        const selectedChat = chats.find((c) => c.id === selected);
+        const chats = (data?.userChats ?? []) as ChatResponseFragment[];
+        const selectedChat = chats.find((c) => c.chat.id === selected);
         if (selectedChat === undefined) {
             return null;
         }
@@ -28,7 +28,7 @@ const ChatsPage = () => {
             <Grid container direction="row" spacing={2}>
                 <Grid xs={3}>
                     <ChatList
-                        chats={(data?.userChats ?? []) as ChatFragment[]}
+                        chats={(data?.userChats ?? []) as ChatResponseFragment[]}
                         selected={selected}
                         setSelected={setSelected}
                     />

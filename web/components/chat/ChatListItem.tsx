@@ -1,20 +1,31 @@
 import {Avatar, Box, ListDivider, ListItem, ListItemButton, Stack, Typography} from "@mui/joy";
-import {ChatFragment} from "@/generated/graphql";
+import {ChatFragment, ChatResponse, ChatResponseFragment} from "@/generated/graphql";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import {useMemo} from "react";
+import React, {CSSProperties, useMemo} from "react";
+import {Circle} from "@mui/icons-material";
 
 interface ChatListItemProps {
-    chat: ChatFragment;
+    chat: ChatResponseFragment;
     selected: boolean;
     setSelected: () => void;
 }
+
+const unreadCircleStyle: CSSProperties = {
+    color: '#fff',
+    backgroundColor: '#4164c1',
+    width: '20px',
+    height: '20px',
+    fontSize: '13px',
+    textAlign: 'center',
+    borderRadius: '50%'
+};
 
 const ChatListItem = ({chat, selected, setSelected}: ChatListItemProps) => {
 
     const currentUser = useCurrentUser();
 
     const chatName = useMemo<string>(() => {
-        let withoutCurrent = chat.participants.filter((p) => p?.id !== currentUser?.id);
+        let withoutCurrent = chat.chat.participants.filter((p) => p?.id !== currentUser?.id);
         let usernames = withoutCurrent.map((u) => u?.username);
         return usernames.join(", ");
     }, [currentUser, chat]);
@@ -47,9 +58,11 @@ const ChatListItem = ({chat, selected, setSelected}: ChatListItemProps) => {
                                 textAlign: 'right',
                             }}
                         >
-                            {/*{messages[0].unread && (
-                                <CircleIcon sx={{ fontSize: 12 }} color="primary" />
-                            )}*/}
+                            {chat.unreadMessagesCount > 0 && (
+                                <Typography style={unreadCircleStyle}>
+                                    {chat.unreadMessagesCount}
+                                </Typography>
+                            )}
                             <Typography
                                 level="body-xs"
                                 display={{ xs: 'none', md: 'block' }}
