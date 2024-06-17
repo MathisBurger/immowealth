@@ -74,4 +74,19 @@ class ChatResource {
             throw GraphQLException(ex)
         }
     }
+
+    /**
+     * Reads all chat messages that were not sent by the current user
+     */
+    @Mutation
+    fun readMessages(chatId: Long): Boolean {
+        try {
+            this.chatService.readChatMessages(chatId);
+            return true;
+        } catch (ex: ParameterException) {
+            throw GraphQLException(ex)
+        } catch (ex: UnauthorizedException) {
+            throw GraphQLException(ex)
+        }
+    }
 }

@@ -97,7 +97,7 @@ class ChatService : AbstractService() {
         for (chat in chats) {
             var count = 0;
             var index = chat.messages.lastIndex;
-            while (index >= 0 && !chat.messages.get(index).read) {
+            while (index >= 0 && !chat.messages.get(index).read && chat.messages.get(index).sender!!.id !== currentUser.id) {
                 count++;
                 index--;
             }
@@ -120,5 +120,33 @@ class ChatService : AbstractService() {
         }
         this.denyUnlessGranted(ChatVoter.READ, chat.get())
         return this.chatMessageRepository.findChatMessagesByChatIdAndLimit(chatId, limit, maxId).reversed()
+    }
+
+    /**
+     * Reads all chat messages that were not sent by the user itself
+     *
+     * @param chatId The ID of the chat
+     */
+    fun readChatMessages(chatId: Long) {
+        val currentUser = this.securityService.getCurrentUser();
+        if (currentUser == null) {
+            throw ParameterException("Current user not present in security");
+        }
+        val chat = this.chatRepository.findByIdOptional(chatId)
+        if (chat.isEmpty) {
+            throw ParameterException("Chat not found");
+        }
+        this.denyUnlessGranted(ChatVoter.READ, chat.get())
+        val realChat = chat.get();
+        var index = realChat.messages.lastIndex;
+        while (index >= 0 && !realChat.messages.get(index).read && realChat.messages.get(index).sender!!.id !== currentUser.id) {
+            val msg = realChat.messages.get(index)
+            msg.read = true;
+            this.entityManager.persist(msg);
+            index--;
+        }
+        if (realChat.messages.lastIndex != index) {
+            this.entityManager.flush();
+        }
     }
 }
