@@ -1,4 +1,4 @@
-package de.immowealth.data.type
+package de.immowealth.data.type.socket
 
 import de.immowealth.entity.User
 import jakarta.websocket.Session

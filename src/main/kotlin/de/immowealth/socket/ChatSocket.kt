@@ -1,7 +1,7 @@
 package de.immowealth.socket
 
-import de.immowealth.data.type.SocketMessage
-import de.immowealth.data.type.SocketSession
+import de.immowealth.data.type.socket.SocketMessage
+import de.immowealth.data.type.socket.SocketSession
 import de.immowealth.entity.User
 import de.immowealth.service.SecurityService
 import jakarta.enterprise.context.ApplicationScoped

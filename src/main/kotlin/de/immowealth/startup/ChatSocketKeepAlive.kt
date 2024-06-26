@@ -1,7 +1,7 @@
 package de.immowealth.startup
 
-import de.immowealth.data.type.SocketMessage
-import de.immowealth.data.type.SocketMessageType
+import de.immowealth.data.type.socket.SocketMessage
+import de.immowealth.data.type.socket.SocketMessageType
 import de.immowealth.socket.ChatSocket
 import io.quarkus.runtime.Startup
 import jakarta.enterprise.context.ApplicationScoped

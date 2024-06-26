@@ -1,4 +1,4 @@
-package de.immowealth.data.type
+package de.immowealth.data.type.socket
 
 /**
  * The socket message that is sent by the socket
@@ -11,5 +11,5 @@ data class SocketMessage(
     /**
      * The message of the message
      */
-    val message: String
+    val message: Any
 )

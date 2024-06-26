@@ -1,12 +1,16 @@
 package de.immowealth.service
 
 import de.immowealth.data.response.ChatResponse
+import de.immowealth.data.type.socket.NewMessageNotification
+import de.immowealth.data.type.socket.SocketMessage
+import de.immowealth.data.type.socket.SocketMessageType
 import de.immowealth.entity.Chat
 import de.immowealth.entity.ChatMessage
 import de.immowealth.exception.ParameterException
 import de.immowealth.repository.ChatMessageRepository
 import de.immowealth.repository.ChatRepository
 import de.immowealth.repository.UserRepository
+import de.immowealth.socket.ChatSocket
 import de.immowealth.voter.ChatMessageVoter
 import de.immowealth.voter.ChatVoter
 import jakarta.enterprise.context.ApplicationScoped
@@ -27,7 +31,10 @@ class ChatService : AbstractService() {
     lateinit var chatRepository: ChatRepository;
 
     @Inject
-    lateinit var chatMessageRepository: ChatMessageRepository
+    lateinit var chatMessageRepository: ChatMessageRepository;
+
+    @Inject
+    lateinit var chatSocket: ChatSocket;
 
     /**
      * Creates a chat with another user.
@@ -71,16 +78,24 @@ class ChatService : AbstractService() {
         }
         val chat = optionalChat.get();
         val msg = ChatMessage()
+        val sender = this.securityService.getCurrentUser();
         msg.chat = chat;
         msg.message = message;
         msg.createdAt = Date();
-        msg.sender = this.securityService.getCurrentUser()
+        msg.sender = sender;
         this.denyUnlessGranted(ChatMessageVoter.CREATE, msg)
         this.entityManager.persist(msg);
         chat.messages.add(msg)
         this.denyUnlessGranted(ChatVoter.SEND_MESSAGE, chat)
         this.entityManager.persist(chat);
-        this.entityManager.flush()
+        this.entityManager.flush();
+        this.chatSocket.broadcast(
+            SocketMessage(SocketMessageType.NEW_MESSAGE, NewMessageNotification(
+                chat.id!!,
+                message
+            )),
+            chat.participants.filter { it.id !== sender?.id }
+        );
         return msg;
     }
 

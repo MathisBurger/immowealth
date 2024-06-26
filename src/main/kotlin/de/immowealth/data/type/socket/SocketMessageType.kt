@@ -1,4 +1,4 @@
-package de.immowealth.data.type
+package de.immowealth.data.type.socket
 
 /**
  * The type of the socket message
