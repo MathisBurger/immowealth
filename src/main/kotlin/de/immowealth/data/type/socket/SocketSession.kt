@@ -10,7 +10,7 @@ data class SocketSession(
     /**
      * The user that is connected to the session
      */
-    val user: User,
+    val userId: Long,
     /**
      * The actual session
      */

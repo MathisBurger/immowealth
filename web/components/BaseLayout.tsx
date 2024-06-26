@@ -8,6 +8,7 @@ import  { SettingsContext } from "@/hooks/useSettings";
 import {SettingDataFragment, useGetAllSettingsQuery, useGetCurrentUserQuery} from "@/generated/graphql";
 import {usePathname, useRouter} from "next/navigation";
 import {CurrentUserContext} from "@/hooks/useCurrentUser";
+import {useCookies} from "react-cookie";
 
 interface BaseLayoutProps {
     children: ReactNode;
@@ -22,11 +23,22 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
     const {data} = useGetAllSettingsQuery();
     const {data: userData} = useGetCurrentUserQuery();
     const pathname = usePathname();
+    const [cookies] = useCookies(['jwt']);
 
     const displaySidebar = useMemo(
         () => !(pathname.includes("login") || pathname.includes("reset")),
         [pathname]
     );
+
+    useEffect(() => {
+        if (displaySidebar) {
+            const baseUrl = process.env.NODE_ENV === 'production' ? '/api/chat/' : 'http://localhost:8080/api/chat/';
+            const ws = new WebSocket(
+                baseUrl + cookies.jwt
+            );
+            ws.onmessage = (msg) => console.log(msg);
+        }
+    }, [cookies, displaySidebar])
 
     useEffect(() => {
         if (data?.allSettings) {

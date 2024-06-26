@@ -6,6 +6,10 @@ import de.immowealth.repository.UserRepository
 import de.immowealth.util.RandomUtils
 import de.immowealth.voter.VoterInterface
 import io.quarkus.elytron.security.common.BcryptUtil
+import io.smallrye.common.annotation.Blocking
+import io.smallrye.jwt.auth.principal.DefaultJWTCallerPrincipalFactory
+import io.smallrye.jwt.auth.principal.JWTAuthContextInfo
+import io.smallrye.jwt.auth.principal.JWTParser
 import io.smallrye.jwt.build.Jwt
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.enterprise.inject.Instance
@@ -23,6 +27,7 @@ import org.wildfly.security.password.WildFlyElytronPasswordProvider
 import org.wildfly.security.password.interfaces.BCryptPassword
 import org.wildfly.security.password.util.ModularCrypt
 import java.util.*
+import kotlin.reflect.typeOf
 
 
 /**
@@ -45,6 +50,9 @@ class SecurityService {
 
     @Inject
     lateinit var mailService: MailService;
+
+    @Inject
+    lateinit var jwtParser: JWTParser;
 
     @ConfigProperty(name = "immowealth.applicationHost")
     lateinit var applicationHost: String;
@@ -89,22 +97,27 @@ class SecurityService {
     }
 
     /**
+     * Gets the current user ID by token
+     *
+     * @param token The JWT token
+     */
+    fun getCurrentUserIdByToken(token: String): Long? {
+        val parsedToken = this.jwtParser.parse(token);
+        try {
+            return parsedToken.name.toLong()
+        } catch (e: NumberFormatException) {
+            return null;
+        }
+    }
+
+    /**
      * Gets the current user that is logged in
      */
     fun getCurrentUser(): User? {
         if (this.ctx.name == null) {
             return null;
         }
-        var rawUser: Optional<User> = Optional.empty();
-        try {
-            rawUser = this.userRepository.findByIdOptional(ctx.name.toLong())
-        } catch (e: NumberFormatException) {
-            rawUser = this.userRepository.findByUserName(ctx.name);
-        }
-        if (rawUser.isEmpty) {
-            return null;
-        }
-        return rawUser.get();
+        return this.getUser(ctx.name);
     }
 
 
@@ -173,5 +186,23 @@ class SecurityService {
         fetchedUser.password = BcryptUtil.bcryptHash(password);
         this.entityManager.persist(fetchedUser);
         this.entityManager.flush();
+    }
+
+    /**
+     * Gets the user by name (ID)
+     *
+     * @param name The ID of the user
+     */
+    private fun getUser(name: String): User? {
+        var rawUser: Optional<User> = Optional.empty();
+        try {
+            rawUser = this.userRepository.findByIdOptional(name.toLong())
+        } catch (e: NumberFormatException) {
+            rawUser = this.userRepository.findByUserName(name);
+        }
+        if (rawUser.isEmpty) {
+            return null;
+        }
+        return rawUser.get();
     }
 }

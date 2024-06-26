@@ -1,5 +1,6 @@
 package de.immowealth.startup
 
+import de.immowealth.data.type.socket.NewMessageNotification
 import de.immowealth.data.type.socket.SocketMessage
 import de.immowealth.data.type.socket.SocketMessageType
 import de.immowealth.socket.ChatSocket
@@ -18,9 +19,10 @@ class ChatSocketKeepAlive {
 
     @Startup
     fun run() {
-        val runnable: Runnable = object : Runnable {
-            override fun run() {
-                chatSocket.broadcast(SocketMessage(SocketMessageType.KEEP_ALIVE, ""), null);
+        val runnable: Runnable = Runnable {
+            while (true) {
+                chatSocket.broadcast(SocketMessage(SocketMessageType.KEEP_ALIVE, NewMessageNotification(-1, "")), null);
+                Thread.sleep(10 * 1000);
             }
         };
         val thread = Thread(runnable)

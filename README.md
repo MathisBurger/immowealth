@@ -81,6 +81,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Profile picture upload
 - [ ] TAX calculations
 - [ ] Extended chat functionality
+- [ ] Configure Chat Socket keep alive
 
 ## Local setup
 
