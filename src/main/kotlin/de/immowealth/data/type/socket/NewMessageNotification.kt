@@ -16,4 +16,8 @@ data class NewMessageNotification(
      * The message that has been sent
      */
     val message: String,
+    /**
+     * The ID of the message
+     */
+    val messageId: Long
 )

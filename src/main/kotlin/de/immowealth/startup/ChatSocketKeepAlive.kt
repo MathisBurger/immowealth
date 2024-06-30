@@ -21,7 +21,7 @@ class ChatSocketKeepAlive {
     fun run() {
         val runnable: Runnable = Runnable {
             while (true) {
-                chatSocket.broadcast(SocketMessage(SocketMessageType.KEEP_ALIVE, NewMessageNotification(-1, "")), null);
+                chatSocket.broadcast(SocketMessage(SocketMessageType.KEEP_ALIVE, NewMessageNotification(-1, "", -1)), null);
                 Thread.sleep(10 * 1000);
             }
         };

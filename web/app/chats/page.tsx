@@ -5,22 +5,22 @@ import {ChatFragment, ChatResponseFragment, useGetAllChatsQuery} from "@/generat
 import ChatList from "@/components/chat/ChatList";
 import {useEffect, useMemo, useState} from "react";
 import ChatComponent from "@/components/chat/ChatComponent";
+import useUnreadMessages from "@/hooks/useUnreadMessages";
 
 
 const ChatsPage = () => {
 
     const {t} = useTranslation();
     const [selected, setSelected] = useState<number>(-1);
-    const {data} = useGetAllChatsQuery();
+    const unreadMessages = useUnreadMessages();
 
     const chatComponent = useMemo(() => {
-        const chats = (data?.userChats ?? []) as ChatResponseFragment[];
-        const selectedChat = chats.find((c) => c.chat.id === selected);
+        const selectedChat = unreadMessages.value.find((c) => c.chat.id === selected);
         if (selectedChat === undefined) {
             return null;
         }
         return <ChatComponent chat={selectedChat} />;
-    }, [data, selected]);
+    }, [unreadMessages, selected]);
 
     return (
         <>
@@ -28,7 +28,7 @@ const ChatsPage = () => {
             <Grid container direction="row" spacing={2}>
                 <Grid xs={3}>
                     <ChatList
-                        chats={(data?.userChats ?? []) as ChatResponseFragment[]}
+                        chats={unreadMessages.value}
                         selected={selected}
                         setSelected={setSelected}
                     />

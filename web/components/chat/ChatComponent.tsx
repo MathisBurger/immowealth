@@ -69,7 +69,7 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
                     readMessagesMutation({variables: {chatId: chat.chat.id}});
                 }
             })
-    }, [chat]);
+    }, []);
 
     return (
         <Card>

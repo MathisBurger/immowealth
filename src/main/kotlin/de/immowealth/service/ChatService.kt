@@ -92,7 +92,8 @@ class ChatService : AbstractService() {
         this.chatSocket.broadcast(
             SocketMessage(SocketMessageType.NEW_MESSAGE, NewMessageNotification(
                 chat.id!!,
-                message
+                message,
+                msg.id!!
             )),
             chat.participants.filter { it.id !== sender?.id }
         );
