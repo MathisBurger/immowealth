@@ -54,7 +54,7 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
     }
 
     useEffect(() => {
-        query({variables: {chatID: chat.chat.id, limit: 100, maxID: null}})
+        query({variables: {chatID: chat.chat.id, limit: 100, maxID: null}, fetchPolicy: 'network-only'})
             .then((res) => {
                 let msgs = (res.data?.chatMessages ?? []) as ChatMessage[];
                 if (msgs.length > 0) {
@@ -69,7 +69,7 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
                     readMessagesMutation({variables: {chatId: chat.chat.id}});
                 }
             })
-    }, []);
+    }, [chat.chat.id]);
 
     return (
         <Card>
