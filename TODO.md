@@ -9,7 +9,7 @@
 - [x] Create new chats
 - [x] Functionality to read messages
 - [x] Display amount of unread messages
-- [ ] Websocket chat integration
+- [x] Websocket chat integration
 - [ ] Create renter login & user accounts
 - [ ] Create rental support chats (all allowed users can communicate with single renter => Renter only has one chat with all of them
 
