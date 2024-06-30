@@ -6,6 +6,7 @@ import {ReactNode, useCallback, useEffect, useMemo, useState} from "react";
 import NoSSR from "@/components/NoSSR";
 import  { SettingsContext } from "@/hooks/useSettings";
 import {
+    ChatMessage,
     ChatResponseFragment,
     SettingDataFragment, useGetAllChatsLazyQuery,
     useGetAllChatsQuery,
@@ -15,6 +16,7 @@ import {
 import {usePathname, useRouter} from "next/navigation";
 import {CurrentUserContext} from "@/hooks/useCurrentUser";
 import {useCookies} from "react-cookie";
+import {ChatsContext} from "@/hooks/useChats";
 import {UnreadMessagesContext} from "@/hooks/useUnreadMessages";
 
 interface BaseLayoutProps {
@@ -31,7 +33,8 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
     const {data: userData} = useGetCurrentUserQuery();
     const pathname = usePathname();
     const {data: allChatsData, refetch: refetchChats} = useGetAllChatsQuery();
-    const [unreadMessages, setUnreadMessages] = useState<ChatResponseFragment[]>([]);
+    const [chats, setChats] = useState<ChatResponseFragment[]>([]);
+    const [unreadMessages, setUnreadMessages] = useState<ChatMessage[]>([]);
     const [cookies] = useCookies(['jwt']);
 
     const displaySidebar = useMemo(
@@ -41,24 +44,39 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
 
     const messageListener = useCallback((msg: MessageEvent<any>) => {
         const json = JSON.parse(msg.data as string);
-        console.log(unreadMessages);
         if (json.reason === "NEW_MESSAGE") {
-            const others = unreadMessages.filter((s) => s.chat.id !== json.message.chatId);
-            let chat = unreadMessages.find((s) => s.chat.id === json.message.chatId);
-            console.log(unreadMessages);
+            const others = chats.filter((s) => s.chat.id !== json.message.chatId);
+            let chat = chats.find((s) => s.chat.id === json.message.chatId);
             if (chat !== undefined) {
                 chat = {...chat, unreadMessagesCount: ++chat.unreadMessagesCount};
-                setUnreadMessages([...others, chat!]);
+                setChats([...others, chat!]);
+                setUnreadMessages([
+                    // @ts-ignore
+                    ...unreadMessages,
+                    {
+                        archived: false,
+                        read: false,
+                        id: json.message.messageId,
+                        message: json.message.message,
+                        // @ts-ignore
+                        sender: {
+                            id: json.message.senderId,
+                        },
+                        // @ts-ignore
+                        chat: {
+                            id: json.message.chatId
+                        },
+                        createdAt: new Date(json.message.createdAt)
+                    }
+                ])
             } else {
-                setUnreadMessages([...others]);
+                setChats([...others]);
             }
         } else if (json.reason === "NEW_CHAT") {
             // Refetches all chats - I know this is not performant
             refetchChats();
         }
-    }, [unreadMessages]);
-
-
+    }, [chats, unreadMessages]);
 
     useEffect(() => {
         if (displaySidebar) {
@@ -76,7 +94,7 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
             ...c
         }));
         console.log(unread);
-        setUnreadMessages(unread);
+        setChats(unread);
     }, [allChatsData]);
 
     useEffect(() => {
@@ -92,37 +110,39 @@ const BaseLayout = ({children}: BaseLayoutProps) => {
         <NoSSR>
             <CurrentUserContext.Provider value={userData?.currentUser ?? null}>
                 <SettingsContext.Provider value={(data?.allSettings ?? []) as SettingDataFragment[]}>
-                    <UnreadMessagesContext.Provider value={{value: unreadMessages, setValue: setUnreadMessages}}>
-                        <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
-                            {displaySidebar && (
-                                <Sidebar />
-                            )}
-                            <Box
-                                component="main"
-                                className="MainContent"
-                                sx={{
-                                    px: { xs: 2, md: 6 },
-                                    pt: {
-                                        xs: 'calc(12px + var(--Header-height))',
-                                        sm: 'calc(12px + var(--Header-height))',
-                                        md: 3,
-                                    },
-                                    pb: { xs: 2, sm: 2, md: 3 },
-                                    flex: 1,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    minWidth: 0,
-                                    height: '100dvh',
-                                    gap: 1,
-                                }}
-                            >
+                    <ChatsContext.Provider value={{value: chats, setValue: setChats}}>
+                        <UnreadMessagesContext.Provider value={unreadMessages}>
+                            <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
                                 {displaySidebar && (
-                                    <PathDisplay />
+                                    <Sidebar />
                                 )}
-                                {children}
+                                <Box
+                                    component="main"
+                                    className="MainContent"
+                                    sx={{
+                                        px: { xs: 2, md: 6 },
+                                        pt: {
+                                            xs: 'calc(12px + var(--Header-height))',
+                                            sm: 'calc(12px + var(--Header-height))',
+                                            md: 3,
+                                        },
+                                        pb: { xs: 2, sm: 2, md: 3 },
+                                        flex: 1,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        minWidth: 0,
+                                        height: '100dvh',
+                                        gap: 1,
+                                    }}
+                                >
+                                    {displaySidebar && (
+                                        <PathDisplay />
+                                    )}
+                                    {children}
+                                </Box>
                             </Box>
-                        </Box>
-                    </UnreadMessagesContext.Provider>
+                        </UnreadMessagesContext.Provider>
+                    </ChatsContext.Provider>
                 </SettingsContext.Provider>
             </CurrentUserContext.Provider>
         </NoSSR>

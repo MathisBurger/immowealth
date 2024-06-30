@@ -1,16 +1,8 @@
 import {createContext, useContext} from "react";
-import {ChatResponseFragment} from "@/generated/graphql";
+import {ChatMessage} from "@/generated/graphql";
 
-interface UnreadMessages {
-    value: ChatResponseFragment[];
-    setValue: (m: ChatResponseFragment[]) => void;
-}
 
-export const UnreadMessagesContext = createContext<UnreadMessages>({
-    value: [],
-    setValue: () => {}
-});
-
+export const UnreadMessagesContext = createContext<ChatMessage[]>([]);
 
 const useUnreadMessages = () => useContext(UnreadMessagesContext);
 

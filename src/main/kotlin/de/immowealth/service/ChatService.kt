@@ -61,6 +61,16 @@ class ChatService : AbstractService() {
         this.entityManager.persist(currentUser);
         this.entityManager.persist(otherUser.get());
         this.entityManager.flush();
+        this.chatSocket.broadcast(
+            SocketMessage(SocketMessageType.NEW_CHAT, NewMessageNotification(
+                -1,
+                "",
+                -1,
+                Date().time,
+                -1,
+            )),
+            chat.participants.filter { it.id !== currentUser.id }
+        );
         return chat;
     }
 
@@ -93,7 +103,9 @@ class ChatService : AbstractService() {
             SocketMessage(SocketMessageType.NEW_MESSAGE, NewMessageNotification(
                 chat.id!!,
                 message,
-                msg.id!!
+                msg.id!!,
+                msg.createdAt!!.time,
+                msg.sender!!.id!!,
             )),
             chat.participants.filter { it.id !== sender?.id }
         );

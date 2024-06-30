@@ -9,6 +9,8 @@ import {FormEvent, useEffect, useRef, useState} from "react";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import ChatMessageComponent from "@/components/chat/ChatMessageComponent";
 import {useTranslation} from "next-export-i18n";
+import useUnreadMessages from "@/hooks/useUnreadMessages";
+import useChats from "@/hooks/useChats";
 
 interface ChatComponentProps {
     chat: ChatResponseFragment;
@@ -20,6 +22,7 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
         fetchPolicy: 'network-only'
     });
     const currentUser = useCurrentUser();
+    const unreadMessages = useUnreadMessages();
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const {t} = useTranslation();
     const [sendMessageMutation] = useSendChatMessageMutation();
@@ -52,6 +55,13 @@ const ChatComponent = ({chat}: ChatComponentProps) => {
             setMessages([...messages, res.data?.sendMessage])
         }
     }
+
+    useEffect(() => {
+        const unreadLocal = unreadMessages.filter((s) => s.chat?.id === chat.chat.id);
+        if (unreadLocal.length > 0 && (messages.length === 0 || unreadLocal[unreadLocal.length-1].id !== messages[messages.length-1].id)) {
+             setMessages([...messages, ...unreadLocal]);
+        }
+    }, [unreadMessages, messages, chat.chat.id]);
 
     useEffect(() => {
         query({variables: {chatID: chat.chat.id, limit: 100, maxID: null}, fetchPolicy: 'network-only'})

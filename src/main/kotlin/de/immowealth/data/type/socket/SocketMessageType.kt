@@ -14,5 +14,9 @@ enum class SocketMessageType {
     /**
      * A new message has been sent
      */
-    NEW_MESSAGE
+    NEW_MESSAGE,
+    /**
+     * New chat has been created
+     */
+    NEW_CHAT
 }

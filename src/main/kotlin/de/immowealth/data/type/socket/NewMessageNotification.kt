@@ -1,6 +1,7 @@
 package de.immowealth.data.type.socket
 
 import kotlinx.serialization.Serializable
+import java.util.*
 
 
 /**
@@ -19,5 +20,13 @@ data class NewMessageNotification(
     /**
      * The ID of the message
      */
-    val messageId: Long
+    val messageId: Long,
+    /**
+     * Created at UNIX
+     */
+    val createdAt: Long,
+    /**
+     * Sender ID
+     */
+    val senderId: Long,
 )
