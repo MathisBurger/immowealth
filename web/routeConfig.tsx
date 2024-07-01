@@ -16,55 +16,64 @@ const routes: RouteConfigType[] = [
         name: 'dashboard',
         path: '/dashboard',
         icon: <DashboardIcon />,
-        authorized: true
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED, UserRoles.RENTER]
     },
     {
         name: 'objects',
         path: '/objects',
         icon: <ApartmentIcon />,
-        authorized: true
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'credits',
         path: '/credits',
         icon: <AttachMoneyIcon />,
-        authorized: true
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'housingPrices',
         path: '/housingPrices',
         icon: <ShowChartIcon />,
-        authorized: true
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'map',
         path: '/map',
         icon: <MapIcon />,
-        authorized: true
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'chats',
         path: '/chats',
         icon: <Chat />,
-        authorized: true
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED, UserRoles.RENTER]
     },
     {
         name: 'activityLog',
         path: '/activityLog',
         icon: <ChangeHistoryIcon />,
-        authorized: true
+        authorized: true,
+        roles: [UserRoles.ADMIN]
     },
     {
       name: 'archived',
       path: '/archived',
       icon: <ArchiveIcon />,
-        authorized: true
+      authorized: true,
+      roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'settings',
         path: '/settings',
         icon: <SettingsRoundedIcon />,
-        authorized: true
+        authorized: true,
+        roles: [UserRoles.ADMIN]
     },
     {
         name: 'tenants',

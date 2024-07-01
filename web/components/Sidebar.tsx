@@ -35,7 +35,7 @@ const Sidebar = () => {
     const filteredRoutes = useMemo<RouteConfigType[]>(
         () => routes.filter((r) => r.authorized ? currentUser !== null : true)
             .filter((r) => r.roles ? !isUniqueArray([...r.roles, ...(currentUser?.roles ?? [])]) : true),
-        [router, currentUser]
+        [currentUser]
     );
 
     const logout = () => {

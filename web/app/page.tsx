@@ -1,27 +1,29 @@
 'use client';
-import {Card, Divider, Grid, Typography} from "@mui/joy";
-import React from 'react';
-import {PieChart} from "@mui/x-charts";
-import {useGetWealthQuery, WealthResponse} from "@/generated/graphql";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import UserRoles, {isGranted} from "@/utilts/userRoles";
+import WealthCardDashboard from "@/components/dashboard/WealthCardDashboard";
+import React from "react";
+import {Divider, Grid, Typography} from "@mui/joy";
 import WealthCard from "@/components/dashboard/WealthCard";
+import {WealthResponse} from "@/generated/graphql";
 
 const Dashboard = () => {
 
-    const {data} = useGetWealthQuery();
+    const currentUser = useCurrentUser();
 
-  return (
-      <React.Fragment>
-          <Typography level="h1">Dashboard</Typography>
-          <Divider />
-          <Typography level="h2">Vermögen</Typography>
-          <Grid container direction="row" spacing={2}>
-              <WealthCard data={data?.grossWealthWithoutInflation as WealthResponse} label="Brutto (ohne Wertsteigerung)" />
-              <WealthCard data={data?.grossWealthWithInflation as WealthResponse} label="Brutto (mit Wertsteigerung)" />
-              <WealthCard data={data?.netWealthWithoutInflation as WealthResponse} label="Netto (ohne Wertsteigerung)" />
-              <WealthCard data={data?.netWealthWithInflation as WealthResponse} label="Netto (mit Wertsteigerung)" />
-          </Grid>
-      </React.Fragment>
-  )
+    if (isGranted(currentUser, [UserRoles.TENANT_ASSIGNED, UserRoles.TENANT_OWNER, UserRoles.ADMIN])) {
+        return <WealthCardDashboard />
+    }
+    if (isGranted(currentUser, [UserRoles.RENTER])) {
+        return (
+            <React.Fragment>
+                <Typography level="h1">Dashboard</Typography>
+                <Divider />
+                <Typography level="h2">Data will be added soon</Typography>
+            </React.Fragment>
+        )
+    }
+    return null;
 };
 
 export const dynamic = 'force-static';
