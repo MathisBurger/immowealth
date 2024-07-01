@@ -1,8 +1,10 @@
 package de.immowealth.entity
 
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.OneToMany
+import jakarta.persistence.OneToOne
 
 /**
  * Chat entity
@@ -21,4 +23,15 @@ class Chat : BaseEntity() {
      */
     @OneToMany(mappedBy = "chat")
     var messages: MutableList<ChatMessage> = mutableListOf()
+
+    /**
+     * The real estate object assigned to the chat
+     */
+    @OneToOne
+    var realEstateObject: RealEstateObject? = null
+
+    /**
+     * Whether the chat is a renter chat
+     */
+    var isRenterChat: Boolean? = false
 }

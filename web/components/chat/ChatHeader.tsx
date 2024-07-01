@@ -2,6 +2,7 @@ import {Avatar, Stack, Typography} from "@mui/joy";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import {useMemo} from "react";
 import {ChatFragment, ChatResponseFragment} from "@/generated/graphql";
+import {useTranslation} from "next-export-i18n";
 
 interface ChatHeaderProps {
     chat: ChatResponseFragment;
@@ -10,8 +11,12 @@ interface ChatHeaderProps {
 const ChatHeader = ({chat}: ChatHeaderProps) => {
 
     const currentUser = useCurrentUser();
+    const {t} = useTranslation();
 
     const chatName = useMemo<string>(() => {
+        if (chat.chat.renterChat) {
+            return `${t('common.object')} ${chat.chat.realEstateObject?.id}`
+        }
         let withoutCurrent = chat.chat.participants.filter((p) => p?.id !== currentUser?.id);
         let usernames = withoutCurrent.map((u) => u?.username);
         return usernames.join(", ");

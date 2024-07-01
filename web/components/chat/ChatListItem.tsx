@@ -3,6 +3,7 @@ import {ChatFragment, ChatResponse, ChatResponseFragment} from "@/generated/grap
 import useCurrentUser from "@/hooks/useCurrentUser";
 import React, {CSSProperties, useMemo} from "react";
 import {Circle} from "@mui/icons-material";
+import {useTranslation} from "next-export-i18n";
 
 interface ChatListItemProps {
     chat: ChatResponseFragment;
@@ -23,8 +24,12 @@ const unreadCircleStyle: CSSProperties = {
 const ChatListItem = ({chat, selected, setSelected}: ChatListItemProps) => {
 
     const currentUser = useCurrentUser();
+    const {t} = useTranslation();
 
     const chatName = useMemo<string>(() => {
+        if (chat.chat.renterChat) {
+            return `${t('common.object')} ${chat.chat.realEstateObject?.id}`
+        }
         let withoutCurrent = chat.chat.participants.filter((p) => p?.id !== currentUser?.id);
         let usernames = withoutCurrent.map((u) => u?.username);
         return usernames.join(", ");

@@ -5,6 +5,7 @@ import de.immowealth.data.input.RealEstateInput
 import de.immowealth.data.input.UpdateRealEstateInput
 import de.immowealth.data.response.ObjectResponse
 import de.immowealth.data.response.PriceValueRelation
+import de.immowealth.entity.Chat
 import de.immowealth.entity.Credit
 import de.immowealth.entity.RealEstateObject
 import de.immowealth.entity.UploadedFile
@@ -80,7 +81,10 @@ class RealEstateService : AbstractService() {
             obj.positionLat = results.first().lat.toDouble();
             obj.positionLon = results.first().lon.toDouble();
         }
-
+        val chat = Chat()
+        chat.realEstateObject = obj;
+        chat.isRenterChat = true;
+        this.entityManager.persist(chat);
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})");
@@ -111,7 +115,7 @@ class RealEstateService : AbstractService() {
         val obj =  this.realEstateRepository.findById(id);
         this.denyUnlessGranted(RealEstateObjectVoter.READ, obj);
         var creditRateSum = 0.0;
-        var cum: MutableList<Double> = mutableListOf();
+        val cum: MutableList<Double> = mutableListOf();
         for (rate in obj.credit!!.rates) {
             if (!rate.archived) {
                 creditRateSum += rate.amount!!;

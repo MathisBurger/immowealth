@@ -97,6 +97,9 @@ class ChatService : AbstractService() {
         this.entityManager.persist(msg);
         chat.messages.add(msg)
         this.denyUnlessGranted(ChatVoter.SEND_MESSAGE, chat)
+        if (sender !== null && !chat.participants.contains(sender)) {
+            chat.participants.add(sender);
+        }
         this.entityManager.persist(chat);
         this.entityManager.flush();
         this.chatSocket.broadcast(
@@ -116,11 +119,10 @@ class ChatService : AbstractService() {
      * Gets all user chats
      */
     fun getUserChats(): List<ChatResponse> {
-        val currentUser = this.securityService.getCurrentUser();
-        if (currentUser == null) {
-            throw ParameterException("Current user not present in security");
-        }
-        val chats = this.chatRepository.findByUser(currentUser);
+        val currentUser = this.securityService.getCurrentUser()
+            ?: throw ParameterException("Current user not present in security");
+        val chats: MutableList<Chat> = this.chatRepository.findByUser(currentUser).toMutableList();
+        chats.addAll(this.filterAccess(ChatVoter.READ, this.chatRepository.getRenterChats(currentUser, chats.map { it.id!! })));
         val responses = mutableListOf<ChatResponse>();
         for (chat in chats) {
             var count = 0;

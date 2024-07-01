@@ -10,6 +10,10 @@ fragment Chat on Chat {
     participants {
         ...SimpleUser
     }
+    renterChat
+    realEstateObject {
+        id
+    }
 }
 
 fragment ChatMessage on ChatMessage {

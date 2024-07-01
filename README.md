@@ -36,6 +36,10 @@ Execute the docker compose:
 docker-compose up -d
 ```
 
+# Chat messages
+
+All chats messages do have live updates, except from renter chats.
+
 # Roadmap
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
@@ -70,6 +74,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Mail templates to send
 - [ ] Rentability calculations
 - [ ] Auto collect market value change data
+- [ ] Optimize chat query
 
 ### Not planned yet
 - [ ] Add balance sheet calculation
