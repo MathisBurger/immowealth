@@ -10,19 +10,19 @@ import org.hibernate.annotations.ColumnDefault
  * Base entity that contains all field present in all entities
  */
 @MappedSuperclass
-abstract class BaseEntity {
+abstract class BaseEntity : Archived {
 
     /**
      * The ID
      */
     @GeneratedValue
     @Id
-    open var id: Long? = null;
+    override var id: Long? = null;
 
     /**
      * If the entity is archived
      */
     @Column(name = "archived")
     @ColumnDefault(value = "false")
-    open var archived: Boolean = false;
+    override var archived: Boolean = false;
 }

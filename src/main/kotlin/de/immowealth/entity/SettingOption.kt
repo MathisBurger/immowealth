@@ -2,6 +2,9 @@ package de.immowealth.entity
 
 import de.immowealth.entity.enum.SettingOptionPrefix
 import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 
 /**
  * A setting option
@@ -25,6 +28,10 @@ class SettingOption : BaseEntity, Archivable {
     var iconPrefix: SettingOptionPrefix? = null;
 
     var translationKey: String? = null;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    var setting: Setting? = null;
 
     constructor() {
     }

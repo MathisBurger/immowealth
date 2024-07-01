@@ -3,4 +3,6 @@ export interface RouteConfigType {
     path: string;
     icon?: JSX.Element;
     children?: RouteConfigType[];
+    authorized: boolean;
+    roles?: string[];
 }

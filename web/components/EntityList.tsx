@@ -55,7 +55,7 @@ const EntityList = ({
     }, [data, baseConfigPresetKey]);
 
     const iDedRows = useMemo<any[]>(
-        () => (rows ?? []).map((r, index) => ({...r, ghostId: index+1})),
+        () => (rows ?? []).map((r, index) => ({...r, ghostId: r?.id ?? index+1})),
         [rows]
     );
 

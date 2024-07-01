@@ -7,7 +7,7 @@ import java.util.Date
  * Credit rate entity
  */
 @Entity
-class CreditRate : BaseEntity(), Archivable {
+class CreditRate : AuthorizedBaseEntity(), Archivable {
 
     /**
      * The date of booking

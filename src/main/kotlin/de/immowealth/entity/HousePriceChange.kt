@@ -7,7 +7,7 @@ import jakarta.persistence.Entity
  * in a specific region as entity
  */
 @Entity
-class HousePriceChange : BaseEntity(), Archivable {
+class HousePriceChange : AuthorizedBaseEntity(), Archivable {
 
     /**
      * The zip

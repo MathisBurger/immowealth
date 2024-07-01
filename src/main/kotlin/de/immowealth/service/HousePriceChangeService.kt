@@ -5,6 +5,7 @@ import de.immowealth.entity.HousePriceChange
 import de.immowealth.entity.enum.MailEntityContext
 import de.immowealth.entity.enum.MailerSettingAction
 import de.immowealth.repository.HousePriceChangeRepository
+import de.immowealth.voter.HousePriceChangeVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -32,6 +33,8 @@ class HousePriceChangeService : AbstractService() {
         change.change = cng;
         change.zip = zip;
         change.year = year;
+        change.tenant = this.securityService.getCurrentUser()?.tenant;
+        this.denyUnlessGranted(HousePriceChangeVoter.CREATE, change);
         this.entityManager.persist(change);
         this.entityManager.flush();
         this.log.writeLog("Added house price change at ($zip, $year) with $cng%");
@@ -53,6 +56,7 @@ class HousePriceChangeService : AbstractService() {
     @Transactional
     fun delete(id: Long) {
         val obj = this.housePriceChangeRepository.findById(id);
+        this.denyUnlessGranted(HousePriceChangeVoter.DELETE, obj);
         this.delete(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted house price change with ID $id");
@@ -69,7 +73,7 @@ class HousePriceChangeService : AbstractService() {
      * Gets all changes
      */
     fun getAllChanges(): List<HousePriceChange> {
-        return this.housePriceChangeRepository.listAll();
+        return this.filterAccess(HousePriceChangeVoter.READ, this.housePriceChangeRepository.listAll());
     }
 
     /**
@@ -78,7 +82,7 @@ class HousePriceChangeService : AbstractService() {
      * @param zip The zip
      */
     fun getAllChangesWithZip(zip: String): List<HousePriceChange> {
-        return this.housePriceChangeRepository.findByZip(zip);
+        return this.filterAccess(HousePriceChangeVoter.READ, this.housePriceChangeRepository.findByZip(zip));
     }
 
     /**
@@ -92,6 +96,7 @@ class HousePriceChangeService : AbstractService() {
         obj.change = input.change ?: obj.change;
         obj.zip = input.zip ?: obj.zip;
         obj.year = input.year ?: obj.year;
+        this.denyUnlessGranted(HousePriceChangeVoter.UPDATE, obj);
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Updated house price change with id ${obj.id}");

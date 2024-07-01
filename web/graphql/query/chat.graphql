@@ -1,0 +1,11 @@
+query GetAllChats {
+    userChats {
+        ...ChatResponse
+    }
+}
+
+query GetChatMessages($chatID: BigInteger! $limit: Int! $maxID: BigInteger) {
+    chatMessages(chatId: $chatID limit: $limit maxId: $maxID) {
+        ...ChatMessage
+    }
+}

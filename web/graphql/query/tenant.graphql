@@ -1,0 +1,11 @@
+query GetAllTenants {
+    allTenants {
+        ...TenantList
+    }
+}
+
+query GetTenant($id: BigInteger!) {
+    tenant(id: $id) {
+        ...Tenant
+    }
+}

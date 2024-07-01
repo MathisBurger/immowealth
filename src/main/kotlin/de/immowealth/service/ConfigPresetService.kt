@@ -2,6 +2,7 @@ package de.immowealth.service
 
 import de.immowealth.entity.ConfigPreset
 import de.immowealth.repository.ConfigPresetRepository
+import de.immowealth.voter.ConfigPresetVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -19,7 +20,7 @@ class ConfigPresetService : AbstractService() {
      * Gets all config presets
      */
     fun getAllConfigPresets(): List<ConfigPreset> {
-        return this.configPresetRepository.listAll();
+        return this.filterAccess(ConfigPresetVoter.READ, this.configPresetRepository.listAll());
     }
 
     /**
@@ -28,7 +29,7 @@ class ConfigPresetService : AbstractService() {
      * @param pathname The selected pathname
      */
     fun getAllForPathname(pathname: String): List<ConfigPreset> {
-        return this.configPresetRepository.getAllByPathname(pathname);
+        return this.filterAccess(ConfigPresetVoter.READ, this.configPresetRepository.getAllByPathname(pathname));
     }
 
     /**
@@ -46,12 +47,15 @@ class ConfigPresetService : AbstractService() {
             preset.pageRoute = pathname;
             preset.key = key;
             preset.jsonString = jsonContent;
+            preset.user = this.securityService.getCurrentUser();
+            this.denyUnlessGranted(ConfigPresetVoter.CREATE, preset);
             this.entityManager.persist(preset);
             this.entityManager.flush();
             return preset;
         }
         val preset = preF.get();
         preset.jsonString = jsonContent;
+        this.denyUnlessGranted(ConfigPresetVoter.UPDATE, preset);
         this.entityManager.persist(preset);
         this.entityManager.flush();
         return preset;

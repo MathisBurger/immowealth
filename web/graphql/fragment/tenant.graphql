@@ -1,0 +1,15 @@
+fragment TenantList on Tenant {
+    id
+    name
+    users {
+        id
+    }
+}
+
+fragment Tenant on Tenant {
+    id
+    name
+    users {
+        ...SimpleUser
+    }
+}

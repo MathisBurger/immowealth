@@ -1,0 +1,11 @@
+mutation MoveTenantMembers($input: TenantMoveInputInput!) {
+    moveUsers(input: $input) {
+        ...Tenant
+    }
+}
+
+mutation CreateTenant($input: CreateTenantInputInput!) {
+    createTenant(input: $input) {
+        ...Tenant
+    }
+}

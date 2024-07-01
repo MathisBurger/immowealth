@@ -8,7 +8,7 @@ import java.util.Date
  * The credit entity
  */
 @Entity
-class Credit : BaseEntity(), Archivable {
+class Credit : AuthorizedBaseEntity(), Archivable {
 
 
     /**
