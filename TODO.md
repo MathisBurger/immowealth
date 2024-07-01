@@ -10,10 +10,12 @@
 - [x] Functionality to read messages
 - [x] Display amount of unread messages
 - [x] Websocket chat integration
-- [ ] Create renter login & user accounts
-- [ ] Ability to disable renter account
+- [x] Create renter login & user accounts
 - [ ] Create rental support chats (all allowed users can communicate with single renter => Renter only has one chat with all of them
 
 ### Rental / Renter status and statistics 
 
+- [ ] Ability to disable renter account
 - [ ] On renter remove open modal to choose whether delete completely or just unassign renter from object
+- [ ] Renter dashboard with ability to see statistics about current rental relation
+- [ ] Collect rental data on renter and display in renter view
