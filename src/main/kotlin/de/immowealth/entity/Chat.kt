@@ -1,10 +1,6 @@
 package de.immowealth.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.ManyToMany
-import jakarta.persistence.OneToMany
-import jakarta.persistence.OneToOne
+import jakarta.persistence.*
 
 /**
  * Chat entity
@@ -21,7 +17,7 @@ class Chat : BaseEntity() {
     /**
      * All messages of the chat
      */
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chat", cascade = [CascadeType.ALL])
     var messages: MutableList<ChatMessage> = mutableListOf()
 
     /**

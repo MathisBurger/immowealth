@@ -54,6 +54,13 @@ class User : BaseEntity(), Archivable {
     @OneToMany
     var messages: MutableList<ChatMessage> = mutableListOf();
 
+    /**
+     * The renter assigned to the user
+     */
+    @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    var renter: Renter? = null;
+
     override fun toString(): String {
         return this.username;
     }

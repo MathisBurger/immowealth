@@ -81,10 +81,6 @@ class RealEstateService : AbstractService() {
             obj.positionLat = results.first().lat.toDouble();
             obj.positionLon = results.first().lon.toDouble();
         }
-        val chat = Chat()
-        chat.realEstateObject = obj;
-        chat.isRenterChat = true;
-        this.entityManager.persist(chat);
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})");

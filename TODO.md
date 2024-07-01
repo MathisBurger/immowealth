@@ -12,7 +12,7 @@
 - [x] Websocket chat integration
 - [x] Create renter login & user accounts
 - [x] Create rental support chats (all allowed users can communicate with single renter => Renter only has one chat with all of them
-- [ ] Delete renter chat on renter delete 
+- [x] Delete renter chat on renter delete 
 
 ### Rental / Renter status and statistics 
 

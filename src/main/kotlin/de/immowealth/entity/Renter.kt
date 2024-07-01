@@ -4,6 +4,8 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToOne
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import java.util.Date
 
 /**
@@ -40,6 +42,7 @@ class Renter : AuthorizedBaseEntity(), Archivable {
      * User that is assigned to the renter
      */
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     var user: User? = null
 
     override fun toString(): String {

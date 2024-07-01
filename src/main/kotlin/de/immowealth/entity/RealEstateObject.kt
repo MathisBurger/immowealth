@@ -1,6 +1,8 @@
 package de.immowealth.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import java.util.Date
 
 /**
@@ -123,6 +125,10 @@ class RealEstateObject : AuthorizedBaseEntity(), Archivable {
      */
     @OneToMany(mappedBy = "realEstateObject", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var uploadedFiles: MutableList<UploadedFile> = mutableListOf();
+
+    @OneToOne
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    var chat: Chat? = null
 
     override fun toString(): String {
         return this.id.toString();

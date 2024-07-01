@@ -1,6 +1,7 @@
 package de.immowealth.service
 
 import de.immowealth.data.input.CreateRenterInput
+import de.immowealth.entity.Chat
 import de.immowealth.entity.Renter
 import de.immowealth.entity.User
 import de.immowealth.entity.UserRoles
@@ -51,6 +52,13 @@ class RenterService : AbstractService() {
         }
         val renter = Renter();
         renter.realEstateObject = realEstate;
+        if (realEstate.chat === null) {
+            val chat = Chat()
+            chat.realEstateObject = realEstate;
+            chat.isRenterChat = true;
+            this.entityManager.persist(chat);
+            realEstate.chat = chat;
+        }
         renter.firstName = input.firstName;
         renter.lastName = input.lastName;
         renter.birthDay = input.birthDay;
@@ -83,9 +91,18 @@ class RenterService : AbstractService() {
         this.denyUnlessGranted(RenterVoter.DELETE, renter);
         if (renter.realEstateObject !== null) {
             renter.realEstateObject!!.renters.remove(renter);
-            this.entityManager.persist(renter.realEstateObject!!);
+            if (renter.realEstateObject!!.renters.size == 0 && renter.realEstateObject!!.chat !== null) {
+                val chat = renter.realEstateObject!!.chat;
+                this.entityManager.remove(chat);
+                renter.realEstateObject!!.chat = null;
+                this.entityManager.persist(renter.realEstateObject!!);
+
+            } else {
+                this.entityManager.persist(renter.realEstateObject!!);
+            }
+
         }
-        this.delete(renter);
+        this.entityManager.remove(renter);
         this.entityManager.flush();
 
     }
