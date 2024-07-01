@@ -47,7 +47,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 ### v1.4.0
 - [x] Full UNIT test coverage (services)
 - [x] User account system
-- [ ] Support Chat for renter
+- [x] Support Chat for renter
 - [ ] Rental status / statistics about the renter
 - [ ] Update mail notifications with favourites
 - [ ] Performance calculations (by input of data)
@@ -74,7 +74,6 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Mail templates to send
 - [ ] Rentability calculations
 - [ ] Auto collect market value change data
-- [ ] Optimize chat query
 
 ### Not planned yet
 - [ ] Add balance sheet calculation

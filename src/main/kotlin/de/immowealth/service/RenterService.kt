@@ -67,6 +67,7 @@ class RenterService : AbstractService() {
         user.username = input.username;
         user.password = BcryptUtil.bcryptHash(input.password)
         user.email = input.email;
+        user.renter = renter;
         user.roles = mutableListOf(UserRoles.RENTER)
         renter.user = user;
         this.denyUnlessGranted(RenterVoter.CREATE, renter);

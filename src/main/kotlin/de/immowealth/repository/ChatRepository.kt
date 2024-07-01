@@ -2,6 +2,9 @@ package de.immowealth.repository
 
 import de.immowealth.entity.*
 import jakarta.enterprise.context.ApplicationScoped
+import jakarta.persistence.Query
+import jakarta.persistence.criteria.Join
+import jakarta.persistence.criteria.Predicate
 
 /**
  * The repository that handles chats
@@ -32,8 +35,28 @@ class ChatRepository : AbstractRepository<Chat>() {
         for (ignored in ignore) {
             inClause.value(ignored);
         }
+        val realEstateJoin = root.join<Chat, Tenant>("realEstateObject");
+        var tenantCondition: Predicate? = null;
+        if (user.tenant === null) {
+            tenantCondition = cb.isNull(realEstateJoin.get<Tenant?>("tenant"));
+        } else {
+            tenantCondition = cb.equal(realEstateJoin.get<Tenant?>("tenant"), user.tenant);
+        }
+        var renterCondition: Predicate? = null;
+        if (user.renter !== null) {
+            val renters = realEstateJoin.get<List<Renter>>("renters");
+            renterCondition = cb.isMember(user.renter!!, renters);
+        }
+
+        var finalMidCondition: Predicate? = null;
+        if (renterCondition !== null) {
+            finalMidCondition = cb.or(tenantCondition, renterCondition)
+        } else {
+            finalMidCondition = tenantCondition;
+        }
         val finalCondition = cb.and(
             cb.equal(root.get<Boolean>("isRenterChat"), true),
+            finalMidCondition,
             cb.not(inClause)
         );
         cq.select(root).where(finalCondition);
