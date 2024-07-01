@@ -11,6 +11,7 @@
 - [x] Display amount of unread messages
 - [x] Websocket chat integration
 - [ ] Create renter login & user accounts
+- [ ] Ability to disable renter account
 - [ ] Create rental support chats (all allowed users can communicate with single renter => Renter only has one chat with all of them
 
 ### Rental / Renter status and statistics 

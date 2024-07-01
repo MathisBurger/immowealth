@@ -31,7 +31,10 @@ const CreateRenterModal = ({onClose, refetch, objectID}: CreateRenterModalProps)
                     objectID: objectID,
                     firstName: `${formData.get("firstName")}`,
                     lastName: `${formData.get("lastName")}`,
-                    birthDay: new Date(`${formData.get("birthDay")}`)
+                    birthDay: new Date(`${formData.get("birthDay")}`),
+                    username: `${formData.get("username")}`,
+                    password: `${formData.get("password")}`,
+                    email: `${formData.get("email")}`
                 }
             }
         });
@@ -64,6 +67,18 @@ const CreateRenterModal = ({onClose, refetch, objectID}: CreateRenterModalProps)
                             disableFuture
                             name="birthDay"
                         />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>{t('common.username')}</FormLabel>
+                        <Input type="text" name="username" />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>{t('common.password')}</FormLabel>
+                        <Input type="password" name="password" />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>{t('common.email')}</FormLabel>
+                        <Input type="email" name="email" />
                     </FormControl>
 
                     <Grid container direction="row" spacing={2} justifyContent="flex-end" sx={{marginTop: '10px'}}>

@@ -3,6 +3,7 @@ package de.immowealth.entity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToOne
 import java.util.Date
 
 /**
@@ -34,6 +35,12 @@ class Renter : AuthorizedBaseEntity(), Archivable {
      */
     @Column(nullable = true)
     var birthDay: Date? = null
+
+    /**
+     * User that is assigned to the renter
+     */
+    @OneToOne
+    var user: User? = null
 
     override fun toString(): String {
         return this.id.toString();

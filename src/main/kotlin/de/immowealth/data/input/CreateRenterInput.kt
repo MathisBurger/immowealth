@@ -23,4 +23,16 @@ data class CreateRenterInput @JsonbCreator constructor(
      * The birthday of the renter
      */
     val birthDay: Date?,
+    /**
+     * The username of the user
+     */
+    val username: String,
+    /**
+     * The password of the user
+     */
+    val password: String,
+    /**
+     * The email of the user
+     */
+    val email: String,
 )

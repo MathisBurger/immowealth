@@ -48,7 +48,10 @@ class RenterServiceTest() : AbstractServiceTest() {
             obj.id!!,
             "Test",
             "User",
-            Date()
+            Date(),
+            "1",
+            "1",
+            "1"
         ));
         assertNotNull(res);
     }
@@ -62,7 +65,10 @@ class RenterServiceTest() : AbstractServiceTest() {
             obj.id!!,
             "Test",
             "User",
-            Date()
+            Date(),
+            "2",
+            "2",
+            "2"
         ));
         assertNotNull(res);
     }
@@ -77,7 +83,10 @@ class RenterServiceTest() : AbstractServiceTest() {
                 obj.id!!,
                 "Test",
                 "User",
-                Date()
+                Date(),
+                "3",
+                "3",
+                "3"
             ));
         }
     }
@@ -92,7 +101,10 @@ class RenterServiceTest() : AbstractServiceTest() {
                 obj.id!!,
                 "Test",
                 "User",
-                Date()
+                Date(),
+                "4",
+                "4",
+                "4"
             ));
         }
     }
@@ -106,7 +118,10 @@ class RenterServiceTest() : AbstractServiceTest() {
                 -1,
                 "Test",
                 "User",
-                Date()
+                Date(),
+                "5",
+                "5",
+                "5"
             ));
         }
     }
