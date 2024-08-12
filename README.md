@@ -72,6 +72,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 
 ### v1.6.0 (not scheduled yet)
 - [ ] Mail templates to send
+- [ ] Service User Accounts (for automated access)
 - [ ] External API for other systems to make integration easier
 - [ ] Rentability calculations
 - [ ] Auto collect market value change data
@@ -101,6 +102,6 @@ openssl genrsa -out rsaPrivateKey.pem 2048
 openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
 openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform pem -out privateKey.pem
 ```
-3. Setup your POstgreSQL DB
+3. Setup your PostgreSQL DB
 4. Build the code and start developing
 
