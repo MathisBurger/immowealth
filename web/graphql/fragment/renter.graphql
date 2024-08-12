@@ -3,4 +3,7 @@ fragment Renter on Renter {
     firstName
     lastName
     birthDay
+    statistics {
+        ...RenterStatistics
+    }
 }

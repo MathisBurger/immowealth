@@ -168,4 +168,19 @@ class RenterService : AbstractService() {
         val renters = this.renterRepository.findUnassigned();
         return this.filterAccess<Renter>(RenterVoter.READ, renters);
     }
+
+    /**
+     * Gets the renter by id
+     *
+     * @param renterId The ID of the renter
+     */
+    fun getRenter(renterId: Long): Renter {
+        val renterOption = this.renterRepository.findByIdOptional(renterId);
+        if (renterOption.isEmpty) {
+            throw ParameterException("The given renter does not exist");
+        }
+        val renter = renterOption.get();
+        this.denyUnlessGranted(RenterVoter.READ, renter);
+        return renter;
+    }
 }

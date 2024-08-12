@@ -21,6 +21,20 @@ class RenterResource {
     lateinit var renterService: RenterService
 
     /**
+     * Gets a renter by ID
+     */
+    @Query
+    fun getRenter(renterId: Long): Renter {
+        try {
+            return renterService.getRenter(renterId)
+        } catch (e: ParameterException) {
+            throw UnauthorizedException(e)
+        } catch (e: UnauthorizedException) {
+            throw UnauthorizedException(e)
+        }
+    }
+
+    /**
      * Gets all unassigned renters
      */
     @Query

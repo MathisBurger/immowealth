@@ -182,5 +182,8 @@
     "name": "Name",
     "baseData": "Base data",
     "owner": "Owner"
+  },
+  "renter": {
+    "history": "Living history"
   }
 }

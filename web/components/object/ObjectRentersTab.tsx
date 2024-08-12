@@ -15,6 +15,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import AssignRenterModal from "@/components/object/modal/AssignRenterModal";
+import {useRouter} from "next/navigation";
 
 interface ObjectRentersTabProps {
     renters: RenterFragment[];
@@ -35,6 +36,7 @@ const ObjectRentersTab = ({renters, objectId, refetch}: ObjectRentersTabProps) =
             }
         ]
     });
+    const router = useRouter();
 
     const [unassignMutation, {loading: unassignLoading}] = useUnassignRenterFromObjectMutation({
         refetchQueries: [
@@ -61,17 +63,24 @@ const ObjectRentersTab = ({renters, objectId, refetch}: ObjectRentersTabProps) =
         {
             field: '_actions',
             headerName: t('common.actions'),
-            width: 200,
+            width: 300,
             renderCell: ({row}: GridRenderCellParams) => (
                 <Grid container direction="row" spacing={2}>
-                    <Grid>
-                        <Button onClick={() => deleteMutation({variables: {renterId: row.id}})} color="danger" loading={loading}>
-                            <DeleteIcon />
-                        </Button>
-                    </Grid>
+                    {row.statistics && (
+                        <Grid>
+                            <Button onClick={() => router.push('/renter/details?id=' + row.id)} color="primary" loading={loading}>
+                                <OpenInNewIcon />
+                            </Button>
+                        </Grid>
+                    )}
                     <Grid>
                         <Button onClick={() => unassignMutation({variables: {renterId: row.id}})} color="warning" loading={unassignLoading}>
                             <PersonRemoveIcon />
+                        </Button>
+                    </Grid>
+                    <Grid>
+                        <Button onClick={() => deleteMutation({variables: {renterId: row.id}})} color="danger" loading={loading}>
+                            <DeleteIcon />
                         </Button>
                     </Grid>
                 </Grid>
@@ -85,14 +94,14 @@ const ObjectRentersTab = ({renters, objectId, refetch}: ObjectRentersTabProps) =
                 <Card>
                     <CardContent>
                         <Grid container direction="row">
-                            <Grid xs={3}>
+                            <Grid xs={2}>
                                 <Button
                                     color="primary"
                                     variant="soft"
                                     onClick={() => setModalOpen(true)}
                                 >{t('object.renter.createRenter')}</Button>
                             </Grid>
-                            <Grid xs={3}>
+                            <Grid xs={2}>
                                 <Button
                                     color="primary"
                                     variant="soft"

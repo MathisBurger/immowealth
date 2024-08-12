@@ -1,0 +1,9 @@
+fragment RenterStatistics on RenterStatistics {
+    id
+    history {
+        id
+        streetAndHouseNr
+        zip
+        city
+    }
+}

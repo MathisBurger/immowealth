@@ -175,6 +175,9 @@
       "assignRenter": "Mieter hinzufügen"
     }
   },
+  "renter": {
+    "history": "Wohnverlauf"
+  },
   "tenant": {
     "createMember": "Mitarbeiter erstellen",
     "manageMembers": "Mitarbeiter verwalten",
