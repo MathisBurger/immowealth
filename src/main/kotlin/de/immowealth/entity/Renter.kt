@@ -45,6 +45,13 @@ class Renter : AuthorizedBaseEntity(), Archivable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     var user: User? = null
 
+    /**
+     * The statistics about the renter
+     */
+    @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    var statistics: RenterStatistics? = null
+
     override fun toString(): String {
         return this.id.toString();
     }

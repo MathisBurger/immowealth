@@ -48,7 +48,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] Full UNIT test coverage (services)
 - [x] User account system
 - [x] Support Chat for renter
-- [ ] Rental status / statistics about the renter
+- [ ] Rental status
 - [ ] Update mail notifications with favourites
 - [ ] Performance calculations (by input of data)
 
@@ -74,6 +74,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Mail templates to send
 - [ ] Service User Accounts (for automated access)
 - [ ] External API for other systems to make integration easier
+- [ ] Ability to insert some data about the current renter (bank, reliability)
 - [ ] Rentability calculations
 - [ ] Auto collect market value change data
 

@@ -1,10 +1,7 @@
 package de.immowealth.service
 
 import de.immowealth.data.input.CreateRenterInput
-import de.immowealth.entity.Chat
-import de.immowealth.entity.Renter
-import de.immowealth.entity.User
-import de.immowealth.entity.UserRoles
+import de.immowealth.entity.*
 import de.immowealth.exception.ParameterException
 import de.immowealth.repository.RealEstateRepository
 import de.immowealth.repository.RenterRepository
@@ -51,6 +48,8 @@ class RenterService : AbstractService() {
             throw ParameterException("Username already in use");
         }
         val renter = Renter();
+        renter.statistics = RenterStatistics()
+        renter.statistics!!.history.add(realEstate)
         renter.realEstateObject = realEstate;
         if (realEstate.chat === null) {
             val chat = Chat()
@@ -74,6 +73,7 @@ class RenterService : AbstractService() {
         realEstate.renters.add(renter);
         this.entityManager.persist(user);
         this.entityManager.persist(renter);
+        this.entityManager.persist(renter.statistics);
         this.entityManager.persist(realEstate);
         this.entityManager.flush();
         return renter;
@@ -154,6 +154,7 @@ class RenterService : AbstractService() {
         val realEstateObject = realEstateOption.get();
         this.denyUnlessGranted(RealEstateObjectVoter.UPDATE, realEstateObject);
         realEstateObject.renters.add(renter);
+        renter.statistics!!.history.add(realEstateObject);
         renter.realEstateObject = realEstateObject;
         this.entityManager.persist(realEstateObject);
         this.entityManager.persist(renter);
