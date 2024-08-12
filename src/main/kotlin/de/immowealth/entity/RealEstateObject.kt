@@ -9,7 +9,13 @@ import java.util.Date
  * The real estate entity
  */
 @Entity
-class RealEstateObject : AuthorizedBaseEntity(), Archivable {
+class RealEstateObject : AuthorizedBaseEntity(), Archivable, Favourite {
+
+    @ManyToMany
+    @JoinTable(name= "realEstateObject_favourite_user",
+        joinColumns = [JoinColumn(name = "object_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")])
+    var favourite: MutableList<User> = mutableListOf()
 
     /**
      * The city of the object
@@ -140,5 +146,9 @@ class RealEstateObject : AuthorizedBaseEntity(), Archivable {
 
     override fun getDirectUrl(): String {
         return "/objects/details?id=${this.id}"
+    }
+
+    override fun isFavourite(user: User?): Boolean {
+        return this.favourite.contains(user);
     }
 }

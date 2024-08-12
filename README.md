@@ -48,16 +48,19 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] Full UNIT test coverage (services)
 - [x] User account system
 - [x] Support Chat for renter
-- [ ] Rental status
+- [x] Rental status
 - [ ] Update mail notifications with favourites
 - [ ] Performance calculations (by input of data)
 
 ### v1.4.1 (after stable React 19 release)
 - [ ] Upgrade to a Next version that supports React compiler
+- [ ] Update log functionality and add everywhere
+- [ ] Improve notification system (send to all users with access)
 
 ### v1.5.0 (not scheduled yet)
 - [ ] Full UNIT test coverage (all classes, doesn`t matter how simple they are => more complex edge-cases)
 - [ ] Subtenants
+- [ ] Favourites as filter in frontend views
 - [ ] Immo portal search
 - [ ] Object location watchlist
 - [ ] Add support for measured object prices

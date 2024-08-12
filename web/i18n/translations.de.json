@@ -16,6 +16,7 @@
     "mailerNotification_realEstateObject": "Objekte",
     "mailerNotification_credit": "Kredite",
     "mailerNotification_housePrices": "Haus-Preisänderungen",
+    "notificationsUseFavourites": "Benachrichtigungen anwenden für",
     "options": {
         "lang": {
           "de": "Deutsch",
@@ -28,7 +29,8 @@
             "create_only": "Nur Erstellen",
             "booking_only": "Nur Buchungen",
             "delete_only": "Nur Löschungen",
-            "all": "Alle"
+            "all": "Alle",
+            "favourites": "Favouriten"
           }
         }
     }

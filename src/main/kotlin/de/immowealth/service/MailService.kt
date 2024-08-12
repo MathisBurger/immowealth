@@ -33,14 +33,25 @@ class MailService {
      * @param to The destination
      * @param context The sending context
      * @param action The required action
+     * @param isFavourite Check if is Favourite
      */
-    fun sendEntityActionMail(subject: String, message: String, to: String, context: MailEntityContext, action: MailerSettingAction) {
+    fun sendEntityActionMail(subject: String, message: String, to: String, context: MailEntityContext, action: MailerSettingAction, isFavourite: Boolean) {
         val setting = this.settingsService.getSetting("mailerNotification_${context.name}");
+        val favouriteSetting = this.settingsService.getSetting("notificationsUseFavourites");
         if (action.name.equals(setting.value) || (setting.value ?: "").equals("ALL")) {
-            this.mailer.send(
-                // TODO: Add HTML mail templates
-                Mail.withText(this.defaultMail, subject, message)
-            );
+            if (favouriteSetting.value === "FAVOURITES") {
+                if (isFavourite) {
+                    this.mailer.send(
+                        // TODO: Add HTML mail templates
+                        Mail.withText(this.defaultMail, subject, message)
+                    );
+                }
+            } else {
+                this.mailer.send(
+                    // TODO: Add HTML mail templates
+                    Mail.withText(this.defaultMail, subject, message)
+                );
+            }
         }
     }
 

@@ -38,12 +38,14 @@ class HousePriceChangeService : AbstractService() {
         this.entityManager.persist(change);
         this.entityManager.flush();
         this.log.writeLog("Added house price change at ($zip, $year) with $cng%");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Added house price change",
             "Added house price change at ($zip, $year) with $cng%",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.housePrices,
-            MailerSettingAction.CREATE_ONLY
+            MailerSettingAction.CREATE_ONLY,
+            change.isFavourite(currentUser)
         );
         return change;
     }
@@ -60,12 +62,14 @@ class HousePriceChangeService : AbstractService() {
         this.delete(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted house price change with ID $id");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Deleted house price change",
             "Deleted house price change with ID $id",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.housePrices,
-            MailerSettingAction.DELETE_ONLY
+            MailerSettingAction.DELETE_ONLY,
+            obj.isFavourite(currentUser)
         );
     }
 
@@ -100,12 +104,14 @@ class HousePriceChangeService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Updated house price change with id ${obj.id}");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Updated house price change",
             "Updated house price change with id ${obj.id}",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.housePrices,
-            MailerSettingAction.UPDATE_ONLY
+            MailerSettingAction.UPDATE_ONLY,
+            obj.isFavourite(currentUser)
         );
         return obj;
     }

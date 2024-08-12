@@ -20,10 +20,10 @@ class SettingsVoter : VoterInterface {
         if (user == null) {
             return false;
         }
-        if (user.roles.contains(UserRoles.ADMIN)) {
-            return true;
-        }
         if (value is Setting) {
+            if (user.roles.contains(UserRoles.ADMIN)) {
+                return value.user === null || user.id === value.user?.id;
+            }
             if (attributeName == READ || attributeName == UPDATE || attributeName == CREATE || attributeName == DELETE) {
                 return user.id == value.user?.id;
             }

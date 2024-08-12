@@ -84,12 +84,14 @@ class RealEstateService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Created real estate object",
             "Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.realEstateObject,
-            MailerSettingAction.CREATE_ONLY
+            MailerSettingAction.CREATE_ONLY,
+            obj.isFavourite(currentUser)
         );
         return obj;
     }
@@ -165,12 +167,14 @@ class RealEstateService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Updated object with ID ${obj.id}");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Updated real estate object",
             "Updated real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.realEstateObject,
-            MailerSettingAction.UPDATE_ONLY
+            MailerSettingAction.UPDATE_ONLY,
+            obj.isFavourite(currentUser)
         );
         return this.getObject(obj.id!!, 10);
     }
@@ -187,12 +191,14 @@ class RealEstateService : AbstractService() {
         this.delete(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted object with ID $id");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Deleted real estate object",
             "Deleted real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.realEstateObject,
-            MailerSettingAction.DELETE_ONLY
+            MailerSettingAction.DELETE_ONLY,
+            obj.isFavourite(currentUser)
         );
     }
 

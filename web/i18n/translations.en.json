@@ -16,6 +16,7 @@
     "mailerNotification_realEstateObject": "Objects",
     "mailerNotification_credit": "Credits",
     "mailerNotification_housePrices": "House price changes",
+    "notificationsUseFavourites": "Apply notifications for",
     "options": {
       "lang": {
         "de": "German",
@@ -28,7 +29,8 @@
           "create_only": "Create only",
           "booking_only": "Booking only",
           "delete_only": "Delete only",
-          "all": "All"
+          "all": "All",
+          "favourites": "Favourites"
         }
       }
     }

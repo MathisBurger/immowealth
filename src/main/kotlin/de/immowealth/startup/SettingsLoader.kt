@@ -93,6 +93,25 @@ class SettingsLoader {
         this.initMailerSetting(MailEntityContext.realEstateObject.name, user);
         this.initMailerSetting(MailEntityContext.credit.name, user);
         this.initMailerSetting(MailEntityContext.housePrices.name, user);
+        var mailerUseFavourites = this.settingsRepository.getByKey("notificationsUseFavourites", user);
+        if (mailerUseFavourites === null) {
+            mailerUseFavourites = Setting()
+            mailerUseFavourites.key = "notificationsUseFavourites";
+            mailerUseFavourites.value = "FAVOURITES";
+            mailerUseFavourites.user = user;
+            mailerUseFavourites.tab = "notification";
+            mailerUseFavourites.section = "mailer";
+            mailerUseFavourites.options = mutableListOf(
+                SettingOption("FAVOURITES", "Favourites", null, "notification.mailer.favourites"),
+                SettingOption("ALL", "All", null, "notification.mailer.all")
+            );
+            for (option in mailerUseFavourites.options) {
+                option.setting = mailerUseFavourites;
+                this.entityManager.persist(option);
+            }
+            this.entityManager.persist(mailerUseFavourites);
+            this.entityManager.flush();
+        }
     }
 
     private fun initMailerSetting(suffix: String, user: User) {

@@ -65,12 +65,14 @@ class CreditService : AbstractService() {
         this.entityManager.flush();
         this.log.writeLog("Added credit rate (${this.cs.convertBack(rate)}€) to credit with ID ${id}");
         if (mail) {
+            val currentUser = this.securityService.getCurrentUser();
             this.mail.sendEntityActionMail(
                 "Added credit rate",
                 "Credit rate has been added to credit with ID $id",
-                "kontakt@mathis-burger.de",
+                currentUser?.email ?: "",
                 MailEntityContext.credit,
-                MailerSettingAction.UPDATE_ONLY
+                MailerSettingAction.UPDATE_ONLY,
+                credit.isFavourite(currentUser)
             );
         }
     }
@@ -112,12 +114,14 @@ class CreditService : AbstractService() {
         this.entityManager.persist(credit);
         this.entityManager.flush();
         this.log.writeLog("Updated credit with ID ${credit.id}");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Updated credit",
             "Updated credit with ID ${credit.id}",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.credit,
-            MailerSettingAction.UPDATE_ONLY
+            MailerSettingAction.UPDATE_ONLY,
+            credit.isFavourite(currentUser)
         );
         return this.getCredit(credit.id!!);
 
@@ -176,12 +180,14 @@ class CreditService : AbstractService() {
         this.entityManager.persist(credit);
         this.entityManager.flush();
         this.log.writeLog("Configured auto booking (${interval}, ${this.cs.convertBack(amount)}€) for credit with ID ${credit.id}");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Configured auto booking",
             "Configured auto booking (${interval}, ${this.cs.convertBack(amount)}€) for credit with ID ${credit.id}",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.credit,
-            MailerSettingAction.UPDATE_ONLY
+            MailerSettingAction.UPDATE_ONLY,
+            credit.isFavourite(currentUser)
         );
         return this.getResponseObject(credit);
     }
@@ -201,12 +207,14 @@ class CreditService : AbstractService() {
             this.delete(obj);
             this.entityManager.flush();
             this.log.writeLog("Deleted credit rate with ID $id");
+            val currentUser = this.securityService.getCurrentUser();
             this.mail.sendEntityActionMail(
                 "Deleted credit rate",
                 "Deleted credit rate with ID ${id}",
-                "kontakt@mathis-burger.de",
+                currentUser?.email ?: "",
                 MailEntityContext.credit,
-                MailerSettingAction.DELETE_ONLY
+                MailerSettingAction.DELETE_ONLY,
+                obj.credit.isFavourite(currentUser)
             );
         }
     }
