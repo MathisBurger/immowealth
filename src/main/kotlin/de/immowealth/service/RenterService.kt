@@ -107,4 +107,64 @@ class RenterService : AbstractService() {
         this.entityManager.flush();
 
     }
+
+    /**
+     * Unassigns a renter from an object
+     *
+     * @param renterId The ID of the renter
+     */
+    @Transactional
+    fun unassignRenterFromObject(renterId: Long) {
+        val renterOption = this.renterRepository.findByIdOptional(renterId);
+        if (renterOption.isEmpty) {
+            throw ParameterException("The given renter does not exist");
+        }
+        val renter = renterOption.get();
+        this.denyUnlessGranted(RenterVoter.UPDATE, renter);
+        if (renter.realEstateObject === null) {
+            throw ParameterException("The given renter is not assigned to a real estate object");
+        }
+        this.denyUnlessGranted(RealEstateObjectVoter.UPDATE, renter.realEstateObject!!);
+        renter.realEstateObject = null;
+        this.entityManager.persist(renter);
+        this.entityManager.flush();
+    }
+
+    /**
+     * Assigns a renter to a real estate object
+     *
+     * @param renterId The ID of the renter
+     * @param objectId The ID of the real estate object
+     */
+    @Transactional
+    fun assignRenterToObject(renterId: Long, objectId: Long) {
+        val renterOption = this.renterRepository.findByIdOptional(renterId);
+        if (renterOption.isEmpty) {
+            throw ParameterException("The given renter does not exist");
+        }
+        val renter = renterOption.get();
+        this.denyUnlessGranted(RenterVoter.UPDATE, renter);
+        if (renter.realEstateObject !== null) {
+            throw ParameterException("The given renter is already assigned to a real estate object");
+        }
+        val realEstateOption = this.realEstateRepository.findByIdOptional(objectId);
+        if (realEstateOption.isEmpty) {
+            throw ParameterException("The given real estate object does not exist");
+        }
+        val realEstateObject = realEstateOption.get();
+        this.denyUnlessGranted(RealEstateObjectVoter.UPDATE, realEstateObject);
+        realEstateObject.renters.add(renter);
+        renter.realEstateObject = realEstateObject;
+        this.entityManager.persist(realEstateObject);
+        this.entityManager.persist(renter);
+        this.entityManager.flush();
+    }
+
+    /**
+     * Gets all unassigned renters
+     */
+    fun getUnassignedRenters(): List<Renter> {
+        val renters = this.renterRepository.findUnassigned();
+        return this.filterAccess<Renter>(RenterVoter.READ, renters);
+    }
 }

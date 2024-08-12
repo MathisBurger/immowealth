@@ -72,6 +72,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 
 ### v1.6.0 (not scheduled yet)
 - [ ] Mail templates to send
+- [ ] External API for other systems to make integration easier
 - [ ] Rentability calculations
 - [ ] Auto collect market value change data
 
