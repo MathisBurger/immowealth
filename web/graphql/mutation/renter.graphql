@@ -7,3 +7,11 @@ mutation CreateRenterOnObject($input: CreateRenterInputInput!) {
 mutation DeleteRenterFromObject($renterId: BigInteger!) {
     deleteRenterFromObject(renterId: $renterId)
 }
+
+mutation UnassignRenterFromObject($renterId: BigInteger!) {
+    unassignRenterFromObject(renterId: $renterId)
+}
+
+mutation AssignRenterToObject($renterId: BigInteger! $objectId: BigInteger!) {
+    assignRenterToObject(renterId: $renterId, objectId: $objectId)
+}
