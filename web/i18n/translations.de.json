@@ -171,7 +171,8 @@
       }
     },
     "renter": {
-      "createRenter": "Mieter anlegen"
+      "createRenter": "Mieter anlegen",
+      "assignRenter": "Mieter hinzufügen"
     }
   },
   "tenant": {

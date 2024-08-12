@@ -25,6 +25,7 @@ class RenterVoter : VoterInterface {
             return false;
         }
         if (value is Renter) {
+            if (value.realEstateObject === null) return true;
             if (attributeName === READ) {
                 return this.securityService.isGranted(READ, value.realEstateObject!!);
             }

@@ -170,7 +170,8 @@
       }
     },
     "renter": {
-      "createRenter": "Create renter"
+      "createRenter": "Create renter",
+      "assignRenter": "Assign renter"
     }
   },
   "tenant": {
