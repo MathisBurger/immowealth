@@ -35,7 +35,13 @@ class User : BaseEntity(), Archivable {
      * All roles of the user
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name="immowealth_user_roles", joinColumns=[JoinColumn(name="immowealth_user_id")])
+    @JoinTable(
+        name = "immowealth_user_roles",
+        joinColumns = [JoinColumn(name = "immowealth_user_id")],
+        uniqueConstraints = [UniqueConstraint(columnNames = ["immowealth_user_id", "roles"])]
+    )
+    @Column(name = "roles")
+    @Cascade(CascadeType.ALL)
     var roles: MutableSet<String> = mutableSetOf();
 
     /**
