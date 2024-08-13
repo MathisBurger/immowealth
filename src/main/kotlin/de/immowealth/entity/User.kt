@@ -3,6 +3,8 @@ package de.immowealth.entity
 import de.immowealth.graphql.PasswordAdapter
 import io.smallrye.graphql.api.AdaptWith
 import jakarta.persistence.*
+import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.CascadeType
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 
@@ -33,7 +35,8 @@ class User : BaseEntity(), Archivable {
      * All roles of the user
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    var roles: MutableList<String> = mutableListOf();
+    @CollectionTable(name="immowealth_user_roles", joinColumns=[JoinColumn(name="immowealth_user_id")])
+    var roles: MutableSet<String> = mutableSetOf();
 
     /**
      * The tenant the user is assigned to

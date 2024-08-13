@@ -49,7 +49,7 @@ class ArchiveServiceTest : AbstractServiceTest() {
             "testUser",
             "123",
             "test@test.de",
-            mutableListOf()
+            mutableSetOf()
         );
         this.loginAsUser("testUser");
         try {

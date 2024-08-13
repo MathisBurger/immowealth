@@ -250,7 +250,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     private fun createObjectWithTenant() {
         this.loginAsUser("admin")
         this.tenantService.createTenant("ten1_renter", "ten1_renter_user", "1", "a@a.de")
-        this.tenantService.userService.registerUser("ten_test_renter_unass", "ten1_renter_user2", "a@b.de", mutableListOf(UserRoles.TENANT_ASSIGNED))
+        this.tenantService.userService.registerUser("ten_test_renter_unass", "ten1_renter_user2", "a@b.de", mutableSetOf(UserRoles.TENANT_ASSIGNED))
         this.loginAsUser("ten1_renter_user")
         val obj = this.realEstateService.createObject(RealEstateInput(
             "obj_renter_01",

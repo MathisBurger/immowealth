@@ -41,7 +41,7 @@ class UserServiceTest : AbstractServiceTest() {
             "admin2",
             "123",
             "test@test.de",
-            mutableListOf(UserRoles.ADMIN)
+            mutableSetOf(UserRoles.ADMIN)
         );
         assertEquals(user.username, "admin2");
     }
@@ -54,7 +54,7 @@ class UserServiceTest : AbstractServiceTest() {
             "admin2",
             "123",
             "test@test.de",
-            mutableListOf(UserRoles.TENANT_OWNER)
+            mutableSetOf(UserRoles.TENANT_OWNER)
         );
         this.loginAsUser("admin2");
         try {
@@ -62,7 +62,7 @@ class UserServiceTest : AbstractServiceTest() {
                 "admin3",
                 "123",
                 "test@test.de",
-                mutableListOf(UserRoles.ADMIN),
+                mutableSetOf(UserRoles.ADMIN),
                 null
             );
             fail<String>("Failed to create user")
@@ -82,7 +82,7 @@ class UserServiceTest : AbstractServiceTest() {
                 "admin3",
                 "123",
                 "test@test.de",
-                mutableListOf(UserRoles.ADMIN)
+                mutableSetOf(UserRoles.ADMIN)
             );
             fail<String>("Failed to create user")
         } catch (e: UnauthorizedException) {
@@ -98,7 +98,7 @@ class UserServiceTest : AbstractServiceTest() {
         this.loginAsUser("admin");
         val ten = this.tenantService.createTenant("ten1", "owner", "123", "owner@chef.de");
         this.loginAsUser("owner");
-        val usr = this.userService.registerUser("usr", "123", "a@chef.de", mutableListOf(), ten.id);
+        val usr = this.userService.registerUser("usr", "123", "a@chef.de", mutableSetOf(), ten.id);
         assertEquals(usr.username, "usr")
         assertEquals(usr.tenant?.id ?: -1, ten.id)
     }

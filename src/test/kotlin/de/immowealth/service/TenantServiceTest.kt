@@ -55,7 +55,7 @@ class TenantServiceTest : AbstractServiceTest() {
     @Order(3)
     fun testCreateTenantAsNonAdmin() {
         this.loginAsUser("admin");
-        this.userService.registerUser("nonAdmin", "123", "a@a.a", mutableListOf());
+        this.userService.registerUser("nonAdmin", "123", "a@a.a", mutableSetOf());
         try {
             this.loginAsUser("nonAdmin")
             this.tenantService.createTenant("ren1", "usr", "pwd", "test@test.de");
@@ -132,7 +132,7 @@ class TenantServiceTest : AbstractServiceTest() {
         this.loginAsUser("admin");
         var ten1 = this.tenantService.createTenant("mv_1", "mv1", "123", "test@test.de");
         var ten2 = this.tenantService.createTenant("mv_2", "mv2", "123", "test@test.de");
-        val usr = this.userService.registerUser("mv3", "123", "a@a.a", mutableListOf(UserRoles.TENANT_ASSIGNED), ten1.id);
+        val usr = this.userService.registerUser("mv3", "123", "a@a.a", mutableSetOf(UserRoles.TENANT_ASSIGNED), ten1.id);
         ten1 = this.tenantService.getTenant(ten1.id!!)
         assertEquals(ten1.users.size,2);
         ten2 = this.tenantService.moveUsersBetweenTenant(ten2.id!!, mutableListOf(usr.id!!, ten2.users.get(0).id!!));
@@ -145,7 +145,7 @@ class TenantServiceTest : AbstractServiceTest() {
         this.loginAsUser("admin");
         var ten1 = this.tenantService.createTenant("mv_11", "mv11", "123", "test@test.de");
         val ten2 = this.tenantService.createTenant("mv_21", "mv21", "123", "test@test.de");
-        val usr = this.userService.registerUser("mv31", "123", "a@a.a", mutableListOf(UserRoles.TENANT_ASSIGNED), ten1.id);
+        val usr = this.userService.registerUser("mv31", "123", "a@a.a", mutableSetOf(UserRoles.TENANT_ASSIGNED), ten1.id);
         ten1 = this.tenantService.getTenant(ten1.id!!)
         assertEquals(ten1.users.size,2);
         this.loginAsUser("mv21");
@@ -163,9 +163,9 @@ class TenantServiceTest : AbstractServiceTest() {
     @Order(12)
     fun testMoveUsersAsRandomUser() {
         this.loginAsUser("admin");
-        var ten1 = this.tenantService.createTenant("mv_11", "mv11", "123", "test@test.de");
-        val ten2 = this.tenantService.createTenant("mv_21", "mv21", "123", "test@test.de");
-        val usr = this.userService.registerUser("mv31", "123", "a@a.a", mutableListOf(UserRoles.TENANT_ASSIGNED), ten1.id);
+        var ten1 = this.tenantService.createTenant("mv_11", "mv112", "123", "test@test.de");
+        val ten2 = this.tenantService.createTenant("mv_21", "mv212", "123", "test@test.de");
+        val usr = this.userService.registerUser("mv31", "123", "a@a.a", mutableSetOf(UserRoles.TENANT_ASSIGNED), ten1.id);
         ten1 = this.tenantService.getTenant(ten1.id!!)
         assertEquals(ten1.users.size,2);
         this.loginAsUser("mv31");

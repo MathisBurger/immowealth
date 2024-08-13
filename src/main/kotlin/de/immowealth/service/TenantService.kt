@@ -41,7 +41,7 @@ class TenantService : AbstractService() {
         tenant.name = name;
         this.entityManager.persist(tenant);
         this.entityManager.flush();
-        this.userService.registerUser(username, password, email, mutableListOf(UserRoles.TENANT_OWNER), tenant.id);
+        this.userService.registerUser(username, password, email, mutableSetOf(UserRoles.TENANT_OWNER), tenant.id);
         return tenant;
     }
 

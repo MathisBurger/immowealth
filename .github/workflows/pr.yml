@@ -57,7 +57,7 @@ jobs:
           cp ./privateKey.pem ./src/main/resources/privateKey.pem
           cp ./publicKey.pem ./src/main/resources/publicKey.pem
       - name: Build with Gradle
-        run: ./gradlew build -DskipTests=true -Dquarkus.package.type=uber-jar
+        run: ./gradlew build -x test -Dquarkus.package.type=uber-jar
       - name: Start application
         run: |
           nohup ./gradlew --console=plain quarkusDev &

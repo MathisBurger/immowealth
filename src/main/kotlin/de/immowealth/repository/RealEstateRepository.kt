@@ -21,6 +21,6 @@ class RealEstateRepository : AbstractRepository<RealEstateObject>() {
      * Finds an object by city
      */
     fun findByCity(city: String): RealEstateObject {
-        return find("city", city).firstResult();
+        return find("from RealEstateObject o where o.city = ?1", city).firstResult();
     }
 }

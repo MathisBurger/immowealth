@@ -37,7 +37,7 @@ class UserService : AbstractService() {
      * @param tenantId The ID of the tenant the user should be assigned to
      */
     @Transactional
-    fun registerUser(username: String, password: String, email: String, roles: MutableList<String>, tenantId: Long? = null): User {
+    fun registerUser(username: String, password: String, email: String, roles: MutableSet<String>, tenantId: Long? = null): User {
         val exists = this.userRepository.findByUserName(username).isPresent;
         if (exists) {
             throw UserExistsException("User already registered");

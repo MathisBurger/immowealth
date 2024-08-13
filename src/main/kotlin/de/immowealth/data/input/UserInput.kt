@@ -21,7 +21,7 @@ data class UserInput @JsonbCreator constructor(
     /**
      * Roles of the user
      */
-    val roles: MutableList<String>,
+    val roles: MutableSet<String>,
     /**
      * Tenant ID of the user
      */

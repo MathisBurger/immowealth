@@ -138,7 +138,7 @@ class ChatServiceTest : AbstractServiceTest() {
         val admin = this.userRepository.findByUserName("admin").get();
         val chat = this.chatRepository.findByUser(admin).get(0);
         this.loginAsUser("admin2");
-        assertThrows(UnauthorizedException::class.java) { this.chatService.readChatMessages(chat.id!!) }
+        assertThrows(ParameterException::class.java) { this.chatService.readChatMessages(chat.id!!) }
     }
 
     @Test
@@ -157,7 +157,7 @@ class ChatServiceTest : AbstractServiceTest() {
         user.username = "chat_user"
         user.email = ""
         user.password = ""
-        user.roles = mutableListOf();
+        user.roles = mutableSetOf();
         this.entityManager.persist(user)
         this.entityManager.flush();
     }
