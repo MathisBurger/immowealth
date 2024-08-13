@@ -19,7 +19,7 @@ quarkus:
     username: postgres
     password: mysecretpassword
     jdbc:
-      url: jdbc:postgresql://localhost:5432/immowealth_test
+      url: jdbc:postgresql://localhost:5432/immowealth
   rest-client:
     geocoding:
       url: https://nominatim.openstreetmap.org/
