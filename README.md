@@ -50,7 +50,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [x] Support Chat for renter
 - [x] Rental status
 - [x] Update mail notifications with favourites
-- [ ] Performance calculations (by input of data)
+- [x] Performance calculations (by input of data)
 
 ### v1.4.1 (after stable React 19 release)
 - [ ] Upgrade to a Next version that supports React compiler
