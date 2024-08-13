@@ -1,7 +1,9 @@
 package de.immowealth.service
 
+import de.immowealth.entity.AuthorizedBaseEntity
 import de.immowealth.entity.BaseEntity
 import de.immowealth.entity.Favourite
+import de.immowealth.entity.RealEstateObject
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.transaction.Transactional
 
@@ -17,7 +19,7 @@ class FavouriteService : AbstractService() {
     @Transactional
     fun markAsFavourite(entityName: String, id: Long) {
         val obj = this.entityManager.find(Class.forName(entityName), id);
-        if (obj !== null && obj is BaseEntity && obj is Favourite) {
+        if (obj !== null && obj is AuthorizedBaseEntity && obj is Favourite) {
             this.denyUnlessGranted("READ", obj);
             val currentUser = this.securityService.getCurrentUser();
             if (!obj.isFavourite(currentUser) && currentUser !== null) {
@@ -37,7 +39,7 @@ class FavouriteService : AbstractService() {
     @Transactional
     fun unmarkAsFavourite(entityName: String, id: Long) {
         val obj = this.entityManager.find(Class.forName(entityName), id);
-        if (obj !== null && obj is BaseEntity && obj is Favourite) {
+        if (obj !== null && obj is AuthorizedBaseEntity && obj is Favourite) {
             this.denyUnlessGranted("READ", obj);
             val currentUser = this.securityService.getCurrentUser();
             if (obj.isFavourite(currentUser) && currentUser !== null) {

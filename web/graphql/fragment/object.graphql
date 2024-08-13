@@ -55,6 +55,9 @@ fragment FullRealEstateData on RealEstateObject {
     renters {
         ...Renter
     }
+    favourite {
+        id
+    }
 }
 
 fragment ObjectData on ObjectResponse {

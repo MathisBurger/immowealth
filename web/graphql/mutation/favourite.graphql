@@ -1,0 +1,7 @@
+mutation MarkAsFavourite($entityName: String! $id: BigInteger!) {
+    markAsFavourite(entityName: $entityName id: $id)
+}
+
+mutation UnmarkAsFavourite($entityName: String! $id: BigInteger!) {
+    unmarkAsFavourite(entityName: $entityName id: $id)
+}

@@ -102,7 +102,9 @@
     "birthday": "Birthday",
     "chats": "Chats",
     "send": "Senden",
-    "loadMore": "Load more"
+    "loadMore": "Load more",
+    "markAsFavourite": "Mark as favourite",
+    "unmarkAsFavourite": "Unmark as favourite"
   },
   "credit": {
     "tab": {

@@ -5,7 +5,7 @@ import {
     CreditDataFragment,
     CreditRateDataFragment, GetAllObjectsDocument, RenterFragment, RentExpenseDataFragment, UploadedFileFragment,
     useDeleteRealEstateMutation,
-    useGetObjectQuery
+    useGetObjectQuery, useMarkAsFavouriteMutation, useUnmarkAsFavouriteMutation
 } from "@/generated/graphql";
 import {useEffect, useMemo, useState} from "react";
 import AddCreditRateModal from "@/components/object/modal/AddCreditRateModal";
@@ -18,6 +18,7 @@ import {useTranslation} from "next-export-i18n";
 import ObjectRentSpreadTab from "@/components/object/ObjectRentSpreadTab";
 import DocumentsTab from "@/components/object/DocumentsTab";
 import ObjectRentersTab from "@/components/object/ObjectRentersTab";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 
 const ObjectDetailsPage = () => {
@@ -28,6 +29,14 @@ const ObjectDetailsPage = () => {
     const {data, loading, refetch} = useGetObjectQuery({
         variables: {id: parseInt(id, 10)}
     });
+    const [markAsFavouriteMutation] = useMarkAsFavouriteMutation();
+    const [unmarkAsFavouriteMutation] = useUnmarkAsFavouriteMutation();
+    const currentUser = useCurrentUser();
+
+    const isFavourite = useMemo<boolean>(() => {
+        // @ts-ignore
+        return data?.object?.realEstate?.favourite?.filter((f) => f?.id === currentUser?.id)?.length > 0;
+    }, [data, currentUser]);
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteRealEstateMutation({
         refetchQueries: [
@@ -139,6 +148,35 @@ const ObjectDetailsPage = () => {
                     >
                         {t('credit.button.auto-booking')}
                     </Button>
+                </Grid>
+                <Grid>
+                    {isFavourite ? (
+                        <Button
+                            variant="solid"
+                            color="primary"
+                            sx={{width: '250px'}}
+                            onClick={() => {
+                                unmarkAsFavouriteMutation({
+                                    variables: {entityName: 'de.immowealth.entity.RealEstateObject', id: parseInt(`${id}`, 10)}
+                                }).then(() => refetch())
+                            }}
+                        >
+                            {t('common.unmarkAsFavourite')}
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="solid"
+                            color="primary"
+                            sx={{width: '250px'}}
+                            onClick={() => {
+                                markAsFavouriteMutation({
+                                    variables: {entityName: 'de.immowealth.entity.RealEstateObject', id: parseInt(`${id}`, 10)}
+                                }).then(() => refetch())
+                            }}
+                        >
+                            {t('common.markAsFavourite')}
+                        </Button>
+                    )}
                 </Grid>
                 <Grid>
                     <Button

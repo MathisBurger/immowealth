@@ -20,6 +20,9 @@ fragment CreditData on Credit {
         ...CreditRateData
     }
     archived
+    favourite {
+        id
+    }
 }
 
 fragment CreditObject on CreditResponse {
