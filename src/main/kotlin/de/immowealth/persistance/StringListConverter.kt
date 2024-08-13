@@ -5,13 +5,13 @@ import jakarta.persistence.Converter
 
 
 @Converter
-class StringListConverter : AttributeConverter<List<String>, String> {
-    override fun convertToDatabaseColumn(stringList: List<String>): String {
+class StringListConverter : AttributeConverter<MutableSet<String>, String> {
+    override fun convertToDatabaseColumn(stringList: MutableSet<String>): String {
         return stringList.joinToString(SPLIT_CHAR)
     }
 
-    override fun convertToEntityAttribute(string: String): List<String> {
-        return string.split(SPLIT_CHAR)
+    override fun convertToEntityAttribute(string: String): MutableSet<String> {
+        return string.split(SPLIT_CHAR).toMutableSet()
     }
 
     companion object {
