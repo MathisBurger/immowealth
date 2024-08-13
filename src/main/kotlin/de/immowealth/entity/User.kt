@@ -1,12 +1,14 @@
 package de.immowealth.entity
 
 import de.immowealth.graphql.PasswordAdapter
+import de.immowealth.persistance.StringListConverter
 import io.smallrye.graphql.api.AdaptWith
 import jakarta.persistence.*
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.CascadeType
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
+import org.hibernate.annotations.Type
 
 /**
  * The user entity
@@ -34,14 +36,8 @@ class User : BaseEntity(), Archivable {
     /**
      * All roles of the user
      */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "immowealth_user_roles",
-        joinColumns = [JoinColumn(name = "immowealth_user_id")],
-        uniqueConstraints = [UniqueConstraint(columnNames = ["immowealth_user_id", "roles"])]
-    )
-    @Column(name = "roles")
-    @Cascade(CascadeType.ALL)
+    @Convert(converter = StringListConverter::class)
+    @Column(name = "roles", columnDefinition = "text")
     var roles: MutableSet<String> = mutableSetOf();
 
     /**
@@ -54,7 +50,7 @@ class User : BaseEntity(), Archivable {
     /**
      * All chats the user is member of
      */
-    @ManyToMany
+    @ManyToMany(cascade = [jakarta.persistence.CascadeType.ALL])
     var chats: MutableList<Chat> = mutableListOf();
 
     /**

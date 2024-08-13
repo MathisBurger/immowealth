@@ -13,8 +13,8 @@ class Chat : BaseEntity() {
     /**
      * All participants of the chat
      */
-    @ManyToMany
-    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @ManyToMany(cascade = [(CascadeType.ALL)])
+    @OnDelete(action = OnDeleteAction.CASCADE)
     var participants: MutableList<User> = mutableListOf()
 
     /**
