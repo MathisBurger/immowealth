@@ -18,8 +18,8 @@ const MoverListDataList = <T,>({data, selected, setSelected, fieldToAccess}: Mov
 
     return (
         <List variant="outlined" sx={{borderRadius: 'sm'}}>
-            {data.map((d) => (
-                <ListItem>
+            {data.map((d, i) => (
+                <ListItem key={`${d}_${i}_${typeof data}`}>
                     {/* @ts-ignore */}
                     <Checkbox checked={selectedIds.indexOf((d as IdAble).id) > -1}
                         onChange={(e) => {
