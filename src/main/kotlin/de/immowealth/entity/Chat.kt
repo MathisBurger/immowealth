@@ -1,6 +1,8 @@
 package de.immowealth.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 
 /**
  * Chat entity
@@ -12,6 +14,7 @@ class Chat : BaseEntity() {
      * All participants of the chat
      */
     @ManyToMany
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     var participants: MutableList<User> = mutableListOf()
 
     /**
