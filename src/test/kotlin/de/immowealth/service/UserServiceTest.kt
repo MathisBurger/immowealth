@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager
 import jakarta.ws.rs.core.SecurityContext
 import org.eclipse.microprofile.jwt.JsonWebToken
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.opentest4j.AssertionFailedError
 
@@ -34,8 +35,8 @@ class UserServiceTest : AbstractServiceTest() {
     override lateinit var securityContext: JsonWebToken;
 
     @Test
+    @Order(1)
     fun testRegisterUserAsAdmin() {
-        this.removeAllUsersExceptAdmin(userRepository, entityManager);
         this.loginAsUser("admin");
         val user = this.userService.registerUser(
             "admin2",
@@ -47,16 +48,16 @@ class UserServiceTest : AbstractServiceTest() {
     }
 
     @Test
+    @Order(2)
     fun testRegisterUserAsNonAdmin() {
-        this.removeAllUsersExceptAdmin(userRepository, entityManager);
         this.loginAsUser("admin");
         this.userService.registerUser(
-            "admin2",
+            "admin23",
             "123",
             "test@test.de",
             mutableSetOf(UserRoles.TENANT_OWNER)
         );
-        this.loginAsUser("admin2");
+        this.loginAsUser("admin23");
         try {
             this.userService.registerUser(
                 "admin3",
@@ -74,12 +75,12 @@ class UserServiceTest : AbstractServiceTest() {
     }
 
     @Test
+    @Order(3)
     fun testRegisterUserAsUnknownUser() {
-        this.removeAllUsersExceptAdmin(userRepository, entityManager);
-        this.loginAsUser("admin2");
+        this.loginAsUser("admin2443434");
         try {
             this.userService.registerUser(
-                "admin3",
+                "admin3345353",
                 "123",
                 "test@test.de",
                 mutableSetOf(UserRoles.ADMIN)
@@ -93,8 +94,8 @@ class UserServiceTest : AbstractServiceTest() {
     }
 
     @Test
+    @Order(4)
     fun testCreateUserAsTenantOwner() {
-        this.removeAllUsersExceptAdmin(userRepository, entityManager);
         this.loginAsUser("admin");
         val ten = this.tenantService.createTenant("ten1", "owner", "123", "owner@chef.de");
         this.loginAsUser("owner");

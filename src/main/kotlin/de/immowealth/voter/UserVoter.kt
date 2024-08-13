@@ -23,6 +23,7 @@ class UserVoter : VoterInterface {
         if (user == null) {
             return false
         }
+        println(user.roles.toList())
         if (user.roles.contains(UserRoles.ADMIN)) {
             return true;
         }

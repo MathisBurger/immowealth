@@ -165,10 +165,10 @@ class TenantServiceTest : AbstractServiceTest() {
         this.loginAsUser("admin");
         var ten1 = this.tenantService.createTenant("mv_11", "mv112", "123", "test@test.de");
         val ten2 = this.tenantService.createTenant("mv_21", "mv212", "123", "test@test.de");
-        val usr = this.userService.registerUser("mv31", "123", "a@a.a", mutableSetOf(UserRoles.TENANT_ASSIGNED), ten1.id);
+        val usr = this.userService.registerUser("mv312", "123", "a@a.a", mutableSetOf(UserRoles.TENANT_ASSIGNED), ten1.id);
         ten1 = this.tenantService.getTenant(ten1.id!!)
         assertEquals(ten1.users.size,2);
-        this.loginAsUser("mv31");
+        this.loginAsUser("mv312");
         try {
             this.tenantService.moveUsersBetweenTenant(ten2.id!!, mutableListOf(usr.id!!, ten2.users.get(0).id!!));
             fail<String>("This should not be allowed");
