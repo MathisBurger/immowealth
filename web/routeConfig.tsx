@@ -9,6 +9,7 @@ import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import GroupsIcon from '@mui/icons-material/Groups';
 import {Chat} from '@mui/icons-material';
+import SportsBarIcon from '@mui/icons-material/SportsBar';
 import UserRoles from "@/utilts/userRoles";
 
 const routes: RouteConfigType[] = [
@@ -67,6 +68,13 @@ const routes: RouteConfigType[] = [
       icon: <ArchiveIcon />,
       authorized: true,
       roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
+    },
+    {
+        name: 'simpleRentabilityCalculation',
+        path: '/simpleRentabilityCalculation',
+        icon: <SportsBarIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'settings',

@@ -46,7 +46,8 @@
     "archived": "Archive",
     "tenants": "Tenants",
     "tenant": "Tenant",
-    "chats": "Chats"
+    "chats": "Chats",
+    "simpleRentabilityCalculation": "Simple Rent. Calc"
   },
   "common": {
     "credit": "Credit",

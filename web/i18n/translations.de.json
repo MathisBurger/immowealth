@@ -46,7 +46,8 @@
     "archived": "Archiv",
     "tenants": "Abteilungen",
     "tenant": " Abteilung",
-    "chats": "Chats"
+    "chats": "Chats",
+    "simpleRentabilityCalculation": "Bierdeckelrechnung"
   },
   "common": {
     "credit": "Kredit",
