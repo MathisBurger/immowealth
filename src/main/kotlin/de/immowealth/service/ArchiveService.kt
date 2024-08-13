@@ -56,7 +56,6 @@ class ArchiveService : AbstractService() {
     @Transactional
     fun removeArchival(id: Long, entityName: String) {
         this.denyUnlessGranted(UserRoles.ADMIN);
-        val cred = Credit()
         val obj = this.entityManager.find(Class.forName(entityName), id);
         if (obj != null && obj is BaseEntity) {
             obj.archived = false;

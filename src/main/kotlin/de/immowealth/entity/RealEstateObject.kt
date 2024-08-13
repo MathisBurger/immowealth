@@ -15,7 +15,7 @@ class RealEstateObject : AuthorizedBaseEntity(), Archivable, Favourite {
     @JoinTable(name= "realEstateObject_favourite_user",
         joinColumns = [JoinColumn(name = "object_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")])
-    var favourite: MutableList<User> = mutableListOf()
+    override var favourite: MutableList<User> = mutableListOf()
 
     /**
      * The city of the object

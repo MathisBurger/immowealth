@@ -14,7 +14,7 @@ class Credit : AuthorizedBaseEntity(), Archivable, Favourite {
     @JoinTable(name= "credit_favourite_user",
         joinColumns = [JoinColumn(name = "credit_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")])
-    var favourite: MutableList<User> = mutableListOf()
+    override var favourite: MutableList<User> = mutableListOf()
 
     /**
      * The interest rate

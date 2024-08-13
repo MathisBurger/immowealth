@@ -16,7 +16,7 @@ class HousePriceChange : AuthorizedBaseEntity(), Archivable, Favourite {
     @JoinTable(name= "housePriceChange_favourite_user",
         joinColumns = [JoinColumn(name = "change_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")])
-    var favourite: MutableList<User> = mutableListOf()
+    override var favourite: MutableList<User> = mutableListOf()
 
     /**
      * The zip
