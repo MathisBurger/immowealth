@@ -97,10 +97,10 @@ class UserServiceTest : AbstractServiceTest() {
     @Order(4)
     fun testCreateUserAsTenantOwner() {
         this.loginAsUser("admin");
-        val ten = this.tenantService.createTenant("ten1", "owner", "123", "owner@chef.de");
-        this.loginAsUser("owner");
-        val usr = this.userService.registerUser("usr", "123", "a@chef.de", mutableSetOf(), ten.id);
-        assertEquals(usr.username, "usr")
+        val ten = this.tenantService.createTenant("ten1", "owner123", "123", "owner@chef.de");
+        this.loginAsUser("owner123");
+        val usr = this.userService.registerUser("usr123", "123", "a@chef.de", mutableSetOf(), ten.id);
+        assertEquals(usr.username, "usr123")
         assertEquals(usr.tenant?.id ?: -1, ten.id)
     }
 

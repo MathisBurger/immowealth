@@ -48,7 +48,7 @@ class RenterServiceTest() : AbstractServiceTest() {
             "Test",
             "User",
             Date(),
-            "1",
+            "123",
             "1",
             "1"
         ));
