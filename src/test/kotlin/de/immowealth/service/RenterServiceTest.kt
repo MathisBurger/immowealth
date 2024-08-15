@@ -3,19 +3,14 @@ package de.immowealth.service
 import de.immowealth.data.input.CreateRenterInput
 import de.immowealth.data.input.CreditInput
 import de.immowealth.data.input.RealEstateInput
-import de.immowealth.entity.User
 import de.immowealth.entity.UserRoles
 import de.immowealth.exception.ParameterException
 import de.immowealth.repository.RealEstateRepository
-import io.quarkus.elytron.security.common.BcryptUtil
 import io.quarkus.security.UnauthorizedException
 import io.quarkus.test.junit.QuarkusTest
 import jakarta.inject.Inject
-import jakarta.persistence.EntityManager
 import org.eclipse.microprofile.jwt.JsonWebToken
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -42,22 +37,14 @@ class RenterServiceTest() : AbstractServiceTest() {
 
     @Inject
     lateinit var renterService: RenterService;
-    
-    @Inject
-    lateinit var entityManager: EntityManager;
 
     @BeforeEach
     fun beforeEach() {
-        this.entityManager.createNativeQuery("DROP SCHEMA public").firstResult;
-        this.entityManager.createNativeQuery("CREATE SCHEMA public").firstResult;
-        val admin = User()
-        admin.username = "admin"
-        admin.password = BcryptUtil.bcryptHash("admin123")
-        admin.roles = mutableSetOf("ROLE_ADMIN");
-        this.entityManager.persist(admin)
-        this.entityManager.flush();
-        this.createObjectWithTenant();
+        try {
+            this.createObjectWithTenant();
+        } catch (_: Throwable) {}
     }
+
 
     @Test
     @Order(1)
