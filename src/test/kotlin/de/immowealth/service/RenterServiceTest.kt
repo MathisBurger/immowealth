@@ -152,22 +152,22 @@ class RenterServiceTest() : AbstractServiceTest() {
 
     @Test
     @Order(7)
-    fun testDeleteRenterFromObjectAsAssigned() {
-        this.loginAsUser("ten1_renter_user")
+    fun testDeleteRenterFromObjectAsUnassigned() {
+        this.loginAsUser("ten_test_renter_unass");
         val obj = this.realEstateRepository.findById(objectId)
         val renter = obj.renters.first();
-        assertDoesNotThrow {
+        assertThrows(UnauthorizedException::class.java) {
             this.renterService.deleteRenterFromObject(renter.id!!)
         }
     }
 
     @Test
     @Order(8)
-    fun testDeleteRenterFromObjectAsUnassigned() {
-        this.loginAsUser("ten_test_renter_unass");
+    fun testDeleteRenterFromObjectAsAssigned() {
+        this.loginAsUser("ten1_renter_user")
         val obj = this.realEstateRepository.findById(objectId)
         val renter = obj.renters.first();
-        assertThrows(UnauthorizedException::class.java) {
+        assertDoesNotThrow {
             this.renterService.deleteRenterFromObject(renter.id!!)
         }
     }
