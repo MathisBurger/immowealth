@@ -37,6 +37,10 @@ class RenterServiceTest() : AbstractServiceTest() {
 
     @Inject
     lateinit var renterService: RenterService;
+    
+    companion object {
+        var objectId: Long = -1L;
+    }
 
     @BeforeEach
     fun beforeEach() {
@@ -51,7 +55,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     fun testCreateRenterAsAdmin() {
 
         this.loginAsUser("admin");
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         val res = this.renterService.createRenterOnObject(CreateRenterInput(
             obj.id!!,
             "Test",
@@ -68,7 +72,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(2)
     fun testCreateRenterAsUserAssigned() {
         this.loginAsUser("ten1_renter_user")
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         val res = this.renterService.createRenterOnObject(CreateRenterInput(
             obj.id!!,
             "Test",
@@ -85,7 +89,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(3)
     fun testCreateRenterAsUserUnassigned() {
         this.loginAsUser("ten_test_renter_unass");
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         assertThrows(UnauthorizedException::class.java) {
             this.renterService.createRenterOnObject(CreateRenterInput(
                 obj.id!!,
@@ -103,7 +107,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(4)
     fun testCreateRenterAsUnknownUser() {
         println("HALLOOOOOO " + 1)
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         this.loginAsUser("unknown")
         assertThrows(UnauthorizedException::class.java) {
             this.renterService.createRenterOnObject(CreateRenterInput(
@@ -139,7 +143,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(6)
     fun testDeleteRenterFromObjectAsAdmin() {
         this.loginAsUser("admin");
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         val renter = obj.renters.first();
         assertDoesNotThrow {
             this.renterService.deleteRenterFromObject(renter.id!!)
@@ -150,7 +154,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(7)
     fun testDeleteRenterFromObjectAsAssigned() {
         this.loginAsUser("ten1_renter_user")
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         val renter = obj.renters.first();
         assertDoesNotThrow {
             this.renterService.deleteRenterFromObject(renter.id!!)
@@ -161,7 +165,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(8)
     fun testDeleteRenterFromObjectAsUnassigned() {
         this.loginAsUser("ten_test_renter_unass");
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         val renter = obj.renters.first();
         assertThrows(UnauthorizedException::class.java) {
             this.renterService.deleteRenterFromObject(renter.id!!)
@@ -172,7 +176,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(9)
     fun testDeleteRenterFromObjectAsUnknown() {
         this.loginAsUser("unknown");
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         val renter = obj.renters.first();
         assertThrows(UnauthorizedException::class.java) {
             this.renterService.deleteRenterFromObject(renter.id!!)
@@ -191,7 +195,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(11)
     fun testUnassignRenterFromObjectAsUnknown() {
         this.loginAsUser("admin");
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         val res = this.renterService.createRenterOnObject(CreateRenterInput(
             obj.id!!,
             "Test",
@@ -211,7 +215,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Order(12)
     fun testUnassignRenterFromObjectAsAdmin() {
         this.loginAsUser("admin");
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         assertDoesNotThrow {
             this.renterService.unassignRenterFromObject(obj.renters.first().id!!)
         }
@@ -238,7 +242,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     fun testAssignRentersAsUnknown() {
         this.loginAsUser("admin");
         val renter = this.renterService.getUnassignedRenters().first();
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         this.logout();
         assertThrows(UnauthorizedException::class.java) {
             this.renterService.assignRenterToObject(renter.id!!, obj.id!!)
@@ -250,7 +254,7 @@ class RenterServiceTest() : AbstractServiceTest() {
     fun testAssignRenterAsAdmin() {
         this.loginAsUser("admin");
         val renter = this.renterService.getUnassignedRenters().first();
-        val obj = this.realEstateRepository.findById(1)
+        val obj = this.realEstateRepository.findById(objectId)
         assertDoesNotThrow {
             this.renterService.assignRenterToObject(renter.id!!, obj.id!!)
         }
@@ -281,6 +285,7 @@ class RenterServiceTest() : AbstractServiceTest() {
             "GAS",
             ""
         ));
+        objectId = obj.id!!;
         println("Creates object with city: " + obj.city);
         this.logout();
     }
