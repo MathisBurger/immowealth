@@ -93,8 +93,9 @@ class RenterServiceTest() : AbstractServiceTest() {
     @Test
     @Order(4)
     fun testCreateRenterAsUnknownUser() {
-        this.loginAsUser("unknown");
-        val obj = this.realEstateRepository.findByCity("obj_renter_01")
+        this.loginAsUser("admin");
+        val obj = this.realEstateRepository.findByCity("obj_renter_01");
+        this.loginAsUser("unknown")
         assertThrows(UnauthorizedException::class.java) {
             this.renterService.createRenterOnObject(CreateRenterInput(
                 obj.id!!,
