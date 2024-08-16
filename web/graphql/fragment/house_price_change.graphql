@@ -4,4 +4,7 @@ fragment HousePriceChangeData on HousePriceChange {
     year
     zip
     archived
+    favourite {
+        id
+    }
 }

@@ -14,8 +14,9 @@ COPY . .
 RUN mkdir ./src/main/resources/META-INF.resources
 RUN ./gradlew build -Dquarkus.package.type=uber-jar
 
-FROM openjdk:21
+FROM openjdk:17-alpine
 WORKDIR /app
+RUN apk add openssl
 COPY --from=serverBuild ./app/build/immowealth-1.0-SNAPSHOT-runner.jar ./server.jar
 RUN mkdir static
 COPY --from=webBuild ./web/out ./static
@@ -23,8 +24,14 @@ COPY --from=webBuild ./web/out ./static
 ENV DATABASE_PASSWORD=mysecretpassword
 ENV DATABASE_USER=postgres
 ENV DATABASE_URL=jdbc:postgresql://localhost:5432/immowealth
-ENV ORM_GENERATION=drop-and-create
+ENV ORM_GENERATION=update
 ENV DEFAULT_MAIL=default@mail.com
+ENV APPLICATION_HOST=http://localhost:3000
+ENV JWT_ISSUER=http://localhost
+ENV MAILER_FROM=noreply@immowealth.local
+ENV MAILER_HOST=localhost
+ENV MAILER_PORT=1025
+ENV MAILER_START_TLS=REQUIRED
 
 EXPOSE 8080
-CMD ["java", "-Dquarkus.datasource.username=${DATABASE_USER}", "-Dquarkus.datasource.password=${DATABASE_PASSWORD}", "-Dquarkus.datasource.jdbc.url=${DATABASE_URL}", "-Dquarkus.hibernate-orm.database.generation=${ORM_GENERATION}", "-Dimmowealth.defaultMail=${DEFAULT_MAIL}", "-jar", "server.jar"]
+ENTRYPOINT ["runner.sh"]

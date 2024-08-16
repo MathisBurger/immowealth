@@ -4,6 +4,7 @@ import de.immowealth.data.response.ArchivedResponse
 import de.immowealth.entity.Archivable
 import de.immowealth.entity.BaseEntity
 import de.immowealth.entity.Credit
+import de.immowealth.entity.UserRoles
 import de.immowealth.repository.*
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -54,7 +55,7 @@ class ArchiveService : AbstractService() {
      */
     @Transactional
     fun removeArchival(id: Long, entityName: String) {
-        val cred = Credit()
+        this.denyUnlessGranted(UserRoles.ADMIN);
         val obj = this.entityManager.find(Class.forName(entityName), id);
         if (obj != null && obj is BaseEntity) {
             obj.archived = false;
@@ -79,7 +80,7 @@ class ArchiveService : AbstractService() {
         responses.addAll(this.realEstateRepository.findAllThatAreArchived());
         responses.addAll(this.settingsRepository.findAllThatAreArchived());
         responses.addAll(this.uploadedFileRepository.findAllThatAreArchived());
-        return this.convertToResponse(responses);
+        return this.convertToResponse(this.filterAccessArchivable(UserRoles.ADMIN, responses));
     }
 
     /**

@@ -1,0 +1,27 @@
+fragment ChatResponse on ChatResponse {
+    chat {
+        ...Chat
+    }
+    unreadMessagesCount
+}
+
+fragment Chat on Chat {
+    id
+    participants {
+        ...SimpleUser
+    }
+    renterChat
+    realEstateObject {
+        id
+    }
+}
+
+fragment ChatMessage on ChatMessage {
+    id
+    sender {
+        id
+        username
+    }
+    createdAt
+    message
+}

@@ -2,6 +2,7 @@ package de.immowealth.controller
 
 import de.immowealth.data.input.UploadedResource
 import de.immowealth.service.FileService
+import jakarta.annotation.security.PermitAll
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.ws.rs.Consumes
@@ -29,6 +30,7 @@ class FileController {
      */
     @POST
     @Path("/realEstateObject")
+    @PermitAll
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     fun uploadFileToRealEstateObject(@MultipartForm form: UploadedResource): Response {
         this.fileService.uploadFileToObject(form);
@@ -39,6 +41,7 @@ class FileController {
      * Gets a file by ID
      */
     @GET
+    @PermitAll
     fun getFile(@QueryParam("id") id: Long): Response {
         val file = this.fileService.getFile(id);
         return file;

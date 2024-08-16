@@ -1,0 +1,9 @@
+fragment Renter on Renter {
+    id
+    firstName
+    lastName
+    birthDay
+    statistics {
+        ...RenterStatistics
+    }
+}

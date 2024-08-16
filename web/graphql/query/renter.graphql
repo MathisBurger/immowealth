@@ -1,0 +1,11 @@
+query GetUnassignedRenters {
+    unassignedRenters {
+        ...Renter
+    }
+}
+
+query GetRenter($renterId: BigInteger!) {
+    renter(renterId: $renterId) {
+        ...Renter
+    }
+}

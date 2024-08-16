@@ -8,7 +8,7 @@ import jakarta.persistence.ManyToOne
  * A rent expense of an object
  */
 @Entity
-class ObjectRentExpense : BaseEntity(), Archivable {
+class ObjectRentExpense : AuthorizedBaseEntity(), Archivable {
 
     /**
      * Name of the expense

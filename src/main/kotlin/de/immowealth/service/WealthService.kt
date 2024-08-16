@@ -4,6 +4,8 @@ import de.immowealth.data.response.WealthResponse
 import de.immowealth.data.type.WealthSpreadType
 import de.immowealth.repository.HousePriceChangeRepository
 import de.immowealth.repository.RealEstateRepository
+import de.immowealth.voter.HousePriceChangeVoter
+import de.immowealth.voter.RealEstateObjectVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import java.util.Calendar
@@ -25,11 +27,11 @@ class WealthService : AbstractService() {
      * Gets gross wealth with inflation
      */
     fun getGrossWealthWithInflation(): WealthResponse {
-        val objects = this.realEstateRepository.findAllArchived();
+        val objects = this.filterAccess(RealEstateObjectVoter.READ, this.realEstateRepository.findAllArchived());
         var wealth = 0L;
         val detailed: MutableList<WealthSpreadType> = mutableListOf();
         for (obj in objects) {
-            val priceChanges = this.housePriceChangeRepository.findByZip(obj.zip!!);
+            val priceChanges = this.filterAccess(RealEstateObjectVoter.READ, this.housePriceChangeRepository.findByZip(obj.zip!!));
             var value = obj.initialValue!!;
             val calendar = GregorianCalendar();
             calendar.time = obj.dateBought!!;
@@ -50,7 +52,7 @@ class WealthService : AbstractService() {
      * Gets gross wealth without inflation
      */
     fun getGrossWealthWithoutInflation(): WealthResponse {
-        val objects = this.realEstateRepository.findAllArchived();
+        val objects = this.filterAccess(RealEstateObjectVoter.READ, this.realEstateRepository.findAllArchived());
         var wealth = 0L;
         val detailed: MutableList<WealthSpreadType> = mutableListOf();
         for (obj in objects) {
@@ -64,7 +66,7 @@ class WealthService : AbstractService() {
      * Gets net wealth with inflation
      */
     fun getNetWealthWithInflation(): WealthResponse {
-        val objects = this.realEstateRepository.findAllArchived();
+        val objects = this.filterAccess(RealEstateObjectVoter.READ, this.realEstateRepository.findAllArchived());
         var netWealth = 0L;
         val detailed: MutableList<WealthSpreadType> = mutableListOf()
         for (obj in objects) {
@@ -77,7 +79,7 @@ class WealthService : AbstractService() {
                 detailed.add(WealthSpreadType(obj.id!!, cumulatedRate.toLong(), obj.streetAndHouseNr + ", " + obj.zip + " " + obj.city));
                 continue;
             }
-            val priceChanges = this.housePriceChangeRepository.findByZip(obj.zip!!);
+            val priceChanges = this.filterAccess(HousePriceChangeVoter.READ, this.housePriceChangeRepository.findByZip(obj.zip!!));
             var value = obj.initialValue!!;
             val calendar = GregorianCalendar();
             calendar.time = obj.dateBought!!;
@@ -98,7 +100,7 @@ class WealthService : AbstractService() {
      * Gets net wealth without inflation
      */
     fun getNetWealthWithoutInflation(): WealthResponse {
-        val objects = this.realEstateRepository.findAllArchived();
+        val objects = this.filterAccess(RealEstateObjectVoter.READ, this.realEstateRepository.findAllArchived());
         var netWealth = 0L;
         val detailed: MutableList<WealthSpreadType> = mutableListOf()
         for (obj in objects) {

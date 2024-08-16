@@ -7,48 +7,96 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import MapIcon from '@mui/icons-material/Map';
 import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 import ArchiveIcon from '@mui/icons-material/Archive';
+import GroupsIcon from '@mui/icons-material/Groups';
+import {Chat} from '@mui/icons-material';
+import SportsBarIcon from '@mui/icons-material/SportsBar';
+import UserRoles from "@/utilts/userRoles";
 
 const routes: RouteConfigType[] = [
     {
         name: 'dashboard',
         path: '/dashboard',
-        icon: <DashboardIcon />
+        icon: <DashboardIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED, UserRoles.RENTER]
     },
     {
         name: 'objects',
         path: '/objects',
-        icon: <ApartmentIcon />
+        icon: <ApartmentIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'credits',
         path: '/credits',
-        icon: <AttachMoneyIcon />
+        icon: <AttachMoneyIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'housingPrices',
         path: '/housingPrices',
-        icon: <ShowChartIcon />
+        icon: <ShowChartIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'map',
         path: '/map',
-        icon: <MapIcon />
+        icon: <MapIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
+    },
+    {
+        name: 'chats',
+        path: '/chats',
+        icon: <Chat />,
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED, UserRoles.RENTER]
     },
     {
         name: 'activityLog',
         path: '/activityLog',
-        icon: <ChangeHistoryIcon />
+        icon: <ChangeHistoryIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN]
     },
     {
       name: 'archived',
       path: '/archived',
-      icon: <ArchiveIcon />
+      icon: <ArchiveIcon />,
+      authorized: true,
+      roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
+    },
+    {
+        name: 'simpleRentabilityCalculation',
+        path: '/simpleRentabilityCalculation',
+        icon: <SportsBarIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN, UserRoles.TENANT_OWNER, UserRoles.TENANT_ASSIGNED]
     },
     {
         name: 'settings',
         path: '/settings',
-        icon: <SettingsRoundedIcon />
+        icon: <SettingsRoundedIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN]
     },
+    {
+        name: 'tenants',
+        path: '/tenants',
+        icon: <GroupsIcon />,
+        authorized: true,
+        roles: [UserRoles.ADMIN]
+    },
+    {
+        name: 'tenant',
+        path: '/tenant',
+        icon: <GroupsIcon />,
+        authorized: true,
+        roles: [UserRoles.TENANT_ASSIGNED, UserRoles.TENANT_OWNER]
+    }
 ];
 
 export default routes;

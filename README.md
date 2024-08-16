@@ -1,4 +1,5 @@
 # Immowealth
+[![](https://tokei.rs/b1/github/MathisBurger/immowealth?category=lines)](https://github.com/XAMPPRocky/tokei).
 
 Immowealth is a project build to monitor your real estate investments
 with a simple easy to use UI. The application provides forecasts, simple analysis 
@@ -35,31 +36,77 @@ Execute the docker compose:
 docker-compose up -d
 ```
 
+# Chat messages
+
+All chats messages do have live updates, except from renter chats.
 
 # Roadmap
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
 ### v1.4.0
-- [ ] Full UNIT test coverage
-- [ ] User account system
-- [ ] Support Chat for renter
-- [ ] Rental status / statistics about the renter
-- [ ] Update mail notifications with favourites
-- [ ] Performance calculations
+- [x] Full UNIT test coverage (services)
+- [x] User account system
+- [x] Support Chat for renter
+- [x] Rental status
+- [x] Update mail notifications with favourites
+- [x] Performance calculations (by input of data)
 
-### v1.5.0
+### v1.4.1 (after stable React 19 release)
+- [ ] Upgrade to a Next version that supports React compiler
+- [ ] Update log functionality and add everywhere
+- [ ] Improve notification system (send to all users with access)
+- [ ] Filter by favourite
+
+### v1.5.0 (not scheduled yet)
+- [ ] Full UNIT test coverage (all classes, doesn`t matter how simple they are => more complex edge-cases)
+- [ ] Subtenants
+- [ ] Favourites as filter in frontend views
 - [ ] Immo portal search
 - [ ] Object location watchlist
 - [ ] Add support for measured object prices
 - [ ] Tabs are saved in URI
 
-### Not planned yet
-- [ ] Mail templates to send
+### v1.5.3 (not scheduled yet)
 - [ ] Backend translations
-- [ ] Auto collect market value change data
-- [ ] Add balance sheet calculation
+- [ ] 2FA
 - [ ] Rent spread suggestions by fixes rules
+- [ ] Validation of emails and other fields with strict rules
+- [ ] Data backup functionality
+
+### v1.6.0 (not scheduled yet)
+- [ ] Mail templates to send
+- [ ] Service User Accounts (for automated access)
+- [ ] External API for other systems to make integration easier
+- [ ] Ability to insert some data about the current renter (bank, reliability)
 - [ ] Rentability calculations
+- [ ] Auto collect market value change data
+
+### Not planned yet
+- [ ] Add balance sheet calculation
+- [ ] New password rule validation
+- [ ] Translation test coverage
+- [ ] Add code quality linting with Prettier and eslint and also for kotlin
+- [ ] Login with LDAP
+- [ ] Assign chat to specific people
+- [ ] Profile picture upload
 - [ ] TAX calculations
+- [ ] Extended chat functionality
+- [ ] Configure Chat Socket keep alive
+
+## Local setup
+
+1. Clone repo
+```shell
+git clone https://github.com/MathisBurger/immowealth.git
+```
+2. Generate keys
+
+```shell
+openssl genrsa -out rsaPrivateKey.pem 2048
+openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
+openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform pem -out privateKey.pem
+```
+3. Setup your PostgreSQL DB
+4. Build the code and start developing
 

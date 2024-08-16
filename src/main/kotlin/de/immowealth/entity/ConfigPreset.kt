@@ -6,7 +6,7 @@ import jakarta.persistence.Entity
  * The config preset entity
  */
 @Entity
-class ConfigPreset : BaseEntity(), Archivable {
+class ConfigPreset : UserAuthorizedBaseEntity(), Archivable {
 
     /**
      * The page route the config is located at

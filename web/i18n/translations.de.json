@@ -16,6 +16,7 @@
     "mailerNotification_realEstateObject": "Objekte",
     "mailerNotification_credit": "Kredite",
     "mailerNotification_housePrices": "Haus-Preisänderungen",
+    "notificationsUseFavourites": "Benachrichtigungen anwenden für",
     "options": {
         "lang": {
           "de": "Deutsch",
@@ -28,7 +29,8 @@
             "create_only": "Nur Erstellen",
             "booking_only": "Nur Buchungen",
             "delete_only": "Nur Löschungen",
-            "all": "Alle"
+            "all": "Alle",
+            "favourites": "Favouriten"
           }
         }
     }
@@ -41,11 +43,16 @@
     "map": "Karte",
     "settings": "Einstellungen",
     "activityLog": "Aktivitäten",
-    "archived": "Archiv"
+    "archived": "Archiv",
+    "tenants": "Abteilungen",
+    "tenant": " Abteilung",
+    "chats": "Chats",
+    "simpleRentabilityCalculation": "Bierdeckelrechnung"
   },
   "common": {
     "credit": "Kredit",
     "credits": "Kredite",
+    "name": "Name",
     "sum": "Summe",
     "creditRateSum": "Getilgt",
     "interestRate": "Zins",
@@ -60,7 +67,7 @@
     "choose": "Auswählen",
     "cancel": "Abbrechen",
     "object": "Objekt",
-    "objects": "Okjekte",
+    "objects": "Objekte",
     "details": "Details",
     "general": "Allgemein",
     "creditRates": "Kreditraten",
@@ -82,7 +89,23 @@
     "add-folder": "Ordner erstellen",
     "value": "Wert",
     "entityName": "Entität",
-    "unarchive": "Entarchivieren"
+    "unarchive": "Entarchivieren",
+    "users": "Nutzer",
+    "username": "Nutzername",
+    "password": "Passwort",
+    "email": "Email",
+    "requestPasswordReset": "Zurücksetzen anfragen",
+    "resetPassword": "Password zurücksetzen",
+    "pleaseCheckYourInbox": "Die E-Mail wurde versendet. Bitte überprüfen sie ihr Postfach.",
+    "renters": "Mieter",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "birthday": "Geburtstag",
+    "chats": "Chats",
+    "send": "Senden",
+    "loadMore": "Mehr laden",
+    "markAsFavourite": "Als Favourit markieren",
+    "unmarkAsFavourite": "Als Favorit entfernen"
   },
   "credit": {
     "tab": {
@@ -151,6 +174,22 @@
         "INSURANCE": "Versicherung",
         "OTHER": "Sonstiges"
       }
+    },
+    "renter": {
+      "createRenter": "Mieter anlegen",
+      "assignRenter": "Mieter hinzufügen"
     }
+  },
+  "renter": {
+    "history": "Wohnverlauf"
+  },
+  "tenant": {
+    "createMember": "Mitarbeiter erstellen",
+    "manageMembers": "Mitarbeiter verwalten",
+    "moveMembers": "Mitarbeiter verschieben",
+    "new": "Neue Abteilung",
+    "name": "Name",
+    "baseData": "Grunddaten",
+    "owner": "Abteilungsleiter"
   }
 }

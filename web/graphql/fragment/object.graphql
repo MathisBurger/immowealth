@@ -52,6 +52,12 @@ fragment FullRealEstateData on RealEstateObject {
     uploadedFiles {
         ...UploadedFile
     }
+    renters {
+        ...Renter
+    }
+    favourite {
+        id
+    }
 }
 
 fragment ObjectData on ObjectResponse {

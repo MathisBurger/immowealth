@@ -6,7 +6,7 @@ import jakarta.persistence.*
  * Simple server side setting that is configured through the web
  */
 @Entity
-class Setting : BaseEntity(), Archivable {
+class Setting : UserAuthorizedBaseEntity(), Archivable {
 
     /**
      * The key of the setting
@@ -16,7 +16,7 @@ class Setting : BaseEntity(), Archivable {
     /**
      * All options for the value
      */
-    @OneToMany(cascade = [CascadeType.PERSIST, CascadeType.ALL], fetch = FetchType.EAGER)
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER, mappedBy = "setting")
     var options: MutableList<SettingOption> = mutableListOf();
 
     /**

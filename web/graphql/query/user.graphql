@@ -1,0 +1,11 @@
+query GetCurrentUser {
+    currentUser {
+        ...SimpleUser
+    }
+}
+
+query GetAllUsers {
+    allUsers {
+        ...SimpleUser
+    }
+}

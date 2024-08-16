@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.22"
+    kotlin("plugin.serialization") version "1.9.22"
     kotlin("plugin.allopen") version "1.9.22"
     id("io.quarkus")
 }
@@ -14,6 +15,7 @@ val quarkusPlatformArtifactId: String by project
 val quarkusPlatformVersion: String by project
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("io.quarkus:quarkus-resteasy-multipart")
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
     implementation("io.quarkus:quarkus-hibernate-orm")
@@ -30,8 +32,14 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-client-jackson")
     implementation("io.quarkus:quarkus-webjars-locator")
     implementation("io.quarkus:quarkus-mailer")
+    implementation("io.quarkus:quarkus-smallrye-jwt")
+    implementation("io.quarkus:quarkus-smallrye-jwt-build")
+    implementation("io.quarkus:quarkus-elytron-security-jdbc")
+    implementation("io.quarkus:quarkus-smallrye-openapi")
+    implementation("io.quarkus:quarkus-websockets")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
+    testImplementation("io.quarkus:quarkus-junit5-mockito")
 }
 
 group = "de.mathisburger"

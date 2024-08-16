@@ -16,4 +16,11 @@ class RealEstateRepository : AbstractRepository<RealEstateObject>() {
     fun getByCredit(credit: Credit): RealEstateObject {
         return find("from RealEstateObject o where o.credit.id = ?1", credit.id).firstResult()
     }
+
+    /**
+     * Finds an object by city
+     */
+    fun findByCity(city: String): RealEstateObject {
+        return find("from RealEstateObject o where o.city = ?1", city).firstResult();
+    }
 }

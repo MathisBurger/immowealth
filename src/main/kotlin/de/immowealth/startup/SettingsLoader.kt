@@ -2,10 +2,12 @@ package de.immowealth.startup
 
 import de.immowealth.entity.Setting
 import de.immowealth.entity.SettingOption
+import de.immowealth.entity.User
 import de.immowealth.entity.enum.MailEntityContext
 import de.immowealth.entity.enum.MailerSettingAction
 import de.immowealth.entity.enum.SettingOptionPrefix
 import de.immowealth.repository.SettingsRepository
+import de.immowealth.repository.UserRepository
 import io.quarkus.runtime.Startup
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
@@ -21,33 +23,48 @@ class SettingsLoader {
     @Inject
     lateinit var entityManager: EntityManager;
 
+    @Inject
+    lateinit var userRepository: UserRepository;
+
     /**
      * Loads all default settings into the database if they do not exist
      */
     @Startup
-    @Transactional
     fun loadSettings() {
+        val users = this.userRepository.listAll();
+        for (user in users) {
+            this.initWithUser(user);
+        }
+    }
 
-        val lang = this.settingsRepository.getByKey("language");
-        if (lang.isEmpty) {
-            var newLang = Setting()
+    @Transactional
+    fun initWithUser(user: User) {
+        val lang = this.settingsRepository.getByKey("language", user);
+        if (lang === null) {
+            val newLang = Setting()
             newLang.key = "language";
             newLang.tab = "general";
+            newLang.user = user;
             newLang.section = "general";
             newLang.options = mutableListOf(
                 SettingOption("DE", "Deutsch", SettingOptionPrefix.deFlag, "lang.de"),
                 SettingOption("EN", "English", SettingOptionPrefix.enFlag, "lang.en")
             );
             newLang.value = "EN";
+            for (option in newLang.options) {
+                option.setting = newLang;
+                this.entityManager.persist(option);
+            }
             this.entityManager.persist(newLang);
             this.entityManager.flush();
         }
-        val currency = this.settingsRepository.getByKey("currency");
-        if (currency.isEmpty) {
-            var newCurrency = Setting()
+        val currency = this.settingsRepository.getByKey("currency", user);
+        if (currency === null) {
+            val newCurrency = Setting()
             newCurrency.key = "currency";
             newCurrency.tab = "general";
             newCurrency.section = "general";
+            newCurrency.user = user;
             newCurrency.options = mutableListOf(
                 SettingOption("USD", "US Dollar", SettingOptionPrefix.USD, null),
                 SettingOption("EUR", "Euro", SettingOptionPrefix.EUR, null),
@@ -66,21 +83,45 @@ class SettingsLoader {
             );
             newCurrency.value = "EUR";
             this.entityManager.persist(newCurrency);
+            for (option in newCurrency.options) {
+                option.setting = newCurrency;
+                this.entityManager.persist(option);
+            }
             this.entityManager.flush();
         }
 
-        this.initMailerSetting(MailEntityContext.realEstateObject.name);
-        this.initMailerSetting(MailEntityContext.credit.name);
-        this.initMailerSetting(MailEntityContext.housePrices.name);
+        this.initMailerSetting(MailEntityContext.realEstateObject.name, user);
+        this.initMailerSetting(MailEntityContext.credit.name, user);
+        this.initMailerSetting(MailEntityContext.housePrices.name, user);
+        var mailerUseFavourites = this.settingsRepository.getByKey("notificationsUseFavourites", user);
+        if (mailerUseFavourites === null) {
+            mailerUseFavourites = Setting()
+            mailerUseFavourites.key = "notificationsUseFavourites";
+            mailerUseFavourites.value = "FAVOURITES";
+            mailerUseFavourites.user = user;
+            mailerUseFavourites.tab = "notification";
+            mailerUseFavourites.section = "mailer";
+            mailerUseFavourites.options = mutableListOf(
+                SettingOption("FAVOURITES", "Favourites", null, "notification.mailer.favourites"),
+                SettingOption("ALL", "All", null, "notification.mailer.all")
+            );
+            for (option in mailerUseFavourites.options) {
+                option.setting = mailerUseFavourites;
+                this.entityManager.persist(option);
+            }
+            this.entityManager.persist(mailerUseFavourites);
+            this.entityManager.flush();
+        }
     }
 
-    private fun initMailerSetting(suffix: String) {
-        val mailerNotification = this.settingsRepository.getByKey("mailerNotification_$suffix");
-        if (mailerNotification.isEmpty) {
+    private fun initMailerSetting(suffix: String, user: User) {
+        val mailerNotification = this.settingsRepository.getByKey("mailerNotification_$suffix", user);
+        if (mailerNotification === null) {
             val newMailerNotification = Setting();
             newMailerNotification.key = "mailerNotification_$suffix";
             newMailerNotification.tab = "notification";
             newMailerNotification.section = "mailer";
+            newMailerNotification.user = user;
             newMailerNotification.options = mutableListOf(
                 SettingOption(MailerSettingAction.NONE.name, "None", null, "notification.mailer.none"),
                 SettingOption(MailerSettingAction.UPDATE_ONLY.name, "Update only", null, "notification.mailer.update_only"),
@@ -90,6 +131,10 @@ class SettingsLoader {
                 SettingOption(MailerSettingAction.ALL.name, "All", null, "notification.mailer.all")
             );
             newMailerNotification.value = "NONE";
+            for (option in newMailerNotification.options) {
+                option.setting = newMailerNotification;
+                this.entityManager.persist(option);
+            }
             this.entityManager.persist(newMailerNotification);
             this.entityManager.flush();
         }

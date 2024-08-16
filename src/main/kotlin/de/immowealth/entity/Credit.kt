@@ -8,8 +8,13 @@ import java.util.Date
  * The credit entity
  */
 @Entity
-class Credit : BaseEntity(), Archivable {
+class Credit : AuthorizedBaseEntity(), Archivable, Favourite {
 
+    @ManyToMany
+    @JoinTable(name= "credit_favourite_user",
+        joinColumns = [JoinColumn(name = "credit_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")])
+    override var favourite: MutableList<User> = mutableListOf()
 
     /**
      * The interest rate
@@ -62,5 +67,9 @@ class Credit : BaseEntity(), Archivable {
 
     override fun getDirectUrl(): String {
         return "/credits/details?id=${this.id}";
+    }
+
+    override fun isFavourite(user: User?): Boolean {
+        return this.favourite.contains(user);
     }
 }

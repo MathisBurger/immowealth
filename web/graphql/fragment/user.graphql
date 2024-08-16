@@ -1,0 +1,10 @@
+fragment SimpleUser on User {
+    id
+    email
+    username
+    roles
+    tenant {
+        id
+        name
+    }
+}

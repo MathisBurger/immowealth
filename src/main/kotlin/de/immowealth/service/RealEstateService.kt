@@ -5,6 +5,7 @@ import de.immowealth.data.input.RealEstateInput
 import de.immowealth.data.input.UpdateRealEstateInput
 import de.immowealth.data.response.ObjectResponse
 import de.immowealth.data.response.PriceValueRelation
+import de.immowealth.entity.Chat
 import de.immowealth.entity.Credit
 import de.immowealth.entity.RealEstateObject
 import de.immowealth.entity.UploadedFile
@@ -13,6 +14,7 @@ import de.immowealth.entity.enum.MailerSettingAction
 import de.immowealth.repository.HousePriceChangeRepository
 import de.immowealth.repository.RealEstateRepository
 import de.immowealth.util.DateUtils
+import de.immowealth.voter.RealEstateObjectVoter
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.inject.Inject
 import jakarta.transaction.Transactional
@@ -44,12 +46,13 @@ class RealEstateService : AbstractService() {
      */
     @Transactional
     fun createObject(input: RealEstateInput): RealEstateObject {
+        val user = this.securityService.getCurrentUser();
         val credit = Credit();
         credit.bank = input.credit.bank;
         credit.interestRate = input.credit.interestRate;
         credit.redemptionRate = input.credit.redemptionRate;
+        credit.tenant = user?.tenant;
         credit.amount = this.cs.convertBack(input.credit.amount);
-        this.entityManager.persist(credit);
 
         val obj = RealEstateObject()
         obj.city = input.city;
@@ -69,22 +72,26 @@ class RealEstateService : AbstractService() {
         obj.kitchen = input.kitchen;
         obj.heatingType = input.heatingType;
         obj.notes = input.notes;
+        obj.tenant = user?.tenant;
 
+        this.denyUnlessGranted(RealEstateObjectVoter.CREATE, obj)
+        this.entityManager.persist(credit);
         val results = this.geocodingApi.getLocations(input.streetAndHouseNr + " " + input.zip + " " + input.city);
         if (results.isNotEmpty()) {
             obj.positionLat = results.first().lat.toDouble();
             obj.positionLon = results.first().lon.toDouble();
         }
-
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Created real estate object",
             "Created real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.realEstateObject,
-            MailerSettingAction.CREATE_ONLY
+            MailerSettingAction.CREATE_ONLY,
+            obj.isFavourite(currentUser)
         );
         return obj;
     }
@@ -93,7 +100,7 @@ class RealEstateService : AbstractService() {
      * Gets all objects
      */
     fun getAllObjects(): List<RealEstateObject> {
-        return this.realEstateRepository.listAll().map { this.convertObjectCurrencies(it) }
+        return this.filterAccess(RealEstateObjectVoter.READ, this.realEstateRepository.listAll()).map { this.convertObjectCurrencies(it) }
     }
 
     /**
@@ -104,8 +111,9 @@ class RealEstateService : AbstractService() {
      */
     fun getObject(id: Long, yearsInFuture: Int = 10): ObjectResponse {
         val obj =  this.realEstateRepository.findById(id);
+        this.denyUnlessGranted(RealEstateObjectVoter.READ, obj);
         var creditRateSum = 0.0;
-        var cum: MutableList<Double> = mutableListOf();
+        val cum: MutableList<Double> = mutableListOf();
         for (rate in obj.credit!!.rates) {
             if (!rate.archived) {
                 creditRateSum += rate.amount!!;
@@ -136,6 +144,7 @@ class RealEstateService : AbstractService() {
     @Transactional
     fun updateObject(input: UpdateRealEstateInput): ObjectResponse {
         val obj = this.realEstateRepository.findById(input.id);
+        this.denyUnlessGranted(RealEstateObjectVoter.UPDATE, obj);
         obj.zip = input.zip ?: obj.zip;
         obj.dateBought = input.dateBought ?: obj.dateBought;
         obj.initialValue = this.cs.convertBack(input.initialValue) ?: obj.initialValue;
@@ -158,12 +167,14 @@ class RealEstateService : AbstractService() {
         this.entityManager.persist(obj);
         this.entityManager.flush();
         this.log.writeLog("Updated object with ID ${obj.id}");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Updated real estate object",
             "Updated real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.realEstateObject,
-            MailerSettingAction.UPDATE_ONLY
+            MailerSettingAction.UPDATE_ONLY,
+            obj.isFavourite(currentUser)
         );
         return this.getObject(obj.id!!, 10);
     }
@@ -176,15 +187,18 @@ class RealEstateService : AbstractService() {
     @Transactional
     fun deleteObject(id: Long) {
         val obj = this.realEstateRepository.findById(id);
+        this.denyUnlessGranted(RealEstateObjectVoter.DELETE, obj);
         this.delete(obj);
         this.entityManager.flush();
         this.log.writeLog("Deleted object with ID $id");
+        val currentUser = this.securityService.getCurrentUser();
         this.mail.sendEntityActionMail(
             "Deleted real estate object",
             "Deleted real estate object (${obj.streetAndHouseNr}, ${obj.zip} ${obj.city})",
-            "kontakt@mathis-burger.de",
+            currentUser?.email ?: "",
             MailEntityContext.realEstateObject,
-            MailerSettingAction.DELETE_ONLY
+            MailerSettingAction.DELETE_ONLY,
+            obj.isFavourite(currentUser)
         );
     }
 

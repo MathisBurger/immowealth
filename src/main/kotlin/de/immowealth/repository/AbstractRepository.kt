@@ -1,12 +1,14 @@
 package de.immowealth.repository
 
+import de.immowealth.entity.Archived
+import de.immowealth.entity.AuthorizedBaseEntity
 import de.immowealth.entity.BaseEntity
 import io.quarkus.hibernate.orm.panache.PanacheRepository
 
 /**
  * Abstract repository that can be used to use archival feature internally
  */
-abstract class AbstractRepository<T: BaseEntity> : PanacheRepository<T> {
+abstract class AbstractRepository<T: Archived> : PanacheRepository<T> {
 
     /**
      * Finds all unarchived entries.

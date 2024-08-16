@@ -4,7 +4,7 @@ import {
     GetAllObjectsDocument,
     HousePriceChangeDataFragment,
     useAllHousePriceChangesQuery, useDeleteHousePriceChangeMutation,
-    useDeleteRealEstateMutation
+    useDeleteRealEstateMutation, useMarkAsFavouriteMutation, useUnmarkAsFavouriteMutation
 } from "@/generated/graphql";
 import {useCallback, useMemo, useState} from "react";
 import {Divider, Select, Typography, Option, Table, Button, Autocomplete, Grid} from "@mui/joy";
@@ -17,15 +17,25 @@ import {GridColDef, GridValueFormatterParams} from "@mui/x-data-grid";
 import EntityList from "@/components/EntityList";
 import {useTranslation} from "next-export-i18n";
 import useCurrencySymbol from "@/hooks/useCurrencySymbol";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 
 const HousingPrices = () => {
 
-    const {data} = useAllHousePriceChangesQuery();
+    const {data, refetch} = useAllHousePriceChangesQuery();
     const router = useRouter();
     const {t} = useTranslation();
     const currency = useCurrencySymbol();
     const [updateObject, setUpdateObject] = useState<HousePriceChangeDataFragment|null>(null);
+
+    const [markAsFavouriteMutation] = useMarkAsFavouriteMutation();
+    const [unmarkAsFavouriteMutation] = useUnmarkAsFavouriteMutation();
+    const currentUser = useCurrentUser();
+
+    const isFavourite = useCallback((change: HousePriceChangeDataFragment) => {
+        // @ts-ignore
+        return change.favourite?.filter((f) => f?.id === currentUser?.id)?.length > 0;
+    }, [currentUser]);
 
     const [deleteMutation, {loading: deleteLoading}] = useDeleteHousePriceChangeMutation({
         refetchQueries: [
@@ -69,16 +79,43 @@ const HousingPrices = () => {
             headerName: t('common.actions'),
             renderCell: ({row}) => (
                 <Grid container direction="row" spacing={2}>
-                    <Grid xs={6}>
+                    <Grid xs={2}>
                         <Button color="primary" onClick={() => setUpdateObject(row)}>
                             <EditIcon />
                         </Button>
                     </Grid>
-                    <Grid xs={6}>
+                    <Grid xs={2}>
                         <Button color="danger" onClick={() => deleteObject(`${row.id}`)} loading={deleteLoading}>
                             <DeleteIcon />
                         </Button>
                     </Grid>
+                    {isFavourite(row) ? (
+                        <Button
+                            variant="solid"
+                            color="primary"
+                            sx={{width: '250px'}}
+                            onClick={() => {
+                                unmarkAsFavouriteMutation({
+                                    variables: {entityName: 'de.immowealth.entity.HousePriceChange', id: parseInt(`${row.id}`, 10)}
+                                }).then(() => refetch())
+                            }}
+                        >
+                            {t('common.unmarkAsFavourite')}
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="solid"
+                            color="primary"
+                            sx={{width: '250px'}}
+                            onClick={() => {
+                                markAsFavouriteMutation({
+                                    variables: {entityName: 'de.immowealth.entity.HousePriceChange', id: parseInt(`${row.id}`, 10)}
+                                }).then(() => refetch())
+                            }}
+                        >
+                            {t('common.markAsFavourite')}
+                        </Button>
+                    )}
                 </Grid>
             )
         }

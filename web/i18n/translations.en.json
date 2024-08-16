@@ -16,6 +16,7 @@
     "mailerNotification_realEstateObject": "Objects",
     "mailerNotification_credit": "Credits",
     "mailerNotification_housePrices": "House price changes",
+    "notificationsUseFavourites": "Apply notifications for",
     "options": {
       "lang": {
         "de": "German",
@@ -28,7 +29,8 @@
           "create_only": "Create only",
           "booking_only": "Booking only",
           "delete_only": "Delete only",
-          "all": "All"
+          "all": "All",
+          "favourites": "Favourites"
         }
       }
     }
@@ -41,11 +43,16 @@
     "map": "Map",
     "settings": "Settings",
     "activityLog": "Activity log",
-    "archived": "Archive"
+    "archived": "Archive",
+    "tenants": "Tenants",
+    "tenant": "Tenant",
+    "chats": "Chats",
+    "simpleRentabilityCalculation": "Simple Rent. Calc"
   },
   "common": {
     "credit": "Credit",
     "credits": "Credits",
+    "name": "Name",
     "sum": "Sum",
     "creditRateSum": "Paid off",
     "interestRate": "Interest rate",
@@ -82,7 +89,23 @@
     "add-folder": "Add folder",
     "value": " Value",
     "entityName": "Entity",
-    "unarchive": "Unarchive"
+    "unarchive": "Unarchive",
+    "users": "Users",
+    "username": "Username",
+    "password": "Password",
+    "email": "Email",
+    "requestPasswordReset": "Request reset",
+    "resetPassword": "Reset password",
+    "pleaseCheckYourInbox": "E-Mail has been sent. Please check your inbox",
+    "renters": "Renters",
+    "firstName": "Firstname",
+    "lastName": "Lastname",
+    "birthday": "Birthday",
+    "chats": "Chats",
+    "send": "Senden",
+    "loadMore": "Load more",
+    "markAsFavourite": "Mark as favourite",
+    "unmarkAsFavourite": "Unmark as favourite"
   },
   "credit": {
     "tab": {
@@ -150,6 +173,22 @@
         "INSURANCE": "Insurance",
         "OTHER": "Other"
       }
+    },
+    "renter": {
+      "createRenter": "Create renter",
+      "assignRenter": "Assign renter"
     }
+  },
+  "tenant": {
+    "createMember": "Create employee",
+    "manageMembers": "Manage employees",
+    "moveMembers": "Move employees",
+    "new": "New Tenant",
+    "name": "Name",
+    "baseData": "Base data",
+    "owner": "Owner"
+  },
+  "renter": {
+    "history": "Living history"
   }
 }

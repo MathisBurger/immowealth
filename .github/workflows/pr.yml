@@ -49,8 +49,15 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
           cache: 'gradle'
+      - name: Setup OpenSSL JWT certificats
+        run: |
+          openssl genrsa -out rsaPrivateKey.pem 2048
+          openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
+          openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform pem -out privateKey.pem
+          cp ./privateKey.pem ./src/main/resources/privateKey.pem
+          cp ./publicKey.pem ./src/main/resources/publicKey.pem
       - name: Build with Gradle
-        run: ./gradlew build -Dquarkus.package.type=uber-jar
+        run: ./gradlew build -x test -Dquarkus.package.type=uber-jar
       - name: Start application
         run: |
           nohup ./gradlew --console=plain quarkusDev &
@@ -72,3 +79,33 @@ jobs:
           npm ci --force
           npm run compile
           npm run build
+
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: mysecretpassword
+          POSTGRES_DB: immowealth
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+      - name: Test application
+        run: ./gradlew test

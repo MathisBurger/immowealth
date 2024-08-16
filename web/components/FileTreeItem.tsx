@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import {useTranslation} from "next-export-i18n";
 import UploadFileModal from "@/components/object/modal/UploadFileModal";
+import {useCookies} from "react-cookie";
 
 interface FileTreeItemProps {
     docs: UploadedFileFragment[];
@@ -23,6 +24,7 @@ interface NestedHelper {
 
 const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
 
+    const [cookies] = useCookies(['jwt']);
     const [deleteMutation] = useDeleteFileMutation({
         refetchQueries: [
             {
@@ -38,13 +40,15 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
     const {t} = useTranslation();
 
     const rootDocs = useMemo<UploadedFileFragment[]>(
-        () => docs.filter((d) => d.fileRoot!.split("/").length === 1 || d.fileRoot === ""),
+        () => docs.filter((d) => d.fileRoot!.startsWith("/") || d.fileRoot === ""),
         [docs]
     );
     const nonRootDocs = useMemo<UploadedFileFragment[]>(
-        () => docs.filter((d) => d.fileRoot!.split("/").length > 1),
+        () => docs.filter((d) => !d.fileRoot!.startsWith("/") && d.fileRoot !== ""),
         [docs]
     );
+
+    console.log(nonRootDocs);
 
     const folders = useMemo<string[]>(
         () => nonRootDocs.map((d) => d.fileRoot!.split("/")[0]).filter((el, pos, self) => self.indexOf(el) === pos),
@@ -69,7 +73,20 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
     }, [folders, nonRootDocs]);
 
     const downloadFile = (id: number) => {
-        window.open(`${process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:8080/'}file?id=${id}`, '_blank');
+        const url = `${process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:8080/'}file?id=${id}`;
+        fetch(url, {
+            headers: {
+                'Authorization': 'Bearer ' + cookies.jwt
+            }
+        } )
+            .then((response) => response.blob())
+            .then((blob) => {
+                const _url = window.URL.createObjectURL(blob);
+                // @ts-ignore
+                window.open(_url, "_blank").focus();
+            }).catch((err) => {
+            console.log(err);
+        });
     }
 
 
@@ -96,7 +113,7 @@ const FileTreeItem = ({docs, objectId, refetch, path}: FileTreeItemProps) => {
                 </TreeItem>
             )}
             {rootDocs.map((d, i) => (
-                <TreeItem key={d.fileName! + i} itemId={d.fileRoot! + d.fileName!} label={
+                <TreeItem key={d.fileName! + d.fileRoot! + i} itemId={d.fileRoot! + d.fileName! + i} label={
                     <Grid container direction="row">
                         <Grid xs={11}>
                             {d.fileName!}

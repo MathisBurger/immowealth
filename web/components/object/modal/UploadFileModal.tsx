@@ -2,6 +2,7 @@ import {DropzoneArea} from "react-mui-dropzone";
 import {useState} from "react";
 import {Button, Grid, Modal, ModalDialog} from "@mui/joy";
 import {useTranslation} from "next-export-i18n";
+import {useCookies} from "react-cookie";
 
 interface UploadFileModalProps {
     objectId: number;
@@ -13,6 +14,7 @@ interface UploadFileModalProps {
 const UploadFileModal = ({objectId, onClose, rootPath, refetch}: UploadFileModalProps) => {
 
     const {t} = useTranslation();
+    const [cookies] = useCookies(['jwt']);
     const [files, setFiles] = useState<File[]>([]);
 
     const onSubmit = async () => {
@@ -25,7 +27,10 @@ const UploadFileModal = ({objectId, onClose, rootPath, refetch}: UploadFileModal
             const options = {
                 method: 'POST',
                 //headers: {'Content-Type': 'multipart/form-data;'},
-                body: form
+                body: form,
+                headers: {
+                    'Authorization': 'Bearer ' + cookies.jwt
+                }
             };
             await fetch(`${process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8080'}/file/realEstateObject`, options);
         }
