@@ -18,6 +18,9 @@ grow very fast and continously and will always have its users in focus.
 - Multiple currencies
 - Rent expenses
 - Document storage
+- User Accounts
+- Renter Communication
+- 
 - Archive
 
 
@@ -44,14 +47,6 @@ All chats messages do have live updates, except from renter chats.
 
 There are many new features planned. You can find a little roadmap of planned future releases here:
 
-### v1.4.0
-- [x] Full UNIT test coverage (services)
-- [x] User account system
-- [x] Support Chat for renter
-- [x] Rental status
-- [x] Update mail notifications with favourites
-- [x] Performance calculations (by input of data)
-
 ### v1.4.1 (after stable React 19 release)
 - [ ] Upgrade to a Next version that supports React compiler
 - [ ] Update log functionality and add everywhere
@@ -59,6 +54,7 @@ There are many new features planned. You can find a little roadmap of planned fu
 - [ ] Filter by favourite
 
 ### v1.5.0 (not scheduled yet)
+- [ ] Fix of RenterService tests
 - [ ] Full UNIT test coverage (all classes, doesn`t matter how simple they are => more complex edge-cases)
 - [ ] Subtenants
 - [ ] Favourites as filter in frontend views
